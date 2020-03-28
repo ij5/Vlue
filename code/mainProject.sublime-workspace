@@ -63,7 +63,17 @@
 			"file": "ion.l",
 			"settings":
 			{
-				"buffer_size": 655,
+				"buffer_size": 707,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "ion.y",
+			"settings":
+			{
+				"buffer_size": 417,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		}
@@ -264,6 +274,8 @@
 	],
 	"file_history":
 	[
+		"/D/D/jaehee/Project/pl/code/lex.yy.c",
+		"/D/D/jaehee/Project/pl/code/mainProject.sublime-project",
 		"/D/D/jaehee/Project/lang_yb/ion.y",
 		"/D/D/jaehee/Project/lang_yb/ion.l",
 		"/C/Users/leeja/AppData/Local/Temp/fz3temp-2/_comment.html",
@@ -389,9 +401,7 @@
 		"/D/D/jaehee/wikid/game/md5.js",
 		"/D/D/jaehee/wikid/story/sftp-config.json",
 		"/D/D/jaehee/wikid/story/view.php",
-		"/D/D/jaehee/wikid/story/write.php",
-		"/D/D/jaehee/wikid/story/writedb.php",
-		"/D/D/jaehee/wikid/story/before.txt"
+		"/D/D/jaehee/wikid/story/write.php"
 	],
 	"find":
 	{
@@ -426,24 +436,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
 					"file": "ion.l",
-					"semi_transient": true,
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 655,
+						"buffer_size": 707,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								318,
+								318
 							]
 						],
 						"settings":
@@ -451,7 +461,38 @@
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
-							"syntax": "Packages/Lisp/Lisp.sublime-syntax"
+							"syntax": "Packages/Bison/Bison.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "ion.y",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 417,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								234,
+								234
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Bison/Bison.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,

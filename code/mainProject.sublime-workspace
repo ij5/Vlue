@@ -64,27 +64,6 @@
 			"settings":
 			{
 				"buffer_size": 655,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "",
-			"file": "/D/D/jaehee/Project/lang_yb/ion.y",
-			"file_size": -1,
-			"file_write_time": -1,
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/leeja/AppData/Roaming/Sublime Text 3/Packages/User/bisonflex.sublime-snippet",
-			"settings":
-			{
-				"buffer_size": 308,
-				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		}
@@ -279,9 +258,9 @@
 	},
 	"expanded_folders":
 	[
-		"/D/D/jaehee/Project/lang_yb",
-		"/D/D/jaehee/Project/lang_yb/code",
-		"/D/D/jaehee/Project/lang_yb/docs"
+		"/D/D/jaehee/Project/pl",
+		"/D/D/jaehee/Project/pl/code",
+		"/D/D/jaehee/Project/pl/docs"
 	],
 	"file_history":
 	[
@@ -430,19 +409,6 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"추천 수",
-			"notify_mes",
-			"title",
-			"allow_mail",
-			"allow_mailing",
-			"btn",
-			"#content",
-			"\"/",
-			"index.php?mid=",
-			"acfield",
-			"로그인",
-			"whos.amung.us/s",
-			"click to "
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -450,8 +416,6 @@
 		"regex": false,
 		"replace_history":
 		[
-			"\"",
-			""
 		],
 		"reverse": false,
 		"show_context": true,
@@ -462,47 +426,16 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
 					"file": "ion.l",
-					"semi_transient": false,
+					"semi_transient": true,
 					"settings":
 					{
 						"buffer_size": 655,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								371,
-								371
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Bison/Bison.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/D/D/jaehee/Project/lang_yb/ion.y",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
 						"regions":
 						{
 						},
@@ -518,43 +451,13 @@
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
-							"syntax": "Packages/Bison/Bison.sublime-syntax"
+							"syntax": "Packages/Lisp/Lisp.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/C/Users/leeja/AppData/Roaming/Sublime Text 3/Packages/User/bisonflex.sublime-snippet",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 308,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								296,
-								296
-							]
-						],
-						"settings":
-						{
-							"default_extension": "sublime-snippet",
-							"incomplete_sync": null,
-							"syntax": "Packages/XML/XML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
 					"type": "text"
 				}
 			]

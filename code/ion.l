@@ -1,24 +1,25 @@
 %{
     #include <string.h>
     #include <stdlib.h>
-    // #include "y.tab.h"
-    extern int yylex();
+    #include "y.tab.h"
     void extern yyerror(char*);
     void InvalidToken();
 %}
 %option noyywrap
 
-space_required	[ \t]+
-space_optional	[ \t]*
+space_required	[ \t\n]+
+space_optional	[ \t\n]*
 eol		\n
+DIGIT	[0-9]
 
 %%
 
 "exit"	|
 "quit"			{ printf("bye!"); exit(0); }
-[0-9]+\.[0-9]+	{ printf("find float"); }
-[-+]?[0-9]+			{ printf("find integer"); }
-[-+]?[a-zA-Z]+[_0-9a-zA-Z]*		{ printf("found variable");  }
+"var"			{ printf("found define");}
+[0-9]+\.[0-9]+					{ printf("find float"); }
+[\-\+]?[0-9]+					{ printf("find integer"); }
+[\-\+]?[a-zA-Z]+[_0-9a-zA-Z]*	{ printf("found variable");  }
 
 .			{ InvalidToken(); }
 
@@ -34,7 +35,3 @@ void InvalidToken(){
 	exit(0);
 }
 
-int main(void){
-	yylex();
-	return 0;
-}

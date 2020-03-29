@@ -16,10 +16,10 @@ DIGIT	[0-9]
 
 "exit"	|
 "quit"			{ printf("bye!"); exit(0); }
-"var"			{ printf("found define"); return T_DEF; }
+"var"			{ printf("found define"); return T_VAR; }
 [0-9]+\.[0-9]+					{ printf("find float"); return T_FLOAT; }
 [\-\+]?[0-9]+					{ printf("find integer"); return T_INT; }
-[\-\+]?[a-zA-Z]+[_0-9a-zA-Z]*	{ printf("found variable"); return T_VAR }
+[\-\+]?[a-zA-Z]+[_0-9a-zA-Z]*	{ printf("found variable"); return T_VAR_INDEX; }
 
 .			{ InvalidToken(); }
 

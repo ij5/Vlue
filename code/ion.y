@@ -13,18 +13,14 @@
 	char* datatype;
 }
 
-%token	T_VAR T_FLOAT T_INT T_DEF
+%token	T_VAR T_VAR_INDEX T_FLOAT T_INT
 
 %token <int_val> T_INT
 
 
 %%
 
-define_expression: define_variable variable_value	{ }
-
-variable_value: T_VAR	{$$=$1}	
-
-define_variable: T_DEF
+declaration_expression: T_VAR T_VAR_INDEX	{ }
 
 %%
 

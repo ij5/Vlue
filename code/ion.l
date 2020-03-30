@@ -1,37 +1,19 @@
-%{
-    #include <string.h>
-    #include <stdlib.h>
-    #include "y.tab.h"
-    void extern yyerror(char*);
-    void InvalidToken();
-%}
 %option noyywrap
+%{
+	#include<stdio.h>
+	#include"ion.tab.h"
+	extern int yyerror(char *s);
+	int lineno = 1;
+%}
 
-space_required	[ \t\n]+
-space_optional	[ \t\n]*
-eol		\n
-DIGIT	[0-9]
-
-%%
-
-"exit"	|
-"quit"			{ printf("bye!"); exit(0); }
-"var"			{ printf("found define"); return T_VAR; }
-[0-9]+\.[0-9]+					{ printf("find float"); return T_FLOAT; }
-[\-\+]?[0-9]+					{ printf("find integer"); return T_INT; }
-[\-\+]?[a-zA-Z]+[_0-9a-zA-Z]*	{ printf("found variable"); return T_VAR_INDEX; }
-
-.			{ InvalidToken(); }
+newline	[\n]
 
 %%
 
-void yyerror(char* s){
-	printf("error on line %d: %s", 1, s);
-	exit(0);
-}
+[ \t]+	{ return space_required; }
+[ \t]*	{ return space_optional; }
+"exit"	{ printf("bye!\n"); exit(0); }
+"var"	{ return T_VAR; }
+{newline}	{ lineno+=1; }
 
-void InvalidToken(){
-	printf("Invalid Token on line %d: %s", 1, yytext);
-	exit(0);
-}
-
+%%

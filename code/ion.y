@@ -14,10 +14,11 @@
 	char* variable_index;
 }
 
-%token T_VAR T_EQUAL EOL
-%token <int_val> T_INT
-%token <variable_index> T_VARIABLE_INDEX
-%token space_optional space_required
+%token T_VAR T_EQUAL //declaration expression
+%token T_IF T_LEFT_PH T_RIGHT_PH T_LEFT_CB T_RIGHT_CB	//if expression
+%token EOL	//End of line
+%token <int_val> T_INT	//type declaration
+%token <variable_index> T_VARIABLE_INDEX	// variable index. 	ex) var (a) = 1
 
 %right '='
 %left '+' '-'
@@ -29,7 +30,16 @@
 %%
 
 expression: 
-	| expression declaration_expression EOL
+	| expression exp EOL
+	| expression exp EOL
+;
+
+if_expression: 
+
+;
+
+exp: declaration_expression
+	| if_expression
 ;
 
 declaration_expression: T_VAR T_VARIABLE_INDEX T_EQUAL T_INT 	{ printf("found variable declaration.\n"); }
@@ -37,7 +47,6 @@ declaration_expression: T_VAR T_VARIABLE_INDEX T_EQUAL T_INT 	{ printf("found va
 ;
 
 %%
-
 
 int main(void){
 	printf("version 5\n");

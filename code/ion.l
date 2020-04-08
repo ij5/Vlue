@@ -18,6 +18,10 @@ whitespace [ \t]
 "exit"	{ printf("bye!\n"); exit(0); }
 "var"	{ return T_VAR; }
 "="	{ return T_EQUAL; }
+'('		{ return T_LEFT_PH; }
+')'		{ return T_RIGHT_PH; }
+'\{'		{ return T_LEFT_CB; }
+'\}'	 { return T_RIGHT_CB; }
 [a-zA-Z]+[a-zA-Z0-9]*	{ return T_VARIABLE_INDEX; }
 [0-9]+ 	{ return T_INT;}
 

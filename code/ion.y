@@ -19,36 +19,38 @@
 %token <variable_index> T_VARIABLE_INDEX
 %token space_optional space_required
 
-%start root
+%right '='
+%left '+' '-'
+%left '*' '/'
+%left '!'
+
+%start expression
 
 %%
 
-root: 
-	|	root line
+expression: 
+	| expression declaration_expression EOL
 ;
 
-line: EOL
-	|	declaration_expression
-;
-
-declaration_expression: T_VAR T_VARIABLE_INDEX T_EQUAL T_INT { printf("Find integer declaration on line %d\n", lineno); }
-	|	T_VAR T_VARIABLE_INDEX { printf("Find declaration on line %d\n", lineno); /*TODO 이 문장 출력이 한 턴 늦음.*/ }
+declaration_expression: T_VAR T_VARIABLE_INDEX T_EQUAL T_INT 	{ printf("found variable declaration.\n"); }
+	| T_VAR T_VARIABLE_INDEX 	{ printf("found variable\n"); }
 ;
 
 %%
 
-void yyerror(char *s){
-	fprintf(stderr, "error on line %d: %s\n", lineno, s);
-	exit(1);
-}
 
 int main(void){
-	printf("version 4\n");
-
+	printf("version 5\n");
 	yyin=stdin;
 	do{
 		yyparse();
 	}while(!feof(yyin));
 
 	return 0;
+}
+
+
+void yyerror(char *s){
+	fprintf(stderr, "error on line %d: %s\n", lineno, s);
+	exit(1);
 }

@@ -21,7 +21,7 @@ whitespace [ \t]
 [a-zA-Z]+[a-zA-Z0-9]*	{ return T_VARIABLE_INDEX; }
 [0-9]+ 	{ return T_INT;}
 
-{newline}	{ lineno+=1; }
+{newline}	{ lineno+=1; return EOL; }
 {whitespace}	;
 
 .		;

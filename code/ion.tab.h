@@ -41,11 +41,16 @@
    enum yytokentype {
      T_VAR = 258,
      T_EQUAL = 259,
-     EOL = 260,
-     T_INT = 261,
-     T_VARIABLE_INDEX = 262,
-     space_optional = 263,
-     space_required = 264
+     T_IF = 260,
+     T_LEFT_SB = 261,
+     T_RIGHT_SB = 262,
+     T_LEFT_MB = 263,
+     T_RIGHT_MB = 264,
+     T_MORE_THAN = 265,
+     T_LESS_THAN = 266,
+     EOL = 267,
+     T_INT = 268,
+     T_VARIABLE_INDEX = 269
    };
 #endif
 
@@ -64,7 +69,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 68 "ion.tab.h"
+#line 73 "ion.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

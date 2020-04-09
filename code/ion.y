@@ -15,7 +15,7 @@
 }
 
 %token T_VAR T_EQUAL //declaration expression
-%token T_IF T_LEFT_PH T_RIGHT_PH T_LEFT_CB T_RIGHT_CB	//if expression
+%token T_IF T_LEFT_SB T_RIGHT_SB T_LEFT_MB T_RIGHT_MB T_MORE_THAN T_LESS_THAN	//if expression
 %token EOL	//End of line
 %token <int_val> T_INT	//type declaration
 %token <variable_index> T_VARIABLE_INDEX	// variable index. 	ex) var (a) = 1
@@ -30,16 +30,23 @@
 %%
 
 expression: 
-	| expression exp EOL
-	| expression exp EOL
+	| expression declaration_expression EOL
+	| expression if_expression EOL
 ;
 
-if_expression: 
-
+if_expression: T_IF T_LEFT_SB condition_expression T_RIGHT_SB
+	| T_IF T_LEFT_SB condition_expression T_RIGHT_SB T_LEFT_MB expression T_RIGHT_MB
 ;
 
-exp: declaration_expression
-	| if_expression
+condition_expression: T_INT T_MORE_THAN T_INT
+	| T_INT T_MORE_THAN T_VARIABLE_INDEX
+	| T_VARIABLE_INDEX T_MORE_THAN T_INT
+	| T_VARIABLE_INDEX T_MORE_THAN T_VARIABLE_INDEX
+
+	| T_INT T_LESS_THAN T_INT
+	| T_INT T_LESS_THAN T_VARIABLE_INDEX
+	| T_VARIABLE_INDEX T_LESS_THAN T_INT
+	| T_VARIABLE_INDEX T_LESS_THAN T_VARIABLE_INDEX
 ;
 
 declaration_expression: T_VAR T_VARIABLE_INDEX T_EQUAL T_INT 	{ printf("found variable declaration.\n"); }

@@ -1,4 +1,15 @@
-html:
-    head:
 
-    body:
+
+
+head:
+    title: Hello World!
+    description:
+        This is default hello world page.
+
+body:
+    div class =mainContainer:
+        p:
+            This is my first page!
+        input type=text, class=text-input, placeholder=Type here!:
+        button id=button1, value=3:
+            Press me!

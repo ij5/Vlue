@@ -39,18 +39,10 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     T_VAR = 258,
-     T_EQUAL = 259,
-     T_IF = 260,
-     T_LEFT_SB = 261,
-     T_RIGHT_SB = 262,
-     T_LEFT_MB = 263,
-     T_RIGHT_MB = 264,
-     T_MORE_THAN = 265,
-     T_LESS_THAN = 266,
-     EOL = 267,
-     T_INT = 268,
-     T_VARIABLE_INDEX = 269
+     T_EQUAL = 258,
+     T_COLON = 259,
+     T_TAB = 260,
+     T_OTH = 261
    };
 #endif
 
@@ -63,13 +55,12 @@ typedef union YYSTYPE
 /* Line 1676 of yacc.c  */
 #line 12 "ion.y"
 
-	int int_val;
-	char* variable_index;
+
 
 
 
 /* Line 1676 of yacc.c  */
-#line 73 "ion.tab.h"
+#line 64 "ion.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

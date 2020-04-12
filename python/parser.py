@@ -3,9 +3,18 @@ import lexer
 
 tokens = lexer.tokens
 
-def 
+def p_expr(t):
+    'expr : LSB RSB'
+    print(t[1])
 
 def p_error(t):
-    print("Error in input.")
+    if(t):
+        print("Error on token '%s'" % t.value)
+    else:
+        print("Error on EOF")
 
-yacc.yacc()
+
+parser = yacc.yacc()
+
+data = '()'
+result = parser.parse(data)

@@ -1,0 +1,60 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    CONTENTS
+    EQUAL
+    IDENTIFIER
+    LMB
+    RMB
+
+Grammar
+
+Rule 0     S' -> expression
+Rule 1     expression -> LSB RSB
+
+Terminals, with rules where they appear
+
+CONTENTS             : 
+EQUAL                : 
+IDENTIFIER           : 
+LMB                  : 
+LSB                  : 1
+RMB                  : 
+RSB                  : 1
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expression
+    (1) expression -> . LSB RSB
+
+    LSB             shift and go to state 2
+
+    expression                     shift and go to state 1
+
+state 1
+
+    (0) S' -> expression .
+
+
+
+state 2
+
+    (1) expression -> LSB . RSB
+
+    RSB             shift and go to state 3
+
+
+state 3
+
+    (1) expression -> LSB RSB .
+
+    $end            reduce using rule 1 (expression -> LSB RSB .)
+

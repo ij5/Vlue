@@ -1,5 +1,8 @@
 from ply import lex
-from ply import yacc
+
+#############
+#LEXING
+#############
 
 tokens = (
 	'LSB',
@@ -16,9 +19,10 @@ t_RSB = r'\)'
 t_LMB = r'\{'
 t_RMB = r'\}'
 t_EQUAL = r'\='
+t_CONTENTS = r'.'
 
 def t_IDENTIFIER(t):
-	r'\w'
+	r'[a-zA-Z]+'
 	return t
 
 def t_newline(t):
@@ -35,17 +39,24 @@ lexer = lex.lex()
 
 data = '''
 html(){
-	head(){}
+	head%(){}
 	body(a=asd){
-
+		Hello World!
+		div(){
+		
+		}
 	}	
 }
 '''
 
-lexer.input(data)
+# lexer.input(data)
+#
+# while True:
+# 	tok = lexer.token()
+# 	if not tok:
+# 		break
+# 	print(tok)
 
-while True:
-	tok = lexer.token()
-	if not tok:
-		break
-	print(tok)
+
+
+

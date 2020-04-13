@@ -6,31 +6,36 @@ tokens = lexer.tokens
 
 def p_html_inside_identifier(t):
     '''
-    html_inside : LMB IDENTIFIER RMB
+    html_inside : LMB contents_expr RMB
     '''
-    print(t[2])
+    pass
 
-
+def p_contents_expr(t):
+    '''
+    contents_expr : contents_expr
+        | IDENTIFIER
+    '''
+    pass
 
 def p_elements_expr(t):
     '''
     elements_expr : LSB elements RSB
     '''
-    t[0] = t[1]+t[2]+t[3]
+    pass
 
 
 def p_elements_comma(t):
     '''
     elements : elements COMMA elements
     '''
-    t[0] = t[1] + t[2] + t[3]
+    pass
 
 
 def p_elements_equal(t):
     '''
     elements : IDENTIFIER EQUAL IDENTIFIER
     '''
-    t[0] = t[1]+t[2]+t[3]
+    pass
 
 def p_error(t):
     if(t):
@@ -41,5 +46,5 @@ def p_error(t):
 
 parser = yacc.yacc()
 
-data = '{asis3o}'
+data = '{asd..}'
 result = parser.parse(data)

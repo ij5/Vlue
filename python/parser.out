@@ -1,29 +1,35 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    NEWLINE
+
 Grammar
 
 Rule 0     S' -> html_inside
-Rule 1     html_inside -> LMB IDENTIFIER RMB
-Rule 2     html_inside -> LMB CONTENTS RMB
-Rule 3     elements_expr -> LSB elements RSB
-Rule 4     elements -> elements COMMA elements
-Rule 5     elements -> IDENTIFIER EQUAL IDENTIFIER
+Rule 1     html_inside -> LMB contents_expr RMB
+Rule 2     contents_expr -> contents_expr
+Rule 3     contents_expr -> IDENTIFIER
+Rule 4     elements_expr -> LSB elements RSB
+Rule 5     elements -> elements COMMA elements
+Rule 6     elements -> IDENTIFIER EQUAL IDENTIFIER
 
 Terminals, with rules where they appear
 
-COMMA                : 4
-CONTENTS             : 2
-EQUAL                : 5
-IDENTIFIER           : 1 5 5
-LMB                  : 1 2
-LSB                  : 3
-RMB                  : 1 2
-RSB                  : 3
+COMMA                : 5
+EQUAL                : 6
+IDENTIFIER           : 3 6 6
+LMB                  : 1
+LSB                  : 4
+NEWLINE              : 
+RMB                  : 1
+RSB                  : 4
 error                : 
 
 Nonterminals, with rules where they appear
 
-elements             : 3 4 4
+contents_expr        : 1 2
+elements             : 4 5 5
 elements_expr        : 
 html_inside          : 0
 
@@ -32,8 +38,7 @@ Parsing method: LALR
 state 0
 
     (0) S' -> . html_inside
-    (1) html_inside -> . LMB IDENTIFIER RMB
-    (2) html_inside -> . LMB CONTENTS RMB
+    (1) html_inside -> . LMB contents_expr RMB
 
     LMB             shift and go to state 2
 
@@ -47,37 +52,39 @@ state 1
 
 state 2
 
-    (1) html_inside -> LMB . IDENTIFIER RMB
-    (2) html_inside -> LMB . CONTENTS RMB
+    (1) html_inside -> LMB . contents_expr RMB
+    (2) contents_expr -> . contents_expr
+    (3) contents_expr -> . IDENTIFIER
 
-    IDENTIFIER      shift and go to state 3
-    CONTENTS        shift and go to state 4
+    IDENTIFIER      shift and go to state 4
 
+    contents_expr                  shift and go to state 3
 
 state 3
 
-    (1) html_inside -> LMB IDENTIFIER . RMB
+    (1) html_inside -> LMB contents_expr . RMB
+    (2) contents_expr -> contents_expr .
 
+  ! shift/reduce conflict for RMB resolved as shift
     RMB             shift and go to state 5
+
+  ! RMB             [ reduce using rule 2 (contents_expr -> contents_expr .) ]
 
 
 state 4
 
-    (2) html_inside -> LMB CONTENTS . RMB
+    (3) contents_expr -> IDENTIFIER .
 
-    RMB             shift and go to state 6
+    RMB             reduce using rule 3 (contents_expr -> IDENTIFIER .)
 
 
 state 5
 
-    (1) html_inside -> LMB IDENTIFIER RMB .
+    (1) html_inside -> LMB contents_expr RMB .
 
-    $end            reduce using rule 1 (html_inside -> LMB IDENTIFIER RMB .)
+    $end            reduce using rule 1 (html_inside -> LMB contents_expr RMB .)
 
-
-state 6
-
-    (2) html_inside -> LMB CONTENTS RMB .
-
-    $end            reduce using rule 2 (html_inside -> LMB CONTENTS RMB .)
-
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for RMB in state 3 resolved as shift

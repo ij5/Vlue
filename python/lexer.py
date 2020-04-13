@@ -11,8 +11,9 @@ tokens = (
 	'RMB',
 	'IDENTIFIER',
 	'EQUAL',
-	'CONTENTS',
-	'COMMA'
+	'COMMA',
+	# 'SPACE',
+	'NEWLINE'
 )
 
 t_LSB = r'\('
@@ -21,12 +22,14 @@ t_LMB = r'\{'
 t_RMB = r'\}'
 t_EQUAL = r'\='
 t_COMMA = r'\,'
-t_IDENTIFIER = r'[a-zA-Z]+'
-t_CONTENTS = r'[^\{\}]+'
+t_IDENTIFIER = r'[^\{\}\(\)\=\n ]+'
+# t_SPACE = '[ ]+'
+# t_CONTENTS = r'[^\{\}]+'
 
-def t_newline(t):
+def t_NEWLINE(t):
 	r'\n+'
 	t.lexer.lineno += len(t.value)
+	return t
 
 t_ignore = ' \t'
 
@@ -37,15 +40,7 @@ def t_error(t):
 lexer = lex.lex()
 
 data = '''
-html(){
-	head%(){}
-	body(a=asd){
-		Hello World!
-		div(){
-		
-		}
-	}	
-}
+{as d...}
 '''
 
 # lexer.input(data)

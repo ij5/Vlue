@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COMMA CONTENTS EQUAL IDENTIFIER LMB LSB RMB RSB\n    html_inside : LMB IDENTIFIER RMB\n    \n    html_inside : LMB CONTENTS RMB\n    \n    elements_expr : LSB elements RSB\n    \n    elements : elements COMMA elements\n    \n    elements : IDENTIFIER EQUAL IDENTIFIER\n    '
+_lr_signature = 'COMMA EQUAL IDENTIFIER LMB LSB NEWLINE RMB RSB\n    html_inside : LMB contents_expr RMB\n    \n    contents_expr : contents_expr\n        | IDENTIFIER\n    \n    elements_expr : LSB elements RSB\n    \n    elements : elements COMMA elements\n    \n    elements : IDENTIFIER EQUAL IDENTIFIER\n    '
     
-_lr_action_items = {'LMB':([0,],[2,]),'$end':([1,5,6,],[0,-1,-2,]),'IDENTIFIER':([2,],[3,]),'CONTENTS':([2,],[4,]),'RMB':([3,4,],[5,6,]),}
+_lr_action_items = {'LMB':([0,],[2,]),'$end':([1,5,],[0,-1,]),'IDENTIFIER':([2,],[4,]),'RMB':([3,4,],[5,-3,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'html_inside':([0,],[1,]),}
+_lr_goto_items = {'html_inside':([0,],[1,]),'contents_expr':([2,],[3,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,9 +27,10 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> html_inside","S'",1,None,None,None),
-  ('html_inside -> LMB IDENTIFIER RMB','html_inside',3,'p_html_inside_identifier','parser.py',9),
-  ('html_inside -> LMB CONTENTS RMB','html_inside',3,'p_html_inside_contents','parser.py',15),
-  ('elements_expr -> LSB elements RSB','elements_expr',3,'p_elements_expr','parser.py',21),
-  ('elements -> elements COMMA elements','elements',3,'p_elements_comma','parser.py',28),
-  ('elements -> IDENTIFIER EQUAL IDENTIFIER','elements',3,'p_elements_equal','parser.py',35),
+  ('html_inside -> LMB contents_expr RMB','html_inside',3,'p_html_inside_identifier','parser.py',9),
+  ('contents_expr -> contents_expr','contents_expr',1,'p_contents_expr','parser.py',15),
+  ('contents_expr -> IDENTIFIER','contents_expr',1,'p_contents_expr','parser.py',16),
+  ('elements_expr -> LSB elements RSB','elements_expr',3,'p_elements_expr','parser.py',22),
+  ('elements -> elements COMMA elements','elements',3,'p_elements_comma','parser.py',29),
+  ('elements -> IDENTIFIER EQUAL IDENTIFIER','elements',3,'p_elements_equal','parser.py',36),
 ]

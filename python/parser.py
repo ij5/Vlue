@@ -3,11 +3,20 @@ import lexer
 
 tokens = lexer.tokens
 
+
+def p_html_inside_identifier(t):
+    '''
+    html_inside : LMB IDENTIFIER RMB
+    '''
+    print(t[2])
+
+
+
 def p_elements_expr(t):
     '''
     elements_expr : LSB elements RSB
     '''
-    print(t[2])
+    t[0] = t[1]+t[2]+t[3]
 
 
 def p_elements_comma(t):
@@ -32,5 +41,5 @@ def p_error(t):
 
 parser = yacc.yacc()
 
-data = '( class =helloWorld)'
+data = '{asis3o}'
 result = parser.parse(data)

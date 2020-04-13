@@ -21,11 +21,8 @@ t_LMB = r'\{'
 t_RMB = r'\}'
 t_EQUAL = r'\='
 t_COMMA = r'\,'
-t_CONTENTS = r'.'
-
-def t_IDENTIFIER(t):
-	r'[a-zA-Z]+'
-	return t
+t_IDENTIFIER = r'[a-zA-Z]+'
+t_CONTENTS = r'[^\{\}]+'
 
 def t_newline(t):
 	r'\n+'

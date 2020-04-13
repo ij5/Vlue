@@ -1,122 +1,83 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    CONTENTS
-    LMB
-    RMB
-
 Grammar
 
-Rule 0     S' -> elements_expr
-Rule 1     elements_expr -> LSB elements RSB
-Rule 2     elements -> elements COMMA elements
-Rule 3     elements -> IDENTIFIER EQUAL IDENTIFIER
+Rule 0     S' -> html_inside
+Rule 1     html_inside -> LMB IDENTIFIER RMB
+Rule 2     html_inside -> LMB CONTENTS RMB
+Rule 3     elements_expr -> LSB elements RSB
+Rule 4     elements -> elements COMMA elements
+Rule 5     elements -> IDENTIFIER EQUAL IDENTIFIER
 
 Terminals, with rules where they appear
 
-COMMA                : 2
-CONTENTS             : 
-EQUAL                : 3
-IDENTIFIER           : 3 3
-LMB                  : 
-LSB                  : 1
-RMB                  : 
-RSB                  : 1
+COMMA                : 4
+CONTENTS             : 2
+EQUAL                : 5
+IDENTIFIER           : 1 5 5
+LMB                  : 1 2
+LSB                  : 3
+RMB                  : 1 2
+RSB                  : 3
 error                : 
 
 Nonterminals, with rules where they appear
 
-elements             : 1 2 2
-elements_expr        : 0
+elements             : 3 4 4
+elements_expr        : 
+html_inside          : 0
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . elements_expr
-    (1) elements_expr -> . LSB elements RSB
+    (0) S' -> . html_inside
+    (1) html_inside -> . LMB IDENTIFIER RMB
+    (2) html_inside -> . LMB CONTENTS RMB
 
-    LSB             shift and go to state 2
+    LMB             shift and go to state 2
 
-    elements_expr                  shift and go to state 1
+    html_inside                    shift and go to state 1
 
 state 1
 
-    (0) S' -> elements_expr .
+    (0) S' -> html_inside .
 
 
 
 state 2
 
-    (1) elements_expr -> LSB . elements RSB
-    (2) elements -> . elements COMMA elements
-    (3) elements -> . IDENTIFIER EQUAL IDENTIFIER
+    (1) html_inside -> LMB . IDENTIFIER RMB
+    (2) html_inside -> LMB . CONTENTS RMB
 
-    IDENTIFIER      shift and go to state 4
+    IDENTIFIER      shift and go to state 3
+    CONTENTS        shift and go to state 4
 
-    elements                       shift and go to state 3
 
 state 3
 
-    (1) elements_expr -> LSB elements . RSB
-    (2) elements -> elements . COMMA elements
+    (1) html_inside -> LMB IDENTIFIER . RMB
 
-    RSB             shift and go to state 5
-    COMMA           shift and go to state 6
+    RMB             shift and go to state 5
 
 
 state 4
 
-    (3) elements -> IDENTIFIER . EQUAL IDENTIFIER
+    (2) html_inside -> LMB CONTENTS . RMB
 
-    EQUAL           shift and go to state 7
+    RMB             shift and go to state 6
 
 
 state 5
 
-    (1) elements_expr -> LSB elements RSB .
+    (1) html_inside -> LMB IDENTIFIER RMB .
 
-    $end            reduce using rule 1 (elements_expr -> LSB elements RSB .)
+    $end            reduce using rule 1 (html_inside -> LMB IDENTIFIER RMB .)
 
 
 state 6
 
-    (2) elements -> elements COMMA . elements
-    (2) elements -> . elements COMMA elements
-    (3) elements -> . IDENTIFIER EQUAL IDENTIFIER
+    (2) html_inside -> LMB CONTENTS RMB .
 
-    IDENTIFIER      shift and go to state 4
+    $end            reduce using rule 2 (html_inside -> LMB CONTENTS RMB .)
 
-    elements                       shift and go to state 8
-
-state 7
-
-    (3) elements -> IDENTIFIER EQUAL . IDENTIFIER
-
-    IDENTIFIER      shift and go to state 9
-
-
-state 8
-
-    (2) elements -> elements COMMA elements .
-    (2) elements -> elements . COMMA elements
-
-  ! shift/reduce conflict for COMMA resolved as shift
-    RSB             reduce using rule 2 (elements -> elements COMMA elements .)
-    COMMA           shift and go to state 6
-
-  ! COMMA           [ reduce using rule 2 (elements -> elements COMMA elements .) ]
-
-
-state 9
-
-    (3) elements -> IDENTIFIER EQUAL IDENTIFIER .
-
-    RSB             reduce using rule 3 (elements -> IDENTIFIER EQUAL IDENTIFIER .)
-    COMMA           reduce using rule 3 (elements -> IDENTIFIER EQUAL IDENTIFIER .)
-
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for COMMA in state 8 resolved as shift

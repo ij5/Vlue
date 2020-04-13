@@ -11,7 +11,8 @@ tokens = (
 	'RMB',
 	'IDENTIFIER',
 	'EQUAL',
-	'CONTENTS'
+	'CONTENTS',
+	'COMMA'
 )
 
 t_LSB = r'\('
@@ -19,6 +20,7 @@ t_RSB = r'\)'
 t_LMB = r'\{'
 t_RMB = r'\}'
 t_EQUAL = r'\='
+t_COMMA = r'\,'
 t_CONTENTS = r'.'
 
 def t_IDENTIFIER(t):

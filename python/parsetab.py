@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'CONTENTS EQUAL IDENTIFIER LMB LSB RMB RSBexpr : LSB RSB'
+_lr_signature = 'COMMA CONTENTS EQUAL IDENTIFIER LMB LSB RMB RSB\n    elements_expr : LSB elements RSB\n    \n    elements : elements COMMA elements\n    \n    elements : IDENTIFIER EQUAL IDENTIFIER\n    '
     
-_lr_action_items = {'LSB':([0,],[2,]),'$end':([1,3,],[0,-1,]),'RSB':([2,],[3,]),}
+_lr_action_items = {'LSB':([0,],[2,]),'$end':([1,5,],[0,-1,]),'IDENTIFIER':([2,6,7,],[4,4,9,]),'RSB':([3,8,9,],[5,-2,-3,]),'COMMA':([3,8,9,],[6,6,-3,]),'EQUAL':([4,],[7,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expr':([0,],[1,]),}
+_lr_goto_items = {'elements_expr':([0,],[1,]),'elements':([2,6,],[3,8,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,6 +26,8 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> expr","S'",1,None,None,None),
-  ('expr -> LSB RSB','expr',2,'p_expr','parser.py',7),
+  ("S' -> elements_expr","S'",1,None,None,None),
+  ('elements_expr -> LSB elements RSB','elements_expr',3,'p_elements_expr','parser.py',8),
+  ('elements -> elements COMMA elements','elements',3,'p_elements_2','parser.py',15),
+  ('elements -> IDENTIFIER EQUAL IDENTIFIER','elements',3,'p_elements','parser.py',22),
 ]

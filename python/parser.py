@@ -37,7 +37,7 @@ def p_attr1(t):
 
 def p_attr2(t):
     '''
-    attr : IDENTIFIER
+    attr : IDENTIFIER 
         | OTHER
     '''
     t[0] = t[1]

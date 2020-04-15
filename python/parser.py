@@ -7,30 +7,45 @@ def p_elements_outside(t):
     '''
     elements_outside : LSB elements_inside_comma RSB
     '''
-    pass
+    print(t[2])
 
-def p_elements_inside_comma(t):
+def p_elements_inside_comma1(t):
     '''
     elements_inside_comma : elements_inside_equal COMMA elements_inside_equal
-        | elements_inside_equal
-
     '''
-    pass
+    t[0] = t[1]+t[2]+t[3]
+
+def p_elements_inside_comma2(t):
+    '''
+    elements_inside_comma : elements_inside_equal
+        | empty
+    '''
+    t[0] = t[1]
 
 def p_elements_inside_equal(t):
     '''
     elements_inside_equal : attr EQUAL attr
     '''
+    t[0] = t[1]+t[2]+t[3]
 
-def p_attr(t):
+def p_attr1(t):
     '''
     attr : attr IDENTIFIER
         | attr OTHER
-        | IDENTIFIER
-        |  OTHER
     '''
-    pass
+    t[0] = t[1] + t[2]
 
+def p_attr2(t):
+    '''
+    attr : IDENTIFIER
+        | OTHER
+    '''
+    t[0] = t[1]
+
+
+def p_empty(t):
+    'empty : '
+    pass
 
 def p_error(t):
     if(t):
@@ -42,6 +57,6 @@ def p_error(t):
 parser = yacc.yacc()
 
 data = '''
-(class = https://google.com)
+(href =https://www.google.com/)
 '''
 result = parser.parse(data)

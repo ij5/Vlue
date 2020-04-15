@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'A BODY COMMA DIV EQUAL HEAD HTML IDENTIFIER LMB LSB OTHER RMB RSB\n    elements_outside : LSB elements_inside_comma RSB\n    \n    elements_inside_comma : elements_inside_equal COMMA elements_inside_equal\n        | elements_inside_equal\n\n    \n    elements_inside_equal : attr EQUAL attr\n    \n    attr : attr IDENTIFIER\n        | attr OTHER\n        | IDENTIFIER\n        |  OTHER\n    '
+_lr_signature = 'A BODY COMMA DIV EQUAL HEAD HTML IDENTIFIER LMB LSB OTHER RMB RSB\n    elements_outside : LSB elements_inside_comma RSB\n    \n    elements_inside_comma : elements_inside_equal COMMA elements_inside_equal\n    \n    elements_inside_comma : elements_inside_equal\n        | empty\n    \n    elements_inside_equal : attr EQUAL attr\n    \n    attr : attr IDENTIFIER\n        | attr OTHER\n    \n    attr : IDENTIFIER\n        | OTHER\n    empty : '
     
-_lr_action_items = {'LSB':([0,],[2,]),'$end':([1,8,],[0,-1,]),'IDENTIFIER':([2,5,6,7,9,10,11,12,14,],[6,11,-7,-8,6,6,-5,-6,11,]),'OTHER':([2,5,6,7,9,10,11,12,14,],[7,12,-7,-8,7,7,-5,-6,12,]),'RSB':([3,4,6,7,11,12,13,14,],[8,-3,-7,-8,-5,-6,-2,-4,]),'COMMA':([4,6,7,11,12,14,],[9,-7,-8,-5,-6,-4,]),'EQUAL':([5,6,7,11,12,],[10,-7,-8,-5,-6,]),}
+_lr_action_items = {'LSB':([0,],[2,]),'$end':([1,9,],[0,-1,]),'RSB':([2,3,4,5,7,8,12,13,14,15,],[-10,9,-3,-4,-8,-9,-6,-7,-2,-5,]),'IDENTIFIER':([2,6,7,8,10,11,12,13,15,],[7,12,-8,-9,7,7,-6,-7,12,]),'OTHER':([2,6,7,8,10,11,12,13,15,],[8,13,-8,-9,8,8,-6,-7,13,]),'COMMA':([4,7,8,12,13,15,],[10,-8,-9,-6,-7,-5,]),'EQUAL':([6,7,8,12,13,],[11,-8,-9,-6,-7,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'elements_outside':([0,],[1,]),'elements_inside_comma':([2,],[3,]),'elements_inside_equal':([2,9,],[4,13,]),'attr':([2,9,10,],[5,5,14,]),}
+_lr_goto_items = {'elements_outside':([0,],[1,]),'elements_inside_comma':([2,],[3,]),'elements_inside_equal':([2,10,],[4,14,]),'empty':([2,],[5,]),'attr':([2,10,11,],[6,6,15,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -28,11 +28,13 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> elements_outside","S'",1,None,None,None),
   ('elements_outside -> LSB elements_inside_comma RSB','elements_outside',3,'p_elements_outside','parser.py',8),
-  ('elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal','elements_inside_comma',3,'p_elements_inside_comma','parser.py',14),
-  ('elements_inside_comma -> elements_inside_equal','elements_inside_comma',1,'p_elements_inside_comma','parser.py',15),
-  ('elements_inside_equal -> attr EQUAL attr','elements_inside_equal',3,'p_elements_inside_equal','parser.py',22),
-  ('attr -> attr IDENTIFIER','attr',2,'p_attr','parser.py',27),
-  ('attr -> attr OTHER','attr',2,'p_attr','parser.py',28),
-  ('attr -> IDENTIFIER','attr',1,'p_attr','parser.py',29),
-  ('attr -> OTHER','attr',1,'p_attr','parser.py',30),
+  ('elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal','elements_inside_comma',3,'p_elements_inside_comma1','parser.py',14),
+  ('elements_inside_comma -> elements_inside_equal','elements_inside_comma',1,'p_elements_inside_comma2','parser.py',20),
+  ('elements_inside_comma -> empty','elements_inside_comma',1,'p_elements_inside_comma2','parser.py',21),
+  ('elements_inside_equal -> attr EQUAL attr','elements_inside_equal',3,'p_elements_inside_equal','parser.py',27),
+  ('attr -> attr IDENTIFIER','attr',2,'p_attr1','parser.py',33),
+  ('attr -> attr OTHER','attr',2,'p_attr1','parser.py',34),
+  ('attr -> IDENTIFIER','attr',1,'p_attr2','parser.py',40),
+  ('attr -> OTHER','attr',1,'p_attr2','parser.py',41),
+  ('empty -> <empty>','empty',0,'p_empty','parser.py',47),
 ]

@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COMMA CONTENTS EQUAL HTML IDENTIFIER LMB LSB RMB RSB\n    identifier : IDENTIFIER\n        | identifier IDENTIFIER\n    '
+_lr_signature = 'A BODY COMMA DIV EQUAL HEAD HTML IDENTIFIER LMB LSB OTHER RMB RSB\n    elements_outside : LSB elements_inside_comma RSB\n    \n    elements_inside_comma : elements_inside_equal COMMA elements_inside_equal\n        | elements_inside_equal\n\n    \n    elements_inside_equal : attr EQUAL attr\n    \n    attr : attr IDENTIFIER\n        | attr OTHER\n        | IDENTIFIER\n        |  OTHER\n    '
     
-_lr_action_items = {'IDENTIFIER':([0,1,2,3,],[2,3,-1,-2,]),'$end':([1,2,3,],[0,-1,-2,]),}
+_lr_action_items = {'LSB':([0,],[2,]),'$end':([1,8,],[0,-1,]),'IDENTIFIER':([2,5,6,7,9,10,11,12,14,],[6,11,-7,-8,6,6,-5,-6,11,]),'OTHER':([2,5,6,7,9,10,11,12,14,],[7,12,-7,-8,7,7,-5,-6,12,]),'RSB':([3,4,6,7,11,12,13,14,],[8,-3,-7,-8,-5,-6,-2,-4,]),'COMMA':([4,6,7,11,12,14,],[9,-7,-8,-5,-6,-4,]),'EQUAL':([5,6,7,11,12,],[10,-7,-8,-5,-6,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'identifier':([0,],[1,]),}
+_lr_goto_items = {'elements_outside':([0,],[1,]),'elements_inside_comma':([2,],[3,]),'elements_inside_equal':([2,9,],[4,13,]),'attr':([2,9,10,],[5,5,14,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,7 +26,13 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> identifier","S'",1,None,None,None),
-  ('identifier -> IDENTIFIER','identifier',1,'p_identifier','parser.py',10),
-  ('identifier -> identifier IDENTIFIER','identifier',2,'p_identifier','parser.py',11),
+  ("S' -> elements_outside","S'",1,None,None,None),
+  ('elements_outside -> LSB elements_inside_comma RSB','elements_outside',3,'p_elements_outside','parser.py',8),
+  ('elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal','elements_inside_comma',3,'p_elements_inside_comma','parser.py',14),
+  ('elements_inside_comma -> elements_inside_equal','elements_inside_comma',1,'p_elements_inside_comma','parser.py',15),
+  ('elements_inside_equal -> attr EQUAL attr','elements_inside_equal',3,'p_elements_inside_equal','parser.py',22),
+  ('attr -> attr IDENTIFIER','attr',2,'p_attr','parser.py',27),
+  ('attr -> attr OTHER','attr',2,'p_attr','parser.py',28),
+  ('attr -> IDENTIFIER','attr',1,'p_attr','parser.py',29),
+  ('attr -> OTHER','attr',1,'p_attr','parser.py',30),
 ]

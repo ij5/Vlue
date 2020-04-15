@@ -3,28 +3,34 @@ import lexer
 
 tokens = lexer.tokens
 
-
-
-def p_identifier(t):
+def p_elements_outside(t):
     '''
-    identifier : IDENTIFIER
-        | identifier IDENTIFIER
+    elements_outside : LSB elements_inside_comma RSB
     '''
     pass
 
-def p_elements(t):
-    '''elements : LSB p_elements_inside RSB
-        | NONE'''
-    print(t[0])
+def p_elements_inside_comma(t):
+    '''
+    elements_inside_comma : elements_inside_equal COMMA elements_inside_equal
+        | elements_inside_equal
 
-def p_elements_inside(t):
-    '''elements_inside : elements_attributes
-        | elements_inside COMMA elements_inside'''
+    '''
     pass
 
-def p_elements_attributes(t):
-    '''elements_attributes : IDENTIFIER EQUAL IDENTIFIER'''
+def p_elements_inside_equal(t):
+    '''
+    elements_inside_equal : attr EQUAL attr
+    '''
+
+def p_attr(t):
+    '''
+    attr : attr IDENTIFIER
+        | attr OTHER
+        | IDENTIFIER
+        |  OTHER
+    '''
     pass
+
 
 def p_error(t):
     if(t):
@@ -36,16 +42,6 @@ def p_error(t):
 parser = yacc.yacc()
 
 data = '''
-html(){
-    head(){
-    
-    }
-    body(){
-        div(class=mainContent, id=mainContent){
-            button(class=mainButton){Press me!}
-            a(href=https://google.com,class=mainlink){Click me!}
-        }
-    }
-}
+(class = https://google.com)
 '''
 result = parser.parse(data)

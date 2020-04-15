@@ -3,3 +3,6 @@ code/.vscode/sftp.json
 code4/.idea/workspace.xml
 python/__pycache__/lexer.cpython-37.pyc
 python/__pycache__/parsetab.cpython-37.pyc
+*.pyc
+*.pyc
+*.pyc

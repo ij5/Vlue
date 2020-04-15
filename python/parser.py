@@ -4,37 +4,26 @@ import lexer
 tokens = lexer.tokens
 
 
-def p_html_inside_identifier(t):
+
+def p_identifier(t):
     '''
-    html_inside : LMB contents_expr RMB
+    identifier : IDENTIFIER
+        | identifier IDENTIFIER
     '''
     pass
 
-def p_contents_expr(t):
-    '''
-    contents_expr : contents_expr
-        | IDENTIFIER
-    '''
+def p_elements(t):
+    '''elements : LSB p_elements_inside RSB
+        | NONE'''
+    print(t[0])
+
+def p_elements_inside(t):
+    '''elements_inside : elements_attributes
+        | elements_inside COMMA elements_inside'''
     pass
 
-def p_elements_expr(t):
-    '''
-    elements_expr : LSB elements RSB
-    '''
-    pass
-
-
-def p_elements_comma(t):
-    '''
-    elements : elements COMMA elements
-    '''
-    pass
-
-
-def p_elements_equal(t):
-    '''
-    elements : IDENTIFIER EQUAL IDENTIFIER
-    '''
+def p_elements_attributes(t):
+    '''elements_attributes : IDENTIFIER EQUAL IDENTIFIER'''
     pass
 
 def p_error(t):
@@ -46,5 +35,17 @@ def p_error(t):
 
 parser = yacc.yacc()
 
-data = '{asd..}'
+data = '''
+html(){
+    head(){
+    
+    }
+    body(){
+        div(class=mainContent, id=mainContent){
+            button(class=mainButton){Press me!}
+            a(href=https://google.com,class=mainlink){Click me!}
+        }
+    }
+}
+'''
 result = parser.parse(data)

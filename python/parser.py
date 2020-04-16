@@ -4,7 +4,9 @@ import lexer
 tokens = lexer.tokens
 
 def p_head(t):
-    'head_expr : HTML elements_outside'
+    '''
+    head_expr : HTML elements_outside
+    '''
     print(t[1]+', '+t[2])
 
 def p_elements_outside(t):
@@ -69,6 +71,8 @@ def p_error(t):
 
 
 parser = yacc.yacc()
+
+
 
 data = '''
 html(href = https://google.com)

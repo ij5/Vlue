@@ -69,16 +69,18 @@ def t_error(t):
 lexer = lex.lex()
 
 data = '''
-(class = https://google.com)
+html(href =https://www.google.com/){
+html(){}
+}
 '''
 
-# lexer.input(data)
-#
-# while True:
-# 	tok = lexer.token()
-# 	if not tok:
-# 		break
-# 	print(tok)
+lexer.input(data)
+
+while True:
+	tok = lexer.token()
+	if not tok:
+		break
+	print(tok)
 
 
 

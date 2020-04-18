@@ -10,6 +10,13 @@ tokens = (
 	'BODY',
 	'DIV',
 	'A',
+	'ABBR',
+	'ADDRESS',
+	'AREA',
+	'ARTICLE',
+	'ASIDE',
+	'AUDIO',
+	'B',
 
 	'LSB',	#(
 	'RSB',	#)
@@ -52,6 +59,38 @@ def t_DIV(t):
 def t_A(t):
 	r'a'
 	return t
+
+def t_ABBR(t):
+	r'abbr'
+	return t
+
+def t_ADDRESS(t):
+	r'address'
+	return t
+
+def t_AREA(t):
+	r'area'
+	return t
+
+def t_ARTICLE(t):
+	r'article'
+	return t
+
+def t_ASIDE(t):
+	r'aside'
+	return t
+
+def t_AUDIO(t):
+	r'audio'
+	return t
+
+def t_B(t):
+	r'b'
+	return t
+
+
+
+
 
 
 def t_NEWLINE(t):

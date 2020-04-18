@@ -15,14 +15,14 @@ Rule 3     inside -> LMB root RMB
 Rule 4     inside_content -> attr
 Rule 5     inside_content -> empty
 Rule 6     head_expr -> HTML elements_outside
-Rule 7     head_expr -> A
-Rule 8     head_expr -> ABBR
-Rule 9     head_expr -> ADDRESS
-Rule 10    head_expr -> AREA
-Rule 11    head_expr -> ARTICLE
-Rule 12    head_expr -> ASIDE
-Rule 13    head_expr -> AUDIO
-Rule 14    head_expr -> B
+Rule 7     head_expr -> A elements_outside
+Rule 8     head_expr -> ABBR elements_outside
+Rule 9     head_expr -> ADDRESS elements_outside
+Rule 10    head_expr -> AREA elements_outside
+Rule 11    head_expr -> ARTICLE elements_outside
+Rule 12    head_expr -> ASIDE elements_outside
+Rule 13    head_expr -> AUDIO elements_outside
+Rule 14    head_expr -> B elements_outside
 Rule 15    elements_outside -> LSB elements_inside_comma RSB
 Rule 16    elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal
 Rule 17    elements_inside_comma -> elements_inside_equal
@@ -35,18 +35,26 @@ Rule 23    attr -> attr OTHER
 Rule 24    attr -> IDENTIFIER
 Rule 25    attr -> OTHER
 Rule 26    attr -> HTML
-Rule 27    empty -> <empty>
+Rule 27    attr -> A
+Rule 28    attr -> ABBR
+Rule 29    attr -> ADDRESS
+Rule 30    attr -> AREA
+Rule 31    attr -> ARTICLE
+Rule 32    attr -> ASIDE
+Rule 33    attr -> AUDIO
+Rule 34    attr -> B
+Rule 35    empty -> <empty>
 
 Terminals, with rules where they appear
 
-A                    : 7
-ABBR                 : 8
-ADDRESS              : 9
-AREA                 : 10
-ARTICLE              : 11
-ASIDE                : 12
-AUDIO                : 13
-B                    : 14
+A                    : 7 27
+ABBR                 : 8 28
+ADDRESS              : 9 29
+AREA                 : 10 30
+ARTICLE              : 11 31
+ASIDE                : 12 32
+AUDIO                : 13 33
+B                    : 14 34
 BODY                 : 
 COMMA                : 16
 DIV                  : 
@@ -67,7 +75,7 @@ attr                 : 4 20 20 21 22 23
 attr_root            : 19 19
 elements_inside_comma : 15
 elements_inside_equal : 16 16 17
-elements_outside     : 6
+elements_outside     : 6 7 8 9 10 11 12 13 14
 empty                : 5 18
 head_expr            : 1
 inside               : 1
@@ -81,14 +89,14 @@ state 0
     (0) S' -> . root
     (1) root -> . head_expr inside
     (6) head_expr -> . HTML elements_outside
-    (7) head_expr -> . A
-    (8) head_expr -> . ABBR
-    (9) head_expr -> . ADDRESS
-    (10) head_expr -> . AREA
-    (11) head_expr -> . ARTICLE
-    (12) head_expr -> . ASIDE
-    (13) head_expr -> . AUDIO
-    (14) head_expr -> . B
+    (7) head_expr -> . A elements_outside
+    (8) head_expr -> . ABBR elements_outside
+    (9) head_expr -> . ADDRESS elements_outside
+    (10) head_expr -> . AREA elements_outside
+    (11) head_expr -> . ARTICLE elements_outside
+    (12) head_expr -> . ASIDE elements_outside
+    (13) head_expr -> . AUDIO elements_outside
+    (14) head_expr -> . B elements_outside
 
     HTML            shift and go to state 3
     A               shift and go to state 4
@@ -130,59 +138,75 @@ state 3
 
 state 4
 
-    (7) head_expr -> A .
+    (7) head_expr -> A . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
 
-    LMB             reduce using rule 7 (head_expr -> A .)
+    LSB             shift and go to state 15
 
+    elements_outside               shift and go to state 16
 
 state 5
 
-    (8) head_expr -> ABBR .
+    (8) head_expr -> ABBR . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
 
-    LMB             reduce using rule 8 (head_expr -> ABBR .)
+    LSB             shift and go to state 15
 
+    elements_outside               shift and go to state 17
 
 state 6
 
-    (9) head_expr -> ADDRESS .
+    (9) head_expr -> ADDRESS . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
 
-    LMB             reduce using rule 9 (head_expr -> ADDRESS .)
+    LSB             shift and go to state 15
 
+    elements_outside               shift and go to state 18
 
 state 7
 
-    (10) head_expr -> AREA .
+    (10) head_expr -> AREA . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
 
-    LMB             reduce using rule 10 (head_expr -> AREA .)
+    LSB             shift and go to state 15
 
+    elements_outside               shift and go to state 19
 
 state 8
 
-    (11) head_expr -> ARTICLE .
+    (11) head_expr -> ARTICLE . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
 
-    LMB             reduce using rule 11 (head_expr -> ARTICLE .)
+    LSB             shift and go to state 15
 
+    elements_outside               shift and go to state 20
 
 state 9
 
-    (12) head_expr -> ASIDE .
+    (12) head_expr -> ASIDE . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
 
-    LMB             reduce using rule 12 (head_expr -> ASIDE .)
+    LSB             shift and go to state 15
 
+    elements_outside               shift and go to state 21
 
 state 10
 
-    (13) head_expr -> AUDIO .
+    (13) head_expr -> AUDIO . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
 
-    LMB             reduce using rule 13 (head_expr -> AUDIO .)
+    LSB             shift and go to state 15
 
+    elements_outside               shift and go to state 22
 
 state 11
 
-    (14) head_expr -> B .
+    (14) head_expr -> B . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
 
-    LMB             reduce using rule 14 (head_expr -> B .)
+    LSB             shift and go to state 15
 
+    elements_outside               shift and go to state 23
 
 state 12
 
@@ -204,34 +228,42 @@ state 13
     (24) attr -> . IDENTIFIER
     (25) attr -> . OTHER
     (26) attr -> . HTML
-    (27) empty -> .
+    (27) attr -> . A
+    (28) attr -> . ABBR
+    (29) attr -> . ADDRESS
+    (30) attr -> . AREA
+    (31) attr -> . ARTICLE
+    (32) attr -> . ASIDE
+    (33) attr -> . AUDIO
+    (34) attr -> . B
+    (35) empty -> .
     (6) head_expr -> . HTML elements_outside
-    (7) head_expr -> . A
-    (8) head_expr -> . ABBR
-    (9) head_expr -> . ADDRESS
-    (10) head_expr -> . AREA
-    (11) head_expr -> . ARTICLE
-    (12) head_expr -> . ASIDE
-    (13) head_expr -> . AUDIO
-    (14) head_expr -> . B
+    (7) head_expr -> . A elements_outside
+    (8) head_expr -> . ABBR elements_outside
+    (9) head_expr -> . ADDRESS elements_outside
+    (10) head_expr -> . AREA elements_outside
+    (11) head_expr -> . ARTICLE elements_outside
+    (12) head_expr -> . ASIDE elements_outside
+    (13) head_expr -> . AUDIO elements_outside
+    (14) head_expr -> . B elements_outside
 
-    IDENTIFIER      shift and go to state 20
-    OTHER           shift and go to state 21
-    HTML            shift and go to state 22
-    RMB             reduce using rule 27 (empty -> .)
-    A               shift and go to state 4
-    ABBR            shift and go to state 5
-    ADDRESS         shift and go to state 6
-    AREA            shift and go to state 7
-    ARTICLE         shift and go to state 8
-    ASIDE           shift and go to state 9
-    AUDIO           shift and go to state 10
-    B               shift and go to state 11
+    IDENTIFIER      shift and go to state 28
+    OTHER           shift and go to state 29
+    HTML            shift and go to state 30
+    A               shift and go to state 31
+    ABBR            shift and go to state 32
+    ADDRESS         shift and go to state 33
+    AREA            shift and go to state 34
+    ARTICLE         shift and go to state 35
+    ASIDE           shift and go to state 36
+    AUDIO           shift and go to state 37
+    B               shift and go to state 38
+    RMB             reduce using rule 35 (empty -> .)
 
-    inside_content                 shift and go to state 16
-    root                           shift and go to state 17
-    attr                           shift and go to state 18
-    empty                          shift and go to state 19
+    inside_content                 shift and go to state 24
+    root                           shift and go to state 25
+    attr                           shift and go to state 26
+    empty                          shift and go to state 27
     head_expr                      shift and go to state 2
 
 state 14
@@ -248,7 +280,7 @@ state 15
     (17) elements_inside_comma -> . elements_inside_equal
     (18) elements_inside_comma -> . empty
     (19) elements_inside_equal -> . attr_root EQUAL attr_root
-    (27) empty -> .
+    (35) empty -> .
     (20) attr_root -> . attr attr
     (21) attr_root -> . attr
     (22) attr -> . attr IDENTIFIER
@@ -256,51 +288,123 @@ state 15
     (24) attr -> . IDENTIFIER
     (25) attr -> . OTHER
     (26) attr -> . HTML
+    (27) attr -> . A
+    (28) attr -> . ABBR
+    (29) attr -> . ADDRESS
+    (30) attr -> . AREA
+    (31) attr -> . ARTICLE
+    (32) attr -> . ASIDE
+    (33) attr -> . AUDIO
+    (34) attr -> . B
 
-    RSB             reduce using rule 27 (empty -> .)
-    IDENTIFIER      shift and go to state 20
-    OTHER           shift and go to state 21
-    HTML            shift and go to state 28
+    RSB             reduce using rule 35 (empty -> .)
+    IDENTIFIER      shift and go to state 28
+    OTHER           shift and go to state 29
+    HTML            shift and go to state 44
+    A               shift and go to state 45
+    ABBR            shift and go to state 46
+    ADDRESS         shift and go to state 47
+    AREA            shift and go to state 48
+    ARTICLE         shift and go to state 49
+    ASIDE           shift and go to state 50
+    AUDIO           shift and go to state 51
+    B               shift and go to state 52
 
-    elements_inside_comma          shift and go to state 23
-    elements_inside_equal          shift and go to state 24
-    empty                          shift and go to state 25
-    attr_root                      shift and go to state 26
-    attr                           shift and go to state 27
+    elements_inside_comma          shift and go to state 39
+    elements_inside_equal          shift and go to state 40
+    empty                          shift and go to state 41
+    attr_root                      shift and go to state 42
+    attr                           shift and go to state 43
 
 state 16
 
-    (2) inside -> LMB inside_content . RMB
+    (7) head_expr -> A elements_outside .
 
-    RMB             shift and go to state 29
+    LMB             reduce using rule 7 (head_expr -> A elements_outside .)
 
 
 state 17
 
-    (3) inside -> LMB root . RMB
+    (8) head_expr -> ABBR elements_outside .
 
-    RMB             shift and go to state 30
+    LMB             reduce using rule 8 (head_expr -> ABBR elements_outside .)
 
 
 state 18
+
+    (9) head_expr -> ADDRESS elements_outside .
+
+    LMB             reduce using rule 9 (head_expr -> ADDRESS elements_outside .)
+
+
+state 19
+
+    (10) head_expr -> AREA elements_outside .
+
+    LMB             reduce using rule 10 (head_expr -> AREA elements_outside .)
+
+
+state 20
+
+    (11) head_expr -> ARTICLE elements_outside .
+
+    LMB             reduce using rule 11 (head_expr -> ARTICLE elements_outside .)
+
+
+state 21
+
+    (12) head_expr -> ASIDE elements_outside .
+
+    LMB             reduce using rule 12 (head_expr -> ASIDE elements_outside .)
+
+
+state 22
+
+    (13) head_expr -> AUDIO elements_outside .
+
+    LMB             reduce using rule 13 (head_expr -> AUDIO elements_outside .)
+
+
+state 23
+
+    (14) head_expr -> B elements_outside .
+
+    LMB             reduce using rule 14 (head_expr -> B elements_outside .)
+
+
+state 24
+
+    (2) inside -> LMB inside_content . RMB
+
+    RMB             shift and go to state 53
+
+
+state 25
+
+    (3) inside -> LMB root . RMB
+
+    RMB             shift and go to state 54
+
+
+state 26
 
     (4) inside_content -> attr .
     (22) attr -> attr . IDENTIFIER
     (23) attr -> attr . OTHER
 
     RMB             reduce using rule 4 (inside_content -> attr .)
-    IDENTIFIER      shift and go to state 31
-    OTHER           shift and go to state 32
+    IDENTIFIER      shift and go to state 55
+    OTHER           shift and go to state 56
 
 
-state 19
+state 27
 
     (5) inside_content -> empty .
 
     RMB             reduce using rule 5 (inside_content -> empty .)
 
 
-state 20
+state 28
 
     (24) attr -> IDENTIFIER .
 
@@ -308,12 +412,20 @@ state 20
     OTHER           reduce using rule 24 (attr -> IDENTIFIER .)
     RMB             reduce using rule 24 (attr -> IDENTIFIER .)
     HTML            reduce using rule 24 (attr -> IDENTIFIER .)
+    A               reduce using rule 24 (attr -> IDENTIFIER .)
+    ABBR            reduce using rule 24 (attr -> IDENTIFIER .)
+    ADDRESS         reduce using rule 24 (attr -> IDENTIFIER .)
+    AREA            reduce using rule 24 (attr -> IDENTIFIER .)
+    ARTICLE         reduce using rule 24 (attr -> IDENTIFIER .)
+    ASIDE           reduce using rule 24 (attr -> IDENTIFIER .)
+    AUDIO           reduce using rule 24 (attr -> IDENTIFIER .)
+    B               reduce using rule 24 (attr -> IDENTIFIER .)
     EQUAL           reduce using rule 24 (attr -> IDENTIFIER .)
     COMMA           reduce using rule 24 (attr -> IDENTIFIER .)
     RSB             reduce using rule 24 (attr -> IDENTIFIER .)
 
 
-state 21
+state 29
 
     (25) attr -> OTHER .
 
@@ -321,12 +433,20 @@ state 21
     OTHER           reduce using rule 25 (attr -> OTHER .)
     RMB             reduce using rule 25 (attr -> OTHER .)
     HTML            reduce using rule 25 (attr -> OTHER .)
+    A               reduce using rule 25 (attr -> OTHER .)
+    ABBR            reduce using rule 25 (attr -> OTHER .)
+    ADDRESS         reduce using rule 25 (attr -> OTHER .)
+    AREA            reduce using rule 25 (attr -> OTHER .)
+    ARTICLE         reduce using rule 25 (attr -> OTHER .)
+    ASIDE           reduce using rule 25 (attr -> OTHER .)
+    AUDIO           reduce using rule 25 (attr -> OTHER .)
+    B               reduce using rule 25 (attr -> OTHER .)
     EQUAL           reduce using rule 25 (attr -> OTHER .)
     COMMA           reduce using rule 25 (attr -> OTHER .)
     RSB             reduce using rule 25 (attr -> OTHER .)
 
 
-state 22
+state 30
 
     (26) attr -> HTML .
     (6) head_expr -> HTML . elements_outside
@@ -339,37 +459,141 @@ state 22
 
     elements_outside               shift and go to state 14
 
-state 23
+state 31
+
+    (27) attr -> A .
+    (7) head_expr -> A . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
+
+    IDENTIFIER      reduce using rule 27 (attr -> A .)
+    OTHER           reduce using rule 27 (attr -> A .)
+    RMB             reduce using rule 27 (attr -> A .)
+    LSB             shift and go to state 15
+
+    elements_outside               shift and go to state 16
+
+state 32
+
+    (28) attr -> ABBR .
+    (8) head_expr -> ABBR . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
+
+    IDENTIFIER      reduce using rule 28 (attr -> ABBR .)
+    OTHER           reduce using rule 28 (attr -> ABBR .)
+    RMB             reduce using rule 28 (attr -> ABBR .)
+    LSB             shift and go to state 15
+
+    elements_outside               shift and go to state 17
+
+state 33
+
+    (29) attr -> ADDRESS .
+    (9) head_expr -> ADDRESS . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
+
+    IDENTIFIER      reduce using rule 29 (attr -> ADDRESS .)
+    OTHER           reduce using rule 29 (attr -> ADDRESS .)
+    RMB             reduce using rule 29 (attr -> ADDRESS .)
+    LSB             shift and go to state 15
+
+    elements_outside               shift and go to state 18
+
+state 34
+
+    (30) attr -> AREA .
+    (10) head_expr -> AREA . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
+
+    IDENTIFIER      reduce using rule 30 (attr -> AREA .)
+    OTHER           reduce using rule 30 (attr -> AREA .)
+    RMB             reduce using rule 30 (attr -> AREA .)
+    LSB             shift and go to state 15
+
+    elements_outside               shift and go to state 19
+
+state 35
+
+    (31) attr -> ARTICLE .
+    (11) head_expr -> ARTICLE . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
+
+    IDENTIFIER      reduce using rule 31 (attr -> ARTICLE .)
+    OTHER           reduce using rule 31 (attr -> ARTICLE .)
+    RMB             reduce using rule 31 (attr -> ARTICLE .)
+    LSB             shift and go to state 15
+
+    elements_outside               shift and go to state 20
+
+state 36
+
+    (32) attr -> ASIDE .
+    (12) head_expr -> ASIDE . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
+
+    IDENTIFIER      reduce using rule 32 (attr -> ASIDE .)
+    OTHER           reduce using rule 32 (attr -> ASIDE .)
+    RMB             reduce using rule 32 (attr -> ASIDE .)
+    LSB             shift and go to state 15
+
+    elements_outside               shift and go to state 21
+
+state 37
+
+    (33) attr -> AUDIO .
+    (13) head_expr -> AUDIO . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
+
+    IDENTIFIER      reduce using rule 33 (attr -> AUDIO .)
+    OTHER           reduce using rule 33 (attr -> AUDIO .)
+    RMB             reduce using rule 33 (attr -> AUDIO .)
+    LSB             shift and go to state 15
+
+    elements_outside               shift and go to state 22
+
+state 38
+
+    (34) attr -> B .
+    (14) head_expr -> B . elements_outside
+    (15) elements_outside -> . LSB elements_inside_comma RSB
+
+    IDENTIFIER      reduce using rule 34 (attr -> B .)
+    OTHER           reduce using rule 34 (attr -> B .)
+    RMB             reduce using rule 34 (attr -> B .)
+    LSB             shift and go to state 15
+
+    elements_outside               shift and go to state 23
+
+state 39
 
     (15) elements_outside -> LSB elements_inside_comma . RSB
 
-    RSB             shift and go to state 33
+    RSB             shift and go to state 57
 
 
-state 24
+state 40
 
     (16) elements_inside_comma -> elements_inside_equal . COMMA elements_inside_equal
     (17) elements_inside_comma -> elements_inside_equal .
 
-    COMMA           shift and go to state 34
+    COMMA           shift and go to state 58
     RSB             reduce using rule 17 (elements_inside_comma -> elements_inside_equal .)
 
 
-state 25
+state 41
 
     (18) elements_inside_comma -> empty .
 
     RSB             reduce using rule 18 (elements_inside_comma -> empty .)
 
 
-state 26
+state 42
 
     (19) elements_inside_equal -> attr_root . EQUAL attr_root
 
-    EQUAL           shift and go to state 35
+    EQUAL           shift and go to state 59
 
 
-state 27
+state 43
 
     (20) attr_root -> attr . attr
     (21) attr_root -> attr .
@@ -380,29 +604,213 @@ state 27
     (24) attr -> . IDENTIFIER
     (25) attr -> . OTHER
     (26) attr -> . HTML
+    (27) attr -> . A
+    (28) attr -> . ABBR
+    (29) attr -> . ADDRESS
+    (30) attr -> . AREA
+    (31) attr -> . ARTICLE
+    (32) attr -> . ASIDE
+    (33) attr -> . AUDIO
+    (34) attr -> . B
 
     EQUAL           reduce using rule 21 (attr_root -> attr .)
     COMMA           reduce using rule 21 (attr_root -> attr .)
     RSB             reduce using rule 21 (attr_root -> attr .)
-    IDENTIFIER      shift and go to state 37
-    OTHER           shift and go to state 38
-    HTML            shift and go to state 28
+    IDENTIFIER      shift and go to state 61
+    OTHER           shift and go to state 62
+    HTML            shift and go to state 44
+    A               shift and go to state 45
+    ABBR            shift and go to state 46
+    ADDRESS         shift and go to state 47
+    AREA            shift and go to state 48
+    ARTICLE         shift and go to state 49
+    ASIDE           shift and go to state 50
+    AUDIO           shift and go to state 51
+    B               shift and go to state 52
 
-    attr                           shift and go to state 36
+    attr                           shift and go to state 60
 
-state 28
+state 44
 
     (26) attr -> HTML .
 
     IDENTIFIER      reduce using rule 26 (attr -> HTML .)
     OTHER           reduce using rule 26 (attr -> HTML .)
     HTML            reduce using rule 26 (attr -> HTML .)
+    A               reduce using rule 26 (attr -> HTML .)
+    ABBR            reduce using rule 26 (attr -> HTML .)
+    ADDRESS         reduce using rule 26 (attr -> HTML .)
+    AREA            reduce using rule 26 (attr -> HTML .)
+    ARTICLE         reduce using rule 26 (attr -> HTML .)
+    ASIDE           reduce using rule 26 (attr -> HTML .)
+    AUDIO           reduce using rule 26 (attr -> HTML .)
+    B               reduce using rule 26 (attr -> HTML .)
     EQUAL           reduce using rule 26 (attr -> HTML .)
     COMMA           reduce using rule 26 (attr -> HTML .)
     RSB             reduce using rule 26 (attr -> HTML .)
 
 
-state 29
+state 45
+
+    (27) attr -> A .
+
+    IDENTIFIER      reduce using rule 27 (attr -> A .)
+    OTHER           reduce using rule 27 (attr -> A .)
+    HTML            reduce using rule 27 (attr -> A .)
+    A               reduce using rule 27 (attr -> A .)
+    ABBR            reduce using rule 27 (attr -> A .)
+    ADDRESS         reduce using rule 27 (attr -> A .)
+    AREA            reduce using rule 27 (attr -> A .)
+    ARTICLE         reduce using rule 27 (attr -> A .)
+    ASIDE           reduce using rule 27 (attr -> A .)
+    AUDIO           reduce using rule 27 (attr -> A .)
+    B               reduce using rule 27 (attr -> A .)
+    EQUAL           reduce using rule 27 (attr -> A .)
+    COMMA           reduce using rule 27 (attr -> A .)
+    RSB             reduce using rule 27 (attr -> A .)
+
+
+state 46
+
+    (28) attr -> ABBR .
+
+    IDENTIFIER      reduce using rule 28 (attr -> ABBR .)
+    OTHER           reduce using rule 28 (attr -> ABBR .)
+    HTML            reduce using rule 28 (attr -> ABBR .)
+    A               reduce using rule 28 (attr -> ABBR .)
+    ABBR            reduce using rule 28 (attr -> ABBR .)
+    ADDRESS         reduce using rule 28 (attr -> ABBR .)
+    AREA            reduce using rule 28 (attr -> ABBR .)
+    ARTICLE         reduce using rule 28 (attr -> ABBR .)
+    ASIDE           reduce using rule 28 (attr -> ABBR .)
+    AUDIO           reduce using rule 28 (attr -> ABBR .)
+    B               reduce using rule 28 (attr -> ABBR .)
+    EQUAL           reduce using rule 28 (attr -> ABBR .)
+    COMMA           reduce using rule 28 (attr -> ABBR .)
+    RSB             reduce using rule 28 (attr -> ABBR .)
+
+
+state 47
+
+    (29) attr -> ADDRESS .
+
+    IDENTIFIER      reduce using rule 29 (attr -> ADDRESS .)
+    OTHER           reduce using rule 29 (attr -> ADDRESS .)
+    HTML            reduce using rule 29 (attr -> ADDRESS .)
+    A               reduce using rule 29 (attr -> ADDRESS .)
+    ABBR            reduce using rule 29 (attr -> ADDRESS .)
+    ADDRESS         reduce using rule 29 (attr -> ADDRESS .)
+    AREA            reduce using rule 29 (attr -> ADDRESS .)
+    ARTICLE         reduce using rule 29 (attr -> ADDRESS .)
+    ASIDE           reduce using rule 29 (attr -> ADDRESS .)
+    AUDIO           reduce using rule 29 (attr -> ADDRESS .)
+    B               reduce using rule 29 (attr -> ADDRESS .)
+    EQUAL           reduce using rule 29 (attr -> ADDRESS .)
+    COMMA           reduce using rule 29 (attr -> ADDRESS .)
+    RSB             reduce using rule 29 (attr -> ADDRESS .)
+
+
+state 48
+
+    (30) attr -> AREA .
+
+    IDENTIFIER      reduce using rule 30 (attr -> AREA .)
+    OTHER           reduce using rule 30 (attr -> AREA .)
+    HTML            reduce using rule 30 (attr -> AREA .)
+    A               reduce using rule 30 (attr -> AREA .)
+    ABBR            reduce using rule 30 (attr -> AREA .)
+    ADDRESS         reduce using rule 30 (attr -> AREA .)
+    AREA            reduce using rule 30 (attr -> AREA .)
+    ARTICLE         reduce using rule 30 (attr -> AREA .)
+    ASIDE           reduce using rule 30 (attr -> AREA .)
+    AUDIO           reduce using rule 30 (attr -> AREA .)
+    B               reduce using rule 30 (attr -> AREA .)
+    EQUAL           reduce using rule 30 (attr -> AREA .)
+    COMMA           reduce using rule 30 (attr -> AREA .)
+    RSB             reduce using rule 30 (attr -> AREA .)
+
+
+state 49
+
+    (31) attr -> ARTICLE .
+
+    IDENTIFIER      reduce using rule 31 (attr -> ARTICLE .)
+    OTHER           reduce using rule 31 (attr -> ARTICLE .)
+    HTML            reduce using rule 31 (attr -> ARTICLE .)
+    A               reduce using rule 31 (attr -> ARTICLE .)
+    ABBR            reduce using rule 31 (attr -> ARTICLE .)
+    ADDRESS         reduce using rule 31 (attr -> ARTICLE .)
+    AREA            reduce using rule 31 (attr -> ARTICLE .)
+    ARTICLE         reduce using rule 31 (attr -> ARTICLE .)
+    ASIDE           reduce using rule 31 (attr -> ARTICLE .)
+    AUDIO           reduce using rule 31 (attr -> ARTICLE .)
+    B               reduce using rule 31 (attr -> ARTICLE .)
+    EQUAL           reduce using rule 31 (attr -> ARTICLE .)
+    COMMA           reduce using rule 31 (attr -> ARTICLE .)
+    RSB             reduce using rule 31 (attr -> ARTICLE .)
+
+
+state 50
+
+    (32) attr -> ASIDE .
+
+    IDENTIFIER      reduce using rule 32 (attr -> ASIDE .)
+    OTHER           reduce using rule 32 (attr -> ASIDE .)
+    HTML            reduce using rule 32 (attr -> ASIDE .)
+    A               reduce using rule 32 (attr -> ASIDE .)
+    ABBR            reduce using rule 32 (attr -> ASIDE .)
+    ADDRESS         reduce using rule 32 (attr -> ASIDE .)
+    AREA            reduce using rule 32 (attr -> ASIDE .)
+    ARTICLE         reduce using rule 32 (attr -> ASIDE .)
+    ASIDE           reduce using rule 32 (attr -> ASIDE .)
+    AUDIO           reduce using rule 32 (attr -> ASIDE .)
+    B               reduce using rule 32 (attr -> ASIDE .)
+    EQUAL           reduce using rule 32 (attr -> ASIDE .)
+    COMMA           reduce using rule 32 (attr -> ASIDE .)
+    RSB             reduce using rule 32 (attr -> ASIDE .)
+
+
+state 51
+
+    (33) attr -> AUDIO .
+
+    IDENTIFIER      reduce using rule 33 (attr -> AUDIO .)
+    OTHER           reduce using rule 33 (attr -> AUDIO .)
+    HTML            reduce using rule 33 (attr -> AUDIO .)
+    A               reduce using rule 33 (attr -> AUDIO .)
+    ABBR            reduce using rule 33 (attr -> AUDIO .)
+    ADDRESS         reduce using rule 33 (attr -> AUDIO .)
+    AREA            reduce using rule 33 (attr -> AUDIO .)
+    ARTICLE         reduce using rule 33 (attr -> AUDIO .)
+    ASIDE           reduce using rule 33 (attr -> AUDIO .)
+    AUDIO           reduce using rule 33 (attr -> AUDIO .)
+    B               reduce using rule 33 (attr -> AUDIO .)
+    EQUAL           reduce using rule 33 (attr -> AUDIO .)
+    COMMA           reduce using rule 33 (attr -> AUDIO .)
+    RSB             reduce using rule 33 (attr -> AUDIO .)
+
+
+state 52
+
+    (34) attr -> B .
+
+    IDENTIFIER      reduce using rule 34 (attr -> B .)
+    OTHER           reduce using rule 34 (attr -> B .)
+    HTML            reduce using rule 34 (attr -> B .)
+    A               reduce using rule 34 (attr -> B .)
+    ABBR            reduce using rule 34 (attr -> B .)
+    ADDRESS         reduce using rule 34 (attr -> B .)
+    AREA            reduce using rule 34 (attr -> B .)
+    ARTICLE         reduce using rule 34 (attr -> B .)
+    ASIDE           reduce using rule 34 (attr -> B .)
+    AUDIO           reduce using rule 34 (attr -> B .)
+    B               reduce using rule 34 (attr -> B .)
+    EQUAL           reduce using rule 34 (attr -> B .)
+    COMMA           reduce using rule 34 (attr -> B .)
+    RSB             reduce using rule 34 (attr -> B .)
+
+
+state 53
 
     (2) inside -> LMB inside_content RMB .
 
@@ -410,7 +818,7 @@ state 29
     RMB             reduce using rule 2 (inside -> LMB inside_content RMB .)
 
 
-state 30
+state 54
 
     (3) inside -> LMB root RMB .
 
@@ -418,7 +826,7 @@ state 30
     RMB             reduce using rule 3 (inside -> LMB root RMB .)
 
 
-state 31
+state 55
 
     (22) attr -> attr IDENTIFIER .
 
@@ -430,7 +838,7 @@ state 31
     RSB             reduce using rule 22 (attr -> attr IDENTIFIER .)
 
 
-state 32
+state 56
 
     (23) attr -> attr OTHER .
 
@@ -442,14 +850,14 @@ state 32
     RSB             reduce using rule 23 (attr -> attr OTHER .)
 
 
-state 33
+state 57
 
     (15) elements_outside -> LSB elements_inside_comma RSB .
 
     LMB             reduce using rule 15 (elements_outside -> LSB elements_inside_comma RSB .)
 
 
-state 34
+state 58
 
     (16) elements_inside_comma -> elements_inside_equal COMMA . elements_inside_equal
     (19) elements_inside_equal -> . attr_root EQUAL attr_root
@@ -460,16 +868,32 @@ state 34
     (24) attr -> . IDENTIFIER
     (25) attr -> . OTHER
     (26) attr -> . HTML
+    (27) attr -> . A
+    (28) attr -> . ABBR
+    (29) attr -> . ADDRESS
+    (30) attr -> . AREA
+    (31) attr -> . ARTICLE
+    (32) attr -> . ASIDE
+    (33) attr -> . AUDIO
+    (34) attr -> . B
 
-    IDENTIFIER      shift and go to state 20
-    OTHER           shift and go to state 21
-    HTML            shift and go to state 28
+    IDENTIFIER      shift and go to state 28
+    OTHER           shift and go to state 29
+    HTML            shift and go to state 44
+    A               shift and go to state 45
+    ABBR            shift and go to state 46
+    ADDRESS         shift and go to state 47
+    AREA            shift and go to state 48
+    ARTICLE         shift and go to state 49
+    ASIDE           shift and go to state 50
+    AUDIO           shift and go to state 51
+    B               shift and go to state 52
 
-    elements_inside_equal          shift and go to state 39
-    attr_root                      shift and go to state 26
-    attr                           shift and go to state 27
+    elements_inside_equal          shift and go to state 63
+    attr_root                      shift and go to state 42
+    attr                           shift and go to state 43
 
-state 35
+state 59
 
     (19) elements_inside_equal -> attr_root EQUAL . attr_root
     (20) attr_root -> . attr attr
@@ -479,15 +903,31 @@ state 35
     (24) attr -> . IDENTIFIER
     (25) attr -> . OTHER
     (26) attr -> . HTML
+    (27) attr -> . A
+    (28) attr -> . ABBR
+    (29) attr -> . ADDRESS
+    (30) attr -> . AREA
+    (31) attr -> . ARTICLE
+    (32) attr -> . ASIDE
+    (33) attr -> . AUDIO
+    (34) attr -> . B
 
-    IDENTIFIER      shift and go to state 20
-    OTHER           shift and go to state 21
-    HTML            shift and go to state 28
+    IDENTIFIER      shift and go to state 28
+    OTHER           shift and go to state 29
+    HTML            shift and go to state 44
+    A               shift and go to state 45
+    ABBR            shift and go to state 46
+    ADDRESS         shift and go to state 47
+    AREA            shift and go to state 48
+    ARTICLE         shift and go to state 49
+    ASIDE           shift and go to state 50
+    AUDIO           shift and go to state 51
+    B               shift and go to state 52
 
-    attr_root                      shift and go to state 40
-    attr                           shift and go to state 27
+    attr_root                      shift and go to state 64
+    attr                           shift and go to state 43
 
-state 36
+state 60
 
     (20) attr_root -> attr attr .
     (22) attr -> attr . IDENTIFIER
@@ -496,11 +936,11 @@ state 36
     EQUAL           reduce using rule 20 (attr_root -> attr attr .)
     COMMA           reduce using rule 20 (attr_root -> attr attr .)
     RSB             reduce using rule 20 (attr_root -> attr attr .)
-    IDENTIFIER      shift and go to state 31
-    OTHER           shift and go to state 32
+    IDENTIFIER      shift and go to state 55
+    OTHER           shift and go to state 56
 
 
-state 37
+state 61
 
     (22) attr -> attr IDENTIFIER .
     (24) attr -> IDENTIFIER .
@@ -513,6 +953,14 @@ state 37
     IDENTIFIER      reduce using rule 22 (attr -> attr IDENTIFIER .)
     OTHER           reduce using rule 22 (attr -> attr IDENTIFIER .)
     HTML            reduce using rule 22 (attr -> attr IDENTIFIER .)
+    A               reduce using rule 22 (attr -> attr IDENTIFIER .)
+    ABBR            reduce using rule 22 (attr -> attr IDENTIFIER .)
+    ADDRESS         reduce using rule 22 (attr -> attr IDENTIFIER .)
+    AREA            reduce using rule 22 (attr -> attr IDENTIFIER .)
+    ARTICLE         reduce using rule 22 (attr -> attr IDENTIFIER .)
+    ASIDE           reduce using rule 22 (attr -> attr IDENTIFIER .)
+    AUDIO           reduce using rule 22 (attr -> attr IDENTIFIER .)
+    B               reduce using rule 22 (attr -> attr IDENTIFIER .)
     EQUAL           reduce using rule 22 (attr -> attr IDENTIFIER .)
     COMMA           reduce using rule 22 (attr -> attr IDENTIFIER .)
     RSB             reduce using rule 22 (attr -> attr IDENTIFIER .)
@@ -524,7 +972,7 @@ state 37
   ! RSB             [ reduce using rule 24 (attr -> IDENTIFIER .) ]
 
 
-state 38
+state 62
 
     (23) attr -> attr OTHER .
     (25) attr -> OTHER .
@@ -537,6 +985,14 @@ state 38
     IDENTIFIER      reduce using rule 23 (attr -> attr OTHER .)
     OTHER           reduce using rule 23 (attr -> attr OTHER .)
     HTML            reduce using rule 23 (attr -> attr OTHER .)
+    A               reduce using rule 23 (attr -> attr OTHER .)
+    ABBR            reduce using rule 23 (attr -> attr OTHER .)
+    ADDRESS         reduce using rule 23 (attr -> attr OTHER .)
+    AREA            reduce using rule 23 (attr -> attr OTHER .)
+    ARTICLE         reduce using rule 23 (attr -> attr OTHER .)
+    ASIDE           reduce using rule 23 (attr -> attr OTHER .)
+    AUDIO           reduce using rule 23 (attr -> attr OTHER .)
+    B               reduce using rule 23 (attr -> attr OTHER .)
     EQUAL           reduce using rule 23 (attr -> attr OTHER .)
     COMMA           reduce using rule 23 (attr -> attr OTHER .)
     RSB             reduce using rule 23 (attr -> attr OTHER .)
@@ -548,14 +1004,14 @@ state 38
   ! RSB             [ reduce using rule 25 (attr -> OTHER .) ]
 
 
-state 39
+state 63
 
     (16) elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal .
 
     RSB             reduce using rule 16 (elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal .)
 
 
-state 40
+state 64
 
     (19) elements_inside_equal -> attr_root EQUAL attr_root .
 
@@ -565,7 +1021,7 @@ state 40
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: reduce/reduce conflict in state 37 resolved using rule (attr -> attr IDENTIFIER)
-WARNING: rejected rule (attr -> IDENTIFIER) in state 37
-WARNING: reduce/reduce conflict in state 38 resolved using rule (attr -> attr OTHER)
-WARNING: rejected rule (attr -> OTHER) in state 38
+WARNING: reduce/reduce conflict in state 61 resolved using rule (attr -> attr IDENTIFIER)
+WARNING: rejected rule (attr -> IDENTIFIER) in state 61
+WARNING: reduce/reduce conflict in state 62 resolved using rule (attr -> attr OTHER)
+WARNING: rejected rule (attr -> OTHER) in state 62

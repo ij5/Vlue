@@ -89,10 +89,6 @@ def t_B(t):
 	return t
 
 
-
-
-
-
 def t_NEWLINE(t):
 	r'\n+'
 	t.lexer.lineno += len(t.value)
@@ -119,6 +115,4 @@ while True:
 		break
 	print(tok)
 
-
-
-
+print()

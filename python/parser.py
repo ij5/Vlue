@@ -89,6 +89,7 @@ def p_attr2(t):
         | ASIDE
         | AUDIO
         | B
+        | BASE
     '''     #TODO: 다른 태그 추가
     t[0] = t[1]
 

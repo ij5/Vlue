@@ -17,6 +17,7 @@ tokens = (
 	'ASIDE',
 	'AUDIO',
 	'B',
+	'BASE',
 
 	'LSB',	#(
 	'RSB',	#)
@@ -86,6 +87,10 @@ def t_AUDIO(t):
 
 def t_B(t):
 	r'b'
+	return t
+
+def t_BASE(t):
+	r'base'
 	return t
 
 

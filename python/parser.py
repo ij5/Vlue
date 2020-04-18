@@ -3,6 +3,23 @@ import lexer
 
 tokens = lexer.tokens
 
+def p_root(t):
+    '''root : head_expr inside'''
+    pass
+
+def p_inside(t):
+    '''
+    inside : LMB inside_content RMB
+        | LMB root RMB
+    '''
+    pass
+
+def p_inside_content(t):
+    '''
+    inside_content : attr
+        | empty'''
+    pass
+
 def p_head(t):
     '''
     head_expr : HTML elements_outside
@@ -75,6 +92,6 @@ parser = yacc.yacc()
 
 
 data = '''
-html(href = https://google.com)
+html(href =https://google.com){}
 '''
 result = parser.parse(data)

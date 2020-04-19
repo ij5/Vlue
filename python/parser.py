@@ -31,6 +31,19 @@ def p_head(t):
         | ASIDE elements_outside
         | AUDIO elements_outside
         | B elements_outside
+        | BASE elements_outside
+        | BDI elements_outside
+        | BDO elements_outside
+        | BLOCKQUOTE elements_outside
+        | BODY elements_outside
+        | BR elements_outside
+        | BUTTON elements_outside 
+        | CANVAS elements_outside
+        | CAPTION elements_outside
+        | CITE elements_outside
+        | CODE elements_outside
+        | COL elements_outside
+        | COLGROUP elements_outside
     '''         #TODO: 다른 태그 추가
     print(t[1]+', '+t[2])
 

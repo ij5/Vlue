@@ -95,6 +95,6 @@ parser = yacc.yacc()
 
 
 data = '''
-html(html=google.com){}
+html( html =google.com){}
 '''
 result = parser.parse(data)

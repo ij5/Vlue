@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'A ABBR ADDRESS AREA ARTICLE ASIDE AUDIO B BASE BODY COMMA DIV EQUAL HEAD HTML IDENTIFIER LMB LSB OTHER RMB RSBroot : head_expr inside\n    inside : LMB inside_content RMB\n        | LMB root RMB\n    \n    inside_content : attr\n        | empty\n    head_expr : HTML elements_outside\n        | A elements_outside\n        | ABBR elements_outside\n        | ADDRESS elements_outside\n        | AREA elements_outside\n        | ARTICLE elements_outside\n        | ASIDE elements_outside\n        | AUDIO elements_outside\n        | B elements_outside\n    \n    elements_outside : LSB elements_inside_comma RSB\n    \n    elements_inside_comma : elements_inside_equal COMMA elements_inside_equal\n    \n    elements_inside_comma : elements_inside_equal\n        | empty\n    \n    elements_inside_equal : attr_root EQUAL attr_root\n    \n    attr_root : attr attr\n    attr_root : attr\n    attr : attr IDENTIFIER\n        | attr OTHER\n    \n    attr : IDENTIFIER\n        | OTHER\n        | HTML\n        | A\n        | ABBR\n        | ADDRESS\n        | AREA\n        | ARTICLE\n        | ASIDE\n        | AUDIO\n        | B\n        | BASE\n    empty : '
+_lr_signature = 'A ABBR ADDRESS AREA ARTICLE ASIDE AUDIO B BASE BDI BDO BLOCKQUOTE BODY BR BUTTON CANVAS CAPTION CITE CODECOL COLGROUP COMMA DIV EQUAL HEAD HTML IDENTIFIER LMB LSB OTHER RMB RSBroot : head_expr inside\n    inside : LMB inside_content RMB\n        | LMB root RMB\n    \n    inside_content : attr\n        | empty\n    \n    head_expr : HTML elements_outside\n    \n    elements_outside : LSB elements_inside_comma RSB\n    \n    elements_inside_comma : elements_inside_equal COMMA elements_inside_equal\n    \n    elements_inside_comma : elements_inside_equal\n        | empty\n    \n    elements_inside_equal : attr_root EQUAL attr_root\n    \n    attr_root : attr attr\n    attr_root : attr\n    attr : attr IDENTIFIER\n        | attr OTHER\n    \n    attr : IDENTIFIER\n        | OTHER\n        | HTML\n    empty : '
     
-_lr_action_items = {'HTML':([0,13,15,28,29,39,44,45,46,47,48,49,50,51,52,53,59,60,62,63,],[3,30,45,-24,-25,-35,45,-26,-27,-28,-29,-30,-31,-32,-33,-34,45,45,-22,-23,]),'A':([0,13,15,28,29,39,44,45,46,47,48,49,50,51,52,53,59,60,62,63,],[4,31,46,-24,-25,-35,46,-26,-27,-28,-29,-30,-31,-32,-33,-34,46,46,-22,-23,]),'ABBR':([0,13,15,28,29,39,44,45,46,47,48,49,50,51,52,53,59,60,62,63,],[5,32,47,-24,-25,-35,47,-26,-27,-28,-29,-30,-31,-32,-33,-34,47,47,-22,-23,]),'ADDRESS':([0,13,15,28,29,39,44,45,46,47,48,49,50,51,52,53,59,60,62,63,],[6,33,48,-24,-25,-35,48,-26,-27,-28,-29,-30,-31,-32,-33,-34,48,48,-22,-23,]),'AREA':([0,13,15,28,29,39,44,45,46,47,48,49,50,51,52,53,59,60,62,63,],[7,34,49,-24,-25,-35,49,-26,-27,-28,-29,-30,-31,-32,-33,-34,49,49,-22,-23,]),'ARTICLE':([0,13,15,28,29,39,44,45,46,47,48,49,50,51,52,53,59,60,62,63,],[8,35,50,-24,-25,-35,50,-26,-27,-28,-29,-30,-31,-32,-33,-34,50,50,-22,-23,]),'ASIDE':([0,13,15,28,29,39,44,45,46,47,48,49,50,51,52,53,59,60,62,63,],[9,36,51,-24,-25,-35,51,-26,-27,-28,-29,-30,-31,-32,-33,-34,51,51,-22,-23,]),'AUDIO':([0,13,15,28,29,39,44,45,46,47,48,49,50,51,52,53,59,60,62,63,],[10,37,52,-24,-25,-35,52,-26,-27,-28,-29,-30,-31,-32,-33,-34,52,52,-22,-23,]),'B':([0,13,15,28,29,39,44,45,46,47,48,49,50,51,52,53,59,60,62,63,],[11,38,53,-24,-25,-35,53,-26,-27,-28,-29,-30,-31,-32,-33,-34,53,53,-22,-23,]),'$end':([1,12,54,55,],[0,-1,-2,-3,]),'LMB':([2,14,16,17,18,19,20,21,22,23,58,],[13,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,]),'LSB':([3,4,5,6,7,8,9,10,11,30,31,32,33,34,35,36,37,38,],[15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,]),'RMB':([12,13,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,54,55,56,57,],[-1,-36,54,55,-4,-5,-24,-25,-26,-27,-28,-29,-30,-31,-32,-33,-34,-35,-2,-3,-22,-23,]),'IDENTIFIER':([13,15,26,28,29,30,31,32,33,34,35,36,37,38,39,44,45,46,47,48,49,50,51,52,53,56,57,59,60,61,62,63,],[28,28,56,-24,-25,-26,-27,-28,-29,-30,-31,-32,-33,-34,-35,62,-26,-27,-28,-29,-30,-31,-32,-33,-34,-22,-23,28,28,56,-22,-23,]),'OTHER':([13,15,26,28,29,30,31,32,33,34,35,36,37,38,39,44,45,46,47,48,49,50,51,52,53,56,57,59,60,61,62,63,],[29,29,57,-24,-25,-26,-27,-28,-29,-30,-31,-32,-33,-34,-35,63,-26,-27,-28,-29,-30,-31,-32,-33,-34,-22,-23,29,29,57,-22,-23,]),'BASE':([13,15,28,29,39,44,45,46,47,48,49,50,51,52,53,59,60,62,63,],[39,39,-24,-25,-35,39,-26,-27,-28,-29,-30,-31,-32,-33,-34,39,39,-22,-23,]),'RSB':([15,28,29,39,40,41,42,44,45,46,47,48,49,50,51,52,53,56,57,61,62,63,64,65,],[-36,-24,-25,-35,58,-17,-18,-21,-26,-27,-28,-29,-30,-31,-32,-33,-34,-22,-23,-20,-22,-23,-16,-19,]),'EQUAL':([28,29,39,43,44,45,46,47,48,49,50,51,52,53,56,57,61,62,63,],[-24,-25,-35,60,-21,-26,-27,-28,-29,-30,-31,-32,-33,-34,-22,-23,-20,-22,-23,]),'COMMA':([28,29,39,41,44,45,46,47,48,49,50,51,52,53,56,57,61,62,63,65,],[-24,-25,-35,59,-21,-26,-27,-28,-29,-30,-31,-32,-33,-34,-22,-23,-20,-22,-23,-19,]),}
+_lr_action_items = {'HTML':([0,5,7,12,13,19,20,26,27,29,30,],[3,14,20,-16,-17,20,-18,20,20,-14,-15,]),'$end':([1,4,21,22,],[0,-1,-2,-3,]),'LMB':([2,6,25,],[5,-6,-7,]),'LSB':([3,14,],[7,7,]),'RMB':([4,5,8,9,10,11,12,13,14,21,22,23,24,],[-1,-19,21,22,-4,-5,-16,-17,-18,-2,-3,-14,-15,]),'IDENTIFIER':([5,7,10,12,13,14,19,20,23,24,26,27,28,29,30,],[12,12,23,-16,-17,-18,29,-18,-14,-15,12,12,23,-14,-15,]),'OTHER':([5,7,10,12,13,14,19,20,23,24,26,27,28,29,30,],[13,13,24,-16,-17,-18,30,-18,-14,-15,13,13,24,-14,-15,]),'RSB':([7,12,13,15,16,17,19,20,23,24,28,29,30,31,32,],[-19,-16,-17,25,-9,-10,-13,-18,-14,-15,-12,-14,-15,-8,-11,]),'EQUAL':([12,13,18,19,20,23,24,28,29,30,],[-16,-17,27,-13,-18,-14,-15,-12,-14,-15,]),'COMMA':([12,13,16,19,20,23,24,28,29,30,32,],[-16,-17,26,-13,-18,-14,-15,-12,-14,-15,-11,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'root':([0,13,],[1,25,]),'head_expr':([0,13,],[2,2,]),'inside':([2,],[12,]),'elements_outside':([3,4,5,6,7,8,9,10,11,30,31,32,33,34,35,36,37,38,],[14,16,17,18,19,20,21,22,23,14,16,17,18,19,20,21,22,23,]),'inside_content':([13,],[24,]),'attr':([13,15,44,59,60,],[26,44,61,44,44,]),'empty':([13,15,],[27,42,]),'elements_inside_comma':([15,],[40,]),'elements_inside_equal':([15,59,],[41,64,]),'attr_root':([15,59,60,],[43,43,65,]),}
+_lr_goto_items = {'root':([0,5,],[1,9,]),'head_expr':([0,5,],[2,2,]),'inside':([2,],[4,]),'elements_outside':([3,14,],[6,6,]),'inside_content':([5,],[8,]),'attr':([5,7,19,26,27,],[10,19,28,19,19,]),'empty':([5,7,],[11,17,]),'elements_inside_comma':([7,],[15,]),'elements_inside_equal':([7,26,],[16,31,]),'attr_root':([7,26,27,],[18,18,32,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -32,35 +32,18 @@ _lr_productions = [
   ('inside -> LMB root RMB','inside',3,'p_inside','parser.py',13),
   ('inside_content -> attr','inside_content',1,'p_inside_content','parser.py',19),
   ('inside_content -> empty','inside_content',1,'p_inside_content','parser.py',20),
-  ('head_expr -> HTML elements_outside','head_expr',2,'p_head','parser.py',25),
-  ('head_expr -> A elements_outside','head_expr',2,'p_head','parser.py',26),
-  ('head_expr -> ABBR elements_outside','head_expr',2,'p_head','parser.py',27),
-  ('head_expr -> ADDRESS elements_outside','head_expr',2,'p_head','parser.py',28),
-  ('head_expr -> AREA elements_outside','head_expr',2,'p_head','parser.py',29),
-  ('head_expr -> ARTICLE elements_outside','head_expr',2,'p_head','parser.py',30),
-  ('head_expr -> ASIDE elements_outside','head_expr',2,'p_head','parser.py',31),
-  ('head_expr -> AUDIO elements_outside','head_expr',2,'p_head','parser.py',32),
-  ('head_expr -> B elements_outside','head_expr',2,'p_head','parser.py',33),
-  ('elements_outside -> LSB elements_inside_comma RSB','elements_outside',3,'p_elements_outside','parser.py',39),
-  ('elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal','elements_inside_comma',3,'p_elements_inside_comma1','parser.py',45),
-  ('elements_inside_comma -> elements_inside_equal','elements_inside_comma',1,'p_elements_inside_comma2','parser.py',51),
-  ('elements_inside_comma -> empty','elements_inside_comma',1,'p_elements_inside_comma2','parser.py',52),
-  ('elements_inside_equal -> attr_root EQUAL attr_root','elements_inside_equal',3,'p_elements_inside_equal','parser.py',58),
-  ('attr_root -> attr attr','attr_root',2,'p_attr0','parser.py',64),
-  ('attr_root -> attr','attr_root',1,'p_attr00','parser.py',69),
-  ('attr -> attr IDENTIFIER','attr',2,'p_attr1','parser.py',74),
-  ('attr -> attr OTHER','attr',2,'p_attr1','parser.py',75),
-  ('attr -> IDENTIFIER','attr',1,'p_attr2','parser.py',81),
-  ('attr -> OTHER','attr',1,'p_attr2','parser.py',82),
-  ('attr -> HTML','attr',1,'p_attr2','parser.py',83),
-  ('attr -> A','attr',1,'p_attr2','parser.py',84),
-  ('attr -> ABBR','attr',1,'p_attr2','parser.py',85),
-  ('attr -> ADDRESS','attr',1,'p_attr2','parser.py',86),
-  ('attr -> AREA','attr',1,'p_attr2','parser.py',87),
-  ('attr -> ARTICLE','attr',1,'p_attr2','parser.py',88),
-  ('attr -> ASIDE','attr',1,'p_attr2','parser.py',89),
-  ('attr -> AUDIO','attr',1,'p_attr2','parser.py',90),
-  ('attr -> B','attr',1,'p_attr2','parser.py',91),
-  ('attr -> BASE','attr',1,'p_attr2','parser.py',92),
-  ('empty -> <empty>','empty',0,'p_empty','parser.py',98),
+  ('head_expr -> HTML elements_outside','head_expr',2,'p_head','parser.py',26),
+  ('elements_outside -> LSB elements_inside_comma RSB','elements_outside',3,'p_elements_outside','parser.py',33),
+  ('elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal','elements_inside_comma',3,'p_elements_inside_comma1','parser.py',39),
+  ('elements_inside_comma -> elements_inside_equal','elements_inside_comma',1,'p_elements_inside_comma2','parser.py',45),
+  ('elements_inside_comma -> empty','elements_inside_comma',1,'p_elements_inside_comma2','parser.py',46),
+  ('elements_inside_equal -> attr_root EQUAL attr_root','elements_inside_equal',3,'p_elements_inside_equal','parser.py',52),
+  ('attr_root -> attr attr','attr_root',2,'p_attr0','parser.py',58),
+  ('attr_root -> attr','attr_root',1,'p_attr00','parser.py',63),
+  ('attr -> attr IDENTIFIER','attr',2,'p_attr1','parser.py',68),
+  ('attr -> attr OTHER','attr',2,'p_attr1','parser.py',69),
+  ('attr -> IDENTIFIER','attr',1,'p_attr2','parser.py',75),
+  ('attr -> OTHER','attr',1,'p_attr2','parser.py',76),
+  ('attr -> HTML','attr',1,'p_attr2','parser.py',77),
+  ('empty -> <empty>','empty',0,'p_empty','parser.py',84),
 ]

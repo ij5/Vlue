@@ -7,6 +7,8 @@ f = open('index.html', 'a')
 
 tag_open = []
 elements = []
+attr1 = []
+attr2 = []
 
 def p_root(t):
     '''root : head_expr inside'''
@@ -30,32 +32,35 @@ def p_head(t):
     '''
     head_expr : IDENTIFIER elements_outside
     '''
-    elements.append(t[1])
+    t[0] = t[1] + ' ' + t[2]
 
 def p_elements_outside(t):
     '''
     elements_outside : LSB elements_inside_comma RSB
     '''
-    t[0] = t[1]+t[2]+t[3]
+    t[0] = t[2]
 
 def p_elements_inside_comma1(t):
     '''
     elements_inside_comma : elements_inside_equal COMMA elements_inside_equal
     '''
-    t[0] = t[1]+t[2]+t[3]
+    t[0] = t[1] + ' ' + t[3]
 
 def p_elements_inside_comma2(t):
     '''
     elements_inside_comma : elements_inside_equal
         | empty
     '''
-    t[0] = t[1]
+    if(t[1] == None):
+        t[0] = ''
+    else:
+        t[0] = t[1]
 
 def p_elements_inside_equal(t):
     '''
     elements_inside_equal : attr_root EQUAL attr_root
     '''
-    t[0] = t[1]+t[2]+t[3]
+    t[0] = t[1] + '=' + '"' + t[3] + '"'
 
 def p_attr0(t):
     '''
@@ -96,9 +101,9 @@ def p_error(t):
 
 parser = yacc.yacc()
 
-print(elements)
-
 data = '''
 html( html =google.com){head(href = navrer.com/){}}
 '''
 result = parser.parse(data)
+
+print(elements)

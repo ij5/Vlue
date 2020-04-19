@@ -3,6 +3,11 @@ import lexer
 
 tokens = lexer.tokens
 
+f = open('index.html', 'a')
+
+tag_open = []
+elements = []
+
 def p_root(t):
     '''root : head_expr inside'''
     pass
@@ -24,9 +29,8 @@ def p_inside_content(t):
 def p_head(t):
     '''
     head_expr : IDENTIFIER elements_outside
-    '''         #TODO: 다른 태그 추가
-
-    print(t[1]+', '+t[2])
+    '''
+    elements.append(t[1])
 
 def p_elements_outside(t):
     '''
@@ -92,9 +96,9 @@ def p_error(t):
 
 parser = yacc.yacc()
 
-
+print(elements)
 
 data = '''
-html( html =google.com){}
+html( html =google.com){head(href = navrer.com/){}}
 '''
 result = parser.parse(data)

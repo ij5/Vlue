@@ -102,7 +102,19 @@ def p_attr2(t):
         | ASIDE
         | AUDIO
         | B
-        | BASE
+        | BASE 
+        | BDI
+        | BDO
+        | BLOCKQUOTE
+        | BODY
+        | BR
+        | BUTTON
+        | CANVAS
+        | CAPTION
+        | CITE
+        | CODE
+        | COL
+        | COLGROUP
     '''     #TODO: 다른 태그 추가
     t[0] = t[1]
 

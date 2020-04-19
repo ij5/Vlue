@@ -18,6 +18,17 @@ tokens = (
 	'AUDIO',
 	'B',
 	'BASE',
+	'BDI',
+	'BDO',
+	'BLOCKQUOTE',
+	'BR',
+	'BUTTON',
+	'CANVAS',
+	'CAPTION',
+	'CITE',
+	'CODE'
+	'COL',
+	'COLGROUP',
 
 	'LSB',	#(
 	'RSB',	#)
@@ -91,6 +102,50 @@ def t_B(t):
 
 def t_BASE(t):
 	r'base'
+	return t
+
+def t_BDI(t):
+	r'bdi'
+	return t
+
+def t_BDO(t):
+	r'bdo'
+	return t
+
+def t_BLOCKQUOTE(t):
+	r'blockquote'
+	return t
+
+def t_BR(t):
+	r'br'
+	return t
+
+def t_BUTTON(t):
+	r'button'
+	return t
+
+def t_CANVAS(t):
+	r'canvas'
+	return t
+
+def t_CAPTION(t):
+	r'caption'
+	return t
+
+def t_CITE(t):
+	r'CITE'
+	return t
+
+def t_CODE(t):
+	r'code'
+	return t
+
+def t_COL(t):
+	r'col'
+	return t
+
+def t_COLGROUP(t):
+	r'colgroup'
 	return t
 
 

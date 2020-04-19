@@ -5,19 +5,18 @@ tokens = lexer.tokens
 
 f = open('index.html', 'a')
 
-tag_open = []
-elements = []
-attr1 = []
-attr2 = []
 
 def p_root(t):
-    '''root : head_expr inside'''
+    '''
+    root : head_expr inside
+    '''
     pass
 
 def p_inside(t):
     '''
     inside : LMB inside_content RMB
         | LMB root RMB
+        | empty
     '''
     pass
 
@@ -102,8 +101,7 @@ def p_error(t):
 parser = yacc.yacc()
 
 data = '''
-html(){head(href = navrer.com/){}}
+html(){head(href = navrer.com/)}
 '''
 result = parser.parse(data)
 
-print(elements)

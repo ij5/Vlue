@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'A ABBR ADDRESS AREA ARTICLE ASIDE AUDIO B BASE BDI BDO BLOCKQUOTE BODY BR BUTTON CANVAS CAPTION CITE CODECOL COLGROUP COMMA DIV EQUAL HEAD HTML IDENTIFIER LMB LSB OTHER RMB RSBroot : head_expr inside\n    inside : LMB inside_content RMB\n        | LMB root RMB\n    \n    inside_content : attr\n        | empty\n    \n    head_expr : HTML elements_outside\n    \n    elements_outside : LSB elements_inside_comma RSB\n    \n    elements_inside_comma : elements_inside_equal COMMA elements_inside_equal\n    \n    elements_inside_comma : elements_inside_equal\n        | empty\n    \n    elements_inside_equal : attr_root EQUAL attr_root\n    \n    attr_root : attr attr\n    attr_root : attr\n    attr : attr IDENTIFIER\n        | attr OTHER\n    \n    attr : IDENTIFIER\n        | OTHER\n        | HTML\n    empty : '
+_lr_signature = 'COMMA EQUAL IDENTIFIER LMB LSB OTHER RMB RSBroot : head_expr inside\n    inside : LMB inside_content RMB\n        | LMB root RMB\n    \n    inside_content : attr\n        | empty\n    \n    head_expr : IDENTIFIER elements_outside\n    \n    elements_outside : LSB elements_inside_comma RSB\n    \n    elements_inside_comma : elements_inside_equal COMMA elements_inside_equal\n    \n    elements_inside_comma : elements_inside_equal\n        | empty\n    \n    elements_inside_equal : attr_root EQUAL attr_root\n    \n    attr_root : attr attr\n    attr_root : attr\n    attr : attr IDENTIFIER\n        | attr OTHER\n    \n    attr : IDENTIFIER\n        | OTHER\n    empty : '
     
-_lr_action_items = {'HTML':([0,5,7,12,13,19,20,26,27,29,30,],[3,14,20,-16,-17,20,-18,20,20,-14,-15,]),'$end':([1,4,21,22,],[0,-1,-2,-3,]),'LMB':([2,6,25,],[5,-6,-7,]),'LSB':([3,14,],[7,7,]),'RMB':([4,5,8,9,10,11,12,13,14,21,22,23,24,],[-1,-19,21,22,-4,-5,-16,-17,-18,-2,-3,-14,-15,]),'IDENTIFIER':([5,7,10,12,13,14,19,20,23,24,26,27,28,29,30,],[12,12,23,-16,-17,-18,29,-18,-14,-15,12,12,23,-14,-15,]),'OTHER':([5,7,10,12,13,14,19,20,23,24,26,27,28,29,30,],[13,13,24,-16,-17,-18,30,-18,-14,-15,13,13,24,-14,-15,]),'RSB':([7,12,13,15,16,17,19,20,23,24,28,29,30,31,32,],[-19,-16,-17,25,-9,-10,-13,-18,-14,-15,-12,-14,-15,-8,-11,]),'EQUAL':([12,13,18,19,20,23,24,28,29,30,],[-16,-17,27,-13,-18,-14,-15,-12,-14,-15,]),'COMMA':([12,13,16,19,20,23,24,28,29,30,32,],[-16,-17,26,-13,-18,-14,-15,-12,-14,-15,-11,]),}
+_lr_action_items = {'IDENTIFIER':([0,5,7,10,12,13,18,19,22,23,25,26,27,28,29,],[3,12,19,22,-16,-17,28,-16,-14,-15,19,19,22,-14,-15,]),'$end':([1,4,20,21,],[0,-1,-2,-3,]),'LMB':([2,6,24,],[5,-6,-7,]),'LSB':([3,12,],[7,7,]),'RMB':([4,5,8,9,10,11,12,13,20,21,22,23,],[-1,-18,20,21,-4,-5,-16,-17,-2,-3,-14,-15,]),'OTHER':([5,7,10,12,13,18,19,22,23,25,26,27,28,29,],[13,13,23,-16,-17,29,-16,-14,-15,13,13,23,-14,-15,]),'RSB':([7,13,14,15,16,18,19,22,23,27,28,29,30,31,],[-18,-17,24,-9,-10,-13,-16,-14,-15,-12,-14,-15,-8,-11,]),'EQUAL':([13,17,18,19,22,23,27,28,29,],[-17,26,-13,-16,-14,-15,-12,-14,-15,]),'COMMA':([13,15,18,19,22,23,27,28,29,31,],[-17,25,-13,-16,-14,-15,-12,-14,-15,-11,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'root':([0,5,],[1,9,]),'head_expr':([0,5,],[2,2,]),'inside':([2,],[4,]),'elements_outside':([3,14,],[6,6,]),'inside_content':([5,],[8,]),'attr':([5,7,19,26,27,],[10,19,28,19,19,]),'empty':([5,7,],[11,17,]),'elements_inside_comma':([7,],[15,]),'elements_inside_equal':([7,26,],[16,31,]),'attr_root':([7,26,27,],[18,18,32,]),}
+_lr_goto_items = {'root':([0,5,],[1,9,]),'head_expr':([0,5,],[2,2,]),'inside':([2,],[4,]),'elements_outside':([3,12,],[6,6,]),'inside_content':([5,],[8,]),'attr':([5,7,18,25,26,],[10,18,27,18,18,]),'empty':([5,7,],[11,16,]),'elements_inside_comma':([7,],[14,]),'elements_inside_equal':([7,25,],[15,30,]),'attr_root':([7,25,26,],[17,17,31,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -32,7 +32,7 @@ _lr_productions = [
   ('inside -> LMB root RMB','inside',3,'p_inside','parser.py',13),
   ('inside_content -> attr','inside_content',1,'p_inside_content','parser.py',19),
   ('inside_content -> empty','inside_content',1,'p_inside_content','parser.py',20),
-  ('head_expr -> HTML elements_outside','head_expr',2,'p_head','parser.py',26),
+  ('head_expr -> IDENTIFIER elements_outside','head_expr',2,'p_head','parser.py',26),
   ('elements_outside -> LSB elements_inside_comma RSB','elements_outside',3,'p_elements_outside','parser.py',33),
   ('elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal','elements_inside_comma',3,'p_elements_inside_comma1','parser.py',39),
   ('elements_inside_comma -> elements_inside_equal','elements_inside_comma',1,'p_elements_inside_comma2','parser.py',45),
@@ -44,6 +44,5 @@ _lr_productions = [
   ('attr -> attr OTHER','attr',2,'p_attr1','parser.py',69),
   ('attr -> IDENTIFIER','attr',1,'p_attr2','parser.py',75),
   ('attr -> OTHER','attr',1,'p_attr2','parser.py',76),
-  ('attr -> HTML','attr',1,'p_attr2','parser.py',77),
-  ('empty -> <empty>','empty',0,'p_empty','parser.py',84),
+  ('empty -> <empty>','empty',0,'p_empty','parser.py',83),
 ]

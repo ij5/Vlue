@@ -23,7 +23,7 @@ def p_inside_content(t):
 
 def p_head(t):
     '''
-    head_expr : HTML elements_outside
+    head_expr : IDENTIFIER elements_outside
     '''         #TODO: 다른 태그 추가
 
     print(t[1]+', '+t[2])
@@ -74,7 +74,6 @@ def p_attr2(t):
     '''
     attr : IDENTIFIER
         | OTHER
-        | HTML
     '''     #TODO: 다른 태그 추가
 
     t[0] = t[1]

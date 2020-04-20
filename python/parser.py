@@ -5,12 +5,14 @@ tokens = lexer.tokens
 
 f = open('index.html', 'a')
 
+final = ''
 
 def p_root(t):
     '''
     root : head_expr inside
     '''
-    pass
+    t[0] = "<"+t[1]+">"+t[2]+"</"+t[1].split(' ')[0]+">"
+    print(t[0])
 
 def p_inside(t):
     '''
@@ -18,7 +20,10 @@ def p_inside(t):
         | LMB root RMB
         | empty
     '''
-    pass
+    if(t[1]==None):
+        t[0] = ''
+    else:
+        t[0] = t[2]
 
 def p_inside_content(t):
     '''
@@ -34,8 +39,10 @@ def p_head(t):
     '''
     head_expr : IDENTIFIER elements_outside
     '''
-    t[0] = t[1] + ' ' + t[2]
-    print(t[0])
+    if(t[2] == ''):
+        t[0] = t[1]
+    else:
+        t[0] = t[1] + ' ' + t[2]
 
 def p_elements_outside(t):
     '''
@@ -108,3 +115,4 @@ html(){head(href = navrer.com/)}
 '''
 result = parser.parse(data)
 
+print(final)

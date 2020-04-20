@@ -25,7 +25,10 @@ def p_inside_content(t):
     inside_content : attr
         | empty
     '''
-    pass
+    if(t[1]==None):
+        t[0] = ''
+    else:
+        t[0] = t[1]
 
 def p_head(t):
     '''

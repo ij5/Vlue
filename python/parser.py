@@ -112,7 +112,9 @@ def p_error(t):
 parser = yacc.yacc()
 
 data = '''
-html(){head(href = navrer.com/)}
+html(){
+    head(href = navrer.com/){}
+}
 '''
 result = parser.parse(data)
 

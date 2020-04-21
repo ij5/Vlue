@@ -8,51 +8,52 @@ Grammar
 
 Rule 0     S' -> root
 Rule 1     root -> head_expr inside
-Rule 2     root -> root root
-Rule 3     inside -> LMB inside_content RMB
-Rule 4     inside -> LMB root RMB
-Rule 5     inside -> empty
-Rule 6     inside_content -> attr
-Rule 7     inside_content -> empty
-Rule 8     head_expr -> IDENTIFIER elements_outside
-Rule 9     elements_outside -> LSB elements_inside_comma RSB
-Rule 10    elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal
-Rule 11    elements_inside_comma -> elements_inside_equal
-Rule 12    elements_inside_comma -> empty
-Rule 13    elements_inside_equal -> attr_root EQUAL attr_root
-Rule 14    attr_root -> attr attr
-Rule 15    attr_root -> attr
-Rule 16    attr -> attr IDENTIFIER
-Rule 17    attr -> attr OTHER
-Rule 18    attr -> IDENTIFIER
-Rule 19    attr -> OTHER
-Rule 20    empty -> <empty>
+Rule 2     root -> head_expr
+Rule 3     root -> root root
+Rule 4     inside -> LMB inside_content RMB
+Rule 5     inside -> LMB root RMB
+Rule 6     inside -> empty
+Rule 7     inside_content -> attr
+Rule 8     inside_content -> empty
+Rule 9     head_expr -> IDENTIFIER elements_outside
+Rule 10    elements_outside -> LSB elements_inside_comma RSB
+Rule 11    elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal
+Rule 12    elements_inside_comma -> elements_inside_equal
+Rule 13    elements_inside_comma -> empty
+Rule 14    elements_inside_equal -> attr_root EQUAL attr_root
+Rule 15    attr_root -> attr attr
+Rule 16    attr_root -> attr
+Rule 17    attr -> attr IDENTIFIER
+Rule 18    attr -> attr OTHER
+Rule 19    attr -> IDENTIFIER
+Rule 20    attr -> OTHER
+Rule 21    empty -> <empty>
 
 Terminals, with rules where they appear
 
-COMMA                : 10
-EQUAL                : 13
+COMMA                : 11
+EQUAL                : 14
 ESCAPE               : 
-IDENTIFIER           : 8 16 18
-LMB                  : 3 4
-LSB                  : 9
-OTHER                : 17 19
-RMB                  : 3 4
-RSB                  : 9
+IDENTIFIER           : 9 17 19
+LMB                  : 4 5
+LSB                  : 10
+OTHER                : 18 20
+RMB                  : 4 5
+RSB                  : 10
 error                : 
 
 Nonterminals, with rules where they appear
 
-attr                 : 6 14 14 15 16 17
-attr_root            : 13 13
-elements_inside_comma : 9
-elements_inside_equal : 10 10 11
-elements_outside     : 8
-empty                : 5 7 12
-head_expr            : 1
+attr                 : 7 15 15 16 17 18
+attr_root            : 14 14
+elements_inside_comma : 10
+elements_inside_equal : 11 11 12
+elements_outside     : 9
+empty                : 6 8 13
+head_expr            : 1 2
 inside               : 1
-inside_content       : 3
-root                 : 2 2 4 0
+inside_content       : 4
+root                 : 3 3 5 0
 
 Parsing method: LALR
 
@@ -60,8 +61,9 @@ state 0
 
     (0) S' -> . root
     (1) root -> . head_expr inside
-    (2) root -> . root root
-    (8) head_expr -> . IDENTIFIER elements_outside
+    (2) root -> . head_expr
+    (3) root -> . root root
+    (9) head_expr -> . IDENTIFIER elements_outside
 
     IDENTIFIER      shift and go to state 3
 
@@ -71,10 +73,11 @@ state 0
 state 1
 
     (0) S' -> root .
-    (2) root -> root . root
+    (3) root -> root . root
     (1) root -> . head_expr inside
-    (2) root -> . root root
-    (8) head_expr -> . IDENTIFIER elements_outside
+    (2) root -> . head_expr
+    (3) root -> . root root
+    (9) head_expr -> . IDENTIFIER elements_outside
 
     IDENTIFIER      shift and go to state 3
 
@@ -84,23 +87,31 @@ state 1
 state 2
 
     (1) root -> head_expr . inside
-    (3) inside -> . LMB inside_content RMB
-    (4) inside -> . LMB root RMB
-    (5) inside -> . empty
-    (20) empty -> .
+    (2) root -> head_expr .
+    (4) inside -> . LMB inside_content RMB
+    (5) inside -> . LMB root RMB
+    (6) inside -> . empty
+    (21) empty -> .
 
+  ! reduce/reduce conflict for IDENTIFIER resolved using rule 2 (root -> head_expr .)
+  ! reduce/reduce conflict for $end resolved using rule 2 (root -> head_expr .)
+  ! reduce/reduce conflict for RMB resolved using rule 2 (root -> head_expr .)
+    IDENTIFIER      reduce using rule 2 (root -> head_expr .)
+    $end            reduce using rule 2 (root -> head_expr .)
+    RMB             reduce using rule 2 (root -> head_expr .)
     LMB             shift and go to state 6
-    IDENTIFIER      reduce using rule 20 (empty -> .)
-    $end            reduce using rule 20 (empty -> .)
-    RMB             reduce using rule 20 (empty -> .)
+
+  ! IDENTIFIER      [ reduce using rule 21 (empty -> .) ]
+  ! $end            [ reduce using rule 21 (empty -> .) ]
+  ! RMB             [ reduce using rule 21 (empty -> .) ]
 
     inside                         shift and go to state 5
     empty                          shift and go to state 7
 
 state 3
 
-    (8) head_expr -> IDENTIFIER . elements_outside
-    (9) elements_outside -> . LSB elements_inside_comma RSB
+    (9) head_expr -> IDENTIFIER . elements_outside
+    (10) elements_outside -> . LSB elements_inside_comma RSB
 
     LSB             shift and go to state 9
 
@@ -108,18 +119,19 @@ state 3
 
 state 4
 
-    (2) root -> root root .
-    (2) root -> root . root
+    (3) root -> root root .
+    (3) root -> root . root
     (1) root -> . head_expr inside
-    (2) root -> . root root
-    (8) head_expr -> . IDENTIFIER elements_outside
+    (2) root -> . head_expr
+    (3) root -> . root root
+    (9) head_expr -> . IDENTIFIER elements_outside
 
   ! shift/reduce conflict for IDENTIFIER resolved as shift
-    $end            reduce using rule 2 (root -> root root .)
-    RMB             reduce using rule 2 (root -> root root .)
+    $end            reduce using rule 3 (root -> root root .)
+    RMB             reduce using rule 3 (root -> root root .)
     IDENTIFIER      shift and go to state 3
 
-  ! IDENTIFIER      [ reduce using rule 2 (root -> root root .) ]
+  ! IDENTIFIER      [ reduce using rule 3 (root -> root root .) ]
 
     root                           shift and go to state 4
     head_expr                      shift and go to state 2
@@ -135,22 +147,23 @@ state 5
 
 state 6
 
-    (3) inside -> LMB . inside_content RMB
-    (4) inside -> LMB . root RMB
-    (6) inside_content -> . attr
-    (7) inside_content -> . empty
+    (4) inside -> LMB . inside_content RMB
+    (5) inside -> LMB . root RMB
+    (7) inside_content -> . attr
+    (8) inside_content -> . empty
     (1) root -> . head_expr inside
-    (2) root -> . root root
-    (16) attr -> . attr IDENTIFIER
-    (17) attr -> . attr OTHER
-    (18) attr -> . IDENTIFIER
-    (19) attr -> . OTHER
-    (20) empty -> .
-    (8) head_expr -> . IDENTIFIER elements_outside
+    (2) root -> . head_expr
+    (3) root -> . root root
+    (17) attr -> . attr IDENTIFIER
+    (18) attr -> . attr OTHER
+    (19) attr -> . IDENTIFIER
+    (20) attr -> . OTHER
+    (21) empty -> .
+    (9) head_expr -> . IDENTIFIER elements_outside
 
     IDENTIFIER      shift and go to state 14
     OTHER           shift and go to state 15
-    RMB             reduce using rule 20 (empty -> .)
+    RMB             reduce using rule 21 (empty -> .)
 
     inside_content                 shift and go to state 10
     root                           shift and go to state 11
@@ -160,39 +173,39 @@ state 6
 
 state 7
 
-    (5) inside -> empty .
+    (6) inside -> empty .
 
-    IDENTIFIER      reduce using rule 5 (inside -> empty .)
-    $end            reduce using rule 5 (inside -> empty .)
-    RMB             reduce using rule 5 (inside -> empty .)
+    IDENTIFIER      reduce using rule 6 (inside -> empty .)
+    $end            reduce using rule 6 (inside -> empty .)
+    RMB             reduce using rule 6 (inside -> empty .)
 
 
 state 8
 
-    (8) head_expr -> IDENTIFIER elements_outside .
+    (9) head_expr -> IDENTIFIER elements_outside .
 
-    LMB             reduce using rule 8 (head_expr -> IDENTIFIER elements_outside .)
-    IDENTIFIER      reduce using rule 8 (head_expr -> IDENTIFIER elements_outside .)
-    $end            reduce using rule 8 (head_expr -> IDENTIFIER elements_outside .)
-    RMB             reduce using rule 8 (head_expr -> IDENTIFIER elements_outside .)
+    LMB             reduce using rule 9 (head_expr -> IDENTIFIER elements_outside .)
+    IDENTIFIER      reduce using rule 9 (head_expr -> IDENTIFIER elements_outside .)
+    $end            reduce using rule 9 (head_expr -> IDENTIFIER elements_outside .)
+    RMB             reduce using rule 9 (head_expr -> IDENTIFIER elements_outside .)
 
 
 state 9
 
-    (9) elements_outside -> LSB . elements_inside_comma RSB
-    (10) elements_inside_comma -> . elements_inside_equal COMMA elements_inside_equal
-    (11) elements_inside_comma -> . elements_inside_equal
-    (12) elements_inside_comma -> . empty
-    (13) elements_inside_equal -> . attr_root EQUAL attr_root
-    (20) empty -> .
-    (14) attr_root -> . attr attr
-    (15) attr_root -> . attr
-    (16) attr -> . attr IDENTIFIER
-    (17) attr -> . attr OTHER
-    (18) attr -> . IDENTIFIER
-    (19) attr -> . OTHER
+    (10) elements_outside -> LSB . elements_inside_comma RSB
+    (11) elements_inside_comma -> . elements_inside_equal COMMA elements_inside_equal
+    (12) elements_inside_comma -> . elements_inside_equal
+    (13) elements_inside_comma -> . empty
+    (14) elements_inside_equal -> . attr_root EQUAL attr_root
+    (21) empty -> .
+    (15) attr_root -> . attr attr
+    (16) attr_root -> . attr
+    (17) attr -> . attr IDENTIFIER
+    (18) attr -> . attr OTHER
+    (19) attr -> . IDENTIFIER
+    (20) attr -> . OTHER
 
-    RSB             reduce using rule 20 (empty -> .)
+    RSB             reduce using rule 21 (empty -> .)
     IDENTIFIER      shift and go to state 21
     OTHER           shift and go to state 15
 
@@ -204,18 +217,19 @@ state 9
 
 state 10
 
-    (3) inside -> LMB inside_content . RMB
+    (4) inside -> LMB inside_content . RMB
 
     RMB             shift and go to state 22
 
 
 state 11
 
-    (4) inside -> LMB root . RMB
-    (2) root -> root . root
+    (5) inside -> LMB root . RMB
+    (3) root -> root . root
     (1) root -> . head_expr inside
-    (2) root -> . root root
-    (8) head_expr -> . IDENTIFIER elements_outside
+    (2) root -> . head_expr
+    (3) root -> . root root
+    (9) head_expr -> . IDENTIFIER elements_outside
 
     RMB             shift and go to state 23
     IDENTIFIER      shift and go to state 3
@@ -225,91 +239,91 @@ state 11
 
 state 12
 
-    (6) inside_content -> attr .
-    (16) attr -> attr . IDENTIFIER
-    (17) attr -> attr . OTHER
+    (7) inside_content -> attr .
+    (17) attr -> attr . IDENTIFIER
+    (18) attr -> attr . OTHER
 
-    RMB             reduce using rule 6 (inside_content -> attr .)
+    RMB             reduce using rule 7 (inside_content -> attr .)
     IDENTIFIER      shift and go to state 24
     OTHER           shift and go to state 25
 
 
 state 13
 
-    (7) inside_content -> empty .
+    (8) inside_content -> empty .
 
-    RMB             reduce using rule 7 (inside_content -> empty .)
+    RMB             reduce using rule 8 (inside_content -> empty .)
 
 
 state 14
 
-    (18) attr -> IDENTIFIER .
-    (8) head_expr -> IDENTIFIER . elements_outside
-    (9) elements_outside -> . LSB elements_inside_comma RSB
+    (19) attr -> IDENTIFIER .
+    (9) head_expr -> IDENTIFIER . elements_outside
+    (10) elements_outside -> . LSB elements_inside_comma RSB
 
-    IDENTIFIER      reduce using rule 18 (attr -> IDENTIFIER .)
-    OTHER           reduce using rule 18 (attr -> IDENTIFIER .)
-    RMB             reduce using rule 18 (attr -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 19 (attr -> IDENTIFIER .)
+    OTHER           reduce using rule 19 (attr -> IDENTIFIER .)
+    RMB             reduce using rule 19 (attr -> IDENTIFIER .)
     LSB             shift and go to state 9
 
     elements_outside               shift and go to state 8
 
 state 15
 
-    (19) attr -> OTHER .
+    (20) attr -> OTHER .
 
-    IDENTIFIER      reduce using rule 19 (attr -> OTHER .)
-    OTHER           reduce using rule 19 (attr -> OTHER .)
-    RMB             reduce using rule 19 (attr -> OTHER .)
-    EQUAL           reduce using rule 19 (attr -> OTHER .)
-    COMMA           reduce using rule 19 (attr -> OTHER .)
-    RSB             reduce using rule 19 (attr -> OTHER .)
+    IDENTIFIER      reduce using rule 20 (attr -> OTHER .)
+    OTHER           reduce using rule 20 (attr -> OTHER .)
+    RMB             reduce using rule 20 (attr -> OTHER .)
+    EQUAL           reduce using rule 20 (attr -> OTHER .)
+    COMMA           reduce using rule 20 (attr -> OTHER .)
+    RSB             reduce using rule 20 (attr -> OTHER .)
 
 
 state 16
 
-    (9) elements_outside -> LSB elements_inside_comma . RSB
+    (10) elements_outside -> LSB elements_inside_comma . RSB
 
     RSB             shift and go to state 26
 
 
 state 17
 
-    (10) elements_inside_comma -> elements_inside_equal . COMMA elements_inside_equal
-    (11) elements_inside_comma -> elements_inside_equal .
+    (11) elements_inside_comma -> elements_inside_equal . COMMA elements_inside_equal
+    (12) elements_inside_comma -> elements_inside_equal .
 
     COMMA           shift and go to state 27
-    RSB             reduce using rule 11 (elements_inside_comma -> elements_inside_equal .)
+    RSB             reduce using rule 12 (elements_inside_comma -> elements_inside_equal .)
 
 
 state 18
 
-    (12) elements_inside_comma -> empty .
+    (13) elements_inside_comma -> empty .
 
-    RSB             reduce using rule 12 (elements_inside_comma -> empty .)
+    RSB             reduce using rule 13 (elements_inside_comma -> empty .)
 
 
 state 19
 
-    (13) elements_inside_equal -> attr_root . EQUAL attr_root
+    (14) elements_inside_equal -> attr_root . EQUAL attr_root
 
     EQUAL           shift and go to state 28
 
 
 state 20
 
-    (14) attr_root -> attr . attr
-    (15) attr_root -> attr .
-    (16) attr -> attr . IDENTIFIER
-    (17) attr -> attr . OTHER
-    (16) attr -> . attr IDENTIFIER
-    (17) attr -> . attr OTHER
-    (18) attr -> . IDENTIFIER
-    (19) attr -> . OTHER
+    (15) attr_root -> attr . attr
+    (16) attr_root -> attr .
+    (17) attr -> attr . IDENTIFIER
+    (18) attr -> attr . OTHER
+    (17) attr -> . attr IDENTIFIER
+    (18) attr -> . attr OTHER
+    (19) attr -> . IDENTIFIER
+    (20) attr -> . OTHER
 
-    EQUAL           reduce using rule 15 (attr_root -> attr .)
-    COMMA           reduce using rule 15 (attr_root -> attr .)
-    RSB             reduce using rule 15 (attr_root -> attr .)
+    EQUAL           reduce using rule 16 (attr_root -> attr .)
+    COMMA           reduce using rule 16 (attr_root -> attr .)
+    RSB             reduce using rule 16 (attr_root -> attr .)
     IDENTIFIER      shift and go to state 30
     OTHER           shift and go to state 31
 
@@ -317,77 +331,77 @@ state 20
 
 state 21
 
-    (18) attr -> IDENTIFIER .
+    (19) attr -> IDENTIFIER .
 
-    IDENTIFIER      reduce using rule 18 (attr -> IDENTIFIER .)
-    OTHER           reduce using rule 18 (attr -> IDENTIFIER .)
-    EQUAL           reduce using rule 18 (attr -> IDENTIFIER .)
-    COMMA           reduce using rule 18 (attr -> IDENTIFIER .)
-    RSB             reduce using rule 18 (attr -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 19 (attr -> IDENTIFIER .)
+    OTHER           reduce using rule 19 (attr -> IDENTIFIER .)
+    EQUAL           reduce using rule 19 (attr -> IDENTIFIER .)
+    COMMA           reduce using rule 19 (attr -> IDENTIFIER .)
+    RSB             reduce using rule 19 (attr -> IDENTIFIER .)
 
 
 state 22
 
-    (3) inside -> LMB inside_content RMB .
+    (4) inside -> LMB inside_content RMB .
 
-    IDENTIFIER      reduce using rule 3 (inside -> LMB inside_content RMB .)
-    $end            reduce using rule 3 (inside -> LMB inside_content RMB .)
-    RMB             reduce using rule 3 (inside -> LMB inside_content RMB .)
+    IDENTIFIER      reduce using rule 4 (inside -> LMB inside_content RMB .)
+    $end            reduce using rule 4 (inside -> LMB inside_content RMB .)
+    RMB             reduce using rule 4 (inside -> LMB inside_content RMB .)
 
 
 state 23
 
-    (4) inside -> LMB root RMB .
+    (5) inside -> LMB root RMB .
 
-    IDENTIFIER      reduce using rule 4 (inside -> LMB root RMB .)
-    $end            reduce using rule 4 (inside -> LMB root RMB .)
-    RMB             reduce using rule 4 (inside -> LMB root RMB .)
+    IDENTIFIER      reduce using rule 5 (inside -> LMB root RMB .)
+    $end            reduce using rule 5 (inside -> LMB root RMB .)
+    RMB             reduce using rule 5 (inside -> LMB root RMB .)
 
 
 state 24
 
-    (16) attr -> attr IDENTIFIER .
+    (17) attr -> attr IDENTIFIER .
 
-    IDENTIFIER      reduce using rule 16 (attr -> attr IDENTIFIER .)
-    OTHER           reduce using rule 16 (attr -> attr IDENTIFIER .)
-    RMB             reduce using rule 16 (attr -> attr IDENTIFIER .)
-    EQUAL           reduce using rule 16 (attr -> attr IDENTIFIER .)
-    COMMA           reduce using rule 16 (attr -> attr IDENTIFIER .)
-    RSB             reduce using rule 16 (attr -> attr IDENTIFIER .)
+    IDENTIFIER      reduce using rule 17 (attr -> attr IDENTIFIER .)
+    OTHER           reduce using rule 17 (attr -> attr IDENTIFIER .)
+    RMB             reduce using rule 17 (attr -> attr IDENTIFIER .)
+    EQUAL           reduce using rule 17 (attr -> attr IDENTIFIER .)
+    COMMA           reduce using rule 17 (attr -> attr IDENTIFIER .)
+    RSB             reduce using rule 17 (attr -> attr IDENTIFIER .)
 
 
 state 25
 
-    (17) attr -> attr OTHER .
+    (18) attr -> attr OTHER .
 
-    IDENTIFIER      reduce using rule 17 (attr -> attr OTHER .)
-    OTHER           reduce using rule 17 (attr -> attr OTHER .)
-    RMB             reduce using rule 17 (attr -> attr OTHER .)
-    EQUAL           reduce using rule 17 (attr -> attr OTHER .)
-    COMMA           reduce using rule 17 (attr -> attr OTHER .)
-    RSB             reduce using rule 17 (attr -> attr OTHER .)
+    IDENTIFIER      reduce using rule 18 (attr -> attr OTHER .)
+    OTHER           reduce using rule 18 (attr -> attr OTHER .)
+    RMB             reduce using rule 18 (attr -> attr OTHER .)
+    EQUAL           reduce using rule 18 (attr -> attr OTHER .)
+    COMMA           reduce using rule 18 (attr -> attr OTHER .)
+    RSB             reduce using rule 18 (attr -> attr OTHER .)
 
 
 state 26
 
-    (9) elements_outside -> LSB elements_inside_comma RSB .
+    (10) elements_outside -> LSB elements_inside_comma RSB .
 
-    LMB             reduce using rule 9 (elements_outside -> LSB elements_inside_comma RSB .)
-    IDENTIFIER      reduce using rule 9 (elements_outside -> LSB elements_inside_comma RSB .)
-    $end            reduce using rule 9 (elements_outside -> LSB elements_inside_comma RSB .)
-    RMB             reduce using rule 9 (elements_outside -> LSB elements_inside_comma RSB .)
+    LMB             reduce using rule 10 (elements_outside -> LSB elements_inside_comma RSB .)
+    IDENTIFIER      reduce using rule 10 (elements_outside -> LSB elements_inside_comma RSB .)
+    $end            reduce using rule 10 (elements_outside -> LSB elements_inside_comma RSB .)
+    RMB             reduce using rule 10 (elements_outside -> LSB elements_inside_comma RSB .)
 
 
 state 27
 
-    (10) elements_inside_comma -> elements_inside_equal COMMA . elements_inside_equal
-    (13) elements_inside_equal -> . attr_root EQUAL attr_root
-    (14) attr_root -> . attr attr
-    (15) attr_root -> . attr
-    (16) attr -> . attr IDENTIFIER
-    (17) attr -> . attr OTHER
-    (18) attr -> . IDENTIFIER
-    (19) attr -> . OTHER
+    (11) elements_inside_comma -> elements_inside_equal COMMA . elements_inside_equal
+    (14) elements_inside_equal -> . attr_root EQUAL attr_root
+    (15) attr_root -> . attr attr
+    (16) attr_root -> . attr
+    (17) attr -> . attr IDENTIFIER
+    (18) attr -> . attr OTHER
+    (19) attr -> . IDENTIFIER
+    (20) attr -> . OTHER
 
     IDENTIFIER      shift and go to state 21
     OTHER           shift and go to state 15
@@ -398,13 +412,13 @@ state 27
 
 state 28
 
-    (13) elements_inside_equal -> attr_root EQUAL . attr_root
-    (14) attr_root -> . attr attr
-    (15) attr_root -> . attr
-    (16) attr -> . attr IDENTIFIER
-    (17) attr -> . attr OTHER
-    (18) attr -> . IDENTIFIER
-    (19) attr -> . OTHER
+    (14) elements_inside_equal -> attr_root EQUAL . attr_root
+    (15) attr_root -> . attr attr
+    (16) attr_root -> . attr
+    (17) attr -> . attr IDENTIFIER
+    (18) attr -> . attr OTHER
+    (19) attr -> . IDENTIFIER
+    (20) attr -> . OTHER
 
     IDENTIFIER      shift and go to state 21
     OTHER           shift and go to state 15
@@ -414,81 +428,83 @@ state 28
 
 state 29
 
-    (14) attr_root -> attr attr .
-    (16) attr -> attr . IDENTIFIER
-    (17) attr -> attr . OTHER
+    (15) attr_root -> attr attr .
+    (17) attr -> attr . IDENTIFIER
+    (18) attr -> attr . OTHER
 
-    EQUAL           reduce using rule 14 (attr_root -> attr attr .)
-    COMMA           reduce using rule 14 (attr_root -> attr attr .)
-    RSB             reduce using rule 14 (attr_root -> attr attr .)
+    EQUAL           reduce using rule 15 (attr_root -> attr attr .)
+    COMMA           reduce using rule 15 (attr_root -> attr attr .)
+    RSB             reduce using rule 15 (attr_root -> attr attr .)
     IDENTIFIER      shift and go to state 24
     OTHER           shift and go to state 25
 
 
 state 30
 
-    (16) attr -> attr IDENTIFIER .
-    (18) attr -> IDENTIFIER .
+    (17) attr -> attr IDENTIFIER .
+    (19) attr -> IDENTIFIER .
 
-  ! reduce/reduce conflict for IDENTIFIER resolved using rule 16 (attr -> attr IDENTIFIER .)
-  ! reduce/reduce conflict for OTHER resolved using rule 16 (attr -> attr IDENTIFIER .)
-  ! reduce/reduce conflict for EQUAL resolved using rule 16 (attr -> attr IDENTIFIER .)
-  ! reduce/reduce conflict for COMMA resolved using rule 16 (attr -> attr IDENTIFIER .)
-  ! reduce/reduce conflict for RSB resolved using rule 16 (attr -> attr IDENTIFIER .)
-    IDENTIFIER      reduce using rule 16 (attr -> attr IDENTIFIER .)
-    OTHER           reduce using rule 16 (attr -> attr IDENTIFIER .)
-    EQUAL           reduce using rule 16 (attr -> attr IDENTIFIER .)
-    COMMA           reduce using rule 16 (attr -> attr IDENTIFIER .)
-    RSB             reduce using rule 16 (attr -> attr IDENTIFIER .)
+  ! reduce/reduce conflict for IDENTIFIER resolved using rule 17 (attr -> attr IDENTIFIER .)
+  ! reduce/reduce conflict for OTHER resolved using rule 17 (attr -> attr IDENTIFIER .)
+  ! reduce/reduce conflict for EQUAL resolved using rule 17 (attr -> attr IDENTIFIER .)
+  ! reduce/reduce conflict for COMMA resolved using rule 17 (attr -> attr IDENTIFIER .)
+  ! reduce/reduce conflict for RSB resolved using rule 17 (attr -> attr IDENTIFIER .)
+    IDENTIFIER      reduce using rule 17 (attr -> attr IDENTIFIER .)
+    OTHER           reduce using rule 17 (attr -> attr IDENTIFIER .)
+    EQUAL           reduce using rule 17 (attr -> attr IDENTIFIER .)
+    COMMA           reduce using rule 17 (attr -> attr IDENTIFIER .)
+    RSB             reduce using rule 17 (attr -> attr IDENTIFIER .)
 
-  ! IDENTIFIER      [ reduce using rule 18 (attr -> IDENTIFIER .) ]
-  ! OTHER           [ reduce using rule 18 (attr -> IDENTIFIER .) ]
-  ! EQUAL           [ reduce using rule 18 (attr -> IDENTIFIER .) ]
-  ! COMMA           [ reduce using rule 18 (attr -> IDENTIFIER .) ]
-  ! RSB             [ reduce using rule 18 (attr -> IDENTIFIER .) ]
+  ! IDENTIFIER      [ reduce using rule 19 (attr -> IDENTIFIER .) ]
+  ! OTHER           [ reduce using rule 19 (attr -> IDENTIFIER .) ]
+  ! EQUAL           [ reduce using rule 19 (attr -> IDENTIFIER .) ]
+  ! COMMA           [ reduce using rule 19 (attr -> IDENTIFIER .) ]
+  ! RSB             [ reduce using rule 19 (attr -> IDENTIFIER .) ]
 
 
 state 31
 
-    (17) attr -> attr OTHER .
-    (19) attr -> OTHER .
+    (18) attr -> attr OTHER .
+    (20) attr -> OTHER .
 
-  ! reduce/reduce conflict for IDENTIFIER resolved using rule 17 (attr -> attr OTHER .)
-  ! reduce/reduce conflict for OTHER resolved using rule 17 (attr -> attr OTHER .)
-  ! reduce/reduce conflict for EQUAL resolved using rule 17 (attr -> attr OTHER .)
-  ! reduce/reduce conflict for COMMA resolved using rule 17 (attr -> attr OTHER .)
-  ! reduce/reduce conflict for RSB resolved using rule 17 (attr -> attr OTHER .)
-    IDENTIFIER      reduce using rule 17 (attr -> attr OTHER .)
-    OTHER           reduce using rule 17 (attr -> attr OTHER .)
-    EQUAL           reduce using rule 17 (attr -> attr OTHER .)
-    COMMA           reduce using rule 17 (attr -> attr OTHER .)
-    RSB             reduce using rule 17 (attr -> attr OTHER .)
+  ! reduce/reduce conflict for IDENTIFIER resolved using rule 18 (attr -> attr OTHER .)
+  ! reduce/reduce conflict for OTHER resolved using rule 18 (attr -> attr OTHER .)
+  ! reduce/reduce conflict for EQUAL resolved using rule 18 (attr -> attr OTHER .)
+  ! reduce/reduce conflict for COMMA resolved using rule 18 (attr -> attr OTHER .)
+  ! reduce/reduce conflict for RSB resolved using rule 18 (attr -> attr OTHER .)
+    IDENTIFIER      reduce using rule 18 (attr -> attr OTHER .)
+    OTHER           reduce using rule 18 (attr -> attr OTHER .)
+    EQUAL           reduce using rule 18 (attr -> attr OTHER .)
+    COMMA           reduce using rule 18 (attr -> attr OTHER .)
+    RSB             reduce using rule 18 (attr -> attr OTHER .)
 
-  ! IDENTIFIER      [ reduce using rule 19 (attr -> OTHER .) ]
-  ! OTHER           [ reduce using rule 19 (attr -> OTHER .) ]
-  ! EQUAL           [ reduce using rule 19 (attr -> OTHER .) ]
-  ! COMMA           [ reduce using rule 19 (attr -> OTHER .) ]
-  ! RSB             [ reduce using rule 19 (attr -> OTHER .) ]
+  ! IDENTIFIER      [ reduce using rule 20 (attr -> OTHER .) ]
+  ! OTHER           [ reduce using rule 20 (attr -> OTHER .) ]
+  ! EQUAL           [ reduce using rule 20 (attr -> OTHER .) ]
+  ! COMMA           [ reduce using rule 20 (attr -> OTHER .) ]
+  ! RSB             [ reduce using rule 20 (attr -> OTHER .) ]
 
 
 state 32
 
-    (10) elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal .
+    (11) elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal .
 
-    RSB             reduce using rule 10 (elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal .)
+    RSB             reduce using rule 11 (elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal .)
 
 
 state 33
 
-    (13) elements_inside_equal -> attr_root EQUAL attr_root .
+    (14) elements_inside_equal -> attr_root EQUAL attr_root .
 
-    COMMA           reduce using rule 13 (elements_inside_equal -> attr_root EQUAL attr_root .)
-    RSB             reduce using rule 13 (elements_inside_equal -> attr_root EQUAL attr_root .)
+    COMMA           reduce using rule 14 (elements_inside_equal -> attr_root EQUAL attr_root .)
+    RSB             reduce using rule 14 (elements_inside_equal -> attr_root EQUAL attr_root .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for IDENTIFIER in state 4 resolved as shift
+WARNING: reduce/reduce conflict in state 2 resolved using rule (root -> head_expr)
+WARNING: rejected rule (empty -> <empty>) in state 2
 WARNING: reduce/reduce conflict in state 30 resolved using rule (attr -> attr IDENTIFIER)
 WARNING: rejected rule (attr -> IDENTIFIER) in state 30
 WARNING: reduce/reduce conflict in state 31 resolved using rule (attr -> attr OTHER)

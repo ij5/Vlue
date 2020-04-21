@@ -17,6 +17,12 @@ def p_root(t):
 
 def p_root2(t):
     '''
+    root : head_expr
+    '''
+    t[0] = "<"+t[1]+">"+"</"+t[1].split(' ')[0]+">"
+
+def p_root3(t):
+    '''
     root : root root
     '''
     t[0] = t[1]+t[2]
@@ -135,9 +141,7 @@ html(){
         }
     }
 }
-html(){
-
-}
+html()
 
 '''
 result = parser.parse(data)

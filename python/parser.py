@@ -12,8 +12,8 @@ def p_root(t):
     root : head_expr inside
     '''
     t[0] = "<"+t[1]+">"+t[2]+"</"+t[1].split(' ')[0]+">"
-    final.append(t[0])
-    print(t[0])
+    global final
+    final = t[0]
 
 def p_inside(t):
     '''

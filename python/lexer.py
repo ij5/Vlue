@@ -42,16 +42,12 @@ def t_error(t):
 
 lexer = lex.lex()
 
-data = '''
-\\
-'''
-
-lexer.input(data)
-
-while True:
-	tok = lexer.token()
-	if not tok:
-		break
-	print(tok)
-
-print()
+# lexer.input(data)
+#
+# while True:
+# 	tok = lexer.token()
+# 	if not tok:
+# 		break
+# 	print(tok)
+#
+# print()

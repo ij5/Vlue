@@ -13,7 +13,7 @@ def p_root(t):
     '''
     t[0] = "<"+t[1]+">"+t[2]+"</"+t[1].split(' ')[0]+">"
     global final
-    final = t[0]
+    final = t[0]    #TODO:중복 사용 시 문제.
 
 def p_inside(t):
     '''
@@ -116,9 +116,13 @@ parser = yacc.yacc()
 # data = open(filename+".ion", 'r')
 # output = open(outfile+".html", 'w')
 data = '''
+
 html(){
+}
+head(){
 
 }
+
 '''
 result = parser.parse(data)
 

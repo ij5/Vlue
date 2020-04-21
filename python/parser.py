@@ -111,9 +111,11 @@ def p_error(t):
 
 parser = yacc.yacc()
 
-data = '''
-html(){}
-'''
+filename = input("Input .ion file: ")
+outfile = input("Input ")
+data = open(filename, 'w')
+
+
 result = parser.parse(data)
 
-print(final)
+

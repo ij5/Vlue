@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COMMA EQUAL ESCAPE IDENTIFIER LMB LSB OTHER RMB RSB\n    root : head_expr inside\n    \n    inside : LMB inside_content RMB\n        | LMB root RMB\n        | empty\n    \n    inside_content : attr\n        | empty\n    \n    head_expr : IDENTIFIER elements_outside\n    \n    elements_outside : LSB elements_inside_comma RSB\n    \n    elements_inside_comma : elements_inside_equal COMMA elements_inside_equal\n    \n    elements_inside_comma : elements_inside_equal\n        | empty\n    \n    elements_inside_equal : attr_root EQUAL attr_root\n    \n    attr_root : attr attr\n    attr_root : attr\n    attr : attr IDENTIFIER\n        | attr OTHER\n    \n    attr : IDENTIFIER\n        | OTHER\n    empty : '
+_lr_signature = 'COMMA EQUAL ESCAPE IDENTIFIER LMB LSB OTHER RMB RSB\n    root : head_expr inside\n    \n    root : root root\n    \n    inside : LMB inside_content RMB\n        | LMB root RMB\n        | empty\n    \n    inside_content : attr\n        | empty\n    \n    head_expr : IDENTIFIER elements_outside\n    \n    elements_outside : LSB elements_inside_comma RSB\n    \n    elements_inside_comma : elements_inside_equal COMMA elements_inside_equal\n    \n    elements_inside_comma : elements_inside_equal\n        | empty\n    \n    elements_inside_equal : attr_root EQUAL attr_root\n    \n    attr_root : attr attr\n    attr_root : attr\n    attr : attr IDENTIFIER\n        | attr OTHER\n    \n    attr : IDENTIFIER\n        | OTHER\n    empty : '
     
-_lr_action_items = {'IDENTIFIER':([0,5,8,11,13,14,19,20,23,24,26,27,28,29,30,],[3,13,20,23,-17,-18,29,-17,-15,-16,20,20,23,-15,-16,]),'$end':([1,2,4,6,7,21,22,25,],[0,-19,-1,-4,-7,-2,-3,-8,]),'LMB':([2,7,25,],[5,-7,-8,]),'RMB':([2,4,5,6,7,9,10,11,12,13,14,21,22,23,24,25,],[-19,-1,-19,-4,-7,21,22,-5,-6,-17,-18,-2,-3,-15,-16,-8,]),'LSB':([3,13,],[8,8,]),'OTHER':([5,8,11,13,14,19,20,23,24,26,27,28,29,30,],[14,14,24,-17,-18,30,-17,-15,-16,14,14,24,-15,-16,]),'RSB':([8,14,15,16,17,19,20,23,24,28,29,30,31,32,],[-19,-18,25,-10,-11,-14,-17,-15,-16,-13,-15,-16,-9,-12,]),'EQUAL':([14,18,19,20,23,24,28,29,30,],[-18,27,-14,-17,-15,-16,-13,-15,-16,]),'COMMA':([14,16,19,20,23,24,28,29,30,32,],[-18,26,-14,-17,-15,-16,-13,-15,-16,-12,]),}
+_lr_action_items = {'IDENTIFIER':([0,1,2,4,5,6,7,8,9,11,12,14,15,20,21,22,23,24,25,26,27,28,29,30,31,],[3,3,-20,3,-1,14,-5,-8,21,3,24,-18,-19,30,-18,-3,-4,-16,-17,-9,21,21,24,-16,-17,]),'$end':([1,2,4,5,7,8,22,23,26,],[0,-20,-2,-1,-5,-8,-3,-4,-9,]),'LMB':([2,8,26,],[6,-8,-9,]),'RMB':([2,4,5,6,7,8,10,11,12,13,14,15,22,23,24,25,26,],[-20,-2,-1,-20,-5,-8,22,23,-6,-7,-18,-19,-3,-4,-16,-17,-9,]),'LSB':([3,14,],[9,9,]),'OTHER':([6,9,12,14,15,20,21,24,25,27,28,29,30,31,],[15,15,25,-18,-19,31,-18,-16,-17,15,15,25,-16,-17,]),'RSB':([9,15,16,17,18,20,21,24,25,29,30,31,32,33,],[-20,-19,26,-11,-12,-15,-18,-16,-17,-14,-16,-17,-10,-13,]),'EQUAL':([15,19,20,21,24,25,29,30,31,],[-19,28,-15,-18,-16,-17,-14,-16,-17,]),'COMMA':([15,17,20,21,24,25,29,30,31,33,],[-19,27,-15,-18,-16,-17,-14,-16,-17,-13,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'root':([0,5,],[1,10,]),'head_expr':([0,5,],[2,2,]),'inside':([2,],[4,]),'empty':([2,5,8,],[6,12,17,]),'elements_outside':([3,13,],[7,7,]),'inside_content':([5,],[9,]),'attr':([5,8,19,26,27,],[11,19,28,19,19,]),'elements_inside_comma':([8,],[15,]),'elements_inside_equal':([8,26,],[16,31,]),'attr_root':([8,26,27,],[18,18,32,]),}
+_lr_goto_items = {'root':([0,1,4,6,11,],[1,4,4,11,4,]),'head_expr':([0,1,4,6,11,],[2,2,2,2,2,]),'inside':([2,],[5,]),'empty':([2,6,9,],[7,13,18,]),'elements_outside':([3,14,],[8,8,]),'inside_content':([6,],[10,]),'attr':([6,9,20,27,28,],[12,20,29,20,20,]),'elements_inside_comma':([9,],[16,]),'elements_inside_equal':([9,27,],[17,32,]),'attr_root':([9,27,28,],[19,19,33,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -28,22 +28,23 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> root","S'",1,None,None,None),
   ('root -> head_expr inside','root',2,'p_root','parser.py',12),
-  ('inside -> LMB inside_content RMB','inside',3,'p_inside','parser.py',20),
-  ('inside -> LMB root RMB','inside',3,'p_inside','parser.py',21),
-  ('inside -> empty','inside',1,'p_inside','parser.py',22),
-  ('inside_content -> attr','inside_content',1,'p_inside_content','parser.py',31),
-  ('inside_content -> empty','inside_content',1,'p_inside_content','parser.py',32),
-  ('head_expr -> IDENTIFIER elements_outside','head_expr',2,'p_head','parser.py',41),
-  ('elements_outside -> LSB elements_inside_comma RSB','elements_outside',3,'p_elements_outside','parser.py',50),
-  ('elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal','elements_inside_comma',3,'p_elements_inside_comma1','parser.py',56),
-  ('elements_inside_comma -> elements_inside_equal','elements_inside_comma',1,'p_elements_inside_comma2','parser.py',62),
-  ('elements_inside_comma -> empty','elements_inside_comma',1,'p_elements_inside_comma2','parser.py',63),
-  ('elements_inside_equal -> attr_root EQUAL attr_root','elements_inside_equal',3,'p_elements_inside_equal','parser.py',72),
-  ('attr_root -> attr attr','attr_root',2,'p_attr0','parser.py',78),
-  ('attr_root -> attr','attr_root',1,'p_attr00','parser.py',83),
-  ('attr -> attr IDENTIFIER','attr',2,'p_attr1','parser.py',88),
-  ('attr -> attr OTHER','attr',2,'p_attr1','parser.py',89),
-  ('attr -> IDENTIFIER','attr',1,'p_attr2','parser.py',95),
-  ('attr -> OTHER','attr',1,'p_attr2','parser.py',96),
-  ('empty -> <empty>','empty',0,'p_empty','parser.py',102),
+  ('root -> root root','root',2,'p_root2','parser.py',20),
+  ('inside -> LMB inside_content RMB','inside',3,'p_inside','parser.py',27),
+  ('inside -> LMB root RMB','inside',3,'p_inside','parser.py',28),
+  ('inside -> empty','inside',1,'p_inside','parser.py',29),
+  ('inside_content -> attr','inside_content',1,'p_inside_content','parser.py',38),
+  ('inside_content -> empty','inside_content',1,'p_inside_content','parser.py',39),
+  ('head_expr -> IDENTIFIER elements_outside','head_expr',2,'p_head','parser.py',48),
+  ('elements_outside -> LSB elements_inside_comma RSB','elements_outside',3,'p_elements_outside','parser.py',57),
+  ('elements_inside_comma -> elements_inside_equal COMMA elements_inside_equal','elements_inside_comma',3,'p_elements_inside_comma1','parser.py',63),
+  ('elements_inside_comma -> elements_inside_equal','elements_inside_comma',1,'p_elements_inside_comma2','parser.py',69),
+  ('elements_inside_comma -> empty','elements_inside_comma',1,'p_elements_inside_comma2','parser.py',70),
+  ('elements_inside_equal -> attr_root EQUAL attr_root','elements_inside_equal',3,'p_elements_inside_equal','parser.py',79),
+  ('attr_root -> attr attr','attr_root',2,'p_attr0','parser.py',85),
+  ('attr_root -> attr','attr_root',1,'p_attr00','parser.py',90),
+  ('attr -> attr IDENTIFIER','attr',2,'p_attr1','parser.py',95),
+  ('attr -> attr OTHER','attr',2,'p_attr1','parser.py',96),
+  ('attr -> IDENTIFIER','attr',1,'p_attr2','parser.py',102),
+  ('attr -> OTHER','attr',1,'p_attr2','parser.py',103),
+  ('empty -> <empty>','empty',0,'p_empty','parser.py',109),
 ]

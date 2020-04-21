@@ -15,6 +15,15 @@ def p_root(t):
     global final
     final = t[0]    #TODO:중복 사용 시 문제.
 
+def p_root2(t):
+    '''
+    root : root root
+    '''
+    t[0] = t[1]+t[2]
+    global final
+    final = t[0]
+
+
 def p_inside(t):
     '''
     inside : LMB inside_content RMB
@@ -118,8 +127,15 @@ parser = yacc.yacc()
 data = '''
 
 html(){
+    head(){
+        body(){
+            div(){
+                Hello(){}
+            }
+        }
+    }
 }
-head(){
+html(){
 
 }
 

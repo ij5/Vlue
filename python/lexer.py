@@ -12,7 +12,8 @@ tokens = (
 	'IDENTIFIER',	#a-z
 	'EQUAL',	#=
 	'COMMA',	#,
-	'OTHER'
+	'OTHER',
+	'ESCAPE'
 	# 'SPACE',
 	# 'NEWLINE',
 )
@@ -32,6 +33,7 @@ def t_NEWLINE(t):
 	r'\n+'
 	t.lexer.lineno += len(t.value)
 
+
 t_ignore = ' \t'
 
 def t_error(t):
@@ -41,9 +43,7 @@ def t_error(t):
 lexer = lex.lex()
 
 data = '''
-html(href =https://www.google.com/){
-html(){}
-}
+\\
 '''
 
 lexer.input(data)

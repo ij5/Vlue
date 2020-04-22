@@ -3,10 +3,13 @@ import lexer
 
 tokens = lexer.tokens
 
-def p_test(t):
-    'test : NEWLINE IDENTIFIER NEWLINE'
-    t[0] = t[2]
-    print(t[0])
+def p_head_first(t):
+    'head_first : IDENTIFIER'
+
+def p_head_end(t):
+    'head_end : IDENTIFIER'
+
+
 
 def p_empty(t):
     'empty : '

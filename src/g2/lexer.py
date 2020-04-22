@@ -16,7 +16,7 @@ t_OTHER = r'.'
 t_ignore = ' '
 
 def t_TAB(t):
-    r'\t'
+    r'(\t| {4})'
     return t
 
 def t_IDENTIFIER(t):

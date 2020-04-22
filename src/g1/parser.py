@@ -3,8 +3,6 @@ import lexer
 
 tokens = lexer.tokens
 
-f = open('index.html', 'a')
-
 final = ''
 
 def p_root(t):
@@ -136,7 +134,7 @@ html(){
     head(){
         body(){
             div(){
-                Hello(){}
+                Hello()
             }
         }
     }

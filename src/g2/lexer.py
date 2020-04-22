@@ -16,7 +16,7 @@ t_OTHER = r'.'
 t_ignore = ' '
 
 def t_TAB(t):
-    r'(\t| {4})'
+    r'\t'
     return t
 
 def t_IDENTIFIER(t):
@@ -36,15 +36,15 @@ def t_error(t):
 lexer = lex.lex()
 
 data = """
-asd
+sad\tasd='/./
 """
 
-lexer.input(data)
-
-while True:
-	tok = lexer.token()
-	if not tok:
-		break
-	print(tok)
-
-print()
+# lexer.input(data)
+#
+# while True:
+# 	tok = lexer.token()
+# 	if not tok:
+# 		break
+# 	print(tok)
+#
+# print()

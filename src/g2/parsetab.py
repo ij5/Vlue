@@ -6,7 +6,7 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COMMA EQUAL IDENTIFIER NEWLINE OTHER TABtest : NEWLINE IDENTIFIER NEWLINE'
+_lr_signature = 'COMMA EQUAL IDENTIFIER NEWLINE OTHER TABtest : NEWLINE IDENTIFIER NEWLINEempty : '
     
 _lr_action_items = {'NEWLINE':([0,3,],[2,4,]),'$end':([1,4,],[0,-1,]),'IDENTIFIER':([2,],[3,]),}
 
@@ -28,4 +28,5 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> test","S'",1,None,None,None),
   ('test -> NEWLINE IDENTIFIER NEWLINE','test',3,'p_test','parser.py',7),
+  ('empty -> <empty>','empty',0,'p_empty','parser.py',12),
 ]

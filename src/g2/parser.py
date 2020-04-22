@@ -13,7 +13,10 @@ def p_empty(t):
     pass
 
 def p_error(t):
-
+    if(t):
+        print("Error on token '%s'" % t.value)
+    else:
+        print("Error on EOF")
 
 parser = yacc.yacc()
 

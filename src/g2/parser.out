@@ -11,6 +11,7 @@ Grammar
 
 Rule 0     S' -> test
 Rule 1     test -> NEWLINE IDENTIFIER NEWLINE
+Rule 2     empty -> <empty>
 
 Terminals, with rules where they appear
 
@@ -24,6 +25,7 @@ error                :
 
 Nonterminals, with rules where they appear
 
+empty                : 
 test                 : 0
 
 Parsing method: LALR

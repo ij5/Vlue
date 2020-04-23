@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COMMA EQUAL IDENTIFIER NEWLINE OTHER TABtest : NEWLINE IDENTIFIER NEWLINEempty : '
+_lr_signature = 'COLON COMMA DQ EQUAL IDENTIFIER NEWLINE OTHER SQ TAB\n    head : IDENTIFIER attr COLON\n        | IDENTIFIER empty COLON\n    \n    attr : attr_equal\n        | empty\n    \n    attr_equal : IDENTIFIER EQUAL SQ other SQ\n        | IDENTIFIER EQUAL DQ other DQ\n    \n    other : other EQUAL\n        | other COMMA\n        | other COLON\n        | other IDENTIFIER\n        | other OTHER\n        | EQUAL\n        | COMMA\n        | COLON\n        | IDENTIFIER\n        | OTHER\n    empty : '
     
-_lr_action_items = {'NEWLINE':([0,3,],[2,4,]),'$end':([1,4,],[0,-1,]),'IDENTIFIER':([2,],[3,]),}
+_lr_action_items = {'IDENTIFIER':([0,2,10,11,12,13,14,15,16,17,18,19,20,22,23,24,],[2,3,12,12,-15,-12,19,-13,-14,-16,19,-10,-7,-8,-9,-11,]),'$end':([1,8,9,],[0,-1,-2,]),'COLON':([2,4,5,6,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,],[-17,8,9,-3,16,16,-15,-12,23,-13,-14,-16,23,-10,-7,-5,-8,-9,-11,-6,]),'EQUAL':([3,10,11,12,13,14,15,16,17,18,19,20,22,23,24,],[7,13,13,-15,-12,20,-13,-14,-16,20,-10,-7,-8,-9,-11,]),'SQ':([7,12,13,14,15,16,17,19,20,22,23,24,],[10,-15,-12,21,-13,-14,-16,-10,-7,-8,-9,-11,]),'DQ':([7,12,13,15,16,17,18,19,20,22,23,24,],[11,-15,-12,-13,-14,-16,25,-10,-7,-8,-9,-11,]),'COMMA':([10,11,12,13,14,15,16,17,18,19,20,22,23,24,],[15,15,-15,-12,22,-13,-14,-16,22,-10,-7,-8,-9,-11,]),'OTHER':([10,11,12,13,14,15,16,17,18,19,20,22,23,24,],[17,17,-15,-12,24,-13,-14,-16,24,-10,-7,-8,-9,-11,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'test':([0,],[1,]),}
+_lr_goto_items = {'head':([0,],[1,]),'attr':([2,],[4,]),'empty':([2,],[5,]),'attr_equal':([2,],[6,]),'other':([10,11,],[14,18,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,7 +26,22 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> test","S'",1,None,None,None),
-  ('test -> NEWLINE IDENTIFIER NEWLINE','test',3,'p_test','parser.py',7),
-  ('empty -> <empty>','empty',0,'p_empty','parser.py',12),
+  ("S' -> head","S'",1,None,None,None),
+  ('head -> IDENTIFIER attr COLON','head',3,'p_head_exp1','parser.py',8),
+  ('head -> IDENTIFIER empty COLON','head',3,'p_head_exp1','parser.py',9),
+  ('attr -> attr_equal','attr',1,'p_attr','parser.py',15),
+  ('attr -> empty','attr',1,'p_attr','parser.py',16),
+  ('attr_equal -> IDENTIFIER EQUAL SQ other SQ','attr_equal',5,'p_attr_equal','parser.py',21),
+  ('attr_equal -> IDENTIFIER EQUAL DQ other DQ','attr_equal',5,'p_attr_equal','parser.py',22),
+  ('other -> other EQUAL','other',2,'p_other','parser.py',28),
+  ('other -> other COMMA','other',2,'p_other','parser.py',29),
+  ('other -> other COLON','other',2,'p_other','parser.py',30),
+  ('other -> other IDENTIFIER','other',2,'p_other','parser.py',31),
+  ('other -> other OTHER','other',2,'p_other','parser.py',32),
+  ('other -> EQUAL','other',1,'p_other','parser.py',33),
+  ('other -> COMMA','other',1,'p_other','parser.py',34),
+  ('other -> COLON','other',1,'p_other','parser.py',35),
+  ('other -> IDENTIFIER','other',1,'p_other','parser.py',36),
+  ('other -> OTHER','other',1,'p_other','parser.py',37),
+  ('empty -> <empty>','empty',0,'p_empty','parser.py',42),
 ]

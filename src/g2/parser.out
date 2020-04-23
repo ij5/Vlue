@@ -2,66 +2,364 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    COMMA
-    EQUAL
-    OTHER
+    NEWLINE
     TAB
 
 Grammar
 
-Rule 0     S' -> test
-Rule 1     test -> NEWLINE IDENTIFIER NEWLINE
-Rule 2     empty -> <empty>
+Rule 0     S' -> head
+Rule 1     head -> IDENTIFIER attr COLON
+Rule 2     head -> IDENTIFIER empty COLON
+Rule 3     attr -> attr_equal
+Rule 4     attr -> empty
+Rule 5     attr_equal -> IDENTIFIER EQUAL SQ other SQ
+Rule 6     attr_equal -> IDENTIFIER EQUAL DQ other DQ
+Rule 7     other -> other EQUAL
+Rule 8     other -> other COMMA
+Rule 9     other -> other COLON
+Rule 10    other -> other IDENTIFIER
+Rule 11    other -> other OTHER
+Rule 12    other -> EQUAL
+Rule 13    other -> COMMA
+Rule 14    other -> COLON
+Rule 15    other -> IDENTIFIER
+Rule 16    other -> OTHER
+Rule 17    empty -> <empty>
 
 Terminals, with rules where they appear
 
-COMMA                : 
-EQUAL                : 
-IDENTIFIER           : 1
-NEWLINE              : 1 1
-OTHER                : 
+COLON                : 1 2 9 14
+COMMA                : 8 13
+DQ                   : 6 6
+EQUAL                : 5 6 7 12
+IDENTIFIER           : 1 2 5 6 10 15
+NEWLINE              : 
+OTHER                : 11 16
+SQ                   : 5 5
 TAB                  : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-empty                : 
-test                 : 0
+attr                 : 1
+attr_equal           : 3
+empty                : 2 4
+head                 : 0
+other                : 5 6 7 8 9 10 11
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . test
-    (1) test -> . NEWLINE IDENTIFIER NEWLINE
+    (0) S' -> . head
+    (1) head -> . IDENTIFIER attr COLON
+    (2) head -> . IDENTIFIER empty COLON
 
-    NEWLINE         shift and go to state 2
+    IDENTIFIER      shift and go to state 2
 
-    test                           shift and go to state 1
+    head                           shift and go to state 1
 
 state 1
 
-    (0) S' -> test .
+    (0) S' -> head .
 
 
 
 state 2
 
-    (1) test -> NEWLINE . IDENTIFIER NEWLINE
+    (1) head -> IDENTIFIER . attr COLON
+    (2) head -> IDENTIFIER . empty COLON
+    (3) attr -> . attr_equal
+    (4) attr -> . empty
+    (17) empty -> .
+    (5) attr_equal -> . IDENTIFIER EQUAL SQ other SQ
+    (6) attr_equal -> . IDENTIFIER EQUAL DQ other DQ
 
+    COLON           reduce using rule 17 (empty -> .)
     IDENTIFIER      shift and go to state 3
 
+    attr                           shift and go to state 4
+    empty                          shift and go to state 5
+    attr_equal                     shift and go to state 6
 
 state 3
 
-    (1) test -> NEWLINE IDENTIFIER . NEWLINE
+    (5) attr_equal -> IDENTIFIER . EQUAL SQ other SQ
+    (6) attr_equal -> IDENTIFIER . EQUAL DQ other DQ
 
-    NEWLINE         shift and go to state 4
+    EQUAL           shift and go to state 7
 
 
 state 4
 
-    (1) test -> NEWLINE IDENTIFIER NEWLINE .
+    (1) head -> IDENTIFIER attr . COLON
 
-    $end            reduce using rule 1 (test -> NEWLINE IDENTIFIER NEWLINE .)
+    COLON           shift and go to state 8
 
+
+state 5
+
+    (2) head -> IDENTIFIER empty . COLON
+    (4) attr -> empty .
+
+  ! shift/reduce conflict for COLON resolved as shift
+    COLON           shift and go to state 9
+
+  ! COLON           [ reduce using rule 4 (attr -> empty .) ]
+
+
+state 6
+
+    (3) attr -> attr_equal .
+
+    COLON           reduce using rule 3 (attr -> attr_equal .)
+
+
+state 7
+
+    (5) attr_equal -> IDENTIFIER EQUAL . SQ other SQ
+    (6) attr_equal -> IDENTIFIER EQUAL . DQ other DQ
+
+    SQ              shift and go to state 10
+    DQ              shift and go to state 11
+
+
+state 8
+
+    (1) head -> IDENTIFIER attr COLON .
+
+    $end            reduce using rule 1 (head -> IDENTIFIER attr COLON .)
+
+
+state 9
+
+    (2) head -> IDENTIFIER empty COLON .
+
+    $end            reduce using rule 2 (head -> IDENTIFIER empty COLON .)
+
+
+state 10
+
+    (5) attr_equal -> IDENTIFIER EQUAL SQ . other SQ
+    (7) other -> . other EQUAL
+    (8) other -> . other COMMA
+    (9) other -> . other COLON
+    (10) other -> . other IDENTIFIER
+    (11) other -> . other OTHER
+    (12) other -> . EQUAL
+    (13) other -> . COMMA
+    (14) other -> . COLON
+    (15) other -> . IDENTIFIER
+    (16) other -> . OTHER
+
+    EQUAL           shift and go to state 13
+    COMMA           shift and go to state 15
+    COLON           shift and go to state 16
+    IDENTIFIER      shift and go to state 12
+    OTHER           shift and go to state 17
+
+    other                          shift and go to state 14
+
+state 11
+
+    (6) attr_equal -> IDENTIFIER EQUAL DQ . other DQ
+    (7) other -> . other EQUAL
+    (8) other -> . other COMMA
+    (9) other -> . other COLON
+    (10) other -> . other IDENTIFIER
+    (11) other -> . other OTHER
+    (12) other -> . EQUAL
+    (13) other -> . COMMA
+    (14) other -> . COLON
+    (15) other -> . IDENTIFIER
+    (16) other -> . OTHER
+
+    EQUAL           shift and go to state 13
+    COMMA           shift and go to state 15
+    COLON           shift and go to state 16
+    IDENTIFIER      shift and go to state 12
+    OTHER           shift and go to state 17
+
+    other                          shift and go to state 18
+
+state 12
+
+    (15) other -> IDENTIFIER .
+
+    SQ              reduce using rule 15 (other -> IDENTIFIER .)
+    EQUAL           reduce using rule 15 (other -> IDENTIFIER .)
+    COMMA           reduce using rule 15 (other -> IDENTIFIER .)
+    COLON           reduce using rule 15 (other -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 15 (other -> IDENTIFIER .)
+    OTHER           reduce using rule 15 (other -> IDENTIFIER .)
+    DQ              reduce using rule 15 (other -> IDENTIFIER .)
+
+
+state 13
+
+    (12) other -> EQUAL .
+
+    SQ              reduce using rule 12 (other -> EQUAL .)
+    EQUAL           reduce using rule 12 (other -> EQUAL .)
+    COMMA           reduce using rule 12 (other -> EQUAL .)
+    COLON           reduce using rule 12 (other -> EQUAL .)
+    IDENTIFIER      reduce using rule 12 (other -> EQUAL .)
+    OTHER           reduce using rule 12 (other -> EQUAL .)
+    DQ              reduce using rule 12 (other -> EQUAL .)
+
+
+state 14
+
+    (5) attr_equal -> IDENTIFIER EQUAL SQ other . SQ
+    (7) other -> other . EQUAL
+    (8) other -> other . COMMA
+    (9) other -> other . COLON
+    (10) other -> other . IDENTIFIER
+    (11) other -> other . OTHER
+
+    SQ              shift and go to state 21
+    EQUAL           shift and go to state 20
+    COMMA           shift and go to state 22
+    COLON           shift and go to state 23
+    IDENTIFIER      shift and go to state 19
+    OTHER           shift and go to state 24
+
+
+state 15
+
+    (13) other -> COMMA .
+
+    SQ              reduce using rule 13 (other -> COMMA .)
+    EQUAL           reduce using rule 13 (other -> COMMA .)
+    COMMA           reduce using rule 13 (other -> COMMA .)
+    COLON           reduce using rule 13 (other -> COMMA .)
+    IDENTIFIER      reduce using rule 13 (other -> COMMA .)
+    OTHER           reduce using rule 13 (other -> COMMA .)
+    DQ              reduce using rule 13 (other -> COMMA .)
+
+
+state 16
+
+    (14) other -> COLON .
+
+    SQ              reduce using rule 14 (other -> COLON .)
+    EQUAL           reduce using rule 14 (other -> COLON .)
+    COMMA           reduce using rule 14 (other -> COLON .)
+    COLON           reduce using rule 14 (other -> COLON .)
+    IDENTIFIER      reduce using rule 14 (other -> COLON .)
+    OTHER           reduce using rule 14 (other -> COLON .)
+    DQ              reduce using rule 14 (other -> COLON .)
+
+
+state 17
+
+    (16) other -> OTHER .
+
+    SQ              reduce using rule 16 (other -> OTHER .)
+    EQUAL           reduce using rule 16 (other -> OTHER .)
+    COMMA           reduce using rule 16 (other -> OTHER .)
+    COLON           reduce using rule 16 (other -> OTHER .)
+    IDENTIFIER      reduce using rule 16 (other -> OTHER .)
+    OTHER           reduce using rule 16 (other -> OTHER .)
+    DQ              reduce using rule 16 (other -> OTHER .)
+
+
+state 18
+
+    (6) attr_equal -> IDENTIFIER EQUAL DQ other . DQ
+    (7) other -> other . EQUAL
+    (8) other -> other . COMMA
+    (9) other -> other . COLON
+    (10) other -> other . IDENTIFIER
+    (11) other -> other . OTHER
+
+    DQ              shift and go to state 25
+    EQUAL           shift and go to state 20
+    COMMA           shift and go to state 22
+    COLON           shift and go to state 23
+    IDENTIFIER      shift and go to state 19
+    OTHER           shift and go to state 24
+
+
+state 19
+
+    (10) other -> other IDENTIFIER .
+
+    SQ              reduce using rule 10 (other -> other IDENTIFIER .)
+    EQUAL           reduce using rule 10 (other -> other IDENTIFIER .)
+    COMMA           reduce using rule 10 (other -> other IDENTIFIER .)
+    COLON           reduce using rule 10 (other -> other IDENTIFIER .)
+    IDENTIFIER      reduce using rule 10 (other -> other IDENTIFIER .)
+    OTHER           reduce using rule 10 (other -> other IDENTIFIER .)
+    DQ              reduce using rule 10 (other -> other IDENTIFIER .)
+
+
+state 20
+
+    (7) other -> other EQUAL .
+
+    SQ              reduce using rule 7 (other -> other EQUAL .)
+    EQUAL           reduce using rule 7 (other -> other EQUAL .)
+    COMMA           reduce using rule 7 (other -> other EQUAL .)
+    COLON           reduce using rule 7 (other -> other EQUAL .)
+    IDENTIFIER      reduce using rule 7 (other -> other EQUAL .)
+    OTHER           reduce using rule 7 (other -> other EQUAL .)
+    DQ              reduce using rule 7 (other -> other EQUAL .)
+
+
+state 21
+
+    (5) attr_equal -> IDENTIFIER EQUAL SQ other SQ .
+
+    COLON           reduce using rule 5 (attr_equal -> IDENTIFIER EQUAL SQ other SQ .)
+
+
+state 22
+
+    (8) other -> other COMMA .
+
+    SQ              reduce using rule 8 (other -> other COMMA .)
+    EQUAL           reduce using rule 8 (other -> other COMMA .)
+    COMMA           reduce using rule 8 (other -> other COMMA .)
+    COLON           reduce using rule 8 (other -> other COMMA .)
+    IDENTIFIER      reduce using rule 8 (other -> other COMMA .)
+    OTHER           reduce using rule 8 (other -> other COMMA .)
+    DQ              reduce using rule 8 (other -> other COMMA .)
+
+
+state 23
+
+    (9) other -> other COLON .
+
+    SQ              reduce using rule 9 (other -> other COLON .)
+    EQUAL           reduce using rule 9 (other -> other COLON .)
+    COMMA           reduce using rule 9 (other -> other COLON .)
+    COLON           reduce using rule 9 (other -> other COLON .)
+    IDENTIFIER      reduce using rule 9 (other -> other COLON .)
+    OTHER           reduce using rule 9 (other -> other COLON .)
+    DQ              reduce using rule 9 (other -> other COLON .)
+
+
+state 24
+
+    (11) other -> other OTHER .
+
+    SQ              reduce using rule 11 (other -> other OTHER .)
+    EQUAL           reduce using rule 11 (other -> other OTHER .)
+    COMMA           reduce using rule 11 (other -> other OTHER .)
+    COLON           reduce using rule 11 (other -> other OTHER .)
+    IDENTIFIER      reduce using rule 11 (other -> other OTHER .)
+    OTHER           reduce using rule 11 (other -> other OTHER .)
+    DQ              reduce using rule 11 (other -> other OTHER .)
+
+
+state 25
+
+    (6) attr_equal -> IDENTIFIER EQUAL DQ other DQ .
+
+    COLON           reduce using rule 6 (attr_equal -> IDENTIFIER EQUAL DQ other DQ .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for COLON in state 5 resolved as shift

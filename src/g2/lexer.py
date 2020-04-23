@@ -6,11 +6,17 @@ tokens = (
     'COMMA',
     'TAB',
     'NEWLINE',
+    'COLON',
+    'SQ',
+    'DQ',
     'OTHER'
 )
 
 t_EQUAL = r'='
 t_COMMA = r','
+t_COLON = r':'
+t_DQ = r'"'
+t_SQ = r"'"
 t_OTHER = r'.'
 
 t_ignore = ' '
@@ -36,7 +42,7 @@ def t_error(t):
 lexer = lex.lex()
 
 data = """
-sad\tasd='/./
+sad\tasd='/./"
 """
 
 # lexer.input(data)

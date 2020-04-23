@@ -5,14 +5,7 @@ tokens = lexer.tokens
 
 def p_root(t):
     '''
-    root : head NEWLINE body
-        | head elements
-    '''
-
-def p_elements_exp(t):
-    '''
-    elements : SQ elements IDENTIFIER SQ
-        | DQ elements IDENTIFIER DQ
+    root : head body
     '''
 
 def p_body_exp(t):
@@ -20,10 +13,7 @@ def p_body_exp(t):
     body : TAB
     '''
 
-def p_body_other(t):
-    '''
 
-    '''
 
 def p_head_exp(t):
     '''

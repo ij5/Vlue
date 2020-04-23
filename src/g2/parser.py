@@ -12,7 +12,6 @@ def p_root(t):
 def p_elements_exp(t):
     '''
     elements : SQ elements IDENTIFIER SQ
-        | SQ elements
         | DQ elements IDENTIFIER DQ
     '''
 

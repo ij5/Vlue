@@ -19,10 +19,10 @@ public class ionParser extends Parser {
 		DQ=1, SQ=2, COLON=3, NEWLINE=4, TAB=5, COMMA=6, EQUAL=7, IDENTIFIER=8, 
 		OTHER=9;
 	public static final int
-		RULE_root = 0, RULE_body = 1, RULE_elements = 2, RULE_head = 3, RULE_empty = 4, 
-		RULE_attr = 5, RULE_attr_equal = 6, RULE_other = 7;
+		RULE_root = 0, RULE_elements = 1, RULE_body = 2, RULE_body_value = 3, 
+		RULE_head = 4, RULE_attr_equal = 5, RULE_element_value = 6;
 	public static final String[] ruleNames = {
-		"root", "body", "elements", "head", "empty", "attr", "attr_equal", "other"
+		"root", "elements", "body", "body_value", "head", "attr_equal", "element_value"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -82,16 +82,10 @@ public class ionParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class RootContext extends ParserRuleContext {
-		public List<TerminalNode> NEWLINE() { return getTokens(ionParser.NEWLINE); }
-		public TerminalNode NEWLINE(int i) {
-			return getToken(ionParser.NEWLINE, i);
-		}
-		public RootContext root() {
-			return getRuleContext(RootContext.class,0);
-		}
 		public HeadContext head() {
 			return getRuleContext(HeadContext.class,0);
 		}
+		public TerminalNode NEWLINE() { return getToken(ionParser.NEWLINE, 0); }
 		public BodyContext body() {
 			return getRuleContext(BodyContext.class,0);
 		}
@@ -108,138 +102,26 @@ public class ionParser extends Parser {
 		RootContext _localctx = new RootContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_root);
 		try {
-			setState(42);
+			setState(21);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
+				setState(14);
+				head();
+				setState(15);
+				match(NEWLINE);
 				setState(16);
-				match(NEWLINE);
-				setState(17);
-				root();
+				body();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
 				setState(18);
-				match(NEWLINE);
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(20);
 				head();
-				setState(21);
-				match(NEWLINE);
-				setState(22);
-				body();
-				setState(23);
-				match(NEWLINE);
-				}
-				break;
-			case 3:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(25);
-				head();
-				setState(26);
-				elements(0);
-				setState(27);
-				match(NEWLINE);
-				}
-				break;
-			case 4:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(29);
-				head();
-				setState(30);
-				match(NEWLINE);
-				}
-				break;
-			case 5:
-				enterOuterAlt(_localctx, 5);
-				{
-				setState(32);
-				match(NEWLINE);
-				setState(33);
-				root();
-				}
-				break;
-			case 6:
-				enterOuterAlt(_localctx, 6);
-				{
-				setState(34);
-				head();
-				setState(35);
-				match(NEWLINE);
-				setState(36);
-				body();
-				}
-				break;
-			case 7:
-				enterOuterAlt(_localctx, 7);
-				{
-				setState(38);
-				head();
-				setState(39);
-				elements(0);
-				}
-				break;
-			case 8:
-				enterOuterAlt(_localctx, 8);
-				{
-				setState(41);
-				head();
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class BodyContext extends ParserRuleContext {
-		public TerminalNode TAB() { return getToken(ionParser.TAB, 0); }
-		public RootContext root() {
-			return getRuleContext(RootContext.class,0);
-		}
-		public ElementsContext elements() {
-			return getRuleContext(ElementsContext.class,0);
-		}
-		public BodyContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_body; }
-	}
-
-	public final BodyContext body() throws RecognitionException {
-		BodyContext _localctx = new BodyContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_body);
-		try {
-			setState(48);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(44);
-				match(TAB);
-				setState(45);
-				root();
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(46);
-				match(TAB);
-				setState(47);
+				setState(19);
 				elements(0);
 				}
 				break;
@@ -258,6 +140,7 @@ public class ionParser extends Parser {
 
 	public static class ElementsContext extends ParserRuleContext {
 		public TerminalNode IDENTIFIER() { return getToken(ionParser.IDENTIFIER, 0); }
+		public TerminalNode COMMA() { return getToken(ionParser.COMMA, 0); }
 		public TerminalNode EQUAL() { return getToken(ionParser.EQUAL, 0); }
 		public TerminalNode OTHER() { return getToken(ionParser.OTHER, 0); }
 		public ElementsContext elements() {
@@ -278,8 +161,191 @@ public class ionParser extends Parser {
 		int _parentState = getState();
 		ElementsContext _localctx = new ElementsContext(_ctx, _parentState);
 		ElementsContext _prevctx = _localctx;
-		int _startState = 4;
-		enterRecursionRule(_localctx, 4, RULE_elements, _p);
+		int _startState = 2;
+		enterRecursionRule(_localctx, 2, RULE_elements, _p);
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(28);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case IDENTIFIER:
+				{
+				setState(24);
+				match(IDENTIFIER);
+				}
+				break;
+			case COMMA:
+				{
+				setState(25);
+				match(COMMA);
+				}
+				break;
+			case EQUAL:
+				{
+				setState(26);
+				match(EQUAL);
+				}
+				break;
+			case OTHER:
+				{
+				setState(27);
+				match(OTHER);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			_ctx.stop = _input.LT(-1);
+			setState(40);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( _parseListeners!=null ) triggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					setState(38);
+					_errHandler.sync(this);
+					switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+					case 1:
+						{
+						_localctx = new ElementsContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_elements);
+						setState(30);
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						setState(31);
+						match(IDENTIFIER);
+						}
+						break;
+					case 2:
+						{
+						_localctx = new ElementsContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_elements);
+						setState(32);
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						setState(33);
+						match(COMMA);
+						}
+						break;
+					case 3:
+						{
+						_localctx = new ElementsContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_elements);
+						setState(34);
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						setState(35);
+						match(EQUAL);
+						}
+						break;
+					case 4:
+						{
+						_localctx = new ElementsContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_elements);
+						setState(36);
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						setState(37);
+						match(OTHER);
+						}
+						break;
+					}
+					} 
+				}
+				setState(42);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			unrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	public static class BodyContext extends ParserRuleContext {
+		public TerminalNode TAB() { return getToken(ionParser.TAB, 0); }
+		public RootContext root() {
+			return getRuleContext(RootContext.class,0);
+		}
+		public Body_valueContext body_value() {
+			return getRuleContext(Body_valueContext.class,0);
+		}
+		public BodyContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_body; }
+	}
+
+	public final BodyContext body() throws RecognitionException {
+		BodyContext _localctx = new BodyContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_body);
+		try {
+			setState(47);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(43);
+				match(TAB);
+				setState(44);
+				root();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(45);
+				match(TAB);
+				setState(46);
+				body_value(0);
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Body_valueContext extends ParserRuleContext {
+		public TerminalNode IDENTIFIER() { return getToken(ionParser.IDENTIFIER, 0); }
+		public TerminalNode COMMA() { return getToken(ionParser.COMMA, 0); }
+		public TerminalNode EQUAL() { return getToken(ionParser.EQUAL, 0); }
+		public TerminalNode OTHER() { return getToken(ionParser.OTHER, 0); }
+		public Body_valueContext body_value() {
+			return getRuleContext(Body_valueContext.class,0);
+		}
+		public Body_valueContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_body_value; }
+	}
+
+	public final Body_valueContext body_value() throws RecognitionException {
+		return body_value(0);
+	}
+
+	private Body_valueContext body_value(int _p) throws RecognitionException {
+		ParserRuleContext _parentctx = _ctx;
+		int _parentState = getState();
+		Body_valueContext _localctx = new Body_valueContext(_ctx, _parentState);
+		Body_valueContext _prevctx = _localctx;
+		int _startState = 6;
+		enterRecursionRule(_localctx, 6, RULE_body_value, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
@@ -289,8 +355,14 @@ public class ionParser extends Parser {
 			switch (_input.LA(1)) {
 			case IDENTIFIER:
 				{
-				setState(51);
+				setState(50);
 				match(IDENTIFIER);
+				}
+				break;
+			case COMMA:
+				{
+				setState(51);
+				match(COMMA);
 				}
 				break;
 			case EQUAL:
@@ -309,53 +381,63 @@ public class ionParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(64);
+			setState(66);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(62);
+					setState(64);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 					case 1:
 						{
-						_localctx = new ElementsContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_elements);
+						_localctx = new Body_valueContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_body_value);
 						setState(56);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(57);
 						match(IDENTIFIER);
 						}
 						break;
 					case 2:
 						{
-						_localctx = new ElementsContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_elements);
+						_localctx = new Body_valueContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_body_value);
 						setState(58);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
 						setState(59);
-						match(EQUAL);
+						match(COMMA);
 						}
 						break;
 					case 3:
 						{
-						_localctx = new ElementsContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_elements);
+						_localctx = new Body_valueContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_body_value);
 						setState(60);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(61);
+						match(EQUAL);
+						}
+						break;
+					case 4:
+						{
+						_localctx = new Body_valueContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_body_value);
+						setState(62);
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						setState(63);
 						match(OTHER);
 						}
 						break;
 					}
 					} 
 				}
-				setState(66);
+				setState(68);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			}
 			}
 		}
@@ -372,12 +454,9 @@ public class ionParser extends Parser {
 
 	public static class HeadContext extends ParserRuleContext {
 		public TerminalNode IDENTIFIER() { return getToken(ionParser.IDENTIFIER, 0); }
-		public AttrContext attr() {
-			return getRuleContext(AttrContext.class,0);
-		}
 		public TerminalNode COLON() { return getToken(ionParser.COLON, 0); }
-		public EmptyContext empty() {
-			return getRuleContext(EmptyContext.class,0);
+		public Attr_equalContext attr_equal() {
+			return getRuleContext(Attr_equalContext.class,0);
 		}
 		public HeadContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -387,19 +466,17 @@ public class ionParser extends Parser {
 
 	public final HeadContext head() throws RecognitionException {
 		HeadContext _localctx = new HeadContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_head);
+		enterRule(_localctx, 8, RULE_head);
 		try {
 			setState(75);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(67);
-				match(IDENTIFIER);
-				setState(68);
-				attr();
 				setState(69);
+				match(IDENTIFIER);
+				setState(70);
 				match(COLON);
 				}
 				break;
@@ -409,68 +486,11 @@ public class ionParser extends Parser {
 				setState(71);
 				match(IDENTIFIER);
 				setState(72);
-				empty();
+				attr_equal();
 				setState(73);
 				match(COLON);
 				}
 				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class EmptyContext extends ParserRuleContext {
-		public EmptyContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_empty; }
-	}
-
-	public final EmptyContext empty() throws RecognitionException {
-		EmptyContext _localctx = new EmptyContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_empty);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class AttrContext extends ParserRuleContext {
-		public Attr_equalContext attr_equal() {
-			return getRuleContext(Attr_equalContext.class,0);
-		}
-		public AttrContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_attr; }
-	}
-
-	public final AttrContext attr() throws RecognitionException {
-		AttrContext _localctx = new AttrContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_attr);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(79);
-			attr_equal();
 			}
 		}
 		catch (RecognitionException re) {
@@ -491,8 +511,8 @@ public class ionParser extends Parser {
 		public TerminalNode SQ(int i) {
 			return getToken(ionParser.SQ, i);
 		}
-		public OtherContext other() {
-			return getRuleContext(OtherContext.class,0);
+		public Element_valueContext element_value() {
+			return getRuleContext(Element_valueContext.class,0);
 		}
 		public List<TerminalNode> DQ() { return getTokens(ionParser.DQ); }
 		public TerminalNode DQ(int i) {
@@ -506,38 +526,38 @@ public class ionParser extends Parser {
 
 	public final Attr_equalContext attr_equal() throws RecognitionException {
 		Attr_equalContext _localctx = new Attr_equalContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_attr_equal);
+		enterRule(_localctx, 10, RULE_attr_equal);
 		try {
-			setState(93);
+			setState(89);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(81);
+				setState(77);
 				match(IDENTIFIER);
-				setState(82);
+				setState(78);
 				match(EQUAL);
-				setState(83);
+				setState(79);
 				match(SQ);
-				setState(84);
-				other(0);
-				setState(85);
+				setState(80);
+				element_value(0);
+				setState(81);
 				match(SQ);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(87);
+				setState(83);
 				match(IDENTIFIER);
-				setState(88);
+				setState(84);
 				match(EQUAL);
-				setState(89);
+				setState(85);
 				match(DQ);
-				setState(90);
-				other(0);
-				setState(91);
+				setState(86);
+				element_value(0);
+				setState(87);
 				match(DQ);
 				}
 				break;
@@ -554,66 +574,66 @@ public class ionParser extends Parser {
 		return _localctx;
 	}
 
-	public static class OtherContext extends ParserRuleContext {
-		public TerminalNode EQUAL() { return getToken(ionParser.EQUAL, 0); }
-		public TerminalNode COMMA() { return getToken(ionParser.COMMA, 0); }
+	public static class Element_valueContext extends ParserRuleContext {
 		public TerminalNode COLON() { return getToken(ionParser.COLON, 0); }
+		public TerminalNode COMMA() { return getToken(ionParser.COMMA, 0); }
+		public TerminalNode EQUAL() { return getToken(ionParser.EQUAL, 0); }
 		public TerminalNode IDENTIFIER() { return getToken(ionParser.IDENTIFIER, 0); }
 		public TerminalNode OTHER() { return getToken(ionParser.OTHER, 0); }
-		public OtherContext other() {
-			return getRuleContext(OtherContext.class,0);
+		public Element_valueContext element_value() {
+			return getRuleContext(Element_valueContext.class,0);
 		}
-		public OtherContext(ParserRuleContext parent, int invokingState) {
+		public Element_valueContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_other; }
+		@Override public int getRuleIndex() { return RULE_element_value; }
 	}
 
-	public final OtherContext other() throws RecognitionException {
-		return other(0);
+	public final Element_valueContext element_value() throws RecognitionException {
+		return element_value(0);
 	}
 
-	private OtherContext other(int _p) throws RecognitionException {
+	private Element_valueContext element_value(int _p) throws RecognitionException {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
-		OtherContext _localctx = new OtherContext(_ctx, _parentState);
-		OtherContext _prevctx = _localctx;
-		int _startState = 14;
-		enterRecursionRule(_localctx, 14, RULE_other, _p);
+		Element_valueContext _localctx = new Element_valueContext(_ctx, _parentState);
+		Element_valueContext _prevctx = _localctx;
+		int _startState = 12;
+		enterRecursionRule(_localctx, 12, RULE_element_value, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(101);
+			setState(97);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case EQUAL:
+			case COLON:
 				{
-				setState(96);
-				match(EQUAL);
+				setState(92);
+				match(COLON);
 				}
 				break;
 			case COMMA:
 				{
-				setState(97);
+				setState(93);
 				match(COMMA);
 				}
 				break;
-			case COLON:
+			case EQUAL:
 				{
-				setState(98);
-				match(COLON);
+				setState(94);
+				match(EQUAL);
 				}
 				break;
 			case IDENTIFIER:
 				{
-				setState(99);
+				setState(95);
 				match(IDENTIFIER);
 				}
 				break;
 			case OTHER:
 				{
-				setState(100);
+				setState(96);
 				match(OTHER);
 				}
 				break;
@@ -621,73 +641,73 @@ public class ionParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(115);
+			setState(111);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(113);
+					setState(109);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
 					case 1:
 						{
-						_localctx = new OtherContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_other);
-						setState(103);
+						_localctx = new Element_valueContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_element_value);
+						setState(99);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
-						setState(104);
-						match(EQUAL);
+						setState(100);
+						match(COLON);
 						}
 						break;
 					case 2:
 						{
-						_localctx = new OtherContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_other);
-						setState(105);
+						_localctx = new Element_valueContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_element_value);
+						setState(101);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(106);
+						setState(102);
 						match(COMMA);
 						}
 						break;
 					case 3:
 						{
-						_localctx = new OtherContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_other);
-						setState(107);
+						_localctx = new Element_valueContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_element_value);
+						setState(103);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-						setState(108);
-						match(COLON);
+						setState(104);
+						match(EQUAL);
 						}
 						break;
 					case 4:
 						{
-						_localctx = new OtherContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_other);
-						setState(109);
+						_localctx = new Element_valueContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_element_value);
+						setState(105);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(110);
+						setState(106);
 						match(IDENTIFIER);
 						}
 						break;
 					case 5:
 						{
-						_localctx = new OtherContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_other);
-						setState(111);
+						_localctx = new Element_valueContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_element_value);
+						setState(107);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(112);
+						setState(108);
 						match(OTHER);
 						}
 						break;
 					}
 					} 
 				}
-				setState(117);
+				setState(113);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
 			}
 			}
 		}
@@ -704,71 +724,89 @@ public class ionParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 2:
+		case 1:
 			return elements_sempred((ElementsContext)_localctx, predIndex);
-		case 7:
-			return other_sempred((OtherContext)_localctx, predIndex);
+		case 3:
+			return body_value_sempred((Body_valueContext)_localctx, predIndex);
+		case 6:
+			return element_value_sempred((Element_valueContext)_localctx, predIndex);
 		}
 		return true;
 	}
 	private boolean elements_sempred(ElementsContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 6);
+			return precpred(_ctx, 8);
 		case 1:
-			return precpred(_ctx, 5);
+			return precpred(_ctx, 7);
 		case 2:
-			return precpred(_ctx, 4);
+			return precpred(_ctx, 6);
+		case 3:
+			return precpred(_ctx, 5);
 		}
 		return true;
 	}
-	private boolean other_sempred(OtherContext _localctx, int predIndex) {
+	private boolean body_value_sempred(Body_valueContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 3:
-			return precpred(_ctx, 10);
 		case 4:
-			return precpred(_ctx, 9);
-		case 5:
 			return precpred(_ctx, 8);
-		case 6:
+		case 5:
 			return precpred(_ctx, 7);
+		case 6:
+			return precpred(_ctx, 6);
 		case 7:
+			return precpred(_ctx, 5);
+		}
+		return true;
+	}
+	private boolean element_value_sempred(Element_valueContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 8:
+			return precpred(_ctx, 10);
+		case 9:
+			return precpred(_ctx, 9);
+		case 10:
+			return precpred(_ctx, 8);
+		case 11:
+			return precpred(_ctx, 7);
+		case 12:
 			return precpred(_ctx, 6);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\13y\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\2\3\2\3\2"+
-		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3"+
-		"\2\3\2\3\2\3\2\5\2-\n\2\3\3\3\3\3\3\3\3\5\3\63\n\3\3\4\3\4\3\4\3\4\5\4"+
-		"9\n\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4A\n\4\f\4\16\4D\13\4\3\5\3\5\3\5\3\5"+
-		"\3\5\3\5\3\5\3\5\5\5N\n\5\3\6\3\6\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b"+
-		"\3\b\3\b\3\b\3\b\3\b\5\b`\n\b\3\t\3\t\3\t\3\t\3\t\3\t\5\th\n\t\3\t\3\t"+
-		"\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\7\tt\n\t\f\t\16\tw\13\t\3\t\2\4\6\20"+
-		"\n\2\4\6\b\n\f\16\20\2\2\2\u0088\2,\3\2\2\2\4\62\3\2\2\2\68\3\2\2\2\b"+
-		"M\3\2\2\2\nO\3\2\2\2\fQ\3\2\2\2\16_\3\2\2\2\20g\3\2\2\2\22\23\7\6\2\2"+
-		"\23\24\5\2\2\2\24\25\7\6\2\2\25-\3\2\2\2\26\27\5\b\5\2\27\30\7\6\2\2\30"+
-		"\31\5\4\3\2\31\32\7\6\2\2\32-\3\2\2\2\33\34\5\b\5\2\34\35\5\6\4\2\35\36"+
-		"\7\6\2\2\36-\3\2\2\2\37 \5\b\5\2 !\7\6\2\2!-\3\2\2\2\"#\7\6\2\2#-\5\2"+
-		"\2\2$%\5\b\5\2%&\7\6\2\2&\'\5\4\3\2\'-\3\2\2\2()\5\b\5\2)*\5\6\4\2*-\3"+
-		"\2\2\2+-\5\b\5\2,\22\3\2\2\2,\26\3\2\2\2,\33\3\2\2\2,\37\3\2\2\2,\"\3"+
-		"\2\2\2,$\3\2\2\2,(\3\2\2\2,+\3\2\2\2-\3\3\2\2\2./\7\7\2\2/\63\5\2\2\2"+
-		"\60\61\7\7\2\2\61\63\5\6\4\2\62.\3\2\2\2\62\60\3\2\2\2\63\5\3\2\2\2\64"+
-		"\65\b\4\1\2\659\7\n\2\2\669\7\t\2\2\679\7\13\2\28\64\3\2\2\28\66\3\2\2"+
-		"\28\67\3\2\2\29B\3\2\2\2:;\f\b\2\2;A\7\n\2\2<=\f\7\2\2=A\7\t\2\2>?\f\6"+
-		"\2\2?A\7\13\2\2@:\3\2\2\2@<\3\2\2\2@>\3\2\2\2AD\3\2\2\2B@\3\2\2\2BC\3"+
-		"\2\2\2C\7\3\2\2\2DB\3\2\2\2EF\7\n\2\2FG\5\f\7\2GH\7\5\2\2HN\3\2\2\2IJ"+
-		"\7\n\2\2JK\5\n\6\2KL\7\5\2\2LN\3\2\2\2ME\3\2\2\2MI\3\2\2\2N\t\3\2\2\2"+
-		"OP\3\2\2\2P\13\3\2\2\2QR\5\16\b\2R\r\3\2\2\2ST\7\n\2\2TU\7\t\2\2UV\7\4"+
-		"\2\2VW\5\20\t\2WX\7\4\2\2X`\3\2\2\2YZ\7\n\2\2Z[\7\t\2\2[\\\7\3\2\2\\]"+
-		"\5\20\t\2]^\7\3\2\2^`\3\2\2\2_S\3\2\2\2_Y\3\2\2\2`\17\3\2\2\2ab\b\t\1"+
-		"\2bh\7\t\2\2ch\7\b\2\2dh\7\5\2\2eh\7\n\2\2fh\7\13\2\2ga\3\2\2\2gc\3\2"+
-		"\2\2gd\3\2\2\2ge\3\2\2\2gf\3\2\2\2hu\3\2\2\2ij\f\f\2\2jt\7\t\2\2kl\f\13"+
-		"\2\2lt\7\b\2\2mn\f\n\2\2nt\7\5\2\2op\f\t\2\2pt\7\n\2\2qr\f\b\2\2rt\7\13"+
-		"\2\2si\3\2\2\2sk\3\2\2\2sm\3\2\2\2so\3\2\2\2sq\3\2\2\2tw\3\2\2\2us\3\2"+
-		"\2\2uv\3\2\2\2v\21\3\2\2\2wu\3\2\2\2\f,\628@BM_gsu";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\13u\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\3\2\3\2\3\2\3\2\3\2\3\2\3\2"+
+		"\5\2\30\n\2\3\3\3\3\3\3\3\3\3\3\5\3\37\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\7\3)\n\3\f\3\16\3,\13\3\3\4\3\4\3\4\3\4\5\4\62\n\4\3\5\3\5\3\5\3"+
+		"\5\3\5\5\59\n\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5C\n\5\f\5\16\5F\13"+
+		"\5\3\6\3\6\3\6\3\6\3\6\3\6\5\6N\n\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3"+
+		"\7\3\7\3\7\3\7\5\7\\\n\7\3\b\3\b\3\b\3\b\3\b\3\b\5\bd\n\b\3\b\3\b\3\b"+
+		"\3\b\3\b\3\b\3\b\3\b\3\b\3\b\7\bp\n\b\f\b\16\bs\13\b\3\b\2\5\4\b\16\t"+
+		"\2\4\6\b\n\f\16\2\2\2\u0088\2\27\3\2\2\2\4\36\3\2\2\2\6\61\3\2\2\2\b8"+
+		"\3\2\2\2\nM\3\2\2\2\f[\3\2\2\2\16c\3\2\2\2\20\21\5\n\6\2\21\22\7\6\2\2"+
+		"\22\23\5\6\4\2\23\30\3\2\2\2\24\25\5\n\6\2\25\26\5\4\3\2\26\30\3\2\2\2"+
+		"\27\20\3\2\2\2\27\24\3\2\2\2\30\3\3\2\2\2\31\32\b\3\1\2\32\37\7\n\2\2"+
+		"\33\37\7\b\2\2\34\37\7\t\2\2\35\37\7\13\2\2\36\31\3\2\2\2\36\33\3\2\2"+
+		"\2\36\34\3\2\2\2\36\35\3\2\2\2\37*\3\2\2\2 !\f\n\2\2!)\7\n\2\2\"#\f\t"+
+		"\2\2#)\7\b\2\2$%\f\b\2\2%)\7\t\2\2&\'\f\7\2\2\')\7\13\2\2( \3\2\2\2(\""+
+		"\3\2\2\2($\3\2\2\2(&\3\2\2\2),\3\2\2\2*(\3\2\2\2*+\3\2\2\2+\5\3\2\2\2"+
+		",*\3\2\2\2-.\7\7\2\2.\62\5\2\2\2/\60\7\7\2\2\60\62\5\b\5\2\61-\3\2\2\2"+
+		"\61/\3\2\2\2\62\7\3\2\2\2\63\64\b\5\1\2\649\7\n\2\2\659\7\b\2\2\669\7"+
+		"\t\2\2\679\7\13\2\28\63\3\2\2\28\65\3\2\2\28\66\3\2\2\28\67\3\2\2\29D"+
+		"\3\2\2\2:;\f\n\2\2;C\7\n\2\2<=\f\t\2\2=C\7\b\2\2>?\f\b\2\2?C\7\t\2\2@"+
+		"A\f\7\2\2AC\7\13\2\2B:\3\2\2\2B<\3\2\2\2B>\3\2\2\2B@\3\2\2\2CF\3\2\2\2"+
+		"DB\3\2\2\2DE\3\2\2\2E\t\3\2\2\2FD\3\2\2\2GH\7\n\2\2HN\7\5\2\2IJ\7\n\2"+
+		"\2JK\5\f\7\2KL\7\5\2\2LN\3\2\2\2MG\3\2\2\2MI\3\2\2\2N\13\3\2\2\2OP\7\n"+
+		"\2\2PQ\7\t\2\2QR\7\4\2\2RS\5\16\b\2ST\7\4\2\2T\\\3\2\2\2UV\7\n\2\2VW\7"+
+		"\t\2\2WX\7\3\2\2XY\5\16\b\2YZ\7\3\2\2Z\\\3\2\2\2[O\3\2\2\2[U\3\2\2\2\\"+
+		"\r\3\2\2\2]^\b\b\1\2^d\7\5\2\2_d\7\b\2\2`d\7\t\2\2ad\7\n\2\2bd\7\13\2"+
+		"\2c]\3\2\2\2c_\3\2\2\2c`\3\2\2\2ca\3\2\2\2cb\3\2\2\2dq\3\2\2\2ef\f\f\2"+
+		"\2fp\7\5\2\2gh\f\13\2\2hp\7\b\2\2ij\f\n\2\2jp\7\t\2\2kl\f\t\2\2lp\7\n"+
+		"\2\2mn\f\b\2\2np\7\13\2\2oe\3\2\2\2og\3\2\2\2oi\3\2\2\2ok\3\2\2\2om\3"+
+		"\2\2\2ps\3\2\2\2qo\3\2\2\2qr\3\2\2\2r\17\3\2\2\2sq\3\2\2\2\17\27\36(*"+
+		"\618BDM[coq";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

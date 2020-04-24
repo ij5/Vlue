@@ -5,7 +5,11 @@ tokens = lexer.tokens
 
 def p_root(t):
     '''
-    root : NEWLINE root
+    root : NEWLINE root NEWLINE
+        | head NEWLINE body NEWLINE
+        | head elements NEWLINE
+        | head NEWLINE
+        | NEWLINE root
         | head NEWLINE body
         | head elements
         | head
@@ -85,7 +89,12 @@ def p_error(t):
 
 parser = yacc.yacc()
 
-data = """div class='https://google.com':"""
+data = """
+div class='https://google.com':
+
+
+
+"""
 
 result = parser.parse(data)
 

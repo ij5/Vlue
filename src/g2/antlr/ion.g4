@@ -1,49 +1,25 @@
 grammar ion;
 
-root: NEWLINE root NEWLINE
-    | head NEWLINE body NEWLINE
-    | head elements NEWLINE
-    | head NEWLINE
-    | NEWLINE root
-    | head NEWLINE body
+root: head NEWLINE body
     | head elements
-    | head
     ;
 
-body: TAB root
-    | TAB elements
+head: IDENTIFIER COLON
+    | IDENTIFIER attr_equal COLON
     ;
 
-elements: elements IDENTIFIER
-    | elements EQUAL
-    | elements OTHER
-    | IDENTIFIER
-    | EQUAL
-    | OTHER
+attr_equal: IDENTIFIER EQUAL SQ element_value SQ
+    | IDENTIFIER EQUAL DQ element_value DQ
     ;
 
-head: IDENTIFIER attr COLON
-    | IDENTIFIER empty COLON
-    ;
-
-empty: 
-;
-
-attr: attr_equal
-    ;
-
-attr_equal: IDENTIFIER EQUAL SQ other SQ
-    | IDENTIFIER EQUAL DQ other DQ
-    ;
-
-other: other EQUAL
-    | other COMMA
-    | other COLON
-    | other IDENTIFIER
-    | other OTHER
-    | EQUAL
-    | COMMA
+element_value: element_value COLON
+    | element_value COMMA
+    | element_value EQUAL
+    | element_value IDENTIFIER
+    | element_value OTHER
     | COLON
+    | COMMA
+    | EQUAL
     | IDENTIFIER
     | OTHER
     ;

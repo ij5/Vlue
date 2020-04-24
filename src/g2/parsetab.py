@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COLON COMMA DQ EQUAL IDENTIFIER NEWLINE OTHER SQ TAB\n    head : IDENTIFIER attr COLON\n        | IDENTIFIER empty COLON\n    \n    attr : attr_equal\n        | empty\n    \n    attr_equal : IDENTIFIER EQUAL SQ other SQ\n        | IDENTIFIER EQUAL DQ other DQ\n    \n    other : other EQUAL\n        | other COMMA\n        | other COLON\n        | other IDENTIFIER\n        | other OTHER\n        | EQUAL\n        | COMMA\n        | COLON\n        | IDENTIFIER\n        | OTHER\n    empty : '
+_lr_signature = 'COLON COMMA DQ EQUAL IDENTIFIER NEWLINE OTHER SQ TAB\n    root : head NEWLINE body\n        | head elements\n        | head\n    \n    body : TAB root\n        | TAB elements\n    \n    elements : elements IDENTIFIER\n        | elements EQUAL\n        | elements OTHER\n        | IDENTIFIER\n        | EQUAL\n        | OTHER\n    \n    head : IDENTIFIER attr COLON\n        | IDENTIFIER empty COLON\n    \n    attr : attr_equal\n        | empty\n    \n    attr_equal : IDENTIFIER EQUAL SQ other SQ\n        | IDENTIFIER EQUAL DQ other DQ\n    \n    other : other EQUAL\n        | other COMMA\n        | other COLON\n        | other IDENTIFIER\n        | other OTHER\n        | EQUAL\n        | COMMA\n        | COLON\n        | IDENTIFIER\n        | OTHER\n    empty : '
     
-_lr_action_items = {'IDENTIFIER':([0,2,10,11,12,13,14,15,16,17,18,19,20,22,23,24,],[2,3,12,12,-15,-12,19,-13,-14,-16,19,-10,-7,-8,-9,-11,]),'$end':([1,8,9,],[0,-1,-2,]),'COLON':([2,4,5,6,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,],[-17,8,9,-3,16,16,-15,-12,23,-13,-14,-16,23,-10,-7,-5,-8,-9,-11,-6,]),'EQUAL':([3,10,11,12,13,14,15,16,17,18,19,20,22,23,24,],[7,13,13,-15,-12,20,-13,-14,-16,20,-10,-7,-8,-9,-11,]),'SQ':([7,12,13,14,15,16,17,19,20,22,23,24,],[10,-15,-12,21,-13,-14,-16,-10,-7,-8,-9,-11,]),'DQ':([7,12,13,15,16,17,18,19,20,22,23,24,],[11,-15,-12,-13,-14,-16,25,-10,-7,-8,-9,-11,]),'COMMA':([10,11,12,13,14,15,16,17,18,19,20,22,23,24,],[15,15,-15,-12,22,-13,-14,-16,22,-10,-7,-8,-9,-11,]),'OTHER':([10,11,12,13,14,15,16,17,18,19,20,22,23,24,],[17,17,-15,-12,24,-13,-14,-16,24,-10,-7,-8,-9,-11,]),}
+_lr_action_items = {'IDENTIFIER':([0,2,3,5,6,7,8,14,15,16,17,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,36,37,38,],[3,6,9,15,-9,-10,-11,23,-6,-7,-8,-12,-13,15,9,26,26,-26,-23,33,-24,-25,-27,33,-21,-18,-19,-20,-22,]),'$end':([1,2,5,6,7,8,13,15,16,17,19,20,21,22,23,],[0,-3,-2,-9,-10,-11,-1,-6,-7,-8,-12,-13,-4,-5,-9,]),'NEWLINE':([2,19,20,],[4,-12,-13,]),'EQUAL':([2,5,6,7,8,9,14,15,16,17,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,36,37,38,],[7,16,-9,-10,-11,18,7,-6,-7,-8,-12,-13,16,-9,27,27,-26,-23,34,-24,-25,-27,34,-21,-18,-19,-20,-22,]),'OTHER':([2,5,6,7,8,14,15,16,17,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,36,37,38,],[8,17,-9,-10,-11,8,-6,-7,-8,-12,-13,17,-9,31,31,-26,-23,38,-24,-25,-27,38,-21,-18,-19,-20,-22,]),'COLON':([3,10,11,12,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,],[-28,19,20,-14,-28,30,30,-26,-23,37,-24,-25,-27,37,-21,-18,-16,-19,-20,-22,-17,]),'TAB':([4,],[14,]),'SQ':([18,26,27,28,29,30,31,33,34,36,37,38,],[24,-26,-23,35,-24,-25,-27,-21,-18,-19,-20,-22,]),'DQ':([18,26,27,29,30,31,32,33,34,36,37,38,],[25,-26,-23,-24,-25,-27,39,-21,-18,-19,-20,-22,]),'COMMA':([24,25,26,27,28,29,30,31,32,33,34,36,37,38,],[29,29,-26,-23,36,-24,-25,-27,36,-21,-18,-19,-20,-22,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'head':([0,],[1,]),'attr':([2,],[4,]),'empty':([2,],[5,]),'attr_equal':([2,],[6,]),'other':([10,11,],[14,18,]),}
+_lr_goto_items = {'root':([0,14,],[1,21,]),'head':([0,14,],[2,2,]),'elements':([2,14,],[5,22,]),'attr':([3,23,],[10,10,]),'empty':([3,23,],[11,11,]),'attr_equal':([3,23,],[12,12,]),'body':([4,],[13,]),'other':([24,25,],[28,32,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,22 +26,33 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> head","S'",1,None,None,None),
-  ('head -> IDENTIFIER attr COLON','head',3,'p_head_exp1','parser.py',8),
-  ('head -> IDENTIFIER empty COLON','head',3,'p_head_exp1','parser.py',9),
-  ('attr -> attr_equal','attr',1,'p_attr','parser.py',15),
-  ('attr -> empty','attr',1,'p_attr','parser.py',16),
-  ('attr_equal -> IDENTIFIER EQUAL SQ other SQ','attr_equal',5,'p_attr_equal','parser.py',21),
-  ('attr_equal -> IDENTIFIER EQUAL DQ other DQ','attr_equal',5,'p_attr_equal','parser.py',22),
-  ('other -> other EQUAL','other',2,'p_other','parser.py',28),
-  ('other -> other COMMA','other',2,'p_other','parser.py',29),
-  ('other -> other COLON','other',2,'p_other','parser.py',30),
-  ('other -> other IDENTIFIER','other',2,'p_other','parser.py',31),
-  ('other -> other OTHER','other',2,'p_other','parser.py',32),
-  ('other -> EQUAL','other',1,'p_other','parser.py',33),
-  ('other -> COMMA','other',1,'p_other','parser.py',34),
-  ('other -> COLON','other',1,'p_other','parser.py',35),
-  ('other -> IDENTIFIER','other',1,'p_other','parser.py',36),
-  ('other -> OTHER','other',1,'p_other','parser.py',37),
-  ('empty -> <empty>','empty',0,'p_empty','parser.py',42),
+  ("S' -> root","S'",1,None,None,None),
+  ('root -> head NEWLINE body','root',3,'p_root','parser.py',8),
+  ('root -> head elements','root',2,'p_root','parser.py',9),
+  ('root -> head','root',1,'p_root','parser.py',10),
+  ('body -> TAB root','body',2,'p_body_exp','parser.py',16),
+  ('body -> TAB elements','body',2,'p_body_exp','parser.py',17),
+  ('elements -> elements IDENTIFIER','elements',2,'p_elements','parser.py',23),
+  ('elements -> elements EQUAL','elements',2,'p_elements','parser.py',24),
+  ('elements -> elements OTHER','elements',2,'p_elements','parser.py',25),
+  ('elements -> IDENTIFIER','elements',1,'p_elements','parser.py',26),
+  ('elements -> EQUAL','elements',1,'p_elements','parser.py',27),
+  ('elements -> OTHER','elements',1,'p_elements','parser.py',28),
+  ('head -> IDENTIFIER attr COLON','head',3,'p_head_exp','parser.py',34),
+  ('head -> IDENTIFIER empty COLON','head',3,'p_head_exp','parser.py',35),
+  ('attr -> attr_equal','attr',1,'p_attr','parser.py',42),
+  ('attr -> empty','attr',1,'p_attr','parser.py',43),
+  ('attr_equal -> IDENTIFIER EQUAL SQ other SQ','attr_equal',5,'p_attr_equal','parser.py',52),
+  ('attr_equal -> IDENTIFIER EQUAL DQ other DQ','attr_equal',5,'p_attr_equal','parser.py',53),
+  ('other -> other EQUAL','other',2,'p_other','parser.py',59),
+  ('other -> other COMMA','other',2,'p_other','parser.py',60),
+  ('other -> other COLON','other',2,'p_other','parser.py',61),
+  ('other -> other IDENTIFIER','other',2,'p_other','parser.py',62),
+  ('other -> other OTHER','other',2,'p_other','parser.py',63),
+  ('other -> EQUAL','other',1,'p_other','parser.py',64),
+  ('other -> COMMA','other',1,'p_other','parser.py',65),
+  ('other -> COLON','other',1,'p_other','parser.py',66),
+  ('other -> IDENTIFIER','other',1,'p_other','parser.py',67),
+  ('other -> OTHER','other',1,'p_other','parser.py',68),
+  ('empty -> <empty>','empty',0,'p_empty','parser.py',76),
 ]

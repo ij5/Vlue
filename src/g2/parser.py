@@ -5,15 +5,30 @@ tokens = lexer.tokens
 
 def p_root(t):
     '''
-    root : head body
+    root : NEWLINE root
+        | head NEWLINE body
+        | head elements
+        | head
     '''
+    pass
 
 def p_body_exp(t):
     '''
-    body : TAB
+    body : TAB root
+        | TAB elements
     '''
+    pass
 
-
+def p_elements(t):
+    '''
+    elements : elements IDENTIFIER
+        | elements EQUAL
+        | elements OTHER
+        | IDENTIFIER
+        | EQUAL
+        | OTHER
+    '''
+    pass
 
 def p_head_exp(t):
     '''

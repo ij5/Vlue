@@ -68,6 +68,7 @@ while True:
     if not tok:
         break
     print(tok)
+print()
 
 
 ###################
@@ -96,11 +97,11 @@ def p_variable_declaration_2(t):
     '''
     print(t[4])
     variable[t[2]] = t[4]
-    print(variable)
+    print(variable.keys())
 
 def p_variable_declaration_1(t):
     'variable_declaration : VAR IDENTIFIER'
-    if t[2] in variable.keys():
+    if(t[2] in variable):
         error("변수는 중복 선언할 수 없습니다.")
     else:
         variable[t[2]] = 0
@@ -155,6 +156,6 @@ def error(s):
 
 parser = yacc.yacc()
 
-data = """var asd = 3+4 var asd = 3 +5"""
+data = """var asd = 3+4 var asd = 3 +5*2"""
 
 result = parser.parse(data)

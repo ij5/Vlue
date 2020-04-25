@@ -11,10 +11,26 @@ tokens = (
     'EQUAL',
     'INT',
     'TAB',
+    'PLUS',
+    'MINUS',
+    'DIV',
+    'MUL',
+    'RSB',
+    'LSB',
+    'RMB',
+    'LMB',
     'NEWLINE'
 )
 
 t_EQUAL = r'='
+t_DIV = r'\/'
+t_MUL = r'\*'
+t_PLUS = r'\+'
+t_MINUS = r'\-'
+t_LSB = r'\('
+t_RSB = r'\)'
+t_LMB = r'\{'
+t_RMB = r'\}'
 
 t_ignore = ' '
 
@@ -63,6 +79,12 @@ from ply import yacc
 varname = []
 varval = []
 
+precedence = (
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'MUL', 'DIV'),
+    ('nonaccoc', 'UMINUS')
+)
+
 def p_expression(t):
     '''
     expression : expression variable_declaration
@@ -83,6 +105,39 @@ def p_variable_declaration_1(t):
     print(varval)
     print(varname)
 
+
+def p_add(t):
+    'calculate : calculate PLUS calculate'
+    t[0] = t[1] + t[3]
+
+def p_sub(t):
+    'calculate : calculate MINUS calculate'
+    t[0] = t[1] - t[3]
+
+def p_calculate2uminus(t):
+    'calculate : MINUS calculate %prec UMINUS'
+    t[0] = - t[2]
+
+def p_mul_div(t):
+    '''
+    calculate : calculate MUL calculate
+        | calculate DIV calculate
+    '''
+    if(t[2]=='*'):
+        t[0] = t[1] * t[3]
+    else:
+        if(t[3]==0):
+            error("0으로 나눌 수 없습니다.")
+        t[0] = t[1] / t[3]
+
+def p_calculate2num(t):
+    'calculate : INT'
+    t[0] = t[1]
+
+def p_parens(t):
+    'calculate : LSB calculate RSB'
+    t[0] = t[2]
+
 def p_error(t):
     if(t):
         print("Error on token '%s'" % t.value)
@@ -95,6 +150,6 @@ def error(s):
 
 parser = yacc.yacc()
 
-data = """var asd"""
+data = """var asd = 3+4"""
 
 result = parser.parse(data)

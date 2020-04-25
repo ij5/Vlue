@@ -82,7 +82,7 @@ varval = []
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'MUL', 'DIV'),
-    ('nonaccoc', 'UMINUS')
+    ('right', 'UMINUS')
 )
 
 def p_expression(t):
@@ -92,7 +92,9 @@ def p_expression(t):
     '''
 
 def p_variable_declaration_2(t):
-    'variable_declaration : VAR IDENTIFIER EQUAL INT'
+    '''
+    variable_declaration : VAR IDENTIFIER EQUAL calculate
+    '''
 
 
 def p_variable_declaration_1(t):

@@ -87,24 +87,22 @@ precedence = (
 
 def p_expression(t):
     '''
-    expression : expression variable_declaration
+    expression : NEWLINE expression variable_declaration
+        | expression variable_declaration
+        | NEWLINE variable_declaration
         | variable_declaration
     '''
 
 def p_variable_declaration_2(t):
     '''
-    variable_declaration : VAR IDENTIFIER EQUAL calculate
+    variable_declaration : VAR IDENTIFIER EQUAL calculate NEWLINE
     '''
-    print(t[4])
     variable[t[2]] = t[4]
-    print(variable.keys())
+    print(variable)
 
 def p_variable_declaration_1(t):
-    'variable_declaration : VAR IDENTIFIER'
-    if(t[2] in variable):
-        error("변수는 중복 선언할 수 없습니다.")
-    else:
-        variable[t[2]] = 0
+    'variable_declaration : VAR IDENTIFIER NEWLINE'
+    variable[t[2]] = 0
 
 #########CALCULATE
 
@@ -156,6 +154,9 @@ def error(s):
 
 parser = yacc.yacc()
 
-data = """var asd = 3+4 var asd = 3 +5*2"""
+data = """
+var asd = 3+4 
+var asd = 3 +5*2
+"""
 
 result = parser.parse(data)

@@ -95,7 +95,7 @@ def p_variable_declaration_2(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL calculate
     '''
-
+    print(t[4])
 
 def p_variable_declaration_1(t):
     'variable_declaration : VAR IDENTIFIER'

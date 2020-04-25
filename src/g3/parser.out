@@ -21,29 +21,30 @@ Rule 9     calculate -> MINUS calculate
 Rule 10    calculate -> calculate MUL calculate
 Rule 11    calculate -> calculate DIV calculate
 Rule 12    calculate -> INT
-Rule 13    calculate -> LSB calculate RSB
+Rule 13    calculate -> IDENTIFIER
+Rule 14    calculate -> LSB calculate RSB
 
 Terminals, with rules where they appear
 
 DIV                  : 11
 EQUAL                : 5
-IDENTIFIER           : 5 6
+IDENTIFIER           : 5 6 13
 INT                  : 12
 LMB                  : 
-LSB                  : 13
+LSB                  : 14
 MINUS                : 8 9
 MUL                  : 10
 NEWLINE              : 1 3 5 6
 PLUS                 : 7
 RMB                  : 
-RSB                  : 13
+RSB                  : 14
 TAB                  : 
 VAR                  : 5 6
 error                : 
 
 Nonterminals, with rules where they appear
 
-calculate            : 5 7 7 8 8 9 10 10 11 11 13
+calculate            : 5 7 7 8 8 9 10 10 11 11 14
 expression           : 1 2 0
 variable_declaration : 1 2 3 4
 
@@ -170,13 +171,15 @@ state 10
     (10) calculate -> . calculate MUL calculate
     (11) calculate -> . calculate DIV calculate
     (12) calculate -> . INT
-    (13) calculate -> . LSB calculate RSB
+    (13) calculate -> . IDENTIFIER
+    (14) calculate -> . LSB calculate RSB
 
-    MINUS           shift and go to state 13
-    INT             shift and go to state 14
-    LSB             shift and go to state 15
+    MINUS           shift and go to state 14
+    INT             shift and go to state 15
+    IDENTIFIER      shift and go to state 12
+    LSB             shift and go to state 16
 
-    calculate                      shift and go to state 12
+    calculate                      shift and go to state 13
 
 state 11
 
@@ -188,20 +191,32 @@ state 11
 
 state 12
 
+    (13) calculate -> IDENTIFIER .
+
+    NEWLINE         reduce using rule 13 (calculate -> IDENTIFIER .)
+    PLUS            reduce using rule 13 (calculate -> IDENTIFIER .)
+    MINUS           reduce using rule 13 (calculate -> IDENTIFIER .)
+    MUL             reduce using rule 13 (calculate -> IDENTIFIER .)
+    DIV             reduce using rule 13 (calculate -> IDENTIFIER .)
+    RSB             reduce using rule 13 (calculate -> IDENTIFIER .)
+
+
+state 13
+
     (5) variable_declaration -> VAR IDENTIFIER EQUAL calculate . NEWLINE
     (7) calculate -> calculate . PLUS calculate
     (8) calculate -> calculate . MINUS calculate
     (10) calculate -> calculate . MUL calculate
     (11) calculate -> calculate . DIV calculate
 
-    NEWLINE         shift and go to state 16
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
-    MUL             shift and go to state 19
-    DIV             shift and go to state 20
+    NEWLINE         shift and go to state 17
+    PLUS            shift and go to state 18
+    MINUS           shift and go to state 19
+    MUL             shift and go to state 20
+    DIV             shift and go to state 21
 
 
-state 13
+state 14
 
     (9) calculate -> MINUS . calculate
     (7) calculate -> . calculate PLUS calculate
@@ -210,15 +225,17 @@ state 13
     (10) calculate -> . calculate MUL calculate
     (11) calculate -> . calculate DIV calculate
     (12) calculate -> . INT
-    (13) calculate -> . LSB calculate RSB
+    (13) calculate -> . IDENTIFIER
+    (14) calculate -> . LSB calculate RSB
 
-    MINUS           shift and go to state 13
-    INT             shift and go to state 14
-    LSB             shift and go to state 15
+    MINUS           shift and go to state 14
+    INT             shift and go to state 15
+    IDENTIFIER      shift and go to state 12
+    LSB             shift and go to state 16
 
-    calculate                      shift and go to state 21
+    calculate                      shift and go to state 22
 
-state 14
+state 15
 
     (12) calculate -> INT .
 
@@ -230,24 +247,26 @@ state 14
     RSB             reduce using rule 12 (calculate -> INT .)
 
 
-state 15
+state 16
 
-    (13) calculate -> LSB . calculate RSB
+    (14) calculate -> LSB . calculate RSB
     (7) calculate -> . calculate PLUS calculate
     (8) calculate -> . calculate MINUS calculate
     (9) calculate -> . MINUS calculate
     (10) calculate -> . calculate MUL calculate
     (11) calculate -> . calculate DIV calculate
     (12) calculate -> . INT
-    (13) calculate -> . LSB calculate RSB
+    (13) calculate -> . IDENTIFIER
+    (14) calculate -> . LSB calculate RSB
 
-    MINUS           shift and go to state 13
-    INT             shift and go to state 14
-    LSB             shift and go to state 15
+    MINUS           shift and go to state 14
+    INT             shift and go to state 15
+    IDENTIFIER      shift and go to state 12
+    LSB             shift and go to state 16
 
-    calculate                      shift and go to state 22
+    calculate                      shift and go to state 23
 
-state 16
+state 17
 
     (5) variable_declaration -> VAR IDENTIFIER EQUAL calculate NEWLINE .
 
@@ -255,7 +274,7 @@ state 16
     $end            reduce using rule 5 (variable_declaration -> VAR IDENTIFIER EQUAL calculate NEWLINE .)
 
 
-state 17
+state 18
 
     (7) calculate -> calculate PLUS . calculate
     (7) calculate -> . calculate PLUS calculate
@@ -264,15 +283,17 @@ state 17
     (10) calculate -> . calculate MUL calculate
     (11) calculate -> . calculate DIV calculate
     (12) calculate -> . INT
-    (13) calculate -> . LSB calculate RSB
+    (13) calculate -> . IDENTIFIER
+    (14) calculate -> . LSB calculate RSB
 
-    MINUS           shift and go to state 13
-    INT             shift and go to state 14
-    LSB             shift and go to state 15
+    MINUS           shift and go to state 14
+    INT             shift and go to state 15
+    IDENTIFIER      shift and go to state 12
+    LSB             shift and go to state 16
 
-    calculate                      shift and go to state 23
+    calculate                      shift and go to state 24
 
-state 18
+state 19
 
     (8) calculate -> calculate MINUS . calculate
     (7) calculate -> . calculate PLUS calculate
@@ -281,15 +302,17 @@ state 18
     (10) calculate -> . calculate MUL calculate
     (11) calculate -> . calculate DIV calculate
     (12) calculate -> . INT
-    (13) calculate -> . LSB calculate RSB
+    (13) calculate -> . IDENTIFIER
+    (14) calculate -> . LSB calculate RSB
 
-    MINUS           shift and go to state 13
-    INT             shift and go to state 14
-    LSB             shift and go to state 15
+    MINUS           shift and go to state 14
+    INT             shift and go to state 15
+    IDENTIFIER      shift and go to state 12
+    LSB             shift and go to state 16
 
-    calculate                      shift and go to state 24
+    calculate                      shift and go to state 25
 
-state 19
+state 20
 
     (10) calculate -> calculate MUL . calculate
     (7) calculate -> . calculate PLUS calculate
@@ -298,15 +321,17 @@ state 19
     (10) calculate -> . calculate MUL calculate
     (11) calculate -> . calculate DIV calculate
     (12) calculate -> . INT
-    (13) calculate -> . LSB calculate RSB
+    (13) calculate -> . IDENTIFIER
+    (14) calculate -> . LSB calculate RSB
 
-    MINUS           shift and go to state 13
-    INT             shift and go to state 14
-    LSB             shift and go to state 15
+    MINUS           shift and go to state 14
+    INT             shift and go to state 15
+    IDENTIFIER      shift and go to state 12
+    LSB             shift and go to state 16
 
-    calculate                      shift and go to state 25
+    calculate                      shift and go to state 26
 
-state 20
+state 21
 
     (11) calculate -> calculate DIV . calculate
     (7) calculate -> . calculate PLUS calculate
@@ -315,15 +340,17 @@ state 20
     (10) calculate -> . calculate MUL calculate
     (11) calculate -> . calculate DIV calculate
     (12) calculate -> . INT
-    (13) calculate -> . LSB calculate RSB
+    (13) calculate -> . IDENTIFIER
+    (14) calculate -> . LSB calculate RSB
 
-    MINUS           shift and go to state 13
-    INT             shift and go to state 14
-    LSB             shift and go to state 15
+    MINUS           shift and go to state 14
+    INT             shift and go to state 15
+    IDENTIFIER      shift and go to state 12
+    LSB             shift and go to state 16
 
-    calculate                      shift and go to state 26
+    calculate                      shift and go to state 27
 
-state 21
+state 22
 
     (9) calculate -> MINUS calculate .
     (7) calculate -> calculate . PLUS calculate
@@ -338,28 +365,28 @@ state 21
     DIV             reduce using rule 9 (calculate -> MINUS calculate .)
     RSB             reduce using rule 9 (calculate -> MINUS calculate .)
 
-  ! PLUS            [ shift and go to state 17 ]
-  ! MINUS           [ shift and go to state 18 ]
-  ! MUL             [ shift and go to state 19 ]
-  ! DIV             [ shift and go to state 20 ]
+  ! PLUS            [ shift and go to state 18 ]
+  ! MINUS           [ shift and go to state 19 ]
+  ! MUL             [ shift and go to state 20 ]
+  ! DIV             [ shift and go to state 21 ]
 
 
-state 22
+state 23
 
-    (13) calculate -> LSB calculate . RSB
+    (14) calculate -> LSB calculate . RSB
     (7) calculate -> calculate . PLUS calculate
     (8) calculate -> calculate . MINUS calculate
     (10) calculate -> calculate . MUL calculate
     (11) calculate -> calculate . DIV calculate
 
-    RSB             shift and go to state 27
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
-    MUL             shift and go to state 19
-    DIV             shift and go to state 20
+    RSB             shift and go to state 28
+    PLUS            shift and go to state 18
+    MINUS           shift and go to state 19
+    MUL             shift and go to state 20
+    DIV             shift and go to state 21
 
 
-state 23
+state 24
 
     (7) calculate -> calculate PLUS calculate .
     (7) calculate -> calculate . PLUS calculate
@@ -371,16 +398,16 @@ state 23
     PLUS            reduce using rule 7 (calculate -> calculate PLUS calculate .)
     MINUS           reduce using rule 7 (calculate -> calculate PLUS calculate .)
     RSB             reduce using rule 7 (calculate -> calculate PLUS calculate .)
-    MUL             shift and go to state 19
-    DIV             shift and go to state 20
+    MUL             shift and go to state 20
+    DIV             shift and go to state 21
 
   ! MUL             [ reduce using rule 7 (calculate -> calculate PLUS calculate .) ]
   ! DIV             [ reduce using rule 7 (calculate -> calculate PLUS calculate .) ]
-  ! PLUS            [ shift and go to state 17 ]
-  ! MINUS           [ shift and go to state 18 ]
+  ! PLUS            [ shift and go to state 18 ]
+  ! MINUS           [ shift and go to state 19 ]
 
 
-state 24
+state 25
 
     (8) calculate -> calculate MINUS calculate .
     (7) calculate -> calculate . PLUS calculate
@@ -392,16 +419,16 @@ state 24
     PLUS            reduce using rule 8 (calculate -> calculate MINUS calculate .)
     MINUS           reduce using rule 8 (calculate -> calculate MINUS calculate .)
     RSB             reduce using rule 8 (calculate -> calculate MINUS calculate .)
-    MUL             shift and go to state 19
-    DIV             shift and go to state 20
+    MUL             shift and go to state 20
+    DIV             shift and go to state 21
 
   ! MUL             [ reduce using rule 8 (calculate -> calculate MINUS calculate .) ]
   ! DIV             [ reduce using rule 8 (calculate -> calculate MINUS calculate .) ]
-  ! PLUS            [ shift and go to state 17 ]
-  ! MINUS           [ shift and go to state 18 ]
+  ! PLUS            [ shift and go to state 18 ]
+  ! MINUS           [ shift and go to state 19 ]
 
 
-state 25
+state 26
 
     (10) calculate -> calculate MUL calculate .
     (7) calculate -> calculate . PLUS calculate
@@ -416,13 +443,13 @@ state 25
     DIV             reduce using rule 10 (calculate -> calculate MUL calculate .)
     RSB             reduce using rule 10 (calculate -> calculate MUL calculate .)
 
-  ! PLUS            [ shift and go to state 17 ]
-  ! MINUS           [ shift and go to state 18 ]
-  ! MUL             [ shift and go to state 19 ]
-  ! DIV             [ shift and go to state 20 ]
+  ! PLUS            [ shift and go to state 18 ]
+  ! MINUS           [ shift and go to state 19 ]
+  ! MUL             [ shift and go to state 20 ]
+  ! DIV             [ shift and go to state 21 ]
 
 
-state 26
+state 27
 
     (11) calculate -> calculate DIV calculate .
     (7) calculate -> calculate . PLUS calculate
@@ -437,22 +464,22 @@ state 26
     DIV             reduce using rule 11 (calculate -> calculate DIV calculate .)
     RSB             reduce using rule 11 (calculate -> calculate DIV calculate .)
 
-  ! PLUS            [ shift and go to state 17 ]
-  ! MINUS           [ shift and go to state 18 ]
-  ! MUL             [ shift and go to state 19 ]
-  ! DIV             [ shift and go to state 20 ]
+  ! PLUS            [ shift and go to state 18 ]
+  ! MINUS           [ shift and go to state 19 ]
+  ! MUL             [ shift and go to state 20 ]
+  ! DIV             [ shift and go to state 21 ]
 
 
-state 27
+state 28
 
-    (13) calculate -> LSB calculate RSB .
+    (14) calculate -> LSB calculate RSB .
 
-    NEWLINE         reduce using rule 13 (calculate -> LSB calculate RSB .)
-    PLUS            reduce using rule 13 (calculate -> LSB calculate RSB .)
-    MINUS           reduce using rule 13 (calculate -> LSB calculate RSB .)
-    MUL             reduce using rule 13 (calculate -> LSB calculate RSB .)
-    DIV             reduce using rule 13 (calculate -> LSB calculate RSB .)
-    RSB             reduce using rule 13 (calculate -> LSB calculate RSB .)
+    NEWLINE         reduce using rule 14 (calculate -> LSB calculate RSB .)
+    PLUS            reduce using rule 14 (calculate -> LSB calculate RSB .)
+    MINUS           reduce using rule 14 (calculate -> LSB calculate RSB .)
+    MUL             reduce using rule 14 (calculate -> LSB calculate RSB .)
+    DIV             reduce using rule 14 (calculate -> LSB calculate RSB .)
+    RSB             reduce using rule 14 (calculate -> LSB calculate RSB .)
 
 WARNING: 
 WARNING: Conflicts:

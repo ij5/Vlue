@@ -101,7 +101,9 @@ def p_variable_declaration_2(t):
     print(variable)
 
 def p_variable_declaration_1(t):
-    'variable_declaration : VAR IDENTIFIER NEWLINE'
+    '''
+    variable_declaration : VAR IDENTIFIER NEWLINE
+    '''
     variable[t[2]] = 0
 
 #########CALCULATE
@@ -131,8 +133,19 @@ def p_mul_div(t):
         t[0] = t[1] / t[3]
 
 def p_calculate2num(t):
-    'calculate : INT'
+    '''
+    calculate : INT
+    '''
     t[0] = t[1]
+
+def p_calculate2str(t):
+    '''
+    calculate : IDENTIFIER
+    '''
+    try:
+        t[0] = variable[t[1]]
+    except LookupError:
+        error("Unknow variable "+t[1])
 
 def p_parens(t):
     'calculate : LSB calculate RSB'
@@ -155,8 +168,9 @@ def error(s):
 parser = yacc.yacc()
 
 data = """
-var asd = 3+4 
-var asd = 3 +5*2
+var a = 3+4 
+var b = 66*2
+var p = a * b
 """
 
 result = parser.parse(data)

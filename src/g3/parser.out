@@ -3,69 +3,82 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     NEWLINE
+    TAB
 
 Grammar
 
-Rule 0     S' -> variable_declaration
-Rule 1     variable_declaration -> VAR IDENTIFIER
+Rule 0     S' -> expression
+Rule 1     expression -> variable_declaration
 Rule 2     variable_declaration -> VAR IDENTIFIER EQUAL INT
+Rule 3     variable_declaration -> VAR IDENTIFIER
 
 Terminals, with rules where they appear
 
 EQUAL                : 2
-IDENTIFIER           : 1 2
+IDENTIFIER           : 2 3
 INT                  : 2
 NEWLINE              : 
-VAR                  : 1 2
+TAB                  : 
+VAR                  : 2 3
 error                : 
 
 Nonterminals, with rules where they appear
 
-variable_declaration : 0
+expression           : 0
+variable_declaration : 1
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . variable_declaration
-    (1) variable_declaration -> . VAR IDENTIFIER
+    (0) S' -> . expression
+    (1) expression -> . variable_declaration
     (2) variable_declaration -> . VAR IDENTIFIER EQUAL INT
+    (3) variable_declaration -> . VAR IDENTIFIER
 
-    VAR             shift and go to state 2
+    VAR             shift and go to state 3
 
-    variable_declaration           shift and go to state 1
+    expression                     shift and go to state 1
+    variable_declaration           shift and go to state 2
 
 state 1
 
-    (0) S' -> variable_declaration .
+    (0) S' -> expression .
 
 
 
 state 2
 
-    (1) variable_declaration -> VAR . IDENTIFIER
-    (2) variable_declaration -> VAR . IDENTIFIER EQUAL INT
+    (1) expression -> variable_declaration .
 
-    IDENTIFIER      shift and go to state 3
+    $end            reduce using rule 1 (expression -> variable_declaration .)
 
 
 state 3
 
-    (1) variable_declaration -> VAR IDENTIFIER .
-    (2) variable_declaration -> VAR IDENTIFIER . EQUAL INT
+    (2) variable_declaration -> VAR . IDENTIFIER EQUAL INT
+    (3) variable_declaration -> VAR . IDENTIFIER
 
-    $end            reduce using rule 1 (variable_declaration -> VAR IDENTIFIER .)
-    EQUAL           shift and go to state 4
+    IDENTIFIER      shift and go to state 4
 
 
 state 4
 
-    (2) variable_declaration -> VAR IDENTIFIER EQUAL . INT
+    (2) variable_declaration -> VAR IDENTIFIER . EQUAL INT
+    (3) variable_declaration -> VAR IDENTIFIER .
 
-    INT             shift and go to state 5
+    EQUAL           shift and go to state 5
+    $end            reduce using rule 3 (variable_declaration -> VAR IDENTIFIER .)
 
 
 state 5
+
+    (2) variable_declaration -> VAR IDENTIFIER EQUAL . INT
+
+    INT             shift and go to state 6
+
+
+state 6
 
     (2) variable_declaration -> VAR IDENTIFIER EQUAL INT .
 

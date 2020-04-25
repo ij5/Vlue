@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'EQUAL IDENTIFIER INT NEWLINE VARvariable_declaration : VAR IDENTIFIERvariable_declaration : VAR IDENTIFIER EQUAL INT'
+_lr_signature = 'EQUAL IDENTIFIER INT NEWLINE TAB VARexpression : variable_declarationvariable_declaration : VAR IDENTIFIER EQUAL INTvariable_declaration : VAR IDENTIFIER'
     
-_lr_action_items = {'VAR':([0,],[2,]),'$end':([1,3,5,],[0,-1,-2,]),'IDENTIFIER':([2,],[3,]),'EQUAL':([3,],[4,]),'INT':([4,],[5,]),}
+_lr_action_items = {'VAR':([0,],[3,]),'$end':([1,2,4,6,],[0,-1,-3,-2,]),'IDENTIFIER':([3,],[4,]),'EQUAL':([4,],[5,]),'INT':([5,],[6,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'variable_declaration':([0,],[1,]),}
+_lr_goto_items = {'expression':([0,],[1,]),'variable_declaration':([0,],[2,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,7 +26,8 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> variable_declaration","S'",1,None,None,None),
-  ('variable_declaration -> VAR IDENTIFIER','variable_declaration',2,'p_variable_declaration_1','main.py',65),
-  ('variable_declaration -> VAR IDENTIFIER EQUAL INT','variable_declaration',4,'p_variable_declaration_2','main.py',68),
+  ("S' -> expression","S'",1,None,None,None),
+  ('expression -> variable_declaration','expression',1,'p_expression','main.py',66),
+  ('variable_declaration -> VAR IDENTIFIER EQUAL INT','variable_declaration',4,'p_variable_declaration_2','main.py',69),
+  ('variable_declaration -> VAR IDENTIFIER','variable_declaration',2,'p_variable_declaration_1','main.py',73),
 ]

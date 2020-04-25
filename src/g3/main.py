@@ -10,6 +10,7 @@ tokens = (
     'VAR',
     'EQUAL',
     'INT',
+    'TAB',
     'NEWLINE'
 )
 
@@ -59,12 +60,23 @@ while True:
 
 from ply import yacc
 
+varname = []
+varval = []
+
+def p_expression(t):
+    'expression : variable_declaration'
+
 def p_variable_declaration_2(t):
     'variable_declaration : VAR IDENTIFIER EQUAL INT'
 
 
 def p_variable_declaration_1(t):
     'variable_declaration : VAR IDENTIFIER'
+    if t[2] in varname:
+        error('변수는 중복 선언할 수 없습니다.')
+    else:
+        varname.append(t[1])
+        varval.append(1)
 
 def p_error(t):
     if(t):
@@ -72,8 +84,12 @@ def p_error(t):
     else:
         print("Error on EOF")
 
+def error(s):
+    print(s)
+    exit()
+
 parser = yacc.yacc()
 
-data = "var asd = 5"
+data = "var asd"
 
 result = parser.parse(data)

@@ -64,7 +64,10 @@ varname = []
 varval = []
 
 def p_expression(t):
-    'expression : variable_declaration'
+    '''
+    expression : expression variable_declaration
+        | variable_declaration
+    '''
 
 def p_variable_declaration_2(t):
     'variable_declaration : VAR IDENTIFIER EQUAL INT'
@@ -75,8 +78,10 @@ def p_variable_declaration_1(t):
     if t[2] in varname:
         error('변수는 중복 선언할 수 없습니다.')
     else:
-        varname.append(t[1])
+        varname.append(t[2])
         varval.append(1)
+    print(varval)
+    print(varname)
 
 def p_error(t):
     if(t):
@@ -86,10 +91,10 @@ def p_error(t):
 
 def error(s):
     print(s)
-    exit()
+    exit(-1)
 
 parser = yacc.yacc()
 
-data = "var asd"
+data = """var asd"""
 
 result = parser.parse(data)

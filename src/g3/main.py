@@ -76,8 +76,7 @@ while True:
 
 from ply import yacc
 
-varname = []
-varval = []
+variable = {}
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -96,17 +95,17 @@ def p_variable_declaration_2(t):
     variable_declaration : VAR IDENTIFIER EQUAL calculate
     '''
     print(t[4])
+    variable[t[2]] = t[4]
+    print(variable)
 
 def p_variable_declaration_1(t):
     'variable_declaration : VAR IDENTIFIER'
-    if t[2] in varname:
-        error('변수는 중복 선언할 수 없습니다.')
+    if t[2] in variable.keys():
+        error("변수는 중복 선언할 수 없습니다.")
     else:
-        varname.append(t[2])
-        varval.append(1)
-    print(varval)
-    print(varname)
+        variable[t[2]] = 0
 
+#########CALCULATE
 
 def p_add(t):
     'calculate : calculate PLUS calculate'
@@ -140,18 +139,22 @@ def p_parens(t):
     'calculate : LSB calculate RSB'
     t[0] = t[2]
 
+############CALCULATE END
+
+#토큰 에러 처리
 def p_error(t):
     if(t):
         print("Error on token '%s'" % t.value)
     else:
         print("Error on EOF")
 
+#에러 처리
 def error(s):
     print(s)
     exit(-1)
 
 parser = yacc.yacc()
 
-data = """var asd = 3+4"""
+data = """var asd = 3+4 var asd = 3 +5"""
 
 result = parser.parse(data)

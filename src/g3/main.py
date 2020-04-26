@@ -107,7 +107,10 @@ def p_variable_value_change(t):
     '''
     variable_value_change : IDENTIFIER EQUAL calculate
     '''
-    variable[t[1]] = t[3]
+    if variable.get(t[1]):
+        variable[t[1]] = t[3]
+    else:
+        error("변수는 선언 후 사용할 수 있습니다.")
     print(variable)
 
 #########VARIABLE DECLARATION
@@ -164,7 +167,7 @@ def p_calculate2str(t):
     try:
         t[0] = variable[t[1]]
     except LookupError:
-        error("Unknow variable "+t[1])
+        error("Unknown variable "+t[1])
 
 def p_parens(t):
     'calculate : LSB calculate RSB'
@@ -187,9 +190,15 @@ def error(s):
 parser = yacc.yacc()
 
 data = """
-var a = 3+4
-var b = 66*2
-a = b
+var a = 4
+var b = 333
+var c = a * b
+c = 1234
 """
+# while True:
+#     buf = input(">>> ")
+#     if(buf=="exit"):
+#         break
+#     data = data+buf
 
 result = parser.parse(data)

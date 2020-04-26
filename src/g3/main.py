@@ -102,7 +102,11 @@ def p_expression(t):
 
 def p_if_head(t):
     '''
-    if_head :
+    if_head : IF condition COLON
+    '''
+
+def p_condition(t):
+    '''
     '''
 
 #########VARIABLE DECLARATION

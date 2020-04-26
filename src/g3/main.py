@@ -114,6 +114,10 @@ def p_condition_line(t):
     condition_line :
     '''
 
+def p_condition(t):
+    '''
+    '''
+
 #########VARIABLE DECLARATION
 
 def p_variable_declaration_2(t):

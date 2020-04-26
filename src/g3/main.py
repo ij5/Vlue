@@ -107,6 +107,7 @@ def p_if_head(t):
 
 def p_condition(t):
     '''
+    condition : 
     '''
 
 #########VARIABLE DECLARATION

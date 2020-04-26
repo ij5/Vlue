@@ -99,15 +99,19 @@ def p_expression(t):
         | NEWLINE
     '''
 
+def p_if_expression(t):
+    '''
+    if_expression : if_head
+    '''
 
 def p_if_head(t):
     '''
     if_head : IF condition COLON
     '''
 
-def p_condition(t):
+def p_condition_line(t):
     '''
-    condition : 
+    condition_line :
     '''
 
 #########VARIABLE DECLARATION

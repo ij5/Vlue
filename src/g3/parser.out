@@ -2,6 +2,8 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
+    ELSE
+    IF
     LMB
     RMB
     TAB
@@ -27,8 +29,10 @@ Rule 14    calculate -> LSB calculate RSB
 Terminals, with rules where they appear
 
 DIV                  : 11
+ELSE                 : 
 EQUAL                : 5
 IDENTIFIER           : 5 6 13
+IF                   : 
 INT                  : 12
 LMB                  : 
 LSB                  : 14

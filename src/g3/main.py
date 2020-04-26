@@ -5,7 +5,12 @@ from ply import lex
 #####LEXER
 ############################
 
-tokens = (
+reserved = {
+    'if': 'IF',
+    'else': 'ELSE',
+}
+
+tokens = [
     'IDENTIFIER',
     'VAR',
     'EQUAL',
@@ -20,7 +25,7 @@ tokens = (
     'RMB',
     'LMB',
     'NEWLINE'
-)
+] + list(reserved.values())
 
 t_EQUAL = r'='
 t_DIV = r'\/'
@@ -45,6 +50,7 @@ def t_INT(t):
 
 def t_IDENTIFIER(t):
     r'[a-zA-Z_]+[a-zA-Z_0-9]*'
+    t.type = reserved.get(t.value, t.type)
     return t
 
 def t_NEWLINE(t):
@@ -59,7 +65,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-data = "var asd = 5"
+data = "if asd"
 
 lexer.input(data)
 
@@ -92,6 +98,9 @@ def p_expression(t):
         | NEWLINE variable_declaration
         | variable_declaration
     '''
+
+
+#########VARIABLE DECLARATION
 
 def p_variable_declaration_2(t):
     '''
@@ -168,9 +177,10 @@ def error(s):
 parser = yacc.yacc()
 
 data = """
-var a = 3+4 
+var a = 3+4 if
 var b = 66*2
 var p = a * b
+var asd = p/3 
 """
 
 result = parser.parse(data)

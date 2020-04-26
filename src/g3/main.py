@@ -102,7 +102,12 @@ def p_expression(t):
 def p_if_expression(t):
     '''
     if_expression : if_head if_body_line
-        | if_head NEWLINE if_body_line 
+        | if_head NEWLINE if_body
+    '''
+
+def p_if_body(t):
+    '''
+    if_body : TAB
     '''
 
 def p_if_head(t):
@@ -113,6 +118,13 @@ def p_if_head(t):
 def p_condition(t):
     '''
     condition :
+    '''
+
+
+#########CHANGE VARIABLE VALUE
+def p_variable_value_change(t):
+    '''
+    
     '''
 
 #########VARIABLE DECLARATION
@@ -194,8 +206,8 @@ parser = yacc.yacc()
 data = """
 var a = 3+4
 var b = 66*2
-var p = a * b
-var asd = p/3 
+if a<b:
+\t 
 """
 
 result = parser.parse(data)

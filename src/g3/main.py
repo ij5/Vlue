@@ -94,25 +94,29 @@ precedence = (
 
 def p_expression(t):
     '''
-    expression : NEWLINE expression variable_declaration
-        | expression variable_declaration
-        | NEWLINE variable_declaration
-        | variable_declaration
+    expression : expression variable_declaration NEWLINE
+        | variable_declaration NEWLINE
+        | NEWLINE
     '''
 
+
+def p_if_head(t):
+    '''
+    if_head :
+    '''
 
 #########VARIABLE DECLARATION
 
 def p_variable_declaration_2(t):
     '''
-    variable_declaration : VAR IDENTIFIER EQUAL calculate NEWLINE
+    variable_declaration : VAR IDENTIFIER EQUAL calculate
     '''
     variable[t[2]] = t[4]
     print(variable)
 
 def p_variable_declaration_1(t):
     '''
-    variable_declaration : VAR IDENTIFIER NEWLINE
+    variable_declaration : VAR IDENTIFIER
     '''
     variable[t[2]] = 0
 
@@ -178,7 +182,7 @@ def error(s):
 parser = yacc.yacc()
 
 data = """
-var a = 3+4 if
+var a = 3+4
 var b = 66*2
 var p = a * b
 var asd = p/3 

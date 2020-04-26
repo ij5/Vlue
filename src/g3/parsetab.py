@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftMULDIVrightUMINUSDIV ELSE EQUAL IDENTIFIER IF INT LMB LSB MINUS MUL NEWLINE PLUS RMB RSB TAB VAR\n    expression : NEWLINE expression variable_declaration\n        | expression variable_declaration\n        | NEWLINE variable_declaration\n        | variable_declaration\n    \n    variable_declaration : VAR IDENTIFIER EQUAL calculate NEWLINE\n    \n    variable_declaration : VAR IDENTIFIER NEWLINE\n    calculate : calculate PLUS calculatecalculate : calculate MINUS calculatecalculate : MINUS calculate %prec UMINUS\n    calculate : calculate MUL calculate\n        | calculate DIV calculate\n    \n    calculate : INT\n    \n    calculate : IDENTIFIER\n    calculate : LSB calculate RSB'
+_lr_signature = 'leftPLUSMINUSleftMULDIVrightUMINUSDIV ELSE EQUAL IDENTIFIER IF INT LMB LSB MINUS MUL NEWLINE PLUS RMB RSB TAB VAR\n    expression : expression variable_declaration\n        | variable_declaration\n        | NEWLINE\n    \n    if_head :\n    \n    variable_declaration : VAR IDENTIFIER EQUAL calculate NEWLINE\n    \n    variable_declaration : VAR IDENTIFIER NEWLINE\n    calculate : calculate PLUS calculatecalculate : calculate MINUS calculatecalculate : MINUS calculate %prec UMINUS\n    calculate : calculate MUL calculate\n        | calculate DIV calculate\n    \n    calculate : INT\n    \n    calculate : IDENTIFIER\n    calculate : LSB calculate RSB'
     
-_lr_action_items = {'NEWLINE':([0,2,8,12,13,15,22,24,25,26,27,28,],[2,2,11,-13,17,-12,-9,-7,-8,-10,-11,-14,]),'VAR':([0,1,2,3,5,6,7,9,11,17,],[4,4,4,-4,-2,4,-3,-1,-6,-5,]),'$end':([1,3,5,7,9,11,17,],[0,-4,-2,-3,-1,-6,-5,]),'IDENTIFIER':([4,10,14,16,18,19,20,21,],[8,12,12,12,12,12,12,12,]),'EQUAL':([8,],[10,]),'MINUS':([10,12,13,14,15,16,18,19,20,21,22,23,24,25,26,27,28,],[14,-13,19,14,-12,14,14,14,14,14,-9,19,-7,-8,-10,-11,-14,]),'INT':([10,14,16,18,19,20,21,],[15,15,15,15,15,15,15,]),'LSB':([10,14,16,18,19,20,21,],[16,16,16,16,16,16,16,]),'PLUS':([12,13,15,22,23,24,25,26,27,28,],[-13,18,-12,-9,18,-7,-8,-10,-11,-14,]),'MUL':([12,13,15,22,23,24,25,26,27,28,],[-13,20,-12,-9,20,20,20,-10,-11,-14,]),'DIV':([12,13,15,22,23,24,25,26,27,28,],[-13,21,-12,-9,21,21,21,-10,-11,-14,]),'RSB':([12,15,22,23,24,25,26,27,28,],[-13,-12,-9,28,-7,-8,-10,-11,-14,]),}
+_lr_action_items = {'NEWLINE':([0,6,9,10,12,19,21,22,23,24,25,],[3,8,-13,14,-12,-9,-7,-8,-10,-11,-14,]),'VAR':([0,1,2,3,5,8,14,],[4,4,-2,-3,-1,-6,-5,]),'$end':([1,2,3,5,8,14,],[0,-2,-3,-1,-6,-5,]),'IDENTIFIER':([4,7,11,13,15,16,17,18,],[6,9,9,9,9,9,9,9,]),'EQUAL':([6,],[7,]),'MINUS':([7,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,],[11,-13,16,11,-12,11,11,11,11,11,-9,16,-7,-8,-10,-11,-14,]),'INT':([7,11,13,15,16,17,18,],[12,12,12,12,12,12,12,]),'LSB':([7,11,13,15,16,17,18,],[13,13,13,13,13,13,13,]),'PLUS':([9,10,12,19,20,21,22,23,24,25,],[-13,15,-12,-9,15,-7,-8,-10,-11,-14,]),'MUL':([9,10,12,19,20,21,22,23,24,25,],[-13,17,-12,-9,17,17,17,-10,-11,-14,]),'DIV':([9,10,12,19,20,21,22,23,24,25,],[-13,18,-12,-9,18,18,18,-10,-11,-14,]),'RSB':([9,12,19,20,21,22,23,24,25,],[-13,-12,-9,25,-7,-8,-10,-11,-14,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expression':([0,2,],[1,6,]),'variable_declaration':([0,1,2,6,],[3,5,7,9,]),'calculate':([10,14,16,18,19,20,21,],[13,22,23,24,25,26,27,]),}
+_lr_goto_items = {'expression':([0,],[1,]),'variable_declaration':([0,1,],[2,5,]),'calculate':([7,11,13,15,16,17,18,],[10,19,20,21,22,23,24,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,18 +27,18 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> expression","S'",1,None,None,None),
-  ('expression -> NEWLINE expression variable_declaration','expression',3,'p_expression','main.py',95),
-  ('expression -> expression variable_declaration','expression',2,'p_expression','main.py',96),
-  ('expression -> NEWLINE variable_declaration','expression',2,'p_expression','main.py',97),
+  ('expression -> expression variable_declaration','expression',2,'p_expression','main.py',97),
   ('expression -> variable_declaration','expression',1,'p_expression','main.py',98),
-  ('variable_declaration -> VAR IDENTIFIER EQUAL calculate NEWLINE','variable_declaration',5,'p_variable_declaration_2','main.py',106),
-  ('variable_declaration -> VAR IDENTIFIER NEWLINE','variable_declaration',3,'p_variable_declaration_1','main.py',113),
-  ('calculate -> calculate PLUS calculate','calculate',3,'p_add','main.py',120),
-  ('calculate -> calculate MINUS calculate','calculate',3,'p_sub','main.py',124),
-  ('calculate -> MINUS calculate','calculate',2,'p_calculate2uminus','main.py',128),
-  ('calculate -> calculate MUL calculate','calculate',3,'p_mul_div','main.py',133),
-  ('calculate -> calculate DIV calculate','calculate',3,'p_mul_div','main.py',134),
-  ('calculate -> INT','calculate',1,'p_calculate2num','main.py',145),
-  ('calculate -> IDENTIFIER','calculate',1,'p_calculate2str','main.py',151),
-  ('calculate -> LSB calculate RSB','calculate',3,'p_parens','main.py',159),
+  ('expression -> NEWLINE','expression',1,'p_expression','main.py',99),
+  ('if_head -> <empty>','if_head',0,'p_if_head','main.py',105),
+  ('variable_declaration -> VAR IDENTIFIER EQUAL calculate NEWLINE','variable_declaration',5,'p_variable_declaration_2','main.py',112),
+  ('variable_declaration -> VAR IDENTIFIER NEWLINE','variable_declaration',3,'p_variable_declaration_1','main.py',119),
+  ('calculate -> calculate PLUS calculate','calculate',3,'p_add','main.py',126),
+  ('calculate -> calculate MINUS calculate','calculate',3,'p_sub','main.py',130),
+  ('calculate -> MINUS calculate','calculate',2,'p_calculate2uminus','main.py',134),
+  ('calculate -> calculate MUL calculate','calculate',3,'p_mul_div','main.py',139),
+  ('calculate -> calculate DIV calculate','calculate',3,'p_mul_div','main.py',140),
+  ('calculate -> INT','calculate',1,'p_calculate2num','main.py',151),
+  ('calculate -> IDENTIFIER','calculate',1,'p_calculate2str','main.py',157),
+  ('calculate -> LSB calculate RSB','calculate',3,'p_parens','main.py',165),
 ]

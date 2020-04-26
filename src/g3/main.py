@@ -50,6 +50,7 @@ def t_INT(t):
 
 def t_IDENTIFIER(t):
     r'[a-zA-Z_]+[a-zA-Z_0-9]*'
+    #if 등 정의
     t.type = reserved.get(t.value, t.type)
     return t
 

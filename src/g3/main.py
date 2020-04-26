@@ -101,7 +101,8 @@ def p_expression(t):
 
 def p_if_expression(t):
     '''
-    if_expression : if_head
+    if_expression : if_head if_body_line
+        | if_head NEWLINE if_body_line 
     '''
 
 def p_if_head(t):
@@ -109,13 +110,9 @@ def p_if_head(t):
     if_head : IF condition COLON
     '''
 
-def p_condition_line(t):
-    '''
-    condition_line :
-    '''
-
 def p_condition(t):
     '''
+    condition :
     '''
 
 #########VARIABLE DECLARATION

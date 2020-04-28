@@ -130,6 +130,13 @@ def p_variable_value_change(t):
 
 #########VARIABLE DECLARATION
 
+def p_variable_declaration_3(t):
+    '''
+    variable_declaration : VAR IDENTIFIER EQUAL STRING
+    '''
+    variable[t[2]] = t[4]
+    print(variable)
+
 def p_variable_declaration_2(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL calculate
@@ -142,6 +149,13 @@ def p_variable_declaration_1(t):
     variable_declaration : VAR IDENTIFIER
     '''
     variable[t[2]] = 0
+
+###########STRING
+
+def p_string_exp(t):
+    '''
+
+    '''
 
 #########CALCULATE
 

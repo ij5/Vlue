@@ -130,16 +130,10 @@ def p_variable_value_change(t):
 
 #########VARIABLE DECLARATION
 
-def p_variable_declaration_3(t):
-    '''
-    variable_declaration : VAR IDENTIFIER EQUAL STRING
-    '''
-    variable[t[2]] = t[4]
-    print(variable)
-
 def p_variable_declaration_2(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL calculate
+        | VAR IDENTIFIER EQUAL STRING
     '''
     variable[t[2]] = t[4]
     print(variable)
@@ -224,7 +218,7 @@ var a = 4
 var b = 333
 var c = a * b
 c = 1234
-var str =0.3
+var str =0.3 * 0.2
 """
 # while True:
 #     buf = input(">>> ")

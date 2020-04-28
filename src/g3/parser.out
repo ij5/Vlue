@@ -17,8 +17,8 @@ Rule 3     expression -> variable_declaration NEWLINE
 Rule 4     expression -> variable_value_change
 Rule 5     expression -> NEWLINE
 Rule 6     variable_value_change -> IDENTIFIER EQUAL calculate
-Rule 7     variable_declaration -> VAR IDENTIFIER EQUAL STRING
-Rule 8     variable_declaration -> VAR IDENTIFIER EQUAL calculate
+Rule 7     variable_declaration -> VAR IDENTIFIER EQUAL calculate
+Rule 8     variable_declaration -> VAR IDENTIFIER EQUAL STRING
 Rule 9     variable_declaration -> VAR IDENTIFIER
 Rule 10    calculate -> calculate PLUS calculate
 Rule 11    calculate -> calculate MINUS calculate
@@ -47,14 +47,14 @@ NEWLINE              : 1 2 3 5
 PLUS                 : 10
 RMB                  : 
 RSB                  : 18
-STRING               : 7
+STRING               : 8
 TAB                  : 
 VAR                  : 7 8 9
 error                : 
 
 Nonterminals, with rules where they appear
 
-calculate            : 6 8 10 10 11 11 12 13 13 14 14 18
+calculate            : 6 7 10 10 11 11 12 13 13 14 14 18
 expression           : 1 2 0
 variable_declaration : 1 3
 variable_value_change : 2 4
@@ -69,8 +69,8 @@ state 0
     (3) expression -> . variable_declaration NEWLINE
     (4) expression -> . variable_value_change
     (5) expression -> . NEWLINE
-    (7) variable_declaration -> . VAR IDENTIFIER EQUAL STRING
-    (8) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (7) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (8) variable_declaration -> . VAR IDENTIFIER EQUAL STRING
     (9) variable_declaration -> . VAR IDENTIFIER
     (6) variable_value_change -> . IDENTIFIER EQUAL calculate
 
@@ -87,8 +87,8 @@ state 1
     (0) S' -> expression .
     (1) expression -> expression . variable_declaration NEWLINE
     (2) expression -> expression . variable_value_change NEWLINE
-    (7) variable_declaration -> . VAR IDENTIFIER EQUAL STRING
-    (8) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (7) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (8) variable_declaration -> . VAR IDENTIFIER EQUAL STRING
     (9) variable_declaration -> . VAR IDENTIFIER
     (6) variable_value_change -> . IDENTIFIER EQUAL calculate
 
@@ -125,8 +125,8 @@ state 4
 
 state 5
 
-    (7) variable_declaration -> VAR . IDENTIFIER EQUAL STRING
-    (8) variable_declaration -> VAR . IDENTIFIER EQUAL calculate
+    (7) variable_declaration -> VAR . IDENTIFIER EQUAL calculate
+    (8) variable_declaration -> VAR . IDENTIFIER EQUAL STRING
     (9) variable_declaration -> VAR . IDENTIFIER
 
     IDENTIFIER      shift and go to state 10
@@ -164,8 +164,8 @@ state 9
 
 state 10
 
-    (7) variable_declaration -> VAR IDENTIFIER . EQUAL STRING
-    (8) variable_declaration -> VAR IDENTIFIER . EQUAL calculate
+    (7) variable_declaration -> VAR IDENTIFIER . EQUAL calculate
+    (8) variable_declaration -> VAR IDENTIFIER . EQUAL STRING
     (9) variable_declaration -> VAR IDENTIFIER .
 
     EQUAL           shift and go to state 14
@@ -213,8 +213,8 @@ state 13
 
 state 14
 
-    (7) variable_declaration -> VAR IDENTIFIER EQUAL . STRING
-    (8) variable_declaration -> VAR IDENTIFIER EQUAL . calculate
+    (7) variable_declaration -> VAR IDENTIFIER EQUAL . calculate
+    (8) variable_declaration -> VAR IDENTIFIER EQUAL . STRING
     (10) calculate -> . calculate PLUS calculate
     (11) calculate -> . calculate MINUS calculate
     (12) calculate -> . MINUS calculate
@@ -225,14 +225,14 @@ state 14
     (17) calculate -> . IDENTIFIER
     (18) calculate -> . LSB calculate RSB
 
-    STRING          shift and go to state 21
+    STRING          shift and go to state 22
     MINUS           shift and go to state 17
     INT             shift and go to state 18
     FLOAT           shift and go to state 19
     IDENTIFIER      shift and go to state 15
     LSB             shift and go to state 20
 
-    calculate                      shift and go to state 22
+    calculate                      shift and go to state 21
 
 state 15
 
@@ -341,24 +341,24 @@ state 20
 
 state 21
 
-    (7) variable_declaration -> VAR IDENTIFIER EQUAL STRING .
-
-    NEWLINE         reduce using rule 7 (variable_declaration -> VAR IDENTIFIER EQUAL STRING .)
-
-
-state 22
-
-    (8) variable_declaration -> VAR IDENTIFIER EQUAL calculate .
+    (7) variable_declaration -> VAR IDENTIFIER EQUAL calculate .
     (10) calculate -> calculate . PLUS calculate
     (11) calculate -> calculate . MINUS calculate
     (13) calculate -> calculate . MUL calculate
     (14) calculate -> calculate . DIV calculate
 
-    NEWLINE         reduce using rule 8 (variable_declaration -> VAR IDENTIFIER EQUAL calculate .)
+    NEWLINE         reduce using rule 7 (variable_declaration -> VAR IDENTIFIER EQUAL calculate .)
     PLUS            shift and go to state 23
     MINUS           shift and go to state 24
     MUL             shift and go to state 25
     DIV             shift and go to state 26
+
+
+state 22
+
+    (8) variable_declaration -> VAR IDENTIFIER EQUAL STRING .
+
+    NEWLINE         reduce using rule 8 (variable_declaration -> VAR IDENTIFIER EQUAL STRING .)
 
 
 state 23

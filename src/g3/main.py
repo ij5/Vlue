@@ -15,6 +15,8 @@ tokens = [
     'VAR',
     'EQUAL',
     'INT',
+    'FLOAT',
+    'STRING',
     'TAB',
     'PLUS',
     'MINUS',
@@ -47,6 +49,16 @@ def t_INT(t):
     r'\d+'
     t.value = int(t.value)
     return t
+
+def t_FLOAT(t):
+    r'\d+\.\d+'
+    t.value = float(t.value)
+    return t
+
+def t_STRING(t):
+    r'("(?:\\"|.)*?"|\'(?:\\\'|.)*?\')'
+    t.value = t.value[1:-1]
+    t.value = bytes(t.value, "utf-8").decode("unicode_escape")
 
 def t_IDENTIFIER(t):
     r'[a-zA-Z_]+[a-zA-Z_0-9]*'
@@ -160,6 +172,7 @@ def p_mul_div(t):
 def p_calculate2num(t):
     '''
     calculate : INT
+        | FLOAT
     '''
     t[0] = t[1]
 

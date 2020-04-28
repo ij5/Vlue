@@ -3,9 +3,11 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     ELSE
+    FLOAT
     IF
     LMB
     RMB
+    STRING
     TAB
 
 Grammar
@@ -33,6 +35,7 @@ Terminals, with rules where they appear
 DIV                  : 13
 ELSE                 : 
 EQUAL                : 6 7
+FLOAT                : 
 IDENTIFIER           : 6 7 8 15
 IF                   : 
 INT                  : 14
@@ -44,6 +47,7 @@ NEWLINE              : 1 2 3 5
 PLUS                 : 9
 RMB                  : 
 RSB                  : 16
+STRING               : 
 TAB                  : 
 VAR                  : 7 8
 error                : 

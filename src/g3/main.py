@@ -45,14 +45,14 @@ def t_VAR(t):
     r'var'
     return t
 
-def t_INT(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
-
 def t_FLOAT(t):
     r'\d+\.\d+'
     t.value = float(t.value)
+    return t
+
+def t_INT(t):
+    r'\d+'
+    t.value = int(t.value)
     return t
 
 def t_STRING(t):
@@ -78,7 +78,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-data = "if asd"
+data = "var str = 'Hello World!'"
 
 lexer.input(data)
 
@@ -224,6 +224,7 @@ var a = 4
 var b = 333
 var c = a * b
 c = 1234
+var str =0.3
 """
 # while True:
 #     buf = input(">>> ")

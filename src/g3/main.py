@@ -78,7 +78,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-data = "var str = 'Hello World!'"
+data = 'var str = "Hello World"'
 
 lexer.input(data)
 
@@ -215,10 +215,8 @@ parser = yacc.yacc()
 
 data = """
 var a = 4
-var b = 333
+var b = 34.88
 var c = a * b
-c = 1234
-var str =0.3 * 0.2
 """
 # while True:
 #     buf = input(">>> ")

@@ -46,6 +46,10 @@ t_RB = r'\>'
 
 t_ignore = ' '
 
+def t_IF(t):
+    r'if'
+    return t
+
 def t_VAR(t):
     r'var'
     return t

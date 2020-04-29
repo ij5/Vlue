@@ -122,6 +122,7 @@ def p_expression(t):
 def p_variable_value_change(t):
     '''
     variable_value_change : IDENTIFIER EQUAL calculate
+        | IDENTIFIER EQUAL string_plus
     '''
     if variable.get(t[1]):
         variable[t[1]] = t[3]
@@ -135,6 +136,7 @@ def p_variable_declaration_2(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL calculate
         | VAR IDENTIFIER EQUAL STRING
+        | VAR IDENTIFIER EQUAL string_plus
     '''
     variable[t[2]] = t[4]
     print(variable)

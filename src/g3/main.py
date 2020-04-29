@@ -149,8 +149,15 @@ def p_variable_declaration_1(t):
 
 def p_string_plus(t):
     '''
-
+    string_plus : string_plus PLUS STRING
     '''
+    t[0] = t[1] + t[3]
+
+def p_string_plus_2(t):
+    '''
+    string_plus : STRING
+    '''
+    t[0] = t[1]
 
 #########CALCULATE
 

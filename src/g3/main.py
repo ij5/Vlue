@@ -59,6 +59,7 @@ def t_STRING(t):
     r'("(?:\\"|.)*?"|\'(?:\\\'|.)*?\')'
     t.value = t.value[1:-1]
     t.value = bytes(t.value, "utf-8").decode("unicode_escape")
+    return t
 
 def t_IDENTIFIER(t):
     r'[a-zA-Z_]+[a-zA-Z_0-9]*'
@@ -146,7 +147,7 @@ def p_variable_declaration_1(t):
 
 ###########STRING
 
-def p_string_exp(t):
+def p_string_plus(t):
     '''
 
     '''
@@ -217,6 +218,7 @@ data = """
 var a = 4
 var b = 34.88
 var c = a * b
+var d = "Hello World!"
 """
 # while True:
 #     buf = input(">>> ")

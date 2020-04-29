@@ -41,6 +41,8 @@ t_LSB = r'\('
 t_RSB = r'\)'
 t_LMB = r'\{'
 t_RMB = r'\}'
+t_LB = r'\<'
+t_RB = r'\>'
 
 t_ignore = ' '
 

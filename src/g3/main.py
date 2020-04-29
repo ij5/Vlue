@@ -18,8 +18,8 @@ tokens = [
     'FLOAT',
     'STRING',
     'IF',
-    'LESS',
-    'MORE',
+    'LB',     #<
+    'RB',     #>
     'TAB',
     'PLUS',
     'MINUS',

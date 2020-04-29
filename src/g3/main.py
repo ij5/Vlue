@@ -20,6 +20,7 @@ tokens = [
     'IF',
     'LB',     #<
     'RB',     #>
+    'COLON',
     'TAB',
     'PLUS',
     'MINUS',
@@ -43,6 +44,7 @@ t_LMB = r'\{'
 t_RMB = r'\}'
 t_LB = r'\<'
 t_RB = r'\>'
+t_COLON = r'\:'
 
 t_ignore = ' '
 
@@ -88,7 +90,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-data = 'var str = "Hello World"'
+data = 'if(a<b):'
 
 lexer.input(data)
 
@@ -129,9 +131,9 @@ def p_expression(t):
 
 #################IF STATEMENT
 
-def if_statement(t):
+def if_statement_head(t):
     '''
-
+    if_statement_head : IF LSB calculate SB calculate RSB COLON
     '''
 
 #########CHANGE VARIABLE VALUE

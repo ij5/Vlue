@@ -17,6 +17,9 @@ tokens = [
     'INT',
     'FLOAT',
     'STRING',
+    'IF',
+    'LESS',
+    'MORE',
     'TAB',
     'PLUS',
     'MINUS',
@@ -122,7 +125,7 @@ def p_expression(t):
 
 def if_statement(t):
     '''
-    
+
     '''
 
 #########CHANGE VARIABLE VALUE

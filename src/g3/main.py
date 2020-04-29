@@ -96,6 +96,7 @@ print()
 ###################
 
 from ply import yacc
+import ast
 
 variable = {}
 
@@ -117,6 +118,12 @@ def p_expression(t):
         | NEWLINE
     '''
 
+#################IF STATEMENT
+
+def if_statement(t):
+    '''
+    
+    '''
 
 #########CHANGE VARIABLE VALUE
 def p_variable_value_change(t):

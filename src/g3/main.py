@@ -124,12 +124,26 @@ def p_expression(t):
     '''
     expression : expression variable_declaration NEWLINE
         | expression variable_value_change NEWLINE
+        | expression if_statement NEWLINE
         | variable_declaration NEWLINE
         | variable_value_change
+        | if_statement
         | NEWLINE
     '''
 
+#################IF EXPRESSION
+
+def p_if_expression(t):
+    '''
+    
+    '''
+
 #################IF STATEMENT
+
+def p_if_statement(t):
+    '''
+    if_statement : if_statement_head NEWLINE TAB expression
+    '''
 
 #HEAD
 def p_if_statement_head_1(t):
@@ -141,15 +155,19 @@ def p_if_statement_head_1(t):
 
 def p_condition_1(t):
     '''
-    condition : condition
+    condition : condition LB INT
     '''
 
 def p_condition_2(t):
     '''
     condition : INT
         | FLOAT
+        | IDENTIFIER
     '''
-    t[0] = t[1]
+    if variable[t[1]] is str:
+        error("문자열은 비교대상이 아닙니다.")
+    else:
+        t[0] = variable[t[1]]
 
 #########CHANGE VARIABLE VALUE
 def p_variable_value_change(t):

@@ -21,7 +21,7 @@ tokens = [
     'LB',     #<
     'RB',     #>
     'COLON',
-    'TAB',
+    'SEMI',
     'PLUS',
     'MINUS',
     'DIV',
@@ -30,7 +30,6 @@ tokens = [
     'LSB',
     'RMB',
     'LMB',
-    'NEWLINE'
 ] + list(reserved.values())
 
 t_EQUAL = r'='
@@ -45,8 +44,9 @@ t_RMB = r'\}'
 t_LB = r'\<'
 t_RB = r'\>'
 t_COLON = r'\:'
+t_SEMI = r'\;'
 
-t_ignore = ' '
+t_ignore = ' \t'
 
 def t_IF(t):
     r'if'
@@ -82,7 +82,6 @@ def t_NEWLINE(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
     t.lexer.linepos = 0
-    return t
 
 def t_error(t):
     print("error on token %s" % t.value)
@@ -90,7 +89,13 @@ def t_error(t):
 
 lexer = lex.lex()
 
-data = 'if(a<b):'
+data = '''var a = 4;
+var b = 34.88;
+var c = a * b;
+var d = "Hello World!";
+var e = " Hello?";
+e = "Hello";
+var str = d+e;'''
 
 lexer.input(data)
 
@@ -122,52 +127,14 @@ precedence = (
 
 def p_expression(t):
     '''
-    expression : expression variable_declaration NEWLINE
-        | expression variable_value_change NEWLINE
-        | expression if_statement NEWLINE
-        | variable_declaration NEWLINE
-        | variable_value_change
-        | if_statement
-        | NEWLINE
+    expression : expression variable_declaration SEMI
+        | expression variable_value_change SEMI
+        | expression if_statement SEMI
+        | variable_declaration SEMI
+        | variable_value_change SEMI
+        | if_statement SEMI
     '''
 
-#################IF EXPRESSION
-
-def p_if_expression(t):
-    '''
-    
-    '''
-
-#################IF STATEMENT
-
-def p_if_statement(t):
-    '''
-    if_statement : if_statement_head NEWLINE TAB expression
-    '''
-
-#HEAD
-def p_if_statement_head_1(t):
-    '''
-    if_statement_head : IF condition COLON
-    '''
-
-#CONDITION
-
-def p_condition_1(t):
-    '''
-    condition : condition LB INT
-    '''
-
-def p_condition_2(t):
-    '''
-    condition : INT
-        | FLOAT
-        | IDENTIFIER
-    '''
-    if variable[t[1]] is str:
-        error("문자열은 비교대상이 아닙니다.")
-    else:
-        t[0] = variable[t[1]]
 
 #########CHANGE VARIABLE VALUE
 def p_variable_value_change(t):
@@ -275,13 +242,13 @@ def error(s):
 parser = yacc.yacc()
 
 data = """
-var a = 4
-var b = 34.88
-var c = a * b
-var d = "Hello World!"
-var e = " Hello?"
-e = "Hello"
-var str = d+e
+var a = 4;
+var b = 34.88;
+var c = a * b;
+var d = "Hello World!";
+var e = " Hello?";
+e = "Hello";
+var str = d+e;
 """
 # while True:
 #     buf = input(">>> ")

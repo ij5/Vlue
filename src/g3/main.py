@@ -129,10 +129,8 @@ def p_expression(t):
     '''
     expression : expression variable_declaration SEMI
         | expression variable_value_change SEMI
-        | expression if_statement SEMI
         | variable_declaration SEMI
         | variable_value_change SEMI
-        | if_statement SEMI
     '''
 
 

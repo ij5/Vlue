@@ -141,8 +141,15 @@ def p_if_statement_head_1(t):
 
 def p_condition_1(t):
     '''
-    condition :
+    condition : condition
     '''
+
+def p_condition_2(t):
+    '''
+    condition : INT
+        | FLOAT
+    '''
+    t[0] = t[1]
 
 #########CHANGE VARIABLE VALUE
 def p_variable_value_change(t):

@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftMULDIVrightUMINUSCOLON DIV ELSE EQUAL FLOAT IDENTIFIER IF IF INT LB LMB LSB MINUS MUL NEWLINE PLUS RB RMB RSB STRING TAB VAR\n    expression : expression variable_declaration NEWLINE\n        | expression variable_value_change NEWLINE\n        | variable_declaration NEWLINE\n        | variable_value_change\n        | NEWLINE\n    \n    variable_value_change : IDENTIFIER EQUAL calculate\n        | IDENTIFIER EQUAL string_plus\n    \n    variable_declaration : VAR IDENTIFIER EQUAL calculate\n        | VAR IDENTIFIER EQUAL STRING\n        | VAR IDENTIFIER EQUAL string_plus\n    \n    variable_declaration : VAR IDENTIFIER\n    \n    string_plus : string_plus PLUS STRING\n    \n    string_plus : STRING\n    calculate : calculate PLUS calculatecalculate : calculate MINUS calculatecalculate : MINUS calculate %prec UMINUS\n    calculate : calculate MUL calculate\n        | calculate DIV calculate\n    \n    calculate : INT\n        | FLOAT\n    \n    calculate : IDENTIFIER\n    calculate : LSB calculate RSB'
+_lr_signature = 'leftPLUSMINUSleftMULDIVrightUMINUSCOLON DIV ELSE EQUAL FLOAT IDENTIFIER IF IF INT LB LMB LSB MINUS MUL NEWLINE PLUS RB RMB RSB STRING TAB VAR\n    expression : expression variable_declaration NEWLINE\n        | expression variable_value_change NEWLINE\n        | variable_declaration NEWLINE\n        | variable_value_change\n        | NEWLINE\n    \n    if_statement_head : IF condition COLON\n    \n    condition :\n    \n    variable_value_change : IDENTIFIER EQUAL calculate\n        | IDENTIFIER EQUAL string_plus\n    \n    variable_declaration : VAR IDENTIFIER EQUAL calculate\n        | VAR IDENTIFIER EQUAL STRING\n        | VAR IDENTIFIER EQUAL string_plus\n    \n    variable_declaration : VAR IDENTIFIER\n    \n    string_plus : string_plus PLUS STRING\n    \n    string_plus : STRING\n    calculate : calculate PLUS calculatecalculate : calculate MINUS calculatecalculate : MINUS calculate %prec UMINUS\n    calculate : calculate MUL calculate\n        | calculate DIV calculate\n    \n    calculate : INT\n        | FLOAT\n    \n    calculate : IDENTIFIER\n    calculate : LSB calculate RSB'
     
-_lr_action_items = {'NEWLINE':([0,2,7,8,10,15,16,17,19,20,22,23,24,25,31,33,34,35,36,37,38,],[3,9,12,13,-11,-21,-6,-7,-19,-20,-13,-8,-9,-10,-16,-14,-15,-17,-18,-12,-22,]),'VAR':([0,1,3,4,9,12,13,15,16,17,19,20,22,31,33,34,35,36,37,38,],[5,5,-5,-4,-3,-1,-2,-21,-6,-7,-19,-20,-13,-16,-14,-15,-17,-18,-12,-22,]),'IDENTIFIER':([0,1,3,4,5,9,11,12,13,14,15,16,17,18,19,20,21,22,26,27,28,29,31,33,34,35,36,37,38,],[6,6,-5,-4,10,-3,15,-1,-2,15,-21,-6,-7,15,-19,-20,15,-13,15,15,15,15,-16,-14,-15,-17,-18,-12,-22,]),'$end':([1,3,4,9,12,13,15,16,17,19,20,22,31,33,34,35,36,37,38,],[0,-5,-4,-3,-1,-2,-21,-6,-7,-19,-20,-13,-16,-14,-15,-17,-18,-12,-22,]),'EQUAL':([6,10,],[11,14,]),'MINUS':([11,14,15,16,18,19,20,21,23,26,27,28,29,31,32,33,34,35,36,38,],[18,18,-21,27,18,-19,-20,18,27,18,18,18,18,-16,27,-14,-15,-17,-18,-22,]),'INT':([11,14,18,21,26,27,28,29,],[19,19,19,19,19,19,19,19,]),'FLOAT':([11,14,18,21,26,27,28,29,],[20,20,20,20,20,20,20,20,]),'LSB':([11,14,18,21,26,27,28,29,],[21,21,21,21,21,21,21,21,]),'STRING':([11,14,30,],[22,24,37,]),'PLUS':([15,16,17,19,20,22,23,24,25,31,32,33,34,35,36,37,38,],[-21,26,30,-19,-20,-13,26,-13,30,-16,26,-14,-15,-17,-18,-12,-22,]),'MUL':([15,16,19,20,23,31,32,33,34,35,36,38,],[-21,28,-19,-20,28,-16,28,28,28,-17,-18,-22,]),'DIV':([15,16,19,20,23,31,32,33,34,35,36,38,],[-21,29,-19,-20,29,-16,29,29,29,-17,-18,-22,]),'RSB':([15,19,20,31,32,33,34,35,36,38,],[-21,-19,-20,-16,38,-14,-15,-17,-18,-22,]),}
+_lr_action_items = {'NEWLINE':([0,2,7,8,10,15,16,17,19,20,22,23,24,25,31,33,34,35,36,37,38,],[3,9,12,13,-13,-23,-8,-9,-21,-22,-15,-10,-11,-12,-18,-16,-17,-19,-20,-14,-24,]),'VAR':([0,1,3,4,9,12,13,15,16,17,19,20,22,31,33,34,35,36,37,38,],[5,5,-5,-4,-3,-1,-2,-23,-8,-9,-21,-22,-15,-18,-16,-17,-19,-20,-14,-24,]),'IDENTIFIER':([0,1,3,4,5,9,11,12,13,14,15,16,17,18,19,20,21,22,26,27,28,29,31,33,34,35,36,37,38,],[6,6,-5,-4,10,-3,15,-1,-2,15,-23,-8,-9,15,-21,-22,15,-15,15,15,15,15,-18,-16,-17,-19,-20,-14,-24,]),'$end':([1,3,4,9,12,13,15,16,17,19,20,22,31,33,34,35,36,37,38,],[0,-5,-4,-3,-1,-2,-23,-8,-9,-21,-22,-15,-18,-16,-17,-19,-20,-14,-24,]),'EQUAL':([6,10,],[11,14,]),'MINUS':([11,14,15,16,18,19,20,21,23,26,27,28,29,31,32,33,34,35,36,38,],[18,18,-23,27,18,-21,-22,18,27,18,18,18,18,-18,27,-16,-17,-19,-20,-24,]),'INT':([11,14,18,21,26,27,28,29,],[19,19,19,19,19,19,19,19,]),'FLOAT':([11,14,18,21,26,27,28,29,],[20,20,20,20,20,20,20,20,]),'LSB':([11,14,18,21,26,27,28,29,],[21,21,21,21,21,21,21,21,]),'STRING':([11,14,30,],[22,24,37,]),'PLUS':([15,16,17,19,20,22,23,24,25,31,32,33,34,35,36,37,38,],[-23,26,30,-21,-22,-15,26,-15,30,-18,26,-16,-17,-19,-20,-14,-24,]),'MUL':([15,16,19,20,23,31,32,33,34,35,36,38,],[-23,28,-21,-22,28,-18,28,28,28,-19,-20,-24,]),'DIV':([15,16,19,20,23,31,32,33,34,35,36,38,],[-23,29,-21,-22,29,-18,29,29,29,-19,-20,-24,]),'RSB':([15,19,20,31,32,33,34,35,36,38,],[-23,-21,-22,-18,38,-16,-17,-19,-20,-24,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -32,21 +32,23 @@ _lr_productions = [
   ('expression -> variable_declaration NEWLINE','expression',2,'p_expression','main.py',127),
   ('expression -> variable_value_change','expression',1,'p_expression','main.py',128),
   ('expression -> NEWLINE','expression',1,'p_expression','main.py',129),
-  ('variable_value_change -> IDENTIFIER EQUAL calculate','variable_value_change',3,'p_variable_value_change','main.py',142),
-  ('variable_value_change -> IDENTIFIER EQUAL string_plus','variable_value_change',3,'p_variable_value_change','main.py',143),
-  ('variable_declaration -> VAR IDENTIFIER EQUAL calculate','variable_declaration',4,'p_variable_declaration_2','main.py',155),
-  ('variable_declaration -> VAR IDENTIFIER EQUAL STRING','variable_declaration',4,'p_variable_declaration_2','main.py',156),
-  ('variable_declaration -> VAR IDENTIFIER EQUAL string_plus','variable_declaration',4,'p_variable_declaration_2','main.py',157),
-  ('variable_declaration -> VAR IDENTIFIER','variable_declaration',2,'p_variable_declaration_1','main.py',164),
-  ('string_plus -> string_plus PLUS STRING','string_plus',3,'p_string_plus','main.py',172),
-  ('string_plus -> STRING','string_plus',1,'p_string_plus_2','main.py',178),
-  ('calculate -> calculate PLUS calculate','calculate',3,'p_add','main.py',185),
-  ('calculate -> calculate MINUS calculate','calculate',3,'p_sub','main.py',189),
-  ('calculate -> MINUS calculate','calculate',2,'p_calculate2uminus','main.py',193),
-  ('calculate -> calculate MUL calculate','calculate',3,'p_mul_div','main.py',198),
-  ('calculate -> calculate DIV calculate','calculate',3,'p_mul_div','main.py',199),
-  ('calculate -> INT','calculate',1,'p_calculate2num','main.py',210),
-  ('calculate -> FLOAT','calculate',1,'p_calculate2num','main.py',211),
-  ('calculate -> IDENTIFIER','calculate',1,'p_calculate2str','main.py',217),
-  ('calculate -> LSB calculate RSB','calculate',3,'p_parens','main.py',225),
+  ('if_statement_head -> IF condition COLON','if_statement_head',3,'p_if_statement_head_1','main.py',137),
+  ('condition -> <empty>','condition',0,'p_condition_1','main.py',144),
+  ('variable_value_change -> IDENTIFIER EQUAL calculate','variable_value_change',3,'p_variable_value_change','main.py',150),
+  ('variable_value_change -> IDENTIFIER EQUAL string_plus','variable_value_change',3,'p_variable_value_change','main.py',151),
+  ('variable_declaration -> VAR IDENTIFIER EQUAL calculate','variable_declaration',4,'p_variable_declaration_2','main.py',163),
+  ('variable_declaration -> VAR IDENTIFIER EQUAL STRING','variable_declaration',4,'p_variable_declaration_2','main.py',164),
+  ('variable_declaration -> VAR IDENTIFIER EQUAL string_plus','variable_declaration',4,'p_variable_declaration_2','main.py',165),
+  ('variable_declaration -> VAR IDENTIFIER','variable_declaration',2,'p_variable_declaration_1','main.py',172),
+  ('string_plus -> string_plus PLUS STRING','string_plus',3,'p_string_plus','main.py',180),
+  ('string_plus -> STRING','string_plus',1,'p_string_plus_2','main.py',186),
+  ('calculate -> calculate PLUS calculate','calculate',3,'p_add','main.py',193),
+  ('calculate -> calculate MINUS calculate','calculate',3,'p_sub','main.py',197),
+  ('calculate -> MINUS calculate','calculate',2,'p_calculate2uminus','main.py',201),
+  ('calculate -> calculate MUL calculate','calculate',3,'p_mul_div','main.py',206),
+  ('calculate -> calculate DIV calculate','calculate',3,'p_mul_div','main.py',207),
+  ('calculate -> INT','calculate',1,'p_calculate2num','main.py',218),
+  ('calculate -> FLOAT','calculate',1,'p_calculate2num','main.py',219),
+  ('calculate -> IDENTIFIER','calculate',1,'p_calculate2str','main.py',225),
+  ('calculate -> LSB calculate RSB','calculate',3,'p_parens','main.py',233),
 ]

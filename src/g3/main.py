@@ -131,9 +131,17 @@ def p_expression(t):
 
 #################IF STATEMENT
 
-def if_statement_head(t):
+#HEAD
+def p_if_statement_head_1(t):
     '''
-    if_statement_head : IF LSB calculate SB calculate RSB COLON
+    if_statement_head : IF condition COLON
+    '''
+
+#CONDITION
+
+def p_condition_1(t):
+    '''
+    condition :
     '''
 
 #########CHANGE VARIABLE VALUE

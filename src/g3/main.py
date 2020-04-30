@@ -245,8 +245,7 @@ var b = 34.88;
 var c = a * b;
 var d = "Hello World!";
 var e = " Hello?";
-e = "Hello";
-var str = d+e;
+e = "Hello";var str = d+e;
 """
 # while True:
 #     buf = input(">>> ")

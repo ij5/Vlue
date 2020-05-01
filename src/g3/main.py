@@ -144,7 +144,7 @@ def p_variable_value_change(t):
     global code
     if variable.get(t[1]):
         variable[t[1]] = t[3]
-        code = code + "{0} = {1}\n".format(t[1], t[3])
+        code = code + "{0} = {1}\n".format(t[1], t[3]) #TODO
     else:
         error("변수는 선언 후 사용할 수 있습니다.")
     print(variable)
@@ -161,7 +161,13 @@ def p_variable_declaration_2(t):
     variable[t[2]] = t[4]
     if(isinstance(t[4], str)):
         if "'" in t[4]:
-            print("include '") #TODO
+            code = code + "{0} = \"{1}\"\n".format(t[2], t[4])
+        else:
+            code = code + "{0} = \"{1}\"\n".format(t[2], t[4])
+        if "\"" in t[4]:
+            code = code + "{0} = '{1}'\n".format(t[2], t[4])
+        else:
+            code = code + "{0} = \"{1}\"\n".format(t[2], t[4])
     else:
         code = code + "{0} = {1}\n".format(t[2], t[4])
     print(variable)

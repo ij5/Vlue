@@ -48,6 +48,10 @@ t_SEMI = r'\;'
 
 t_ignore = ' \t'
 
+def t_IF(t):
+    r'if'
+    return t
+
 def t_VAR(t):
     r'var'
     return t
@@ -135,39 +139,26 @@ def p_expression(t):
 def p_variable_value_change(t):
     '''
     variable_value_change : IDENTIFIER EQUAL calculate
+        | IDENTIFIER EQUAL string_plus
     '''
     global code
     if variable.get(t[1]):
         variable[t[1]] = t[3]
-        code = code + "{0} = {1}\n".format(t[1], t[3]) #TODO
     else:
         error("변수는 선언 후 사용할 수 있습니다.")
     print(variable)
-
-def p_variable_value_change_string(t):
-    '''
-    variable_value_change : IDENTIFIER EQUAL string_plus
-    '''
-    pass
-
 
 #########VARIABLE DECLARATION
 
 def p_variable_declaration_2(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL calculate
+        | VAR IDENTIFIER EQUAL string_plus
     '''
     global code
     variable[t[2]] = t[4]
     code = code + "{0} = {1}\n".format(t[2], t[4])
     print(variable)
-
-def p_variable_declaration_2_string(t):
-    '''
-    variable_declaration : VAR IDENTIFIER EQUAL STRING
-        | VAR IDENTIFIER EQUAL string_plus
-    '''
-    pass
 
 def p_variable_declaration_1(t):
     '''
@@ -258,7 +249,7 @@ data = """
 var a = 4;
 var b = 34.88;
 var c = a * b;
-var d = a*a*a;
+var d = "Hello 'World!";
 var e = " Hello?";
 e = "Hello";var str = d+e;
 """

@@ -160,6 +160,14 @@ def p_variable_declaration_2(t):
     code = code + "{0} = {1}\n".format(t[2], t[4])
     print(variable)
 
+def p_variable_declaration_2_string(t):
+    '''
+    variable_declaration : VAR IDENTIFIER EQUAL string_plus
+    '''
+    global code
+    variable[t[2]] = t[4]
+    code = code + '{0} = "{1}"'.format(t[2], t[4])
+
 def p_variable_declaration_1(t):
     '''
     variable_declaration : VAR IDENTIFIER
@@ -249,7 +257,7 @@ data = """
 var a = 4;
 var b = 34.88;
 var c = a * b;
-var d = "Hello 'World!";
+var d = "H\'ello 'World!";
 var e = " Hello?";
 e = "Hello";var str = d+e;
 """

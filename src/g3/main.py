@@ -229,19 +229,23 @@ def p_variable_declaration_1(t):
 
 ###########STRING
 
-def p_string_plus(t):
+def p_string_plus(t):       #TODO 문자열 오류
     '''
     string_plus : string_plus PLUS STRING
     '''
     global code
     t[0] = t[1] + t[3]
 
-def p_string_plus_2(t):
+def p_string_plus_2(t):     #TODO 문자열 오류 2
     '''
     string_plus : STRING
-        | IDENTIFIER
     '''
     t[0] = t[1]
+
+def p_string_plus_3(t):
+    '''
+    string_plus : IDENTIFIER
+    '''
 
 #########CALCULATE
 

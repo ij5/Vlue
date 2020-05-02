@@ -18,8 +18,8 @@ tokens = [
     'FLOAT',
     'STRING',
     'IF',
-    'LB',     #<
-    'RB',     #>
+    'LB',
+    'RB',
     'COLON',
     'SEMI',
     'PLUS',
@@ -130,10 +130,34 @@ def p_expression(t):
     '''
     expression : expression variable_declaration SEMI
         | expression variable_value_change SEMI
+        | expression if_statement SEMI
         | variable_declaration SEMI
         | variable_value_change SEMI
+        | if_statement SEMI
     '''
 
+
+###############IF STATEMENT
+
+def p_if_statement(t):
+    '''
+    if_statement : if_statement_head if_statement_body
+    '''
+
+def p_if_statement_head(t):
+    '''
+    if_statement_head : IF LSB condition RSB
+    '''
+
+def p_if_statement_body(t):
+    '''
+    if_statement_body : LMB expression RMB
+    '''
+
+def p_condition(t):
+    '''
+    condition : 
+    '''
 
 #########CHANGE VARIABLE VALUE
 def p_variable_value_change(t):

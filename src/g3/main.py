@@ -154,10 +154,27 @@ def p_if_statement_body(t):
     if_statement_body : LMB expression RMB
     '''
 
+############CONDITION
+
 def p_condition(t):
     '''
-    condition : 
+    condition : condition LB calculate
+        | condition RB calculate
     '''
+    pass
+
+def p_condition_2(t):
+    '''
+    condition : condition LB EQUAL calculate
+        | condition RB EQUAL calculate
+    '''
+    pass
+
+def p_condition_3(t):
+    '''
+    condition : calculate
+    '''
+    pass
 
 #########CHANGE VARIABLE VALUE
 def p_variable_value_change(t):

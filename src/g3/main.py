@@ -279,10 +279,17 @@ def p_calculate2str(t):
     '''
     calculate : IDENTIFIER
     '''
-    try:
-        t[0] = variable[t[1]]
-    except LookupError:
-        error("Unknown variable "+t[1])
+    global code
+    if(isinstance(variable[t[1]], str)):
+        try:
+            t[0] = variable[t[1]]
+        except LookupError:
+            error("Unknown variable "+t[1])
+    else:
+        try:
+            t[0] = variable[t[1]]
+        except LookupError:
+            error("Unknown variable "+t[1])
 
 def p_parens(t):
     'calculate : LSB calculate RSB'
@@ -310,7 +317,9 @@ var b = 34.88;
 var c = a * b;
 var d = "H\'ello 'World!";
 var e = " Hello?";
-e = "Hello";var str = d+e;
+e = "Hello";
+var e = d+e;
+var asd = 8;
 """
 # while True:
 #     buf = input(">>> ")

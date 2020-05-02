@@ -239,6 +239,7 @@ def p_string_plus(t):
 def p_string_plus_2(t):
     '''
     string_plus : STRING
+        | IDENTIFIER
     '''
     t[0] = t[1]
 
@@ -279,17 +280,10 @@ def p_calculate2str(t):
     '''
     calculate : IDENTIFIER
     '''
-    global code
-    if(isinstance(variable[t[1]], str)):
-        try:
-            t[0] = variable[t[1]]
-        except LookupError:
-            error("Unknown variable "+t[1])
-    else:
-        try:
-            t[0] = variable[t[1]]
-        except LookupError:
-            error("Unknown variable "+t[1])
+    try:
+        t[0] = variable[t[1]]
+    except LookupError:
+        error("Unknown variable "+t[1])
 
 def p_parens(t):
     'calculate : LSB calculate RSB'

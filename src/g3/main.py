@@ -167,7 +167,7 @@ def p_condition_2(t):
     condition : condition LB EQUAL calculate
         | condition RB EQUAL calculate
     '''
-    pass
+    
 
 def p_condition_3(t):
     '''

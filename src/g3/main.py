@@ -256,7 +256,10 @@ def p_add(t):
         elif(t[3].startswith("'")):
             t[0] = t[1][:-1] + t[3][1:-1]+'"'
     elif(t[1].startswith("'")):
-        
+        if(t[3].startswith('"')):
+            t[0] = t[1][:-1] + t[3][1:-1]+"'"
+        elif(t[3].startswith("'")):
+            t[0] = t[1][:-1] + t[3][1:]
     else:
         t[0] = t[1] + t[3]
 
@@ -322,8 +325,8 @@ var a = 4;
 var b = 34.88;
 var c = a * b;
 var d = "H\'ello 'World!";
-var e = " Hello?";
-e = 'Hello';
+var e = 'Hello?';
+e = "Hello";
 var e = d+e;
 var asd = 8;
 """

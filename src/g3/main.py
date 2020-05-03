@@ -139,23 +139,23 @@ def p_expression(t):
 
 ###############IF STATEMENT
 
-def p_if_statement(t):
+def p_if_statement(t):      #TODO if expression tab problem
     '''
     if_statement : if_statement_head if_statement_body
     '''
-    pass
+    t[0] = t[1] + ":" + "\n\t" + t[2]
 
 def p_if_statement_head(t):
     '''
     if_statement_head : IF LSB condition RSB
     '''
-    print(t[1])
+    t[0] = t[1] + t[2] + t[3] + t[4]
 
 def p_if_statement_body(t):
     '''
     if_statement_body : LMB expression RMB
     '''
-    pass
+    t[0] = t[1] + t[2] + t[3]
 
 ############CONDITION
 

@@ -1,2 +1,2 @@
-a = "def hello():\n\tprint('hello')\nhello()"
-exec(a)
+str = '"hello World!"'
+print(str[1:])

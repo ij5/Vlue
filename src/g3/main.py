@@ -187,17 +187,17 @@ def p_variable_value_change(t):
         error("변수는 선언 후 사용할 수 있습니다.")
     print(variable)
 
-def p_variable_value_change_string(t):
-    '''
-    variable_value_change : IDENTIFIER EQUAL STRING
-    '''
-    global code
-    if variable.get(t[1]):
-        variable[t[1]] = t[3]
-        code = code + '{0} ={1}\n'.format(t[1], t[3])
-    else:
-        error("변수는 선언 후 사용할 수 있습니다.")
-    print(variable)
+# def p_variable_value_change_string(t):
+#     '''
+#     variable_value_change : IDENTIFIER EQUAL STRING
+#     '''
+#     global code
+#     if variable.get(t[1]):
+#         variable[t[1]] = t[3]
+#         code = code + '{0} ={1}\n'.format(t[1], t[3])
+#     else:
+#         error("변수는 선언 후 사용할 수 있습니다.")
+#     print(variable)
 
 #########VARIABLE DECLARATION
 
@@ -210,13 +210,13 @@ def p_variable_declaration_2(t):
     code = code + "{0} = {1}\n".format(t[2], t[4])
     print(variable)
 
-def p_variable_declaration_2_string(t):
-    '''
-    variable_declaration : VAR IDENTIFIER EQUAL STRING
-    '''
-    global code
-    variable[t[2]] = t[4]
-    code = code + '{0} = {1}\n'.format(t[2], t[4])
+# def p_variable_declaration_2_string(t):
+#     '''
+#     variable_declaration : VAR IDENTIFIER EQUAL STRING
+#     '''
+#     global code
+#     variable[t[2]] = t[4]
+#     code = code + '{0} = {1}\n'.format(t[2], t[4])
 
 def p_variable_declaration_1(t):
     '''
@@ -250,7 +250,15 @@ def p_variable_declaration_1(t):
 
 def p_add(t):
     'calculate : calculate PLUS calculate'
-    t[0] = t[1] + t[3]
+    if(t[1].startswith('"')):
+        if(t[3].startswith('"')):
+            t[0] = t[1][:-1] + t[3][1:]
+        elif(t[3].startswith("'")):
+            t[0] = t[1][:-1] + t[3][1:-1]+'"'
+    elif(t[1].startswith("'")):
+        
+    else:
+        t[0] = t[1] + t[3]
 
 def p_sub(t):
     'calculate : calculate MINUS calculate'
@@ -276,13 +284,13 @@ def p_calculate2num(t):
     '''
     calculate : INT
         | FLOAT
+        | STRING
     '''
     t[0] = t[1]
 
 def p_calculate2str(t):     #TODO: 확인 필요.
     '''
     calculate : IDENTIFIER
-        | STRING
     '''
     try:
         t[0] = variable[t[1]]
@@ -315,7 +323,7 @@ var b = 34.88;
 var c = a * b;
 var d = "H\'ello 'World!";
 var e = " Hello?";
-e = "Hello";
+e = 'Hello';
 var e = d+e;
 var asd = 8;
 """

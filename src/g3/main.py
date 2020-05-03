@@ -133,6 +133,7 @@ def p_expression(t):
         | variable_declaration SEMI
         | variable_value_change SEMI
         | if_statement SEMI
+        | empty
     '''
 
 
@@ -142,16 +143,19 @@ def p_if_statement(t):
     '''
     if_statement : if_statement_head if_statement_body
     '''
+    pass
 
 def p_if_statement_head(t):
     '''
     if_statement_head : IF LSB condition RSB
     '''
+    print(t[1])
 
 def p_if_statement_body(t):
     '''
     if_statement_body : LMB expression RMB
     '''
+    pass
 
 ############CONDITION
 
@@ -173,7 +177,7 @@ def p_condition_3(t):
     '''
     condition : condition EQUAL calculate
     '''
-    t[0] = t[1] + "==" + t[3]
+    t[0] = str(t[1]) + "==" + str(t[3])
 
 def p_condition_4(t):
     '''
@@ -312,6 +316,10 @@ def p_parens(t):
 
 ############CALCULATE END
 
+def p_empty(t):
+    'empty : '
+    pass
+
 #토큰 에러 처리
 def p_error(t):
     if(t):
@@ -333,8 +341,9 @@ var c = a * b;
 var d = "H\'ello 'World!";
 var e = 'Hello?';
 e = "Hello";
-var e = d+e;
+e = d+e;
 var asd = 8;
+if(a=b){}
 """
 # while True:
 #     buf = input(">>> ")

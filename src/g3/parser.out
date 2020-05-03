@@ -23,56 +23,53 @@ Rule 12    condition -> condition LB EQUAL calculate
 Rule 13    condition -> condition RB EQUAL calculate
 Rule 14    condition -> calculate
 Rule 15    variable_value_change -> IDENTIFIER EQUAL calculate
-Rule 16    variable_value_change -> IDENTIFIER EQUAL string_plus
+Rule 16    variable_value_change -> IDENTIFIER EQUAL STRING
 Rule 17    variable_declaration -> VAR IDENTIFIER EQUAL calculate
-Rule 18    variable_declaration -> VAR IDENTIFIER EQUAL string_plus
+Rule 18    variable_declaration -> VAR IDENTIFIER EQUAL STRING
 Rule 19    variable_declaration -> VAR IDENTIFIER
-Rule 20    string_plus -> string_plus PLUS STRING
-Rule 21    string_plus -> STRING
-Rule 22    string_plus -> IDENTIFIER
-Rule 23    calculate -> calculate PLUS calculate
-Rule 24    calculate -> calculate MINUS calculate
-Rule 25    calculate -> MINUS calculate
-Rule 26    calculate -> calculate MUL calculate
-Rule 27    calculate -> calculate DIV calculate
-Rule 28    calculate -> INT
-Rule 29    calculate -> FLOAT
-Rule 30    calculate -> IDENTIFIER
-Rule 31    calculate -> LSB calculate RSB
+Rule 20    calculate -> calculate PLUS calculate
+Rule 21    calculate -> calculate MINUS calculate
+Rule 22    calculate -> MINUS calculate
+Rule 23    calculate -> calculate MUL calculate
+Rule 24    calculate -> calculate DIV calculate
+Rule 25    calculate -> INT
+Rule 26    calculate -> FLOAT
+Rule 27    calculate -> IDENTIFIER
+Rule 28    calculate -> STRING
+Rule 29    calculate -> LSB calculate RSB
 
 Terminals, with rules where they appear
 
 COLON                : 
-DIV                  : 27
+DIV                  : 24
 ELSE                 : 
 EQUAL                : 12 13 15 16 17 18
-FLOAT                : 29
-IDENTIFIER           : 15 16 17 18 19 22 30
+FLOAT                : 26
+IDENTIFIER           : 15 16 17 18 19 27
 IF                   : 8
-INT                  : 28
+INT                  : 25
 LB                   : 10 12
 LMB                  : 9
-LSB                  : 8 31
-MINUS                : 24 25
-MUL                  : 26
-PLUS                 : 20 23
+LSB                  : 8 29
+MINUS                : 21 22
+MUL                  : 23
+PLUS                 : 20
 RB                   : 11 13
 RMB                  : 9
-RSB                  : 8 31
+RSB                  : 8 29
 SEMI                 : 1 2 3 4 5 6
-STRING               : 20 21
+STRING               : 16 18 28
 VAR                  : 17 18 19
 error                : 
 
 Nonterminals, with rules where they appear
 
-calculate            : 10 11 12 13 14 15 17 23 23 24 24 25 26 26 27 27 31
+calculate            : 10 11 12 13 14 15 17 20 20 21 21 22 23 23 24 24 29
 condition            : 8 10 11 12 13
 expression           : 1 2 3 9 0
 if_statement         : 3 6
 if_statement_body    : 7
 if_statement_head    : 7
-string_plus          : 16 18 20
 variable_declaration : 1 4
 variable_value_change : 2 5
 
@@ -88,10 +85,10 @@ state 0
     (5) expression -> . variable_value_change SEMI
     (6) expression -> . if_statement SEMI
     (17) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (18) variable_declaration -> . VAR IDENTIFIER EQUAL string_plus
+    (18) variable_declaration -> . VAR IDENTIFIER EQUAL STRING
     (19) variable_declaration -> . VAR IDENTIFIER
     (15) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (16) variable_value_change -> . IDENTIFIER EQUAL string_plus
+    (16) variable_value_change -> . IDENTIFIER EQUAL STRING
     (7) if_statement -> . if_statement_head if_statement_body
     (8) if_statement_head -> . IF LSB condition RSB
 
@@ -112,10 +109,10 @@ state 1
     (2) expression -> expression . variable_value_change SEMI
     (3) expression -> expression . if_statement SEMI
     (17) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (18) variable_declaration -> . VAR IDENTIFIER EQUAL string_plus
+    (18) variable_declaration -> . VAR IDENTIFIER EQUAL STRING
     (19) variable_declaration -> . VAR IDENTIFIER
     (15) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (16) variable_value_change -> . IDENTIFIER EQUAL string_plus
+    (16) variable_value_change -> . IDENTIFIER EQUAL STRING
     (7) if_statement -> . if_statement_head if_statement_body
     (8) if_statement_head -> . IF LSB condition RSB
 
@@ -152,7 +149,7 @@ state 4
 state 5
 
     (17) variable_declaration -> VAR . IDENTIFIER EQUAL calculate
-    (18) variable_declaration -> VAR . IDENTIFIER EQUAL string_plus
+    (18) variable_declaration -> VAR . IDENTIFIER EQUAL STRING
     (19) variable_declaration -> VAR . IDENTIFIER
 
     IDENTIFIER      shift and go to state 15
@@ -161,7 +158,7 @@ state 5
 state 6
 
     (15) variable_value_change -> IDENTIFIER . EQUAL calculate
-    (16) variable_value_change -> IDENTIFIER . EQUAL string_plus
+    (16) variable_value_change -> IDENTIFIER . EQUAL STRING
 
     EQUAL           shift and go to state 16
 
@@ -239,7 +236,7 @@ state 14
 state 15
 
     (17) variable_declaration -> VAR IDENTIFIER . EQUAL calculate
-    (18) variable_declaration -> VAR IDENTIFIER . EQUAL string_plus
+    (18) variable_declaration -> VAR IDENTIFIER . EQUAL STRING
     (19) variable_declaration -> VAR IDENTIFIER .
 
     EQUAL           shift and go to state 23
@@ -249,29 +246,26 @@ state 15
 state 16
 
     (15) variable_value_change -> IDENTIFIER EQUAL . calculate
-    (16) variable_value_change -> IDENTIFIER EQUAL . string_plus
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
-    (20) string_plus -> . string_plus PLUS STRING
-    (21) string_plus -> . STRING
-    (22) string_plus -> . IDENTIFIER
+    (16) variable_value_change -> IDENTIFIER EQUAL . STRING
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
 
+    STRING          shift and go to state 26
     MINUS           shift and go to state 27
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
     IDENTIFIER      shift and go to state 24
     LSB             shift and go to state 30
-    STRING          shift and go to state 31
 
     calculate                      shift and go to state 25
-    string_plus                    shift and go to state 26
 
 state 17
 
@@ -290,10 +284,10 @@ state 18
     (5) expression -> . variable_value_change SEMI
     (6) expression -> . if_statement SEMI
     (17) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (18) variable_declaration -> . VAR IDENTIFIER EQUAL string_plus
+    (18) variable_declaration -> . VAR IDENTIFIER EQUAL STRING
     (19) variable_declaration -> . VAR IDENTIFIER
     (15) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (16) variable_value_change -> . IDENTIFIER EQUAL string_plus
+    (16) variable_value_change -> . IDENTIFIER EQUAL STRING
     (7) if_statement -> . if_statement_head if_statement_body
     (8) if_statement_head -> . IF LSB condition RSB
 
@@ -301,7 +295,7 @@ state 18
     IDENTIFIER      shift and go to state 6
     IF              shift and go to state 8
 
-    expression                     shift and go to state 32
+    expression                     shift and go to state 31
     variable_declaration           shift and go to state 2
     variable_value_change          shift and go to state 3
     if_statement                   shift and go to state 4
@@ -315,24 +309,26 @@ state 19
     (12) condition -> . condition LB EQUAL calculate
     (13) condition -> . condition RB EQUAL calculate
     (14) condition -> . calculate
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
 
     MINUS           shift and go to state 27
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
-    IDENTIFIER      shift and go to state 35
+    IDENTIFIER      shift and go to state 24
+    STRING          shift and go to state 34
     LSB             shift and go to state 30
 
-    condition                      shift and go to state 33
-    calculate                      shift and go to state 34
+    condition                      shift and go to state 32
+    calculate                      shift and go to state 33
 
 state 20
 
@@ -370,164 +366,160 @@ state 22
 state 23
 
     (17) variable_declaration -> VAR IDENTIFIER EQUAL . calculate
-    (18) variable_declaration -> VAR IDENTIFIER EQUAL . string_plus
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
-    (20) string_plus -> . string_plus PLUS STRING
-    (21) string_plus -> . STRING
-    (22) string_plus -> . IDENTIFIER
+    (18) variable_declaration -> VAR IDENTIFIER EQUAL . STRING
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
 
+    STRING          shift and go to state 36
     MINUS           shift and go to state 27
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
     IDENTIFIER      shift and go to state 24
     LSB             shift and go to state 30
-    STRING          shift and go to state 31
 
-    calculate                      shift and go to state 36
-    string_plus                    shift and go to state 37
+    calculate                      shift and go to state 35
 
 state 24
 
-    (30) calculate -> IDENTIFIER .
-    (22) string_plus -> IDENTIFIER .
+    (27) calculate -> IDENTIFIER .
 
-  ! reduce/reduce conflict for PLUS resolved using rule 22 (string_plus -> IDENTIFIER .)
-  ! reduce/reduce conflict for SEMI resolved using rule 22 (string_plus -> IDENTIFIER .)
-    MINUS           reduce using rule 30 (calculate -> IDENTIFIER .)
-    MUL             reduce using rule 30 (calculate -> IDENTIFIER .)
-    DIV             reduce using rule 30 (calculate -> IDENTIFIER .)
-    PLUS            reduce using rule 22 (string_plus -> IDENTIFIER .)
-    SEMI            reduce using rule 22 (string_plus -> IDENTIFIER .)
-
-  ! PLUS            [ reduce using rule 30 (calculate -> IDENTIFIER .) ]
-  ! SEMI            [ reduce using rule 30 (calculate -> IDENTIFIER .) ]
+    PLUS            reduce using rule 27 (calculate -> IDENTIFIER .)
+    MINUS           reduce using rule 27 (calculate -> IDENTIFIER .)
+    MUL             reduce using rule 27 (calculate -> IDENTIFIER .)
+    DIV             reduce using rule 27 (calculate -> IDENTIFIER .)
+    SEMI            reduce using rule 27 (calculate -> IDENTIFIER .)
+    RSB             reduce using rule 27 (calculate -> IDENTIFIER .)
+    LB              reduce using rule 27 (calculate -> IDENTIFIER .)
+    RB              reduce using rule 27 (calculate -> IDENTIFIER .)
 
 
 state 25
 
     (15) variable_value_change -> IDENTIFIER EQUAL calculate .
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
 
     SEMI            reduce using rule 15 (variable_value_change -> IDENTIFIER EQUAL calculate .)
-    PLUS            shift and go to state 38
-    MINUS           shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
+    PLUS            shift and go to state 37
+    MINUS           shift and go to state 38
+    MUL             shift and go to state 39
+    DIV             shift and go to state 40
 
 
 state 26
 
-    (16) variable_value_change -> IDENTIFIER EQUAL string_plus .
-    (20) string_plus -> string_plus . PLUS STRING
+    (16) variable_value_change -> IDENTIFIER EQUAL STRING .
+    (28) calculate -> STRING .
 
-    SEMI            reduce using rule 16 (variable_value_change -> IDENTIFIER EQUAL string_plus .)
-    PLUS            shift and go to state 42
+  ! reduce/reduce conflict for SEMI resolved using rule 16 (variable_value_change -> IDENTIFIER EQUAL STRING .)
+    SEMI            reduce using rule 16 (variable_value_change -> IDENTIFIER EQUAL STRING .)
+    PLUS            reduce using rule 28 (calculate -> STRING .)
+    MINUS           reduce using rule 28 (calculate -> STRING .)
+    MUL             reduce using rule 28 (calculate -> STRING .)
+    DIV             reduce using rule 28 (calculate -> STRING .)
+
+  ! SEMI            [ reduce using rule 28 (calculate -> STRING .) ]
 
 
 state 27
 
-    (25) calculate -> MINUS . calculate
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
+    (22) calculate -> MINUS . calculate
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
 
     MINUS           shift and go to state 27
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
-    IDENTIFIER      shift and go to state 35
+    IDENTIFIER      shift and go to state 24
+    STRING          shift and go to state 34
     LSB             shift and go to state 30
 
-    calculate                      shift and go to state 43
+    calculate                      shift and go to state 41
 
 state 28
 
-    (28) calculate -> INT .
+    (25) calculate -> INT .
 
-    PLUS            reduce using rule 28 (calculate -> INT .)
-    MINUS           reduce using rule 28 (calculate -> INT .)
-    MUL             reduce using rule 28 (calculate -> INT .)
-    DIV             reduce using rule 28 (calculate -> INT .)
-    SEMI            reduce using rule 28 (calculate -> INT .)
-    RSB             reduce using rule 28 (calculate -> INT .)
-    LB              reduce using rule 28 (calculate -> INT .)
-    RB              reduce using rule 28 (calculate -> INT .)
+    PLUS            reduce using rule 25 (calculate -> INT .)
+    MINUS           reduce using rule 25 (calculate -> INT .)
+    MUL             reduce using rule 25 (calculate -> INT .)
+    DIV             reduce using rule 25 (calculate -> INT .)
+    SEMI            reduce using rule 25 (calculate -> INT .)
+    RSB             reduce using rule 25 (calculate -> INT .)
+    LB              reduce using rule 25 (calculate -> INT .)
+    RB              reduce using rule 25 (calculate -> INT .)
 
 
 state 29
 
-    (29) calculate -> FLOAT .
+    (26) calculate -> FLOAT .
 
-    PLUS            reduce using rule 29 (calculate -> FLOAT .)
-    MINUS           reduce using rule 29 (calculate -> FLOAT .)
-    MUL             reduce using rule 29 (calculate -> FLOAT .)
-    DIV             reduce using rule 29 (calculate -> FLOAT .)
-    SEMI            reduce using rule 29 (calculate -> FLOAT .)
-    RSB             reduce using rule 29 (calculate -> FLOAT .)
-    LB              reduce using rule 29 (calculate -> FLOAT .)
-    RB              reduce using rule 29 (calculate -> FLOAT .)
+    PLUS            reduce using rule 26 (calculate -> FLOAT .)
+    MINUS           reduce using rule 26 (calculate -> FLOAT .)
+    MUL             reduce using rule 26 (calculate -> FLOAT .)
+    DIV             reduce using rule 26 (calculate -> FLOAT .)
+    SEMI            reduce using rule 26 (calculate -> FLOAT .)
+    RSB             reduce using rule 26 (calculate -> FLOAT .)
+    LB              reduce using rule 26 (calculate -> FLOAT .)
+    RB              reduce using rule 26 (calculate -> FLOAT .)
 
 
 state 30
 
-    (31) calculate -> LSB . calculate RSB
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
+    (29) calculate -> LSB . calculate RSB
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
 
     MINUS           shift and go to state 27
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
-    IDENTIFIER      shift and go to state 35
+    IDENTIFIER      shift and go to state 24
+    STRING          shift and go to state 34
     LSB             shift and go to state 30
 
-    calculate                      shift and go to state 44
+    calculate                      shift and go to state 42
 
 state 31
-
-    (21) string_plus -> STRING .
-
-    PLUS            reduce using rule 21 (string_plus -> STRING .)
-    SEMI            reduce using rule 21 (string_plus -> STRING .)
-
-
-state 32
 
     (9) if_statement_body -> LMB expression . RMB
     (1) expression -> expression . variable_declaration SEMI
     (2) expression -> expression . variable_value_change SEMI
     (3) expression -> expression . if_statement SEMI
     (17) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (18) variable_declaration -> . VAR IDENTIFIER EQUAL string_plus
+    (18) variable_declaration -> . VAR IDENTIFIER EQUAL STRING
     (19) variable_declaration -> . VAR IDENTIFIER
     (15) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (16) variable_value_change -> . IDENTIFIER EQUAL string_plus
+    (16) variable_value_change -> . IDENTIFIER EQUAL STRING
     (7) if_statement -> . if_statement_head if_statement_body
     (8) if_statement_head -> . IF LSB condition RSB
 
-    RMB             shift and go to state 45
+    RMB             shift and go to state 43
     VAR             shift and go to state 5
     IDENTIFIER      shift and go to state 6
     IF              shift and go to state 8
@@ -537,7 +529,7 @@ state 32
     if_statement                   shift and go to state 11
     if_statement_head              shift and go to state 7
 
-state 33
+state 32
 
     (8) if_statement_head -> IF LSB condition . RSB
     (10) condition -> condition . LB calculate
@@ -545,480 +537,489 @@ state 33
     (12) condition -> condition . LB EQUAL calculate
     (13) condition -> condition . RB EQUAL calculate
 
-    RSB             shift and go to state 46
-    LB              shift and go to state 47
-    RB              shift and go to state 48
+    RSB             shift and go to state 44
+    LB              shift and go to state 45
+    RB              shift and go to state 46
 
 
-state 34
+state 33
 
     (14) condition -> calculate .
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
 
     RSB             reduce using rule 14 (condition -> calculate .)
     LB              reduce using rule 14 (condition -> calculate .)
     RB              reduce using rule 14 (condition -> calculate .)
-    PLUS            shift and go to state 38
-    MINUS           shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
+    PLUS            shift and go to state 37
+    MINUS           shift and go to state 38
+    MUL             shift and go to state 39
+    DIV             shift and go to state 40
+
+
+state 34
+
+    (28) calculate -> STRING .
+
+    PLUS            reduce using rule 28 (calculate -> STRING .)
+    MINUS           reduce using rule 28 (calculate -> STRING .)
+    MUL             reduce using rule 28 (calculate -> STRING .)
+    DIV             reduce using rule 28 (calculate -> STRING .)
+    RSB             reduce using rule 28 (calculate -> STRING .)
+    LB              reduce using rule 28 (calculate -> STRING .)
+    RB              reduce using rule 28 (calculate -> STRING .)
+    SEMI            reduce using rule 28 (calculate -> STRING .)
 
 
 state 35
 
-    (30) calculate -> IDENTIFIER .
+    (17) variable_declaration -> VAR IDENTIFIER EQUAL calculate .
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
 
-    PLUS            reduce using rule 30 (calculate -> IDENTIFIER .)
-    MINUS           reduce using rule 30 (calculate -> IDENTIFIER .)
-    MUL             reduce using rule 30 (calculate -> IDENTIFIER .)
-    DIV             reduce using rule 30 (calculate -> IDENTIFIER .)
-    RSB             reduce using rule 30 (calculate -> IDENTIFIER .)
-    LB              reduce using rule 30 (calculate -> IDENTIFIER .)
-    RB              reduce using rule 30 (calculate -> IDENTIFIER .)
-    SEMI            reduce using rule 30 (calculate -> IDENTIFIER .)
+    SEMI            reduce using rule 17 (variable_declaration -> VAR IDENTIFIER EQUAL calculate .)
+    PLUS            shift and go to state 37
+    MINUS           shift and go to state 38
+    MUL             shift and go to state 39
+    DIV             shift and go to state 40
 
 
 state 36
 
-    (17) variable_declaration -> VAR IDENTIFIER EQUAL calculate .
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
+    (18) variable_declaration -> VAR IDENTIFIER EQUAL STRING .
+    (28) calculate -> STRING .
 
-    SEMI            reduce using rule 17 (variable_declaration -> VAR IDENTIFIER EQUAL calculate .)
-    PLUS            shift and go to state 38
-    MINUS           shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
+  ! reduce/reduce conflict for SEMI resolved using rule 18 (variable_declaration -> VAR IDENTIFIER EQUAL STRING .)
+    SEMI            reduce using rule 18 (variable_declaration -> VAR IDENTIFIER EQUAL STRING .)
+    PLUS            reduce using rule 28 (calculate -> STRING .)
+    MINUS           reduce using rule 28 (calculate -> STRING .)
+    MUL             reduce using rule 28 (calculate -> STRING .)
+    DIV             reduce using rule 28 (calculate -> STRING .)
+
+  ! SEMI            [ reduce using rule 28 (calculate -> STRING .) ]
 
 
 state 37
 
-    (18) variable_declaration -> VAR IDENTIFIER EQUAL string_plus .
-    (20) string_plus -> string_plus . PLUS STRING
-
-    SEMI            reduce using rule 18 (variable_declaration -> VAR IDENTIFIER EQUAL string_plus .)
-    PLUS            shift and go to state 42
-
-
-state 38
-
-    (23) calculate -> calculate PLUS . calculate
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
+    (20) calculate -> calculate PLUS . calculate
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
 
     MINUS           shift and go to state 27
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
-    IDENTIFIER      shift and go to state 35
+    IDENTIFIER      shift and go to state 24
+    STRING          shift and go to state 34
+    LSB             shift and go to state 30
+
+    calculate                      shift and go to state 47
+
+state 38
+
+    (21) calculate -> calculate MINUS . calculate
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
+
+    MINUS           shift and go to state 27
+    INT             shift and go to state 28
+    FLOAT           shift and go to state 29
+    IDENTIFIER      shift and go to state 24
+    STRING          shift and go to state 34
+    LSB             shift and go to state 30
+
+    calculate                      shift and go to state 48
+
+state 39
+
+    (23) calculate -> calculate MUL . calculate
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
+
+    MINUS           shift and go to state 27
+    INT             shift and go to state 28
+    FLOAT           shift and go to state 29
+    IDENTIFIER      shift and go to state 24
+    STRING          shift and go to state 34
     LSB             shift and go to state 30
 
     calculate                      shift and go to state 49
 
-state 39
+state 40
 
-    (24) calculate -> calculate MINUS . calculate
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
+    (24) calculate -> calculate DIV . calculate
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
 
     MINUS           shift and go to state 27
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
-    IDENTIFIER      shift and go to state 35
+    IDENTIFIER      shift and go to state 24
+    STRING          shift and go to state 34
     LSB             shift and go to state 30
 
     calculate                      shift and go to state 50
 
-state 40
-
-    (26) calculate -> calculate MUL . calculate
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
-
-    MINUS           shift and go to state 27
-    INT             shift and go to state 28
-    FLOAT           shift and go to state 29
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 30
-
-    calculate                      shift and go to state 51
-
 state 41
 
-    (27) calculate -> calculate DIV . calculate
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
+    (22) calculate -> MINUS calculate .
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
 
-    MINUS           shift and go to state 27
-    INT             shift and go to state 28
-    FLOAT           shift and go to state 29
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 30
+    PLUS            reduce using rule 22 (calculate -> MINUS calculate .)
+    MINUS           reduce using rule 22 (calculate -> MINUS calculate .)
+    MUL             reduce using rule 22 (calculate -> MINUS calculate .)
+    DIV             reduce using rule 22 (calculate -> MINUS calculate .)
+    SEMI            reduce using rule 22 (calculate -> MINUS calculate .)
+    RSB             reduce using rule 22 (calculate -> MINUS calculate .)
+    LB              reduce using rule 22 (calculate -> MINUS calculate .)
+    RB              reduce using rule 22 (calculate -> MINUS calculate .)
 
-    calculate                      shift and go to state 52
+  ! PLUS            [ shift and go to state 37 ]
+  ! MINUS           [ shift and go to state 38 ]
+  ! MUL             [ shift and go to state 39 ]
+  ! DIV             [ shift and go to state 40 ]
+
 
 state 42
 
-    (20) string_plus -> string_plus PLUS . STRING
+    (29) calculate -> LSB calculate . RSB
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
 
-    STRING          shift and go to state 53
+    RSB             shift and go to state 51
+    PLUS            shift and go to state 37
+    MINUS           shift and go to state 38
+    MUL             shift and go to state 39
+    DIV             shift and go to state 40
 
 
 state 43
-
-    (25) calculate -> MINUS calculate .
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
-
-    PLUS            reduce using rule 25 (calculate -> MINUS calculate .)
-    MINUS           reduce using rule 25 (calculate -> MINUS calculate .)
-    MUL             reduce using rule 25 (calculate -> MINUS calculate .)
-    DIV             reduce using rule 25 (calculate -> MINUS calculate .)
-    SEMI            reduce using rule 25 (calculate -> MINUS calculate .)
-    RSB             reduce using rule 25 (calculate -> MINUS calculate .)
-    LB              reduce using rule 25 (calculate -> MINUS calculate .)
-    RB              reduce using rule 25 (calculate -> MINUS calculate .)
-
-  ! PLUS            [ shift and go to state 38 ]
-  ! MINUS           [ shift and go to state 39 ]
-  ! MUL             [ shift and go to state 40 ]
-  ! DIV             [ shift and go to state 41 ]
-
-
-state 44
-
-    (31) calculate -> LSB calculate . RSB
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
-
-    RSB             shift and go to state 54
-    PLUS            shift and go to state 38
-    MINUS           shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-
-
-state 45
 
     (9) if_statement_body -> LMB expression RMB .
 
     SEMI            reduce using rule 9 (if_statement_body -> LMB expression RMB .)
 
 
-state 46
+state 44
 
     (8) if_statement_head -> IF LSB condition RSB .
 
     LMB             reduce using rule 8 (if_statement_head -> IF LSB condition RSB .)
 
 
-state 47
+state 45
 
     (10) condition -> condition LB . calculate
     (12) condition -> condition LB . EQUAL calculate
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
 
-    EQUAL           shift and go to state 56
+    EQUAL           shift and go to state 53
     MINUS           shift and go to state 27
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
-    IDENTIFIER      shift and go to state 35
+    IDENTIFIER      shift and go to state 24
+    STRING          shift and go to state 34
     LSB             shift and go to state 30
 
-    calculate                      shift and go to state 55
+    calculate                      shift and go to state 52
 
-state 48
+state 46
 
     (11) condition -> condition RB . calculate
     (13) condition -> condition RB . EQUAL calculate
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
 
-    EQUAL           shift and go to state 58
+    EQUAL           shift and go to state 55
     MINUS           shift and go to state 27
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
-    IDENTIFIER      shift and go to state 35
+    IDENTIFIER      shift and go to state 24
+    STRING          shift and go to state 34
     LSB             shift and go to state 30
 
-    calculate                      shift and go to state 57
+    calculate                      shift and go to state 54
+
+state 47
+
+    (20) calculate -> calculate PLUS calculate .
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
+
+    PLUS            reduce using rule 20 (calculate -> calculate PLUS calculate .)
+    MINUS           reduce using rule 20 (calculate -> calculate PLUS calculate .)
+    SEMI            reduce using rule 20 (calculate -> calculate PLUS calculate .)
+    RSB             reduce using rule 20 (calculate -> calculate PLUS calculate .)
+    LB              reduce using rule 20 (calculate -> calculate PLUS calculate .)
+    RB              reduce using rule 20 (calculate -> calculate PLUS calculate .)
+    MUL             shift and go to state 39
+    DIV             shift and go to state 40
+
+  ! MUL             [ reduce using rule 20 (calculate -> calculate PLUS calculate .) ]
+  ! DIV             [ reduce using rule 20 (calculate -> calculate PLUS calculate .) ]
+  ! PLUS            [ shift and go to state 37 ]
+  ! MINUS           [ shift and go to state 38 ]
+
+
+state 48
+
+    (21) calculate -> calculate MINUS calculate .
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
+
+    PLUS            reduce using rule 21 (calculate -> calculate MINUS calculate .)
+    MINUS           reduce using rule 21 (calculate -> calculate MINUS calculate .)
+    SEMI            reduce using rule 21 (calculate -> calculate MINUS calculate .)
+    RSB             reduce using rule 21 (calculate -> calculate MINUS calculate .)
+    LB              reduce using rule 21 (calculate -> calculate MINUS calculate .)
+    RB              reduce using rule 21 (calculate -> calculate MINUS calculate .)
+    MUL             shift and go to state 39
+    DIV             shift and go to state 40
+
+  ! MUL             [ reduce using rule 21 (calculate -> calculate MINUS calculate .) ]
+  ! DIV             [ reduce using rule 21 (calculate -> calculate MINUS calculate .) ]
+  ! PLUS            [ shift and go to state 37 ]
+  ! MINUS           [ shift and go to state 38 ]
+
 
 state 49
 
-    (23) calculate -> calculate PLUS calculate .
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
+    (23) calculate -> calculate MUL calculate .
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
 
-    PLUS            reduce using rule 23 (calculate -> calculate PLUS calculate .)
-    MINUS           reduce using rule 23 (calculate -> calculate PLUS calculate .)
-    SEMI            reduce using rule 23 (calculate -> calculate PLUS calculate .)
-    RSB             reduce using rule 23 (calculate -> calculate PLUS calculate .)
-    LB              reduce using rule 23 (calculate -> calculate PLUS calculate .)
-    RB              reduce using rule 23 (calculate -> calculate PLUS calculate .)
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
+    PLUS            reduce using rule 23 (calculate -> calculate MUL calculate .)
+    MINUS           reduce using rule 23 (calculate -> calculate MUL calculate .)
+    MUL             reduce using rule 23 (calculate -> calculate MUL calculate .)
+    DIV             reduce using rule 23 (calculate -> calculate MUL calculate .)
+    SEMI            reduce using rule 23 (calculate -> calculate MUL calculate .)
+    RSB             reduce using rule 23 (calculate -> calculate MUL calculate .)
+    LB              reduce using rule 23 (calculate -> calculate MUL calculate .)
+    RB              reduce using rule 23 (calculate -> calculate MUL calculate .)
 
-  ! MUL             [ reduce using rule 23 (calculate -> calculate PLUS calculate .) ]
-  ! DIV             [ reduce using rule 23 (calculate -> calculate PLUS calculate .) ]
-  ! PLUS            [ shift and go to state 38 ]
-  ! MINUS           [ shift and go to state 39 ]
+  ! PLUS            [ shift and go to state 37 ]
+  ! MINUS           [ shift and go to state 38 ]
+  ! MUL             [ shift and go to state 39 ]
+  ! DIV             [ shift and go to state 40 ]
 
 
 state 50
 
-    (24) calculate -> calculate MINUS calculate .
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
+    (24) calculate -> calculate DIV calculate .
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
 
-    PLUS            reduce using rule 24 (calculate -> calculate MINUS calculate .)
-    MINUS           reduce using rule 24 (calculate -> calculate MINUS calculate .)
-    SEMI            reduce using rule 24 (calculate -> calculate MINUS calculate .)
-    RSB             reduce using rule 24 (calculate -> calculate MINUS calculate .)
-    LB              reduce using rule 24 (calculate -> calculate MINUS calculate .)
-    RB              reduce using rule 24 (calculate -> calculate MINUS calculate .)
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
+    PLUS            reduce using rule 24 (calculate -> calculate DIV calculate .)
+    MINUS           reduce using rule 24 (calculate -> calculate DIV calculate .)
+    MUL             reduce using rule 24 (calculate -> calculate DIV calculate .)
+    DIV             reduce using rule 24 (calculate -> calculate DIV calculate .)
+    SEMI            reduce using rule 24 (calculate -> calculate DIV calculate .)
+    RSB             reduce using rule 24 (calculate -> calculate DIV calculate .)
+    LB              reduce using rule 24 (calculate -> calculate DIV calculate .)
+    RB              reduce using rule 24 (calculate -> calculate DIV calculate .)
 
-  ! MUL             [ reduce using rule 24 (calculate -> calculate MINUS calculate .) ]
-  ! DIV             [ reduce using rule 24 (calculate -> calculate MINUS calculate .) ]
-  ! PLUS            [ shift and go to state 38 ]
-  ! MINUS           [ shift and go to state 39 ]
+  ! PLUS            [ shift and go to state 37 ]
+  ! MINUS           [ shift and go to state 38 ]
+  ! MUL             [ shift and go to state 39 ]
+  ! DIV             [ shift and go to state 40 ]
 
 
 state 51
 
-    (26) calculate -> calculate MUL calculate .
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
+    (29) calculate -> LSB calculate RSB .
 
-    PLUS            reduce using rule 26 (calculate -> calculate MUL calculate .)
-    MINUS           reduce using rule 26 (calculate -> calculate MUL calculate .)
-    MUL             reduce using rule 26 (calculate -> calculate MUL calculate .)
-    DIV             reduce using rule 26 (calculate -> calculate MUL calculate .)
-    SEMI            reduce using rule 26 (calculate -> calculate MUL calculate .)
-    RSB             reduce using rule 26 (calculate -> calculate MUL calculate .)
-    LB              reduce using rule 26 (calculate -> calculate MUL calculate .)
-    RB              reduce using rule 26 (calculate -> calculate MUL calculate .)
-
-  ! PLUS            [ shift and go to state 38 ]
-  ! MINUS           [ shift and go to state 39 ]
-  ! MUL             [ shift and go to state 40 ]
-  ! DIV             [ shift and go to state 41 ]
+    PLUS            reduce using rule 29 (calculate -> LSB calculate RSB .)
+    MINUS           reduce using rule 29 (calculate -> LSB calculate RSB .)
+    MUL             reduce using rule 29 (calculate -> LSB calculate RSB .)
+    DIV             reduce using rule 29 (calculate -> LSB calculate RSB .)
+    SEMI            reduce using rule 29 (calculate -> LSB calculate RSB .)
+    RSB             reduce using rule 29 (calculate -> LSB calculate RSB .)
+    LB              reduce using rule 29 (calculate -> LSB calculate RSB .)
+    RB              reduce using rule 29 (calculate -> LSB calculate RSB .)
 
 
 state 52
 
-    (27) calculate -> calculate DIV calculate .
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
-
-    PLUS            reduce using rule 27 (calculate -> calculate DIV calculate .)
-    MINUS           reduce using rule 27 (calculate -> calculate DIV calculate .)
-    MUL             reduce using rule 27 (calculate -> calculate DIV calculate .)
-    DIV             reduce using rule 27 (calculate -> calculate DIV calculate .)
-    SEMI            reduce using rule 27 (calculate -> calculate DIV calculate .)
-    RSB             reduce using rule 27 (calculate -> calculate DIV calculate .)
-    LB              reduce using rule 27 (calculate -> calculate DIV calculate .)
-    RB              reduce using rule 27 (calculate -> calculate DIV calculate .)
-
-  ! PLUS            [ shift and go to state 38 ]
-  ! MINUS           [ shift and go to state 39 ]
-  ! MUL             [ shift and go to state 40 ]
-  ! DIV             [ shift and go to state 41 ]
-
-
-state 53
-
-    (20) string_plus -> string_plus PLUS STRING .
-
-    PLUS            reduce using rule 20 (string_plus -> string_plus PLUS STRING .)
-    SEMI            reduce using rule 20 (string_plus -> string_plus PLUS STRING .)
-
-
-state 54
-
-    (31) calculate -> LSB calculate RSB .
-
-    PLUS            reduce using rule 31 (calculate -> LSB calculate RSB .)
-    MINUS           reduce using rule 31 (calculate -> LSB calculate RSB .)
-    MUL             reduce using rule 31 (calculate -> LSB calculate RSB .)
-    DIV             reduce using rule 31 (calculate -> LSB calculate RSB .)
-    SEMI            reduce using rule 31 (calculate -> LSB calculate RSB .)
-    RSB             reduce using rule 31 (calculate -> LSB calculate RSB .)
-    LB              reduce using rule 31 (calculate -> LSB calculate RSB .)
-    RB              reduce using rule 31 (calculate -> LSB calculate RSB .)
-
-
-state 55
-
     (10) condition -> condition LB calculate .
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
 
     RSB             reduce using rule 10 (condition -> condition LB calculate .)
     LB              reduce using rule 10 (condition -> condition LB calculate .)
     RB              reduce using rule 10 (condition -> condition LB calculate .)
-    PLUS            shift and go to state 38
-    MINUS           shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
+    PLUS            shift and go to state 37
+    MINUS           shift and go to state 38
+    MUL             shift and go to state 39
+    DIV             shift and go to state 40
 
 
-state 56
+state 53
 
     (12) condition -> condition LB EQUAL . calculate
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
 
     MINUS           shift and go to state 27
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
-    IDENTIFIER      shift and go to state 35
+    IDENTIFIER      shift and go to state 24
+    STRING          shift and go to state 34
     LSB             shift and go to state 30
 
-    calculate                      shift and go to state 59
+    calculate                      shift and go to state 56
 
-state 57
+state 54
 
     (11) condition -> condition RB calculate .
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
 
     RSB             reduce using rule 11 (condition -> condition RB calculate .)
     LB              reduce using rule 11 (condition -> condition RB calculate .)
     RB              reduce using rule 11 (condition -> condition RB calculate .)
-    PLUS            shift and go to state 38
-    MINUS           shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
+    PLUS            shift and go to state 37
+    MINUS           shift and go to state 38
+    MUL             shift and go to state 39
+    DIV             shift and go to state 40
 
 
-state 58
+state 55
 
     (13) condition -> condition RB EQUAL . calculate
-    (23) calculate -> . calculate PLUS calculate
-    (24) calculate -> . calculate MINUS calculate
-    (25) calculate -> . MINUS calculate
-    (26) calculate -> . calculate MUL calculate
-    (27) calculate -> . calculate DIV calculate
-    (28) calculate -> . INT
-    (29) calculate -> . FLOAT
-    (30) calculate -> . IDENTIFIER
-    (31) calculate -> . LSB calculate RSB
+    (20) calculate -> . calculate PLUS calculate
+    (21) calculate -> . calculate MINUS calculate
+    (22) calculate -> . MINUS calculate
+    (23) calculate -> . calculate MUL calculate
+    (24) calculate -> . calculate DIV calculate
+    (25) calculate -> . INT
+    (26) calculate -> . FLOAT
+    (27) calculate -> . IDENTIFIER
+    (28) calculate -> . STRING
+    (29) calculate -> . LSB calculate RSB
 
     MINUS           shift and go to state 27
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
-    IDENTIFIER      shift and go to state 35
+    IDENTIFIER      shift and go to state 24
+    STRING          shift and go to state 34
     LSB             shift and go to state 30
 
-    calculate                      shift and go to state 60
+    calculate                      shift and go to state 57
 
-state 59
+state 56
 
     (12) condition -> condition LB EQUAL calculate .
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
 
     RSB             reduce using rule 12 (condition -> condition LB EQUAL calculate .)
     LB              reduce using rule 12 (condition -> condition LB EQUAL calculate .)
     RB              reduce using rule 12 (condition -> condition LB EQUAL calculate .)
-    PLUS            shift and go to state 38
-    MINUS           shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
+    PLUS            shift and go to state 37
+    MINUS           shift and go to state 38
+    MUL             shift and go to state 39
+    DIV             shift and go to state 40
 
 
-state 60
+state 57
 
     (13) condition -> condition RB EQUAL calculate .
-    (23) calculate -> calculate . PLUS calculate
-    (24) calculate -> calculate . MINUS calculate
-    (26) calculate -> calculate . MUL calculate
-    (27) calculate -> calculate . DIV calculate
+    (20) calculate -> calculate . PLUS calculate
+    (21) calculate -> calculate . MINUS calculate
+    (23) calculate -> calculate . MUL calculate
+    (24) calculate -> calculate . DIV calculate
 
     RSB             reduce using rule 13 (condition -> condition RB EQUAL calculate .)
     LB              reduce using rule 13 (condition -> condition RB EQUAL calculate .)
     RB              reduce using rule 13 (condition -> condition RB EQUAL calculate .)
-    PLUS            shift and go to state 38
-    MINUS           shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
+    PLUS            shift and go to state 37
+    MINUS           shift and go to state 38
+    MUL             shift and go to state 39
+    DIV             shift and go to state 40
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: reduce/reduce conflict in state 24 resolved using rule (string_plus -> IDENTIFIER)
-WARNING: rejected rule (calculate -> IDENTIFIER) in state 24
+WARNING: reduce/reduce conflict in state 26 resolved using rule (variable_value_change -> IDENTIFIER EQUAL STRING)
+WARNING: rejected rule (calculate -> STRING) in state 26
+WARNING: reduce/reduce conflict in state 36 resolved using rule (variable_declaration -> VAR IDENTIFIER EQUAL STRING)
+WARNING: rejected rule (calculate -> STRING) in state 36

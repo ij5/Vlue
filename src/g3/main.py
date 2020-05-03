@@ -68,7 +68,6 @@ def t_INT(t):
 
 def t_STRING(t):
     r'("(?:\\"|.)*?"|\'(?:\\\'|.)*?\')'
-    t.value = t.value[1:-1]
     t.value = bytes(t.value, "utf-8").decode("unicode_escape")
     return t
 
@@ -190,12 +189,12 @@ def p_variable_value_change(t):
 
 def p_variable_value_change_string(t):
     '''
-    variable_value_change : IDENTIFIER EQUAL string_plus
+    variable_value_change : IDENTIFIER EQUAL STRING
     '''
     global code
     if variable.get(t[1]):
         variable[t[1]] = t[3]
-        code = code + '{0} ="{1}"\n'.format(t[1], t[3])
+        code = code + '{0} ={1}\n'.format(t[1], t[3])
     else:
         error("변수는 선언 후 사용할 수 있습니다.")
     print(variable)
@@ -213,11 +212,11 @@ def p_variable_declaration_2(t):
 
 def p_variable_declaration_2_string(t):
     '''
-    variable_declaration : VAR IDENTIFIER EQUAL string_plus
+    variable_declaration : VAR IDENTIFIER EQUAL STRING
     '''
     global code
     variable[t[2]] = t[4]
-    code = code + '{0} = "{1}"\n'.format(t[2], t[4])
+    code = code + '{0} = {1}\n'.format(t[2], t[4])
 
 def p_variable_declaration_1(t):
     '''
@@ -229,23 +228,23 @@ def p_variable_declaration_1(t):
 
 ###########STRING
 
-def p_string_plus(t):       #TODO 문자열 오류
-    '''
-    string_plus : string_plus PLUS STRING
-    '''
-    global code
-    t[0] = t[1] + t[3]
-
-def p_string_plus_2(t):     #TODO 문자열 오류 2
-    '''
-    string_plus : STRING
-    '''
-    t[0] = t[1]
-
-def p_string_plus_3(t):
-    '''
-    string_plus : IDENTIFIER
-    '''
+# def p_string_plus(t):       #TODO 문자열 오류
+#     '''
+#     string_plus : string_plus PLUS STRING
+#     '''
+#     global code
+#     t[0] = t[1] + t[3]
+#
+# def p_string_plus_2(t):     #TODO 문자열 오류 2
+#     '''
+#     string_plus : STRING
+#     '''
+#     t[0] = t[1]
+#
+# def p_string_plus_3(t):
+#     '''
+#     string_plus : IDENTIFIER
+#     '''
 
 #########CALCULATE
 

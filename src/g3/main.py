@@ -280,9 +280,10 @@ def p_calculate2num(t):
     '''
     t[0] = t[1]
 
-def p_calculate2str(t):
+def p_calculate2str(t):     #TODO: 확인 필요.
     '''
     calculate : IDENTIFIER
+        | STRING
     '''
     try:
         t[0] = variable[t[1]]

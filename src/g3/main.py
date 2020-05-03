@@ -173,7 +173,7 @@ def p_condition_3(t):
     '''
     condition : calculate
     '''
-    pass
+    t[0] = t[1]
 
 #########CHANGE VARIABLE VALUE
 def p_variable_value_change(t):
@@ -291,7 +291,7 @@ def p_calculate2num(t):
     '''
     t[0] = t[1]
 
-def p_calculate2str(t):     #TODO: 확인 필요.
+def p_calculate2str(t):
     '''
     calculate : IDENTIFIER
     '''

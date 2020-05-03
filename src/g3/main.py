@@ -160,16 +160,22 @@ def p_condition(t):
     condition : condition LB calculate
         | condition RB calculate
     '''
-    pass
+    t[0] = t[1] + t[2] + t[3]
 
 def p_condition_2(t):
     '''
     condition : condition LB EQUAL calculate
         | condition RB EQUAL calculate
     '''
-    
+    t[0] = t[1] + t[2] + t[3] + t[4]
 
 def p_condition_3(t):
+    '''
+    condition : condition EQUAL calculate
+    '''
+    t[0] = t[1] + "==" + t[3]
+
+def p_condition_4(t):
     '''
     condition : calculate
     '''

@@ -112,6 +112,7 @@ print()
 
 from ply import yacc
 import ast
+import re
 
 variable = {}
 code = ""

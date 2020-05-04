@@ -155,7 +155,7 @@ def p_if_statement_body(t):
     '''
     if_statement_body : LMB expression RMB
     '''
-    t[0] = t[1] + t[2] + t[3]
+    t[0] = t[2]
 
 ############CONDITION
 

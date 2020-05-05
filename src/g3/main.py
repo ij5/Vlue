@@ -160,6 +160,7 @@ def p_expression_empty(t):
     '''
     expression : empty
     '''
+    global code
     code = code + ""
 
 

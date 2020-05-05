@@ -143,6 +143,7 @@ def p_expression(t):
             code = code + t[1]
         else:
             code = code + t[1] + t[2]
+    t[0] = t[1] + t[2]
 
 def p_expression_if(t):
     '''
@@ -153,6 +154,7 @@ def p_expression_if(t):
         code = code + t[2]
     else:
         code = code + t[1] + t[2]
+    t[0] = t[1] + t[2]
 
 def p_expression_2(t):
     '''
@@ -165,6 +167,7 @@ def p_expression_2(t):
         code = code + ""
     else:
         code = code + t[1]
+    t[0] = t[1]
 
 def p_expression_2_if(t):
     '''
@@ -172,6 +175,7 @@ def p_expression_2_if(t):
     '''
     global code
     code = code + t[1]
+    t[0] = t[1]
 
 def p_expression_empty(t):
     '''
@@ -243,7 +247,7 @@ def p_variable_value_change(t):
     global code
     if variable.get(t[1]):
         variable[t[1]] = t[3]
-        t[0] = t[1]+t[2]+str(t[3])
+        t[0] = t[1]+t[2]+str(t[3])+"\n"
     else:
         error("변수는 선언 후 사용할 수 있습니다.")
 
@@ -267,7 +271,7 @@ def p_variable_declaration_2(t):
     '''
     global code
     variable[t[2]] = t[4]
-    code = code + "{0} = {1}\n".format(t[2], t[4])
+    t[0] = t[2] + t[3] + str(t[4])+"\n"
 
 # def p_variable_declaration_2_string(t):
 #     '''
@@ -282,7 +286,7 @@ def p_variable_declaration_1(t):
     variable_declaration : VAR IDENTIFIER
     '''
     global code
-    code = code + "{0} = 0\n".format(t[2])
+    t[0] = t[1] + " = 0"
     variable[t[2]] = 0
 
 ###########STRING

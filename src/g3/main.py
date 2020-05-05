@@ -172,6 +172,7 @@ def p_if_statement(t):      #TODO if expression tab problem
     '''
     if_statement_body = re.sub("\n", "\n\t", t[2])
     t[0] = t[1] + ":" + "\n" + if_statement_body
+    print(if_statement_body)
 
 def p_if_statement_head(t):
     '''
@@ -195,7 +196,7 @@ def p_condition(t):
     condition : condition LB calculate
         | condition RB calculate
     '''
-    t[0] = t[1] + t[2] + t[3]
+    t[0] = str(t[1]) + t[2] + str(t[3])
 
 def p_condition_2(t):
     '''
@@ -226,7 +227,6 @@ def p_variable_value_change(t):
         variable[t[1]] = t[3]
     else:
         error("변수는 선언 후 사용할 수 있습니다.")
-    print(variable)
 
 # def p_variable_value_change_string(t):
 #     '''
@@ -249,7 +249,6 @@ def p_variable_declaration_2(t):
     global code
     variable[t[2]] = t[4]
     code = code + "{0} = {1}\n".format(t[2], t[4])
-    print(variable)
 
 # def p_variable_declaration_2_string(t):
 #     '''
@@ -371,10 +370,13 @@ var b = 34.88;
 var c = a * b;
 var d = "H\'ello 'World!";
 var e = 'Hello?';
+if(a>b){
+var d = "asd";
+}
 e = "Hello";
 e = d+e;
 var asd = 8;
-if(a=b){}
+
 """
 # while True:
 #     buf = input(">>> ")

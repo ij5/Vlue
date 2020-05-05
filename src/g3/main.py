@@ -131,6 +131,7 @@ def p_expression(t):
     expression : expression variable_declaration SEMI
         | expression variable_value_change SEMI
     '''
+    print(t[2])
     global code
     if(t[1]==None):
         if(t[2]==None):
@@ -158,6 +159,7 @@ def p_expression_2(t):
     expression : variable_declaration SEMI
         | variable_value_change SEMI
     '''
+    print(t[1])
     global code
     if(t[1]==None):
         code = code + ""
@@ -241,6 +243,7 @@ def p_variable_value_change(t):
     global code
     if variable.get(t[1]):
         variable[t[1]] = t[3]
+        t[0] = t[1]+t[2]+str(t[3])
     else:
         error("변수는 선언 후 사용할 수 있습니다.")
 
@@ -381,10 +384,10 @@ def error(s):
 parser = yacc.yacc()
 
 data = """
-var a = "Hello World!";
-var b = "Hello";
+var a = 6;
+var b = 5;
 if(a>b){
-a = "hello world!";
+a = 5;
 }
 """
 # while True:

@@ -131,12 +131,18 @@ def p_expression(t):
     expression : expression variable_declaration SEMI
         | expression variable_value_change SEMI
         | expression if_statement SEMI
-        | variable_declaration SEMI
-        | variable_value_change SEMI
-        | if_statement SEMI
-        | empty
     '''
     global code
+    if(t[1]==None):
+        if(t[2]==None):
+            code = code + ""
+        else:
+            code = code + t[2]
+    else:
+        if(t[2]==None):
+            code = code + t[1]
+        else:
+            code = code + t[1] + t[2]
 
 def p_expression_2(t):
     '''
@@ -144,11 +150,17 @@ def p_expression_2(t):
         | variable_value_change SEMI
         | if_statement SEMI
     '''
+    global code
+    if(t[1]==None):
+        code = code + ""
+    else:
+        code = code + t[1]
 
 def p_expression_empty(t):
     '''
     expression : empty
     '''
+    code = code + ""
 
 
 ###############IF STATEMENT

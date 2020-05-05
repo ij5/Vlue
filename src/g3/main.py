@@ -130,7 +130,6 @@ def p_expression(t):
     '''
     expression : expression variable_declaration SEMI
         | expression variable_value_change SEMI
-        | expression if_statement SEMI
     '''
     global code
     if(t[1]==None):
@@ -144,17 +143,33 @@ def p_expression(t):
         else:
             code = code + t[1] + t[2]
 
+def p_expression_if(t):
+    '''
+    expression : expression if_statement
+    '''
+    global code
+    if(t[1]==None):
+        code = code + t[2]
+    else:
+        code = code + t[1] + t[2]
+
 def p_expression_2(t):
     '''
     expression : variable_declaration SEMI
         | variable_value_change SEMI
-        | if_statement SEMI
     '''
     global code
     if(t[1]==None):
         code = code + ""
     else:
         code = code + t[1]
+
+def p_expression_2_if(t):
+    '''
+    expression : if_statement
+    '''
+    global code
+    code = code + t[1]
 
 def p_expression_empty(t):
     '''
@@ -365,18 +380,11 @@ def error(s):
 parser = yacc.yacc()
 
 data = """
-var a = 4;
-var b = 34.88;
-var c = a * b;
-var d = "H\'ello 'World!";
-var e = 'Hello?';
+var a = "Hello World!";
+var b = "Hello";
 if(a>b){
-var d = "asd";
+a = "hello world!";
 }
-e = "Hello";
-e = d+e;
-var asd = 8;
-
 """
 # while True:
 #     buf = input(">>> ")
@@ -385,4 +393,5 @@ var asd = 8;
 #     data = data+buf
 
 result = parser.parse(data)
+print(variable)
 print(code)

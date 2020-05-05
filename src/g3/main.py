@@ -156,7 +156,10 @@ def p_if_statement_body(t):
     '''
     if_statement_body : LMB expression RMB
     '''
-    t[0] = t[2]
+    if(t[2]==None):
+        t[0] = ""
+    else:
+        t[0] = t[2]
 
 ############CONDITION
 

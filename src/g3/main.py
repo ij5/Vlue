@@ -131,7 +131,6 @@ def p_expression(t):
     expression : expression variable_declaration SEMI
         | expression variable_value_change SEMI
     '''
-    print(t[2])
     global code
     if(t[1]==None):
         if(t[2]==None):
@@ -161,7 +160,6 @@ def p_expression_2(t):
     expression : variable_declaration SEMI
         | variable_value_change SEMI
     '''
-    print(t[1])
     global code
     if(t[1]==None):
         code = code + ""
@@ -192,7 +190,7 @@ def p_if_statement(t):      #TODO if expression tab problem
     if_statement : if_statement_head if_statement_body
     '''
     if_statement_body = re.sub("\n", "\n\t", t[2])
-    t[0] = t[1] + ":" + "\n" + if_statement_body
+    t[0] = t[1] + ":" + "\n\t" + if_statement_body
     print(if_statement_body)
 
 def p_if_statement_head(t):

@@ -233,6 +233,7 @@ def p_condition_4(t):
     t[0] = t[1]
 
 #########CHANGE VARIABLE VALUE
+
 def p_variable_value_change(t):
     '''
     variable_value_change : IDENTIFIER EQUAL calculate
@@ -351,7 +352,7 @@ def p_calculate2str(t):
     calculate : IDENTIFIER
     '''
     try:
-        t[0] = variable[t[1]]
+        t[0] = t[1]
     except LookupError:
         error("Unknown variable "+t[1])
 

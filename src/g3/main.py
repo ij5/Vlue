@@ -390,6 +390,7 @@ var a = 6;
 var b = 5;
 if(a>b){
 a = 5;
+b=5;
 }
 """
 # while True:

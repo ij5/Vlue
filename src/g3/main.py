@@ -126,7 +126,9 @@ precedence = (
 
 ################EXPRESSION
 
-def p_expression(t):
+#EXPRESSION EXPRESSION
+
+def p_expression_variable(t):
     '''
     expression : expression variable_declaration SEMI
         | expression variable_value_change SEMI
@@ -144,7 +146,7 @@ def p_expression(t):
             code = code + t[2]
     t[0] = t[1] + t[2]
 
-def p_expression_if(t):
+def p_expression_if_statement(t):
     '''
     expression : expression if_statement
     '''
@@ -155,7 +157,9 @@ def p_expression_if(t):
         code = code + t[2]
     t[0] = t[1] + t[2]
 
-def p_expression_2(t):
+#EXPRESSION
+
+def p_expression_variable(t):
     '''
     expression : variable_declaration SEMI
         | variable_value_change SEMI
@@ -167,13 +171,15 @@ def p_expression_2(t):
         code = code + t[1]
     t[0] = t[1]
 
-def p_expression_2_if(t):
+def p_expression_if_statement_2(t):
     '''
     expression : if_statement
     '''
     global code
     code = code + t[1]
     t[0] = t[1]
+
+#EMPTY
 
 def p_expression_empty(t):
     '''

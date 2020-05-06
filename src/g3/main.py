@@ -128,7 +128,7 @@ precedence = (
 
 #EXPRESSION EXPRESSION
 
-def p_expression_variable(t):
+def p_expression_variable(t):       #TODO 변수 중복 선언 문제
     '''
     expression : expression variable_declaration SEMI
         | expression variable_value_change SEMI
@@ -159,7 +159,7 @@ def p_expression_if_statement(t):
 
 #EXPRESSION
 
-def p_expression_variable(t):
+def p_expression_variable(t):       #TODO 변수 중복 선언 문제
     '''
     expression : variable_declaration SEMI
         | variable_value_change SEMI

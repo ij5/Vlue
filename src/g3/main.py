@@ -222,7 +222,7 @@ def p_condition_2(t):
     condition : condition LB EQUAL calculate
         | condition RB EQUAL calculate
     '''
-    t[0] = t[1] + t[2] + t[3] + t[4]
+    t[0] = str(t[1]) + t[2] + t[3] + str(t[4])
 
 def p_condition_3(t):
     '''

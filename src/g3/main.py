@@ -141,7 +141,7 @@ def p_expression(t):
         if(t[2]==None):
             code = code + t[1]
         else:
-            code = code + t[1] + t[2]
+            code = code + t[2]
     t[0] = t[1] + t[2]
 
 def p_expression_if(t):
@@ -152,7 +152,7 @@ def p_expression_if(t):
     if(t[1]==None):
         code = code + t[2]
     else:
-        code = code + t[1] + t[2]
+        code = code + t[2]
     t[0] = t[1] + t[2]
 
 def p_expression_2(t):

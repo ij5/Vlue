@@ -115,7 +115,7 @@ import ast
 import re
 
 variable = {}
-code = ""
+code = "buf___ = 0\n"
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -123,6 +123,8 @@ precedence = (
     ('right', 'UMINUS')
 )
 
+
+################ROOT
 
 ################EXPRESSION
 
@@ -209,7 +211,7 @@ def p_if_statement_body(t):
     if_statement_body : LMB expression RMB
     '''
     if(t[2]==None):
-        t[0] = ""
+        t[0] = "buf___ = 0"
     else:
         t[0] = t[2]
 
@@ -396,6 +398,10 @@ var b = 5;
 if(a>b){
 a = 5;
 b=5;
+if(a<b){
+a = 6;
+b = 6;
+}
 }
 """
 # while True:

@@ -167,10 +167,10 @@ def p_expression_variable_2(t):       #TODO 변수 중복 선언 문제
         | variable_value_change SEMI
     '''
     global code
-    if(t[1]==None):
-        code = code + ""
-    else:
-        code = code + t[1]
+    # if(t[1]==None):
+    #     code = code + ""
+    # else:
+    #     code = code + t[1]
     t[0] = t[1]
 
 def p_expression_if_statement_2(t):
@@ -178,7 +178,7 @@ def p_expression_if_statement_2(t):
     expression : if_statement
     '''
     global code
-    code = code + t[1]
+    # code = code + t[1]
     t[0] = t[1]
 
 #EMPTY

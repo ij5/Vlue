@@ -116,7 +116,6 @@ import re
 
 variable = {}
 code = ""
-inif = False
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -160,7 +159,7 @@ def p_expression_if_statement(t):
 
 #EXPRESSION
 
-def p_expression_variable(t):       #TODO 변수 중복 선언 문제
+def p_expression_variable_2(t):       #TODO 변수 중복 선언 문제
     '''
     expression : variable_declaration SEMI
         | variable_value_change SEMI
@@ -198,7 +197,6 @@ def p_if_statement(t):      #TODO if expression tab problem
     '''
     if_statement_body = re.sub("\n", "\n\t", t[2])
     t[0] = t[1] + ":" + "\n\t" + if_statement_body
-    print(if_statement_body)
 
 def p_if_statement_head(t):
     '''

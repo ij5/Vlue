@@ -130,6 +130,7 @@ def p_root(t):
     '''
     root : expression
     '''
+    global code
     code = code + t[1]
 
 ################EXPRESSION

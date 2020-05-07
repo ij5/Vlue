@@ -211,7 +211,7 @@ def p_if_statement_body(t):
     if_statement_body : LMB expression RMB
     '''
     if(t[2]==None):
-        t[0] = "buf___ = 0"
+        t[0] = "buf___ = 0\n"
     else:
         t[0] = t[2]
 
@@ -399,8 +399,7 @@ if(a>b){
 a = 5;
 b=5;
 if(a<b){
-a = 6;
-b = 6;
+
 }
 }
 """

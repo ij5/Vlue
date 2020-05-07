@@ -396,11 +396,9 @@ data = """
 var a = 6;
 var b = 5;
 if(a>b){
-a = 5;
-b=5;
-if(a<b){
-
-}
+var c = 4;
+var d = 6;
+if(c<d){}
 }
 """
 # while True:

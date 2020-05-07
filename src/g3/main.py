@@ -126,6 +126,12 @@ precedence = (
 
 ################ROOT
 
+def p_root(t):
+    '''
+    root : expression
+    '''
+    code = code + t[1]
+
 ################EXPRESSION
 
 #EXPRESSION EXPRESSION
@@ -136,16 +142,16 @@ def p_expression_variable(t):       #TODO 변수 중복 선언 문제
         | expression variable_value_change SEMI
     '''
     global code
-    if(t[1]==None):
-        if(t[2]==None):
-            code = code + ""
-        else:
-            code = code + t[2]
-    else:
-        if(t[2]==None):
-            code = code + t[1]
-        else:
-            code = code + t[2]
+    # if(t[1]==None):
+    #     if(t[2]==None):
+    #         code = code + ""
+    #     else:
+    #         code = code + t[2]
+    # else:
+    #     if(t[2]==None):
+    #         code = code + t[1]
+    #     else:
+    #         code = code + t[2]
     t[0] = t[1] + t[2]
 
 def p_expression_if_statement(t):
@@ -153,10 +159,10 @@ def p_expression_if_statement(t):
     expression : expression if_statement
     '''
     global code
-    if(t[1]==None):
-        code = code + t[2]
-    else:
-        code = code + t[2]
+    # if(t[1]==None):
+    #     code = code + t[2]
+    # else:
+    #     code = code + t[2]
     t[0] = t[1] + t[2]
 
 #EXPRESSION

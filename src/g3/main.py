@@ -116,6 +116,7 @@ import re
 
 variable = {}
 code = ""
+inif = False
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),

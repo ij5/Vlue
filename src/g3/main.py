@@ -18,7 +18,6 @@ tokens = [
     'INT',
     'FLOAT',
     'STRING',
-    'IF',
     'LB',
     'RB',
     'COLON',

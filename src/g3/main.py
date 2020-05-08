@@ -201,12 +201,18 @@ def p_expression_empty(t):
 
 #DECLARATION
 
-def p_function(t):
+def p_function_head(t):
     '''
-    function : FUNCTION IDENTIFIER LSB empty RSB LMB expression RMB
-        | FUNCTION IDENTIFIER LSB parameter RSB LMB expression RMB
+    function_head : FUNCTION IDENTIFIER LSB empty RSB
+        | FUNCTION IDENTIFIER LSB parameter RSB
     '''
     pass
+
+def p_function_body(t):
+    '''
+    function_body : LMB expression RMB
+        | LMB empty RMB
+    '''
 
 #CALL
 
@@ -434,6 +440,7 @@ var c = 4;
 var d = 6;
 if(c<d){}
 }
+
 """
 # while True:
 #     buf = input(">>> ")

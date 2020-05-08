@@ -30,6 +30,7 @@ tokens = [
     'LSB',
     'RMB',
     'LMB',
+    'COMMA',
 ] + list(reserved.values())
 
 t_EQUAL = r'='
@@ -45,6 +46,7 @@ t_LB = r'\<'
 t_RB = r'\>'
 t_COLON = r'\:'
 t_SEMI = r'\;'
+t_COMMA = r'\,'
 
 t_ignore = ' \t'
 
@@ -199,7 +201,29 @@ def p_expression_empty(t):
 
 #DECLARATION
 
+def p_function(t):
+    '''
+    function : FUNCTION IDENTIFIER LSB empty RSB LMB expression RMB
+        | FUNCTION IDENTIFIER LSB parameter RSB LMB expression RMB
+    '''
+    pass
+
 #CALL
+
+def p_function_call(t):
+    '''
+    function_call : IDENTIFIER LSB parameter RSB
+    '''
+    pass
+
+#PARAMETER
+
+def p_parameter(t):
+    '''
+    parameter : parameter COMMA calculate
+        | calculate
+    '''
+    pass
 
 ###############IF STATEMENT
 

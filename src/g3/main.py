@@ -8,6 +8,7 @@ from ply import lex
 reserved = {
     'if': 'IF',
     'else': 'ELSE',
+    'function': 'FUNCTION',
 }
 
 tokens = [

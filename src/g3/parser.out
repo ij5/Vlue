@@ -4,6 +4,7 @@ Unused terminals:
 
     COLON
     ELSE
+    FUNCTION
 
 Grammar
 
@@ -47,6 +48,7 @@ DIV                  : 25
 ELSE                 : 
 EQUAL                : 14 15 16 18 19
 FLOAT                : 27
+FUNCTION             : 
 IDENTIFIER           : 18 19 20 29
 IF                   : 10
 INT                  : 26

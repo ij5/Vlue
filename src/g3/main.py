@@ -49,10 +49,6 @@ t_SEMI = r'\;'
 
 t_ignore = ' \t'
 
-def t_IF(t):
-    r'if'
-    return t
-
 def t_VAR(t):
     r'var'
     return t
@@ -95,7 +91,9 @@ var c = a * b;
 var d = "Hello World!";
 var e = " Hello?";
 e = "Hello";
-var str = d+e;'''
+var str = d+e;
+function
+'''
 
 lexer.input(data)
 

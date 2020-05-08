@@ -201,6 +201,12 @@ def p_expression_empty(t):
 
 #DECLARATION
 
+def p_function(t):
+    '''
+    function : function_head function_body
+    '''
+    pass
+
 def p_function_head(t):
     '''
     function_head : FUNCTION IDENTIFIER LSB empty RSB

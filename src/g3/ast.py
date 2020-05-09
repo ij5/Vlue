@@ -5,4 +5,6 @@ Hello World!
 \tasdasd
 \tasd"""
 str = re.sub("\n", "\n\t", str)
-print(str)
+def asd():
+    print("Hello World!")
+asd()

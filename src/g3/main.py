@@ -251,6 +251,7 @@ def p_parameter(t):
     '''
     parameter : parameter COMMA calculate
         | calculate
+        | empty
     '''
     pass
 
@@ -463,7 +464,9 @@ var c = 4;
 var d = 6;
 if(c<d){}
 }
-
+function(asd){
+d = "Hello World!";
+}
 
 """
 # while True:

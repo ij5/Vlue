@@ -124,7 +124,7 @@ precedence = (
 )
 
 
-################ROOT
+################ ROOT
 
 def p_root(t):
     '''
@@ -136,9 +136,9 @@ def p_root(t):
     else:
         code = code + t[1]
 
-################EXPRESSION
+################ EXPRESSION
 
-#EXPRESSION EXPRESSION
+# EXPRESSION EXPRESSION
 
 def p_expression_variable(t):       #TODO 변수 중복 선언 문제
     '''
@@ -176,7 +176,7 @@ def p_expression_function(t):
     '''
     pass
 
-#EXPRESSION
+# EXPRESSION
 
 def p_expression_variable_2(t):       #TODO 변수 중복 선언 문제
     '''
@@ -205,7 +205,7 @@ def p_expression_function_2(t):
     '''
     pass
 
-#EMPTY
+# EMPTY
 
 def p_expression_empty(t):
     '''
@@ -214,9 +214,9 @@ def p_expression_empty(t):
     global code
     code = code + ""
 
-###############FUNCTION
+############### FUNCTION
 
-#DECLARATION
+# DECLARATION
 
 def p_function(t):
     '''
@@ -237,7 +237,7 @@ def p_function_body(t):
         | LMB empty RMB
     '''
 
-#CALL
+# CALL
 
 def p_function_call(t):
     '''
@@ -245,7 +245,7 @@ def p_function_call(t):
     '''
     pass
 
-#PARAMETER
+# PARAMETER
 
 def p_parameter(t):
     '''
@@ -254,7 +254,7 @@ def p_parameter(t):
     '''
     pass
 
-###############IF STATEMENT
+############### IF STATEMENT
 
 def p_if_statement(t):      #TODO if expression tab problem
     '''
@@ -278,7 +278,7 @@ def p_if_statement_body(t):
     else:
         t[0] = t[2]
 
-############CONDITION
+############ CONDITION
 
 def p_condition(t):
     '''
@@ -306,7 +306,7 @@ def p_condition_4(t):
     '''
     t[0] = t[1]
 
-#########CHANGE VARIABLE VALUE
+######### CHANGE VARIABLE VALUE
 
 def p_variable_value_change(t):
     '''
@@ -331,7 +331,7 @@ def p_variable_value_change(t):
 #         error("변수는 선언 후 사용할 수 있습니다.")
 #     print(variable)
 
-#########VARIABLE DECLARATION
+######### VARIABLE DECLARATION
 
 def p_variable_declaration_2(t):
     '''
@@ -357,7 +357,7 @@ def p_variable_declaration_1(t):
     t[0] = t[1] + " = 0"
     variable[t[2]] = 0
 
-###########STRING
+########### STRING
 
 # def p_string_plus(t):       #TODO 문자열 오류
 #     '''
@@ -377,7 +377,7 @@ def p_variable_declaration_1(t):
 #     string_plus : IDENTIFIER
 #     '''
 
-#########CALCULATE
+######### CALCULATE
 
 def p_add(t):
     'calculate : calculate PLUS calculate'
@@ -435,20 +435,20 @@ def p_parens(t):
     'calculate : LSB calculate RSB'
     t[0] = t[2]
 
-############CALCULATE END
+############ CALCULATE END
 
 def p_empty(t):
     'empty : '
     pass
 
-#토큰 에러 처리
+# 토큰 에러 처리
 def p_error(t):
     if(t):
         print("Error on token '%s'" % t.value)
     else:
         print("Error on EOF")
 
-#에러 처리
+# 에러 처리
 def error(s):
     print(s)
     exit(-1)

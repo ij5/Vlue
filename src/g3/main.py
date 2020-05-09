@@ -230,7 +230,10 @@ def p_function_head(t):
     function_head : FUNCTION IDENTIFIER LSB empty RSB
         | FUNCTION IDENTIFIER LSB parameter RSB
     '''
-    t[0] = "def " + t[2] + t[3] + t[4] + t[5]
+    if(t[4]==None):
+        t[0] = "def " + t[2] + t[3] + "" + t[5]
+    else:
+        t[0] = "def " + t[2] + t[3] + t[4] + t[5]
 
 def p_function_body(t):
     '''
@@ -254,7 +257,13 @@ def p_parameter(t):
         | calculate
         | empty
     '''
-    pass
+    if not t[2]==None:
+        t[0] = t[1]+t[2]+t[3]
+    else:
+        if(t[1]==None):
+            t[0] = ""
+        else:
+            t[0] = t[1]
 
 ############### IF STATEMENT
 

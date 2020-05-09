@@ -116,6 +116,7 @@ import re
 
 variable = {}
 code = "buf___ = 0\n"
+state = []
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -470,16 +471,12 @@ def error(s):
 parser = yacc.yacc()
 
 data = """
-var a = 6;
-var b = 5;
-if(a>b){
-var c = 4;
-var d = 6;
-if(c<d){}
-}
+
 function asd(asd){
-d = "Hello World!";
+var d = "Hello World!";
 }
+d = 345;
+
 
 """
 # while True:

@@ -20,12 +20,12 @@ Rule 9     expression -> if_statement
 Rule 10    expression -> function
 Rule 11    expression -> function_call
 Rule 12    expression -> empty
-Rule 13    function_call -> IDENTIFIER LSB parameter RSB
-Rule 14    function -> function_head function_body
-Rule 15    function_head -> FUNCTION IDENTIFIER LSB empty RSB
-Rule 16    function_head -> FUNCTION IDENTIFIER LSB parameter RSB
-Rule 17    function_body -> LMB expression RMB
-Rule 18    function_body -> LMB empty RMB
+Rule 13    function -> function_head function_body
+Rule 14    function_head -> FUNCTION IDENTIFIER LSB empty RSB
+Rule 15    function_head -> FUNCTION IDENTIFIER LSB parameter RSB
+Rule 16    function_body -> LMB expression RMB
+Rule 17    function_body -> LMB empty RMB
+Rule 18    function_call -> IDENTIFIER LSB parameter RSB
 Rule 19    parameter -> parameter COMMA calculate
 Rule 20    parameter -> calculate
 Rule 21    parameter -> empty
@@ -61,19 +61,19 @@ DIV                  : 38
 ELSE                 : 
 EQUAL                : 27 28 29 31 32
 FLOAT                : 40
-FUNCTION             : 15 16
-IDENTIFIER           : 13 15 16 31 32 33 42
+FUNCTION             : 14 15
+IDENTIFIER           : 14 15 18 31 32 33 42
 IF                   : 23
 INT                  : 39
 LB                   : 25 27
-LMB                  : 17 18 24
-LSB                  : 13 15 16 23 43
+LMB                  : 16 17 24
+LSB                  : 14 15 18 23 43
 MINUS                : 35 36
 MUL                  : 37
 PLUS                 : 34
 RB                   : 26 28
-RMB                  : 17 18 24
-RSB                  : 13 15 16 23 43
+RMB                  : 16 17 24
+RSB                  : 14 15 18 23 43
 SEMI                 : 2 3 6 7 8
 STRING               : 41
 VAR                  : 32 33
@@ -83,16 +83,16 @@ Nonterminals, with rules where they appear
 
 calculate            : 19 20 25 26 27 28 29 30 31 32 34 34 35 35 36 37 37 38 38 43
 condition            : 23 25 26 27 28 29
-empty                : 12 15 18 21
-expression           : 1 2 3 4 5 6 17 24
+empty                : 12 14 17 21
+expression           : 1 2 3 4 5 6 16 24
 function             : 5 10
-function_body        : 14
+function_body        : 13
 function_call        : 6 11
-function_head        : 14
+function_head        : 13
 if_statement         : 4 9
 if_statement_body    : 22
 if_statement_head    : 22
-parameter            : 13 16 19
+parameter            : 15 18 19
 root                 : 0
 variable_declaration : 2 7
 variable_value_change : 3 8
@@ -118,12 +118,12 @@ state 0
     (33) variable_declaration -> . VAR IDENTIFIER
     (31) variable_value_change -> . IDENTIFIER EQUAL calculate
     (22) if_statement -> . if_statement_head if_statement_body
-    (14) function -> . function_head function_body
-    (13) function_call -> . IDENTIFIER LSB parameter RSB
+    (13) function -> . function_head function_body
+    (18) function_call -> . IDENTIFIER LSB parameter RSB
     (44) empty -> .
     (23) if_statement_head -> . IF LSB condition RSB
-    (15) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (16) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (14) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (15) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
 
   ! shift/reduce conflict for VAR resolved as shift
   ! shift/reduce conflict for IDENTIFIER resolved as shift
@@ -169,11 +169,11 @@ state 2
     (33) variable_declaration -> . VAR IDENTIFIER
     (31) variable_value_change -> . IDENTIFIER EQUAL calculate
     (22) if_statement -> . if_statement_head if_statement_body
-    (14) function -> . function_head function_body
-    (13) function_call -> . IDENTIFIER LSB parameter RSB
+    (13) function -> . function_head function_body
+    (18) function_call -> . IDENTIFIER LSB parameter RSB
     (23) if_statement_head -> . IF LSB condition RSB
-    (15) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (16) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (14) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (15) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
 
     $end            reduce using rule 1 (root -> expression .)
     VAR             shift and go to state 9
@@ -262,7 +262,7 @@ state 9
 state 10
 
     (31) variable_value_change -> IDENTIFIER . EQUAL calculate
-    (13) function_call -> IDENTIFIER . LSB parameter RSB
+    (18) function_call -> IDENTIFIER . LSB parameter RSB
 
     EQUAL           shift and go to state 23
     LSB             shift and go to state 24
@@ -279,9 +279,9 @@ state 11
 
 state 12
 
-    (14) function -> function_head . function_body
-    (17) function_body -> . LMB expression RMB
-    (18) function_body -> . LMB empty RMB
+    (13) function -> function_head . function_body
+    (16) function_body -> . LMB expression RMB
+    (17) function_body -> . LMB empty RMB
 
     LMB             shift and go to state 28
 
@@ -296,8 +296,8 @@ state 13
 
 state 14
 
-    (15) function_head -> FUNCTION . IDENTIFIER LSB empty RSB
-    (16) function_head -> FUNCTION . IDENTIFIER LSB parameter RSB
+    (14) function_head -> FUNCTION . IDENTIFIER LSB empty RSB
+    (15) function_head -> FUNCTION . IDENTIFIER LSB parameter RSB
 
     IDENTIFIER      shift and go to state 30
 
@@ -405,7 +405,7 @@ state 23
 
 state 24
 
-    (13) function_call -> IDENTIFIER LSB . parameter RSB
+    (18) function_call -> IDENTIFIER LSB . parameter RSB
     (19) parameter -> . parameter COMMA calculate
     (20) parameter -> . calculate
     (21) parameter -> . empty
@@ -464,12 +464,12 @@ state 26
     (33) variable_declaration -> . VAR IDENTIFIER
     (31) variable_value_change -> . IDENTIFIER EQUAL calculate
     (22) if_statement -> . if_statement_head if_statement_body
-    (14) function -> . function_head function_body
-    (13) function_call -> . IDENTIFIER LSB parameter RSB
+    (13) function -> . function_head function_body
+    (18) function_call -> . IDENTIFIER LSB parameter RSB
     (44) empty -> .
     (23) if_statement_head -> . IF LSB condition RSB
-    (15) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (16) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (14) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (15) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
 
   ! shift/reduce conflict for VAR resolved as shift
   ! shift/reduce conflict for IDENTIFIER resolved as shift
@@ -498,20 +498,20 @@ state 26
 
 state 27
 
-    (14) function -> function_head function_body .
+    (13) function -> function_head function_body .
 
-    VAR             reduce using rule 14 (function -> function_head function_body .)
-    IDENTIFIER      reduce using rule 14 (function -> function_head function_body .)
-    IF              reduce using rule 14 (function -> function_head function_body .)
-    FUNCTION        reduce using rule 14 (function -> function_head function_body .)
-    $end            reduce using rule 14 (function -> function_head function_body .)
-    RMB             reduce using rule 14 (function -> function_head function_body .)
+    VAR             reduce using rule 13 (function -> function_head function_body .)
+    IDENTIFIER      reduce using rule 13 (function -> function_head function_body .)
+    IF              reduce using rule 13 (function -> function_head function_body .)
+    FUNCTION        reduce using rule 13 (function -> function_head function_body .)
+    $end            reduce using rule 13 (function -> function_head function_body .)
+    RMB             reduce using rule 13 (function -> function_head function_body .)
 
 
 state 28
 
-    (17) function_body -> LMB . expression RMB
-    (18) function_body -> LMB . empty RMB
+    (16) function_body -> LMB . expression RMB
+    (17) function_body -> LMB . empty RMB
     (2) expression -> . expression variable_declaration SEMI
     (3) expression -> . expression variable_value_change SEMI
     (4) expression -> . expression if_statement
@@ -528,11 +528,11 @@ state 28
     (33) variable_declaration -> . VAR IDENTIFIER
     (31) variable_value_change -> . IDENTIFIER EQUAL calculate
     (22) if_statement -> . if_statement_head if_statement_body
-    (14) function -> . function_head function_body
-    (13) function_call -> . IDENTIFIER LSB parameter RSB
+    (13) function -> . function_head function_body
+    (18) function_call -> . IDENTIFIER LSB parameter RSB
     (23) if_statement_head -> . IF LSB condition RSB
-    (15) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (16) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (14) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (15) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
 
   ! shift/reduce conflict for VAR resolved as shift
   ! shift/reduce conflict for IDENTIFIER resolved as shift
@@ -591,8 +591,8 @@ state 29
 
 state 30
 
-    (15) function_head -> FUNCTION IDENTIFIER . LSB empty RSB
-    (16) function_head -> FUNCTION IDENTIFIER . LSB parameter RSB
+    (14) function_head -> FUNCTION IDENTIFIER . LSB empty RSB
+    (15) function_head -> FUNCTION IDENTIFIER . LSB parameter RSB
 
     LSB             shift and go to state 50
 
@@ -783,7 +783,7 @@ state 41
 
 state 42
 
-    (13) function_call -> IDENTIFIER LSB parameter . RSB
+    (18) function_call -> IDENTIFIER LSB parameter . RSB
     (19) parameter -> parameter . COMMA calculate
 
     RSB             shift and go to state 58
@@ -826,11 +826,11 @@ state 45
     (33) variable_declaration -> . VAR IDENTIFIER
     (31) variable_value_change -> . IDENTIFIER EQUAL calculate
     (22) if_statement -> . if_statement_head if_statement_body
-    (14) function -> . function_head function_body
-    (13) function_call -> . IDENTIFIER LSB parameter RSB
+    (13) function -> . function_head function_body
+    (18) function_call -> . IDENTIFIER LSB parameter RSB
     (23) if_statement_head -> . IF LSB condition RSB
-    (15) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (16) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (14) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (15) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
 
     RMB             shift and go to state 60
     VAR             shift and go to state 9
@@ -848,7 +848,7 @@ state 45
 
 state 46
 
-    (17) function_body -> LMB expression . RMB
+    (16) function_body -> LMB expression . RMB
     (2) expression -> expression . variable_declaration SEMI
     (3) expression -> expression . variable_value_change SEMI
     (4) expression -> expression . if_statement
@@ -858,11 +858,11 @@ state 46
     (33) variable_declaration -> . VAR IDENTIFIER
     (31) variable_value_change -> . IDENTIFIER EQUAL calculate
     (22) if_statement -> . if_statement_head if_statement_body
-    (14) function -> . function_head function_body
-    (13) function_call -> . IDENTIFIER LSB parameter RSB
+    (13) function -> . function_head function_body
+    (18) function_call -> . IDENTIFIER LSB parameter RSB
     (23) if_statement_head -> . IF LSB condition RSB
-    (15) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (16) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (14) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (15) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
 
     RMB             shift and go to state 61
     VAR             shift and go to state 9
@@ -880,7 +880,7 @@ state 46
 
 state 47
 
-    (18) function_body -> LMB empty . RMB
+    (17) function_body -> LMB empty . RMB
     (12) expression -> empty .
 
   ! shift/reduce conflict for RMB resolved as shift
@@ -928,8 +928,8 @@ state 49
 
 state 50
 
-    (15) function_head -> FUNCTION IDENTIFIER LSB . empty RSB
-    (16) function_head -> FUNCTION IDENTIFIER LSB . parameter RSB
+    (14) function_head -> FUNCTION IDENTIFIER LSB . empty RSB
+    (15) function_head -> FUNCTION IDENTIFIER LSB . parameter RSB
     (44) empty -> .
     (19) parameter -> . parameter COMMA calculate
     (20) parameter -> . calculate
@@ -1107,15 +1107,15 @@ state 57
 
 state 58
 
-    (13) function_call -> IDENTIFIER LSB parameter RSB .
+    (18) function_call -> IDENTIFIER LSB parameter RSB .
 
-    VAR             reduce using rule 13 (function_call -> IDENTIFIER LSB parameter RSB .)
-    IDENTIFIER      reduce using rule 13 (function_call -> IDENTIFIER LSB parameter RSB .)
-    IF              reduce using rule 13 (function_call -> IDENTIFIER LSB parameter RSB .)
-    FUNCTION        reduce using rule 13 (function_call -> IDENTIFIER LSB parameter RSB .)
-    $end            reduce using rule 13 (function_call -> IDENTIFIER LSB parameter RSB .)
-    SEMI            reduce using rule 13 (function_call -> IDENTIFIER LSB parameter RSB .)
-    RMB             reduce using rule 13 (function_call -> IDENTIFIER LSB parameter RSB .)
+    VAR             reduce using rule 18 (function_call -> IDENTIFIER LSB parameter RSB .)
+    IDENTIFIER      reduce using rule 18 (function_call -> IDENTIFIER LSB parameter RSB .)
+    IF              reduce using rule 18 (function_call -> IDENTIFIER LSB parameter RSB .)
+    FUNCTION        reduce using rule 18 (function_call -> IDENTIFIER LSB parameter RSB .)
+    $end            reduce using rule 18 (function_call -> IDENTIFIER LSB parameter RSB .)
+    SEMI            reduce using rule 18 (function_call -> IDENTIFIER LSB parameter RSB .)
+    RMB             reduce using rule 18 (function_call -> IDENTIFIER LSB parameter RSB .)
 
 
 state 59
@@ -1155,26 +1155,26 @@ state 60
 
 state 61
 
-    (17) function_body -> LMB expression RMB .
+    (16) function_body -> LMB expression RMB .
 
-    VAR             reduce using rule 17 (function_body -> LMB expression RMB .)
-    IDENTIFIER      reduce using rule 17 (function_body -> LMB expression RMB .)
-    IF              reduce using rule 17 (function_body -> LMB expression RMB .)
-    FUNCTION        reduce using rule 17 (function_body -> LMB expression RMB .)
-    $end            reduce using rule 17 (function_body -> LMB expression RMB .)
-    RMB             reduce using rule 17 (function_body -> LMB expression RMB .)
+    VAR             reduce using rule 16 (function_body -> LMB expression RMB .)
+    IDENTIFIER      reduce using rule 16 (function_body -> LMB expression RMB .)
+    IF              reduce using rule 16 (function_body -> LMB expression RMB .)
+    FUNCTION        reduce using rule 16 (function_body -> LMB expression RMB .)
+    $end            reduce using rule 16 (function_body -> LMB expression RMB .)
+    RMB             reduce using rule 16 (function_body -> LMB expression RMB .)
 
 
 state 62
 
-    (18) function_body -> LMB empty RMB .
+    (17) function_body -> LMB empty RMB .
 
-    VAR             reduce using rule 18 (function_body -> LMB empty RMB .)
-    IDENTIFIER      reduce using rule 18 (function_body -> LMB empty RMB .)
-    IF              reduce using rule 18 (function_body -> LMB empty RMB .)
-    FUNCTION        reduce using rule 18 (function_body -> LMB empty RMB .)
-    $end            reduce using rule 18 (function_body -> LMB empty RMB .)
-    RMB             reduce using rule 18 (function_body -> LMB empty RMB .)
+    VAR             reduce using rule 17 (function_body -> LMB empty RMB .)
+    IDENTIFIER      reduce using rule 17 (function_body -> LMB empty RMB .)
+    IF              reduce using rule 17 (function_body -> LMB empty RMB .)
+    FUNCTION        reduce using rule 17 (function_body -> LMB empty RMB .)
+    $end            reduce using rule 17 (function_body -> LMB empty RMB .)
+    RMB             reduce using rule 17 (function_body -> LMB empty RMB .)
 
 
 state 63
@@ -1259,7 +1259,7 @@ state 66
 
 state 67
 
-    (15) function_head -> FUNCTION IDENTIFIER LSB empty . RSB
+    (14) function_head -> FUNCTION IDENTIFIER LSB empty . RSB
     (21) parameter -> empty .
 
   ! shift/reduce conflict for RSB resolved as shift
@@ -1271,7 +1271,7 @@ state 67
 
 state 68
 
-    (16) function_head -> FUNCTION IDENTIFIER LSB parameter . RSB
+    (15) function_head -> FUNCTION IDENTIFIER LSB parameter . RSB
     (19) parameter -> parameter . COMMA calculate
 
     RSB             shift and go to state 81
@@ -1512,16 +1512,16 @@ state 79
 
 state 80
 
-    (15) function_head -> FUNCTION IDENTIFIER LSB empty RSB .
+    (14) function_head -> FUNCTION IDENTIFIER LSB empty RSB .
 
-    LMB             reduce using rule 15 (function_head -> FUNCTION IDENTIFIER LSB empty RSB .)
+    LMB             reduce using rule 14 (function_head -> FUNCTION IDENTIFIER LSB empty RSB .)
 
 
 state 81
 
-    (16) function_head -> FUNCTION IDENTIFIER LSB parameter RSB .
+    (15) function_head -> FUNCTION IDENTIFIER LSB parameter RSB .
 
-    LMB             reduce using rule 16 (function_head -> FUNCTION IDENTIFIER LSB parameter RSB .)
+    LMB             reduce using rule 15 (function_head -> FUNCTION IDENTIFIER LSB parameter RSB .)
 
 
 state 82

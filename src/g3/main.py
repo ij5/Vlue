@@ -464,7 +464,7 @@ var c = 4;
 var d = 6;
 if(c<d){}
 }
-function(asd){
+function asd(asd){
 d = "Hello World!";
 }
 

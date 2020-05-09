@@ -222,14 +222,15 @@ def p_function(t):
     '''
     function : function_head function_body
     '''
-    pass
+    function_body = re.sub("\n", "\n\t", t[2])
+    t[0] = t[1] + ":" + "\n\t" + function_body
 
 def p_function_head(t):
     '''
     function_head : FUNCTION IDENTIFIER LSB empty RSB
         | FUNCTION IDENTIFIER LSB parameter RSB
     '''
-    pass
+    t[0] = "def " + t[2] + t[3] + t[4] + t[5]
 
 def p_function_body(t):
     '''

@@ -174,7 +174,7 @@ def p_expression_function(t):
     expression : expression function
         | expression function_call SEMI
     '''
-    pass
+    t[0] = t[1] + t[2]
 
 # EXPRESSION
 
@@ -203,7 +203,7 @@ def p_expression_function_2(t):
     expression : function
         | function_call
     '''
-    pass
+    t[0] = t[1]
 
 # EMPTY
 
@@ -240,6 +240,7 @@ def p_function_body(t):
     function_body : LMB expression RMB
         | LMB empty RMB
     '''
+    t[0] = t[2]
 
 # CALL
 
@@ -254,16 +255,18 @@ def p_function_call(t):
 def p_parameter(t):
     '''
     parameter : parameter COMMA calculate
-        | calculate
+    '''
+    t[0] = t[1] + t[2]
+
+def p_parameter_2(t):
+    '''
+    parameter : calculate
         | empty
     '''
-    if not t[2]==None:
-        t[0] = t[1]+t[2]+t[3]
+    if(t[1]==None):
+        t[0] = ""
     else:
-        if(t[1]==None):
-            t[0] = ""
-        else:
-            t[0] = t[1]
+        t[0] = t[1]
 
 ############### IF STATEMENT
 

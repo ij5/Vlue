@@ -131,7 +131,10 @@ def p_root(t):
     root : expression
     '''
     global code
-    code = code + t[1]
+    if(t[1]==None):
+        code = code + ""
+    else:
+        code = code + t[1]
 
 ################EXPRESSION
 
@@ -460,6 +463,7 @@ var c = 4;
 var d = 6;
 if(c<d){}
 }
+
 
 """
 # while True:

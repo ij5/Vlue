@@ -91,7 +91,7 @@ var b = 34.88;
 var c = a * b;
 var d = "Hello World!";
 var e = " Hello?";
-e = "Hello";
+e = "var";
 var str = d+e;
 function
 '''

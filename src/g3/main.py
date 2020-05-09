@@ -166,6 +166,13 @@ def p_expression_if_statement(t):
     #     code = code + t[2]
     t[0] = t[1] + t[2]
 
+def p_expression_function(t):
+    '''
+    expression : expression function
+        | expression function_call SEMI
+    '''
+    pass
+
 #EXPRESSION
 
 def p_expression_variable_2(t):       #TODO 변수 중복 선언 문제
@@ -187,6 +194,13 @@ def p_expression_if_statement_2(t):
     global code
     # code = code + t[1]
     t[0] = t[1]
+
+def p_expression_function_2(t):
+    '''
+    expression : function
+        | function_call
+    '''
+    pass
 
 #EMPTY
 

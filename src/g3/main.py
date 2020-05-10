@@ -10,6 +10,8 @@ reserved = {
     'else': 'ELSE',
     'function': 'FUNCTION',
     'repeat': 'REPEAT',
+    'for' : 'FOR',
+    'while' : 'WHILE',
 }
 
 tokens = [
@@ -228,6 +230,10 @@ def p_expression_empty(t):
     '''
     global code
     code = code + ""
+
+############### FOR
+
+############### WHILE
 
 ############### REPEAT
 

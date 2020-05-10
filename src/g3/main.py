@@ -252,7 +252,7 @@ def p_function_call(t):
     '''
     function_call : IDENTIFIER LSB parameter RSB
     '''
-    t[0] = t[1] + t[2] + t[3] + t[4]
+    t[0] = t[1] + t[2] + t[3] + t[4] + "\n"
 
 # PARAMETER
 
@@ -490,6 +490,8 @@ function asd(asd){
     }
     
 }
+d = 345;
+asd(d);
 
 d = 345;
 

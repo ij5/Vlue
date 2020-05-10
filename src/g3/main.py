@@ -12,7 +12,7 @@ reserved = {
     'repeat': 'REPEAT',
     'for': 'FOR',
     'while': 'WHILE',
-    'in': 'in',
+    'in': 'IN',
 }
 
 tokens = [
@@ -256,7 +256,7 @@ def p_for(t):
 
 def p_for_head(t):
     '''
-    for_head : FOR LSB calculate IN IDENTIFIER RSB
+    for_head : FOR LSB IDENTIFIER IN IDENTIFIER RSB
     '''
     t[0] = "for " + t[3] + " in " + t[5] + ":\n\t"
 
@@ -575,6 +575,10 @@ if(a<b){
 var c = 5;
 repeat(5){
 var c = c + 1;
+}
+
+for(c in a){
+    c = "Hello World!";
 }
 
 """

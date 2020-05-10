@@ -7,4 +7,4 @@ Hello World!
 str = re.sub("\n", "\n\t", str)
 def asd():
     print("Hello World!")
-asd()
+print(asd)

@@ -10,8 +10,9 @@ reserved = {
     'else': 'ELSE',
     'function': 'FUNCTION',
     'repeat': 'REPEAT',
-    'for' : 'FOR',
-    'while' : 'WHILE',
+    'for': 'FOR',
+    'while': 'WHILE',
+    'in': 'in',
 }
 
 tokens = [
@@ -187,6 +188,12 @@ def p_expression_repeat(t):
     '''
     t[0] = t[1] + t[2]
 
+def p_expression_for(t):
+    '''
+    expression : expression for
+    '''
+    t[0] = t[1] + t[2]
+
 # EXPRESSION
 
 def p_expression_variable_2(t):       #TODO 변수 중복 선언 문제
@@ -222,6 +229,12 @@ def p_expression_repeat_2(t):
     '''
     t[0] = t[1]
 
+def p_expression_for_2(t):
+    '''
+    expression : for
+    '''
+    t[0] = t[1]
+
 # EMPTY
 
 def p_expression_empty(t):
@@ -232,6 +245,29 @@ def p_expression_empty(t):
     code = code + ""
 
 ############### FOR
+
+def p_for(t):
+    '''
+    for : for_head for_body
+    '''
+    for_body = re.sub("\n", "\n\t", t[2])
+    for_body = for_body[:-1]
+    t[0] = t[1] + for_body
+
+def p_for_head(t):
+    '''
+    for_head : FOR LSB calculate IN IDENTIFIER RSB
+    '''
+    t[0] = "for " + t[3] + " in " + t[5] + ":\n\t"
+
+def p_for_body(t):
+    '''
+    for_body : LMB expression RMB
+    '''
+    if(t[2]==None):
+        t[0] = "buf___ = 0\n"
+    else:
+        t[0] = t[2]
 
 ############### WHILE
 

@@ -14,94 +14,96 @@ Rule 3     expression -> expression variable_value_change SEMI
 Rule 4     expression -> expression if_statement
 Rule 5     expression -> expression function
 Rule 6     expression -> expression function_call SEMI
-Rule 7     expression -> variable_declaration SEMI
-Rule 8     expression -> variable_value_change SEMI
-Rule 9     expression -> if_statement
-Rule 10    expression -> function
-Rule 11    expression -> function_call
-Rule 12    expression -> empty
-Rule 13    repeat -> repeat_head repeat_body
-Rule 14    repeat_head -> REPEAT LSB calculate RSB
-Rule 15    repeat_body -> LMB expression RMB
-Rule 16    function -> function_head function_body
-Rule 17    function_head -> FUNCTION IDENTIFIER LSB empty RSB
-Rule 18    function_head -> FUNCTION IDENTIFIER LSB parameter RSB
-Rule 19    function_body -> LMB expression RMB
-Rule 20    function_call -> IDENTIFIER LSB parameter RSB
-Rule 21    parameter -> parameter COMMA calculate
-Rule 22    parameter -> calculate
-Rule 23    parameter -> empty
-Rule 24    if_statement -> if_statement_head if_statement_body
-Rule 25    if_statement_head -> IF LSB condition RSB
-Rule 26    if_statement_body -> LMB expression RMB
-Rule 27    condition -> condition LB calculate
-Rule 28    condition -> condition RB calculate
-Rule 29    condition -> condition LB EQUAL calculate
-Rule 30    condition -> condition RB EQUAL calculate
-Rule 31    condition -> condition EQUAL calculate
-Rule 32    condition -> calculate
-Rule 33    variable_value_change -> IDENTIFIER EQUAL calculate
-Rule 34    variable_declaration -> VAR IDENTIFIER EQUAL calculate
-Rule 35    variable_declaration -> VAR IDENTIFIER
-Rule 36    calculate -> calculate PLUS calculate
-Rule 37    calculate -> calculate MINUS calculate
-Rule 38    calculate -> MINUS calculate
-Rule 39    calculate -> calculate MUL calculate
-Rule 40    calculate -> calculate DIV calculate
-Rule 41    calculate -> INT
-Rule 42    calculate -> FLOAT
-Rule 43    calculate -> STRING
-Rule 44    calculate -> IDENTIFIER
-Rule 45    calculate -> LSB calculate RSB
-Rule 46    empty -> <empty>
+Rule 7     expression -> expression repeat
+Rule 8     expression -> variable_declaration SEMI
+Rule 9     expression -> variable_value_change SEMI
+Rule 10    expression -> if_statement
+Rule 11    expression -> function
+Rule 12    expression -> function_call
+Rule 13    expression -> repeat
+Rule 14    expression -> empty
+Rule 15    repeat -> repeat_head repeat_body
+Rule 16    repeat_head -> REPEAT LSB calculate RSB
+Rule 17    repeat_body -> LMB expression RMB
+Rule 18    function -> function_head function_body
+Rule 19    function_head -> FUNCTION IDENTIFIER LSB empty RSB
+Rule 20    function_head -> FUNCTION IDENTIFIER LSB parameter RSB
+Rule 21    function_body -> LMB expression RMB
+Rule 22    function_call -> IDENTIFIER LSB parameter RSB
+Rule 23    parameter -> parameter COMMA calculate
+Rule 24    parameter -> calculate
+Rule 25    parameter -> empty
+Rule 26    if_statement -> if_statement_head if_statement_body
+Rule 27    if_statement_head -> IF LSB condition RSB
+Rule 28    if_statement_body -> LMB expression RMB
+Rule 29    condition -> condition LB calculate
+Rule 30    condition -> condition RB calculate
+Rule 31    condition -> condition LB EQUAL calculate
+Rule 32    condition -> condition RB EQUAL calculate
+Rule 33    condition -> condition EQUAL calculate
+Rule 34    condition -> calculate
+Rule 35    variable_value_change -> IDENTIFIER EQUAL calculate
+Rule 36    variable_declaration -> VAR IDENTIFIER EQUAL calculate
+Rule 37    variable_declaration -> VAR IDENTIFIER
+Rule 38    calculate -> calculate PLUS calculate
+Rule 39    calculate -> calculate MINUS calculate
+Rule 40    calculate -> MINUS calculate
+Rule 41    calculate -> calculate MUL calculate
+Rule 42    calculate -> calculate DIV calculate
+Rule 43    calculate -> INT
+Rule 44    calculate -> FLOAT
+Rule 45    calculate -> STRING
+Rule 46    calculate -> IDENTIFIER
+Rule 47    calculate -> LSB calculate RSB
+Rule 48    empty -> <empty>
 
 Terminals, with rules where they appear
 
 COLON                : 
-COMMA                : 21
-DIV                  : 40
+COMMA                : 23
+DIV                  : 42
 ELSE                 : 
-EQUAL                : 29 30 31 33 34
-FLOAT                : 42
-FUNCTION             : 17 18
-IDENTIFIER           : 17 18 20 33 34 35 44
-IF                   : 25
-INT                  : 41
-LB                   : 27 29
-LMB                  : 15 19 26
-LSB                  : 14 17 18 20 25 45
-MINUS                : 37 38
-MUL                  : 39
-PLUS                 : 36
-RB                   : 28 30
-REPEAT               : 14
-RMB                  : 15 19 26
-RSB                  : 14 17 18 20 25 45
-SEMI                 : 2 3 6 7 8
-STRING               : 43
-VAR                  : 34 35
+EQUAL                : 31 32 33 35 36
+FLOAT                : 44
+FUNCTION             : 19 20
+IDENTIFIER           : 19 20 22 35 36 37 46
+IF                   : 27
+INT                  : 43
+LB                   : 29 31
+LMB                  : 17 21 28
+LSB                  : 16 19 20 22 27 47
+MINUS                : 39 40
+MUL                  : 41
+PLUS                 : 38
+RB                   : 30 32
+REPEAT               : 16
+RMB                  : 17 21 28
+RSB                  : 16 19 20 22 27 47
+SEMI                 : 2 3 6 8 9
+STRING               : 45
+VAR                  : 36 37
 error                : 
 
 Nonterminals, with rules where they appear
 
-calculate            : 14 21 22 27 28 29 30 31 32 33 34 36 36 37 37 38 39 39 40 40 45
-condition            : 25 27 28 29 30 31
-empty                : 12 17 23
-expression           : 1 2 3 4 5 6 15 19 26
-function             : 5 10
-function_body        : 16
-function_call        : 6 11
-function_head        : 16
-if_statement         : 4 9
-if_statement_body    : 24
-if_statement_head    : 24
-parameter            : 18 20 21
-repeat               : 
-repeat_body          : 13
-repeat_head          : 13
+calculate            : 16 23 24 29 30 31 32 33 34 35 36 38 38 39 39 40 41 41 42 42 47
+condition            : 27 29 30 31 32 33
+empty                : 14 19 25
+expression           : 1 2 3 4 5 6 7 17 21 28
+function             : 5 11
+function_body        : 18
+function_call        : 6 12
+function_head        : 18
+if_statement         : 4 10
+if_statement_body    : 26
+if_statement_head    : 26
+parameter            : 20 22 23
+repeat               : 7 13
+repeat_body          : 15
+repeat_head          : 15
 root                 : 0
-variable_declaration : 2 7
-variable_value_change : 3 8
+variable_declaration : 2 8
+variable_value_change : 3 9
 
 Parsing method: LALR
 
@@ -114,37 +116,44 @@ state 0
     (4) expression -> . expression if_statement
     (5) expression -> . expression function
     (6) expression -> . expression function_call SEMI
-    (7) expression -> . variable_declaration SEMI
-    (8) expression -> . variable_value_change SEMI
-    (9) expression -> . if_statement
-    (10) expression -> . function
-    (11) expression -> . function_call
-    (12) expression -> . empty
-    (34) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (35) variable_declaration -> . VAR IDENTIFIER
-    (33) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (24) if_statement -> . if_statement_head if_statement_body
-    (16) function -> . function_head function_body
-    (20) function_call -> . IDENTIFIER LSB parameter RSB
-    (46) empty -> .
-    (25) if_statement_head -> . IF LSB condition RSB
-    (17) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (18) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (7) expression -> . expression repeat
+    (8) expression -> . variable_declaration SEMI
+    (9) expression -> . variable_value_change SEMI
+    (10) expression -> . if_statement
+    (11) expression -> . function
+    (12) expression -> . function_call
+    (13) expression -> . repeat
+    (14) expression -> . empty
+    (36) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (37) variable_declaration -> . VAR IDENTIFIER
+    (35) variable_value_change -> . IDENTIFIER EQUAL calculate
+    (26) if_statement -> . if_statement_head if_statement_body
+    (18) function -> . function_head function_body
+    (22) function_call -> . IDENTIFIER LSB parameter RSB
+    (15) repeat -> . repeat_head repeat_body
+    (48) empty -> .
+    (27) if_statement_head -> . IF LSB condition RSB
+    (19) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (20) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (16) repeat_head -> . REPEAT LSB calculate RSB
 
   ! shift/reduce conflict for VAR resolved as shift
   ! shift/reduce conflict for IDENTIFIER resolved as shift
   ! shift/reduce conflict for IF resolved as shift
   ! shift/reduce conflict for FUNCTION resolved as shift
-    VAR             shift and go to state 9
-    IDENTIFIER      shift and go to state 10
-    $end            reduce using rule 46 (empty -> .)
-    IF              shift and go to state 13
-    FUNCTION        shift and go to state 14
+  ! shift/reduce conflict for REPEAT resolved as shift
+    VAR             shift and go to state 10
+    IDENTIFIER      shift and go to state 11
+    $end            reduce using rule 48 (empty -> .)
+    IF              shift and go to state 15
+    FUNCTION        shift and go to state 16
+    REPEAT          shift and go to state 17
 
-  ! VAR             [ reduce using rule 46 (empty -> .) ]
-  ! IDENTIFIER      [ reduce using rule 46 (empty -> .) ]
-  ! IF              [ reduce using rule 46 (empty -> .) ]
-  ! FUNCTION        [ reduce using rule 46 (empty -> .) ]
+  ! VAR             [ reduce using rule 48 (empty -> .) ]
+  ! IDENTIFIER      [ reduce using rule 48 (empty -> .) ]
+  ! IF              [ reduce using rule 48 (empty -> .) ]
+  ! FUNCTION        [ reduce using rule 48 (empty -> .) ]
+  ! REPEAT          [ reduce using rule 48 (empty -> .) ]
 
     root                           shift and go to state 1
     expression                     shift and go to state 2
@@ -153,9 +162,11 @@ state 0
     if_statement                   shift and go to state 5
     function                       shift and go to state 6
     function_call                  shift and go to state 7
-    empty                          shift and go to state 8
-    if_statement_head              shift and go to state 11
-    function_head                  shift and go to state 12
+    repeat                         shift and go to state 8
+    empty                          shift and go to state 9
+    if_statement_head              shift and go to state 12
+    function_head                  shift and go to state 13
+    repeat_head                    shift and go to state 14
 
 state 1
 
@@ -171,157 +182,196 @@ state 2
     (4) expression -> expression . if_statement
     (5) expression -> expression . function
     (6) expression -> expression . function_call SEMI
-    (34) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (35) variable_declaration -> . VAR IDENTIFIER
-    (33) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (24) if_statement -> . if_statement_head if_statement_body
-    (16) function -> . function_head function_body
-    (20) function_call -> . IDENTIFIER LSB parameter RSB
-    (25) if_statement_head -> . IF LSB condition RSB
-    (17) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (18) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (7) expression -> expression . repeat
+    (36) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (37) variable_declaration -> . VAR IDENTIFIER
+    (35) variable_value_change -> . IDENTIFIER EQUAL calculate
+    (26) if_statement -> . if_statement_head if_statement_body
+    (18) function -> . function_head function_body
+    (22) function_call -> . IDENTIFIER LSB parameter RSB
+    (15) repeat -> . repeat_head repeat_body
+    (27) if_statement_head -> . IF LSB condition RSB
+    (19) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (20) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (16) repeat_head -> . REPEAT LSB calculate RSB
 
     $end            reduce using rule 1 (root -> expression .)
-    VAR             shift and go to state 9
-    IDENTIFIER      shift and go to state 10
-    IF              shift and go to state 13
-    FUNCTION        shift and go to state 14
+    VAR             shift and go to state 10
+    IDENTIFIER      shift and go to state 11
+    IF              shift and go to state 15
+    FUNCTION        shift and go to state 16
+    REPEAT          shift and go to state 17
 
-    variable_declaration           shift and go to state 15
-    variable_value_change          shift and go to state 16
-    if_statement                   shift and go to state 17
-    function                       shift and go to state 18
-    function_call                  shift and go to state 19
-    if_statement_head              shift and go to state 11
-    function_head                  shift and go to state 12
+    variable_declaration           shift and go to state 18
+    variable_value_change          shift and go to state 19
+    if_statement                   shift and go to state 20
+    function                       shift and go to state 21
+    function_call                  shift and go to state 22
+    repeat                         shift and go to state 23
+    if_statement_head              shift and go to state 12
+    function_head                  shift and go to state 13
+    repeat_head                    shift and go to state 14
 
 state 3
 
-    (7) expression -> variable_declaration . SEMI
+    (8) expression -> variable_declaration . SEMI
 
-    SEMI            shift and go to state 20
+    SEMI            shift and go to state 24
 
 
 state 4
 
-    (8) expression -> variable_value_change . SEMI
+    (9) expression -> variable_value_change . SEMI
 
-    SEMI            shift and go to state 21
+    SEMI            shift and go to state 25
 
 
 state 5
 
-    (9) expression -> if_statement .
+    (10) expression -> if_statement .
 
-    VAR             reduce using rule 9 (expression -> if_statement .)
-    IDENTIFIER      reduce using rule 9 (expression -> if_statement .)
-    IF              reduce using rule 9 (expression -> if_statement .)
-    FUNCTION        reduce using rule 9 (expression -> if_statement .)
-    $end            reduce using rule 9 (expression -> if_statement .)
-    RMB             reduce using rule 9 (expression -> if_statement .)
+    VAR             reduce using rule 10 (expression -> if_statement .)
+    IDENTIFIER      reduce using rule 10 (expression -> if_statement .)
+    IF              reduce using rule 10 (expression -> if_statement .)
+    FUNCTION        reduce using rule 10 (expression -> if_statement .)
+    REPEAT          reduce using rule 10 (expression -> if_statement .)
+    $end            reduce using rule 10 (expression -> if_statement .)
+    RMB             reduce using rule 10 (expression -> if_statement .)
 
 
 state 6
 
-    (10) expression -> function .
+    (11) expression -> function .
 
-    VAR             reduce using rule 10 (expression -> function .)
-    IDENTIFIER      reduce using rule 10 (expression -> function .)
-    IF              reduce using rule 10 (expression -> function .)
-    FUNCTION        reduce using rule 10 (expression -> function .)
-    $end            reduce using rule 10 (expression -> function .)
-    RMB             reduce using rule 10 (expression -> function .)
+    VAR             reduce using rule 11 (expression -> function .)
+    IDENTIFIER      reduce using rule 11 (expression -> function .)
+    IF              reduce using rule 11 (expression -> function .)
+    FUNCTION        reduce using rule 11 (expression -> function .)
+    REPEAT          reduce using rule 11 (expression -> function .)
+    $end            reduce using rule 11 (expression -> function .)
+    RMB             reduce using rule 11 (expression -> function .)
 
 
 state 7
 
-    (11) expression -> function_call .
+    (12) expression -> function_call .
 
-    VAR             reduce using rule 11 (expression -> function_call .)
-    IDENTIFIER      reduce using rule 11 (expression -> function_call .)
-    IF              reduce using rule 11 (expression -> function_call .)
-    FUNCTION        reduce using rule 11 (expression -> function_call .)
-    $end            reduce using rule 11 (expression -> function_call .)
-    RMB             reduce using rule 11 (expression -> function_call .)
+    VAR             reduce using rule 12 (expression -> function_call .)
+    IDENTIFIER      reduce using rule 12 (expression -> function_call .)
+    IF              reduce using rule 12 (expression -> function_call .)
+    FUNCTION        reduce using rule 12 (expression -> function_call .)
+    REPEAT          reduce using rule 12 (expression -> function_call .)
+    $end            reduce using rule 12 (expression -> function_call .)
+    RMB             reduce using rule 12 (expression -> function_call .)
 
 
 state 8
 
-    (12) expression -> empty .
+    (13) expression -> repeat .
 
-    VAR             reduce using rule 12 (expression -> empty .)
-    IDENTIFIER      reduce using rule 12 (expression -> empty .)
-    IF              reduce using rule 12 (expression -> empty .)
-    FUNCTION        reduce using rule 12 (expression -> empty .)
-    $end            reduce using rule 12 (expression -> empty .)
-    RMB             reduce using rule 12 (expression -> empty .)
+    VAR             reduce using rule 13 (expression -> repeat .)
+    IDENTIFIER      reduce using rule 13 (expression -> repeat .)
+    IF              reduce using rule 13 (expression -> repeat .)
+    FUNCTION        reduce using rule 13 (expression -> repeat .)
+    REPEAT          reduce using rule 13 (expression -> repeat .)
+    $end            reduce using rule 13 (expression -> repeat .)
+    RMB             reduce using rule 13 (expression -> repeat .)
 
 
 state 9
 
-    (34) variable_declaration -> VAR . IDENTIFIER EQUAL calculate
-    (35) variable_declaration -> VAR . IDENTIFIER
+    (14) expression -> empty .
 
-    IDENTIFIER      shift and go to state 22
+    VAR             reduce using rule 14 (expression -> empty .)
+    IDENTIFIER      reduce using rule 14 (expression -> empty .)
+    IF              reduce using rule 14 (expression -> empty .)
+    FUNCTION        reduce using rule 14 (expression -> empty .)
+    REPEAT          reduce using rule 14 (expression -> empty .)
+    $end            reduce using rule 14 (expression -> empty .)
+    RMB             reduce using rule 14 (expression -> empty .)
 
 
 state 10
 
-    (33) variable_value_change -> IDENTIFIER . EQUAL calculate
-    (20) function_call -> IDENTIFIER . LSB parameter RSB
+    (36) variable_declaration -> VAR . IDENTIFIER EQUAL calculate
+    (37) variable_declaration -> VAR . IDENTIFIER
 
-    EQUAL           shift and go to state 23
-    LSB             shift and go to state 24
+    IDENTIFIER      shift and go to state 26
 
 
 state 11
 
-    (24) if_statement -> if_statement_head . if_statement_body
-    (26) if_statement_body -> . LMB expression RMB
+    (35) variable_value_change -> IDENTIFIER . EQUAL calculate
+    (22) function_call -> IDENTIFIER . LSB parameter RSB
 
-    LMB             shift and go to state 26
+    EQUAL           shift and go to state 27
+    LSB             shift and go to state 28
 
-    if_statement_body              shift and go to state 25
 
 state 12
 
-    (16) function -> function_head . function_body
-    (19) function_body -> . LMB expression RMB
+    (26) if_statement -> if_statement_head . if_statement_body
+    (28) if_statement_body -> . LMB expression RMB
 
-    LMB             shift and go to state 28
+    LMB             shift and go to state 30
 
-    function_body                  shift and go to state 27
+    if_statement_body              shift and go to state 29
 
 state 13
 
-    (25) if_statement_head -> IF . LSB condition RSB
+    (18) function -> function_head . function_body
+    (21) function_body -> . LMB expression RMB
 
-    LSB             shift and go to state 29
+    LMB             shift and go to state 32
 
+    function_body                  shift and go to state 31
 
 state 14
 
-    (17) function_head -> FUNCTION . IDENTIFIER LSB empty RSB
-    (18) function_head -> FUNCTION . IDENTIFIER LSB parameter RSB
+    (15) repeat -> repeat_head . repeat_body
+    (17) repeat_body -> . LMB expression RMB
 
-    IDENTIFIER      shift and go to state 30
+    LMB             shift and go to state 34
 
+    repeat_body                    shift and go to state 33
 
 state 15
 
-    (2) expression -> expression variable_declaration . SEMI
+    (27) if_statement_head -> IF . LSB condition RSB
 
-    SEMI            shift and go to state 31
+    LSB             shift and go to state 35
 
 
 state 16
 
-    (3) expression -> expression variable_value_change . SEMI
+    (19) function_head -> FUNCTION . IDENTIFIER LSB empty RSB
+    (20) function_head -> FUNCTION . IDENTIFIER LSB parameter RSB
 
-    SEMI            shift and go to state 32
+    IDENTIFIER      shift and go to state 36
 
 
 state 17
+
+    (16) repeat_head -> REPEAT . LSB calculate RSB
+
+    LSB             shift and go to state 37
+
+
+state 18
+
+    (2) expression -> expression variable_declaration . SEMI
+
+    SEMI            shift and go to state 38
+
+
+state 19
+
+    (3) expression -> expression variable_value_change . SEMI
+
+    SEMI            shift and go to state 39
+
+
+state 20
 
     (4) expression -> expression if_statement .
 
@@ -329,11 +379,12 @@ state 17
     IDENTIFIER      reduce using rule 4 (expression -> expression if_statement .)
     IF              reduce using rule 4 (expression -> expression if_statement .)
     FUNCTION        reduce using rule 4 (expression -> expression if_statement .)
+    REPEAT          reduce using rule 4 (expression -> expression if_statement .)
     $end            reduce using rule 4 (expression -> expression if_statement .)
     RMB             reduce using rule 4 (expression -> expression if_statement .)
 
 
-state 18
+state 21
 
     (5) expression -> expression function .
 
@@ -341,267 +392,398 @@ state 18
     IDENTIFIER      reduce using rule 5 (expression -> expression function .)
     IF              reduce using rule 5 (expression -> expression function .)
     FUNCTION        reduce using rule 5 (expression -> expression function .)
+    REPEAT          reduce using rule 5 (expression -> expression function .)
     $end            reduce using rule 5 (expression -> expression function .)
     RMB             reduce using rule 5 (expression -> expression function .)
 
 
-state 19
+state 22
 
     (6) expression -> expression function_call . SEMI
 
-    SEMI            shift and go to state 33
-
-
-state 20
-
-    (7) expression -> variable_declaration SEMI .
-
-    VAR             reduce using rule 7 (expression -> variable_declaration SEMI .)
-    IDENTIFIER      reduce using rule 7 (expression -> variable_declaration SEMI .)
-    IF              reduce using rule 7 (expression -> variable_declaration SEMI .)
-    FUNCTION        reduce using rule 7 (expression -> variable_declaration SEMI .)
-    $end            reduce using rule 7 (expression -> variable_declaration SEMI .)
-    RMB             reduce using rule 7 (expression -> variable_declaration SEMI .)
-
-
-state 21
-
-    (8) expression -> variable_value_change SEMI .
-
-    VAR             reduce using rule 8 (expression -> variable_value_change SEMI .)
-    IDENTIFIER      reduce using rule 8 (expression -> variable_value_change SEMI .)
-    IF              reduce using rule 8 (expression -> variable_value_change SEMI .)
-    FUNCTION        reduce using rule 8 (expression -> variable_value_change SEMI .)
-    $end            reduce using rule 8 (expression -> variable_value_change SEMI .)
-    RMB             reduce using rule 8 (expression -> variable_value_change SEMI .)
-
-
-state 22
-
-    (34) variable_declaration -> VAR IDENTIFIER . EQUAL calculate
-    (35) variable_declaration -> VAR IDENTIFIER .
-
-    EQUAL           shift and go to state 34
-    SEMI            reduce using rule 35 (variable_declaration -> VAR IDENTIFIER .)
+    SEMI            shift and go to state 40
 
 
 state 23
 
-    (33) variable_value_change -> IDENTIFIER EQUAL . calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (7) expression -> expression repeat .
 
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    VAR             reduce using rule 7 (expression -> expression repeat .)
+    IDENTIFIER      reduce using rule 7 (expression -> expression repeat .)
+    IF              reduce using rule 7 (expression -> expression repeat .)
+    FUNCTION        reduce using rule 7 (expression -> expression repeat .)
+    REPEAT          reduce using rule 7 (expression -> expression repeat .)
+    $end            reduce using rule 7 (expression -> expression repeat .)
+    RMB             reduce using rule 7 (expression -> expression repeat .)
 
-    calculate                      shift and go to state 36
 
 state 24
 
-    (20) function_call -> IDENTIFIER LSB . parameter RSB
-    (21) parameter -> . parameter COMMA calculate
-    (22) parameter -> . calculate
-    (23) parameter -> . empty
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
-    (46) empty -> .
+    (8) expression -> variable_declaration SEMI .
 
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
-    RSB             reduce using rule 46 (empty -> .)
-    COMMA           reduce using rule 46 (empty -> .)
+    VAR             reduce using rule 8 (expression -> variable_declaration SEMI .)
+    IDENTIFIER      reduce using rule 8 (expression -> variable_declaration SEMI .)
+    IF              reduce using rule 8 (expression -> variable_declaration SEMI .)
+    FUNCTION        reduce using rule 8 (expression -> variable_declaration SEMI .)
+    REPEAT          reduce using rule 8 (expression -> variable_declaration SEMI .)
+    $end            reduce using rule 8 (expression -> variable_declaration SEMI .)
+    RMB             reduce using rule 8 (expression -> variable_declaration SEMI .)
 
-    parameter                      shift and go to state 42
-    calculate                      shift and go to state 43
-    empty                          shift and go to state 44
 
 state 25
 
-    (24) if_statement -> if_statement_head if_statement_body .
+    (9) expression -> variable_value_change SEMI .
 
-    VAR             reduce using rule 24 (if_statement -> if_statement_head if_statement_body .)
-    IDENTIFIER      reduce using rule 24 (if_statement -> if_statement_head if_statement_body .)
-    IF              reduce using rule 24 (if_statement -> if_statement_head if_statement_body .)
-    FUNCTION        reduce using rule 24 (if_statement -> if_statement_head if_statement_body .)
-    $end            reduce using rule 24 (if_statement -> if_statement_head if_statement_body .)
-    RMB             reduce using rule 24 (if_statement -> if_statement_head if_statement_body .)
+    VAR             reduce using rule 9 (expression -> variable_value_change SEMI .)
+    IDENTIFIER      reduce using rule 9 (expression -> variable_value_change SEMI .)
+    IF              reduce using rule 9 (expression -> variable_value_change SEMI .)
+    FUNCTION        reduce using rule 9 (expression -> variable_value_change SEMI .)
+    REPEAT          reduce using rule 9 (expression -> variable_value_change SEMI .)
+    $end            reduce using rule 9 (expression -> variable_value_change SEMI .)
+    RMB             reduce using rule 9 (expression -> variable_value_change SEMI .)
 
 
 state 26
 
-    (26) if_statement_body -> LMB . expression RMB
-    (2) expression -> . expression variable_declaration SEMI
-    (3) expression -> . expression variable_value_change SEMI
-    (4) expression -> . expression if_statement
-    (5) expression -> . expression function
-    (6) expression -> . expression function_call SEMI
-    (7) expression -> . variable_declaration SEMI
-    (8) expression -> . variable_value_change SEMI
-    (9) expression -> . if_statement
-    (10) expression -> . function
-    (11) expression -> . function_call
-    (12) expression -> . empty
-    (34) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (35) variable_declaration -> . VAR IDENTIFIER
-    (33) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (24) if_statement -> . if_statement_head if_statement_body
-    (16) function -> . function_head function_body
-    (20) function_call -> . IDENTIFIER LSB parameter RSB
-    (46) empty -> .
-    (25) if_statement_head -> . IF LSB condition RSB
-    (17) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (18) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (36) variable_declaration -> VAR IDENTIFIER . EQUAL calculate
+    (37) variable_declaration -> VAR IDENTIFIER .
 
-  ! shift/reduce conflict for VAR resolved as shift
-  ! shift/reduce conflict for IDENTIFIER resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for FUNCTION resolved as shift
-    VAR             shift and go to state 9
-    IDENTIFIER      shift and go to state 10
-    RMB             reduce using rule 46 (empty -> .)
-    IF              shift and go to state 13
-    FUNCTION        shift and go to state 14
+    EQUAL           shift and go to state 41
+    SEMI            reduce using rule 37 (variable_declaration -> VAR IDENTIFIER .)
 
-  ! VAR             [ reduce using rule 46 (empty -> .) ]
-  ! IDENTIFIER      [ reduce using rule 46 (empty -> .) ]
-  ! IF              [ reduce using rule 46 (empty -> .) ]
-  ! FUNCTION        [ reduce using rule 46 (empty -> .) ]
-
-    expression                     shift and go to state 45
-    variable_declaration           shift and go to state 3
-    variable_value_change          shift and go to state 4
-    if_statement                   shift and go to state 5
-    function                       shift and go to state 6
-    function_call                  shift and go to state 7
-    empty                          shift and go to state 8
-    if_statement_head              shift and go to state 11
-    function_head                  shift and go to state 12
 
 state 27
 
-    (16) function -> function_head function_body .
+    (35) variable_value_change -> IDENTIFIER EQUAL . calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    VAR             reduce using rule 16 (function -> function_head function_body .)
-    IDENTIFIER      reduce using rule 16 (function -> function_head function_body .)
-    IF              reduce using rule 16 (function -> function_head function_body .)
-    FUNCTION        reduce using rule 16 (function -> function_head function_body .)
-    $end            reduce using rule 16 (function -> function_head function_body .)
-    RMB             reduce using rule 16 (function -> function_head function_body .)
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
+    calculate                      shift and go to state 43
 
 state 28
 
-    (19) function_body -> LMB . expression RMB
+    (22) function_call -> IDENTIFIER LSB . parameter RSB
+    (23) parameter -> . parameter COMMA calculate
+    (24) parameter -> . calculate
+    (25) parameter -> . empty
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
+    (48) empty -> .
+
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
+    RSB             reduce using rule 48 (empty -> .)
+    COMMA           reduce using rule 48 (empty -> .)
+
+    parameter                      shift and go to state 49
+    calculate                      shift and go to state 50
+    empty                          shift and go to state 51
+
+state 29
+
+    (26) if_statement -> if_statement_head if_statement_body .
+
+    VAR             reduce using rule 26 (if_statement -> if_statement_head if_statement_body .)
+    IDENTIFIER      reduce using rule 26 (if_statement -> if_statement_head if_statement_body .)
+    IF              reduce using rule 26 (if_statement -> if_statement_head if_statement_body .)
+    FUNCTION        reduce using rule 26 (if_statement -> if_statement_head if_statement_body .)
+    REPEAT          reduce using rule 26 (if_statement -> if_statement_head if_statement_body .)
+    $end            reduce using rule 26 (if_statement -> if_statement_head if_statement_body .)
+    RMB             reduce using rule 26 (if_statement -> if_statement_head if_statement_body .)
+
+
+state 30
+
+    (28) if_statement_body -> LMB . expression RMB
     (2) expression -> . expression variable_declaration SEMI
     (3) expression -> . expression variable_value_change SEMI
     (4) expression -> . expression if_statement
     (5) expression -> . expression function
     (6) expression -> . expression function_call SEMI
-    (7) expression -> . variable_declaration SEMI
-    (8) expression -> . variable_value_change SEMI
-    (9) expression -> . if_statement
-    (10) expression -> . function
-    (11) expression -> . function_call
-    (12) expression -> . empty
-    (34) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (35) variable_declaration -> . VAR IDENTIFIER
-    (33) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (24) if_statement -> . if_statement_head if_statement_body
-    (16) function -> . function_head function_body
-    (20) function_call -> . IDENTIFIER LSB parameter RSB
-    (46) empty -> .
-    (25) if_statement_head -> . IF LSB condition RSB
-    (17) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (18) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (7) expression -> . expression repeat
+    (8) expression -> . variable_declaration SEMI
+    (9) expression -> . variable_value_change SEMI
+    (10) expression -> . if_statement
+    (11) expression -> . function
+    (12) expression -> . function_call
+    (13) expression -> . repeat
+    (14) expression -> . empty
+    (36) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (37) variable_declaration -> . VAR IDENTIFIER
+    (35) variable_value_change -> . IDENTIFIER EQUAL calculate
+    (26) if_statement -> . if_statement_head if_statement_body
+    (18) function -> . function_head function_body
+    (22) function_call -> . IDENTIFIER LSB parameter RSB
+    (15) repeat -> . repeat_head repeat_body
+    (48) empty -> .
+    (27) if_statement_head -> . IF LSB condition RSB
+    (19) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (20) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (16) repeat_head -> . REPEAT LSB calculate RSB
 
   ! shift/reduce conflict for VAR resolved as shift
   ! shift/reduce conflict for IDENTIFIER resolved as shift
   ! shift/reduce conflict for IF resolved as shift
   ! shift/reduce conflict for FUNCTION resolved as shift
-    VAR             shift and go to state 9
-    IDENTIFIER      shift and go to state 10
-    RMB             reduce using rule 46 (empty -> .)
-    IF              shift and go to state 13
-    FUNCTION        shift and go to state 14
+  ! shift/reduce conflict for REPEAT resolved as shift
+    VAR             shift and go to state 10
+    IDENTIFIER      shift and go to state 11
+    RMB             reduce using rule 48 (empty -> .)
+    IF              shift and go to state 15
+    FUNCTION        shift and go to state 16
+    REPEAT          shift and go to state 17
 
-  ! VAR             [ reduce using rule 46 (empty -> .) ]
-  ! IDENTIFIER      [ reduce using rule 46 (empty -> .) ]
-  ! IF              [ reduce using rule 46 (empty -> .) ]
-  ! FUNCTION        [ reduce using rule 46 (empty -> .) ]
+  ! VAR             [ reduce using rule 48 (empty -> .) ]
+  ! IDENTIFIER      [ reduce using rule 48 (empty -> .) ]
+  ! IF              [ reduce using rule 48 (empty -> .) ]
+  ! FUNCTION        [ reduce using rule 48 (empty -> .) ]
+  ! REPEAT          [ reduce using rule 48 (empty -> .) ]
 
-    expression                     shift and go to state 46
+    expression                     shift and go to state 52
     variable_declaration           shift and go to state 3
     variable_value_change          shift and go to state 4
     if_statement                   shift and go to state 5
     function                       shift and go to state 6
     function_call                  shift and go to state 7
-    empty                          shift and go to state 8
-    if_statement_head              shift and go to state 11
-    function_head                  shift and go to state 12
-
-state 29
-
-    (25) if_statement_head -> IF LSB . condition RSB
-    (27) condition -> . condition LB calculate
-    (28) condition -> . condition RB calculate
-    (29) condition -> . condition LB EQUAL calculate
-    (30) condition -> . condition RB EQUAL calculate
-    (31) condition -> . condition EQUAL calculate
-    (32) condition -> . calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
-
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
-
-    condition                      shift and go to state 47
-    calculate                      shift and go to state 48
-
-state 30
-
-    (17) function_head -> FUNCTION IDENTIFIER . LSB empty RSB
-    (18) function_head -> FUNCTION IDENTIFIER . LSB parameter RSB
-
-    LSB             shift and go to state 49
-
+    repeat                         shift and go to state 8
+    empty                          shift and go to state 9
+    if_statement_head              shift and go to state 12
+    function_head                  shift and go to state 13
+    repeat_head                    shift and go to state 14
 
 state 31
+
+    (18) function -> function_head function_body .
+
+    VAR             reduce using rule 18 (function -> function_head function_body .)
+    IDENTIFIER      reduce using rule 18 (function -> function_head function_body .)
+    IF              reduce using rule 18 (function -> function_head function_body .)
+    FUNCTION        reduce using rule 18 (function -> function_head function_body .)
+    REPEAT          reduce using rule 18 (function -> function_head function_body .)
+    $end            reduce using rule 18 (function -> function_head function_body .)
+    RMB             reduce using rule 18 (function -> function_head function_body .)
+
+
+state 32
+
+    (21) function_body -> LMB . expression RMB
+    (2) expression -> . expression variable_declaration SEMI
+    (3) expression -> . expression variable_value_change SEMI
+    (4) expression -> . expression if_statement
+    (5) expression -> . expression function
+    (6) expression -> . expression function_call SEMI
+    (7) expression -> . expression repeat
+    (8) expression -> . variable_declaration SEMI
+    (9) expression -> . variable_value_change SEMI
+    (10) expression -> . if_statement
+    (11) expression -> . function
+    (12) expression -> . function_call
+    (13) expression -> . repeat
+    (14) expression -> . empty
+    (36) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (37) variable_declaration -> . VAR IDENTIFIER
+    (35) variable_value_change -> . IDENTIFIER EQUAL calculate
+    (26) if_statement -> . if_statement_head if_statement_body
+    (18) function -> . function_head function_body
+    (22) function_call -> . IDENTIFIER LSB parameter RSB
+    (15) repeat -> . repeat_head repeat_body
+    (48) empty -> .
+    (27) if_statement_head -> . IF LSB condition RSB
+    (19) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (20) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (16) repeat_head -> . REPEAT LSB calculate RSB
+
+  ! shift/reduce conflict for VAR resolved as shift
+  ! shift/reduce conflict for IDENTIFIER resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for FUNCTION resolved as shift
+  ! shift/reduce conflict for REPEAT resolved as shift
+    VAR             shift and go to state 10
+    IDENTIFIER      shift and go to state 11
+    RMB             reduce using rule 48 (empty -> .)
+    IF              shift and go to state 15
+    FUNCTION        shift and go to state 16
+    REPEAT          shift and go to state 17
+
+  ! VAR             [ reduce using rule 48 (empty -> .) ]
+  ! IDENTIFIER      [ reduce using rule 48 (empty -> .) ]
+  ! IF              [ reduce using rule 48 (empty -> .) ]
+  ! FUNCTION        [ reduce using rule 48 (empty -> .) ]
+  ! REPEAT          [ reduce using rule 48 (empty -> .) ]
+
+    expression                     shift and go to state 53
+    variable_declaration           shift and go to state 3
+    variable_value_change          shift and go to state 4
+    if_statement                   shift and go to state 5
+    function                       shift and go to state 6
+    function_call                  shift and go to state 7
+    repeat                         shift and go to state 8
+    empty                          shift and go to state 9
+    if_statement_head              shift and go to state 12
+    function_head                  shift and go to state 13
+    repeat_head                    shift and go to state 14
+
+state 33
+
+    (15) repeat -> repeat_head repeat_body .
+
+    VAR             reduce using rule 15 (repeat -> repeat_head repeat_body .)
+    IDENTIFIER      reduce using rule 15 (repeat -> repeat_head repeat_body .)
+    IF              reduce using rule 15 (repeat -> repeat_head repeat_body .)
+    FUNCTION        reduce using rule 15 (repeat -> repeat_head repeat_body .)
+    REPEAT          reduce using rule 15 (repeat -> repeat_head repeat_body .)
+    $end            reduce using rule 15 (repeat -> repeat_head repeat_body .)
+    RMB             reduce using rule 15 (repeat -> repeat_head repeat_body .)
+
+
+state 34
+
+    (17) repeat_body -> LMB . expression RMB
+    (2) expression -> . expression variable_declaration SEMI
+    (3) expression -> . expression variable_value_change SEMI
+    (4) expression -> . expression if_statement
+    (5) expression -> . expression function
+    (6) expression -> . expression function_call SEMI
+    (7) expression -> . expression repeat
+    (8) expression -> . variable_declaration SEMI
+    (9) expression -> . variable_value_change SEMI
+    (10) expression -> . if_statement
+    (11) expression -> . function
+    (12) expression -> . function_call
+    (13) expression -> . repeat
+    (14) expression -> . empty
+    (36) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (37) variable_declaration -> . VAR IDENTIFIER
+    (35) variable_value_change -> . IDENTIFIER EQUAL calculate
+    (26) if_statement -> . if_statement_head if_statement_body
+    (18) function -> . function_head function_body
+    (22) function_call -> . IDENTIFIER LSB parameter RSB
+    (15) repeat -> . repeat_head repeat_body
+    (48) empty -> .
+    (27) if_statement_head -> . IF LSB condition RSB
+    (19) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (20) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (16) repeat_head -> . REPEAT LSB calculate RSB
+
+  ! shift/reduce conflict for VAR resolved as shift
+  ! shift/reduce conflict for IDENTIFIER resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for FUNCTION resolved as shift
+  ! shift/reduce conflict for REPEAT resolved as shift
+    VAR             shift and go to state 10
+    IDENTIFIER      shift and go to state 11
+    RMB             reduce using rule 48 (empty -> .)
+    IF              shift and go to state 15
+    FUNCTION        shift and go to state 16
+    REPEAT          shift and go to state 17
+
+  ! VAR             [ reduce using rule 48 (empty -> .) ]
+  ! IDENTIFIER      [ reduce using rule 48 (empty -> .) ]
+  ! IF              [ reduce using rule 48 (empty -> .) ]
+  ! FUNCTION        [ reduce using rule 48 (empty -> .) ]
+  ! REPEAT          [ reduce using rule 48 (empty -> .) ]
+
+    expression                     shift and go to state 54
+    variable_declaration           shift and go to state 3
+    variable_value_change          shift and go to state 4
+    if_statement                   shift and go to state 5
+    function                       shift and go to state 6
+    function_call                  shift and go to state 7
+    repeat                         shift and go to state 8
+    empty                          shift and go to state 9
+    if_statement_head              shift and go to state 12
+    function_head                  shift and go to state 13
+    repeat_head                    shift and go to state 14
+
+state 35
+
+    (27) if_statement_head -> IF LSB . condition RSB
+    (29) condition -> . condition LB calculate
+    (30) condition -> . condition RB calculate
+    (31) condition -> . condition LB EQUAL calculate
+    (32) condition -> . condition RB EQUAL calculate
+    (33) condition -> . condition EQUAL calculate
+    (34) condition -> . calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
+
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
+
+    condition                      shift and go to state 55
+    calculate                      shift and go to state 56
+
+state 36
+
+    (19) function_head -> FUNCTION IDENTIFIER . LSB empty RSB
+    (20) function_head -> FUNCTION IDENTIFIER . LSB parameter RSB
+
+    LSB             shift and go to state 57
+
+
+state 37
+
+    (16) repeat_head -> REPEAT LSB . calculate RSB
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
+
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
+
+    calculate                      shift and go to state 58
+
+state 38
 
     (2) expression -> expression variable_declaration SEMI .
 
@@ -609,11 +791,12 @@ state 31
     IDENTIFIER      reduce using rule 2 (expression -> expression variable_declaration SEMI .)
     IF              reduce using rule 2 (expression -> expression variable_declaration SEMI .)
     FUNCTION        reduce using rule 2 (expression -> expression variable_declaration SEMI .)
+    REPEAT          reduce using rule 2 (expression -> expression variable_declaration SEMI .)
     $end            reduce using rule 2 (expression -> expression variable_declaration SEMI .)
     RMB             reduce using rule 2 (expression -> expression variable_declaration SEMI .)
 
 
-state 32
+state 39
 
     (3) expression -> expression variable_value_change SEMI .
 
@@ -621,11 +804,12 @@ state 32
     IDENTIFIER      reduce using rule 3 (expression -> expression variable_value_change SEMI .)
     IF              reduce using rule 3 (expression -> expression variable_value_change SEMI .)
     FUNCTION        reduce using rule 3 (expression -> expression variable_value_change SEMI .)
+    REPEAT          reduce using rule 3 (expression -> expression variable_value_change SEMI .)
     $end            reduce using rule 3 (expression -> expression variable_value_change SEMI .)
     RMB             reduce using rule 3 (expression -> expression variable_value_change SEMI .)
 
 
-state 33
+state 40
 
     (6) expression -> expression function_call SEMI .
 
@@ -633,908 +817,997 @@ state 33
     IDENTIFIER      reduce using rule 6 (expression -> expression function_call SEMI .)
     IF              reduce using rule 6 (expression -> expression function_call SEMI .)
     FUNCTION        reduce using rule 6 (expression -> expression function_call SEMI .)
+    REPEAT          reduce using rule 6 (expression -> expression function_call SEMI .)
     $end            reduce using rule 6 (expression -> expression function_call SEMI .)
     RMB             reduce using rule 6 (expression -> expression function_call SEMI .)
 
 
-state 34
-
-    (34) variable_declaration -> VAR IDENTIFIER EQUAL . calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
-
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
-
-    calculate                      shift and go to state 50
-
-state 35
-
-    (44) calculate -> IDENTIFIER .
-
-    PLUS            reduce using rule 44 (calculate -> IDENTIFIER .)
-    MINUS           reduce using rule 44 (calculate -> IDENTIFIER .)
-    MUL             reduce using rule 44 (calculate -> IDENTIFIER .)
-    DIV             reduce using rule 44 (calculate -> IDENTIFIER .)
-    SEMI            reduce using rule 44 (calculate -> IDENTIFIER .)
-    RSB             reduce using rule 44 (calculate -> IDENTIFIER .)
-    COMMA           reduce using rule 44 (calculate -> IDENTIFIER .)
-    LB              reduce using rule 44 (calculate -> IDENTIFIER .)
-    RB              reduce using rule 44 (calculate -> IDENTIFIER .)
-    EQUAL           reduce using rule 44 (calculate -> IDENTIFIER .)
-
-
-state 36
-
-    (33) variable_value_change -> IDENTIFIER EQUAL calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
-
-    SEMI            reduce using rule 33 (variable_value_change -> IDENTIFIER EQUAL calculate .)
-    PLUS            shift and go to state 51
-    MINUS           shift and go to state 52
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
-
-
-state 37
-
-    (38) calculate -> MINUS . calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
-
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
-
-    calculate                      shift and go to state 55
-
-state 38
-
-    (41) calculate -> INT .
-
-    PLUS            reduce using rule 41 (calculate -> INT .)
-    MINUS           reduce using rule 41 (calculate -> INT .)
-    MUL             reduce using rule 41 (calculate -> INT .)
-    DIV             reduce using rule 41 (calculate -> INT .)
-    SEMI            reduce using rule 41 (calculate -> INT .)
-    RSB             reduce using rule 41 (calculate -> INT .)
-    COMMA           reduce using rule 41 (calculate -> INT .)
-    LB              reduce using rule 41 (calculate -> INT .)
-    RB              reduce using rule 41 (calculate -> INT .)
-    EQUAL           reduce using rule 41 (calculate -> INT .)
-
-
-state 39
-
-    (42) calculate -> FLOAT .
-
-    PLUS            reduce using rule 42 (calculate -> FLOAT .)
-    MINUS           reduce using rule 42 (calculate -> FLOAT .)
-    MUL             reduce using rule 42 (calculate -> FLOAT .)
-    DIV             reduce using rule 42 (calculate -> FLOAT .)
-    SEMI            reduce using rule 42 (calculate -> FLOAT .)
-    RSB             reduce using rule 42 (calculate -> FLOAT .)
-    COMMA           reduce using rule 42 (calculate -> FLOAT .)
-    LB              reduce using rule 42 (calculate -> FLOAT .)
-    RB              reduce using rule 42 (calculate -> FLOAT .)
-    EQUAL           reduce using rule 42 (calculate -> FLOAT .)
-
-
-state 40
-
-    (43) calculate -> STRING .
-
-    PLUS            reduce using rule 43 (calculate -> STRING .)
-    MINUS           reduce using rule 43 (calculate -> STRING .)
-    MUL             reduce using rule 43 (calculate -> STRING .)
-    DIV             reduce using rule 43 (calculate -> STRING .)
-    SEMI            reduce using rule 43 (calculate -> STRING .)
-    RSB             reduce using rule 43 (calculate -> STRING .)
-    COMMA           reduce using rule 43 (calculate -> STRING .)
-    LB              reduce using rule 43 (calculate -> STRING .)
-    RB              reduce using rule 43 (calculate -> STRING .)
-    EQUAL           reduce using rule 43 (calculate -> STRING .)
-
-
 state 41
 
-    (45) calculate -> LSB . calculate RSB
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (36) variable_declaration -> VAR IDENTIFIER EQUAL . calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
-    calculate                      shift and go to state 56
+    calculate                      shift and go to state 59
 
 state 42
 
-    (20) function_call -> IDENTIFIER LSB parameter . RSB
-    (21) parameter -> parameter . COMMA calculate
+    (46) calculate -> IDENTIFIER .
 
-    RSB             shift and go to state 57
-    COMMA           shift and go to state 58
+    PLUS            reduce using rule 46 (calculate -> IDENTIFIER .)
+    MINUS           reduce using rule 46 (calculate -> IDENTIFIER .)
+    MUL             reduce using rule 46 (calculate -> IDENTIFIER .)
+    DIV             reduce using rule 46 (calculate -> IDENTIFIER .)
+    SEMI            reduce using rule 46 (calculate -> IDENTIFIER .)
+    RSB             reduce using rule 46 (calculate -> IDENTIFIER .)
+    COMMA           reduce using rule 46 (calculate -> IDENTIFIER .)
+    LB              reduce using rule 46 (calculate -> IDENTIFIER .)
+    RB              reduce using rule 46 (calculate -> IDENTIFIER .)
+    EQUAL           reduce using rule 46 (calculate -> IDENTIFIER .)
 
 
 state 43
 
-    (22) parameter -> calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (35) variable_value_change -> IDENTIFIER EQUAL calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
 
-    RSB             reduce using rule 22 (parameter -> calculate .)
-    COMMA           reduce using rule 22 (parameter -> calculate .)
-    PLUS            shift and go to state 51
-    MINUS           shift and go to state 52
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
+    SEMI            reduce using rule 35 (variable_value_change -> IDENTIFIER EQUAL calculate .)
+    PLUS            shift and go to state 60
+    MINUS           shift and go to state 61
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
 
 
 state 44
 
-    (23) parameter -> empty .
+    (40) calculate -> MINUS . calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    RSB             reduce using rule 23 (parameter -> empty .)
-    COMMA           reduce using rule 23 (parameter -> empty .)
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
+    calculate                      shift and go to state 64
 
 state 45
 
-    (26) if_statement_body -> LMB expression . RMB
-    (2) expression -> expression . variable_declaration SEMI
-    (3) expression -> expression . variable_value_change SEMI
-    (4) expression -> expression . if_statement
-    (5) expression -> expression . function
-    (6) expression -> expression . function_call SEMI
-    (34) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (35) variable_declaration -> . VAR IDENTIFIER
-    (33) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (24) if_statement -> . if_statement_head if_statement_body
-    (16) function -> . function_head function_body
-    (20) function_call -> . IDENTIFIER LSB parameter RSB
-    (25) if_statement_head -> . IF LSB condition RSB
-    (17) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (18) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (43) calculate -> INT .
 
-    RMB             shift and go to state 59
-    VAR             shift and go to state 9
-    IDENTIFIER      shift and go to state 10
-    IF              shift and go to state 13
-    FUNCTION        shift and go to state 14
+    PLUS            reduce using rule 43 (calculate -> INT .)
+    MINUS           reduce using rule 43 (calculate -> INT .)
+    MUL             reduce using rule 43 (calculate -> INT .)
+    DIV             reduce using rule 43 (calculate -> INT .)
+    SEMI            reduce using rule 43 (calculate -> INT .)
+    RSB             reduce using rule 43 (calculate -> INT .)
+    COMMA           reduce using rule 43 (calculate -> INT .)
+    LB              reduce using rule 43 (calculate -> INT .)
+    RB              reduce using rule 43 (calculate -> INT .)
+    EQUAL           reduce using rule 43 (calculate -> INT .)
 
-    variable_declaration           shift and go to state 15
-    variable_value_change          shift and go to state 16
-    if_statement                   shift and go to state 17
-    function                       shift and go to state 18
-    function_call                  shift and go to state 19
-    if_statement_head              shift and go to state 11
-    function_head                  shift and go to state 12
 
 state 46
 
-    (19) function_body -> LMB expression . RMB
-    (2) expression -> expression . variable_declaration SEMI
-    (3) expression -> expression . variable_value_change SEMI
-    (4) expression -> expression . if_statement
-    (5) expression -> expression . function
-    (6) expression -> expression . function_call SEMI
-    (34) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (35) variable_declaration -> . VAR IDENTIFIER
-    (33) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (24) if_statement -> . if_statement_head if_statement_body
-    (16) function -> . function_head function_body
-    (20) function_call -> . IDENTIFIER LSB parameter RSB
-    (25) if_statement_head -> . IF LSB condition RSB
-    (17) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (18) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (44) calculate -> FLOAT .
 
-    RMB             shift and go to state 60
-    VAR             shift and go to state 9
-    IDENTIFIER      shift and go to state 10
-    IF              shift and go to state 13
-    FUNCTION        shift and go to state 14
+    PLUS            reduce using rule 44 (calculate -> FLOAT .)
+    MINUS           reduce using rule 44 (calculate -> FLOAT .)
+    MUL             reduce using rule 44 (calculate -> FLOAT .)
+    DIV             reduce using rule 44 (calculate -> FLOAT .)
+    SEMI            reduce using rule 44 (calculate -> FLOAT .)
+    RSB             reduce using rule 44 (calculate -> FLOAT .)
+    COMMA           reduce using rule 44 (calculate -> FLOAT .)
+    LB              reduce using rule 44 (calculate -> FLOAT .)
+    RB              reduce using rule 44 (calculate -> FLOAT .)
+    EQUAL           reduce using rule 44 (calculate -> FLOAT .)
 
-    variable_declaration           shift and go to state 15
-    variable_value_change          shift and go to state 16
-    if_statement                   shift and go to state 17
-    function                       shift and go to state 18
-    function_call                  shift and go to state 19
-    if_statement_head              shift and go to state 11
-    function_head                  shift and go to state 12
 
 state 47
 
-    (25) if_statement_head -> IF LSB condition . RSB
-    (27) condition -> condition . LB calculate
-    (28) condition -> condition . RB calculate
-    (29) condition -> condition . LB EQUAL calculate
-    (30) condition -> condition . RB EQUAL calculate
-    (31) condition -> condition . EQUAL calculate
+    (45) calculate -> STRING .
 
-    RSB             shift and go to state 61
-    LB              shift and go to state 62
-    RB              shift and go to state 63
-    EQUAL           shift and go to state 64
+    PLUS            reduce using rule 45 (calculate -> STRING .)
+    MINUS           reduce using rule 45 (calculate -> STRING .)
+    MUL             reduce using rule 45 (calculate -> STRING .)
+    DIV             reduce using rule 45 (calculate -> STRING .)
+    SEMI            reduce using rule 45 (calculate -> STRING .)
+    RSB             reduce using rule 45 (calculate -> STRING .)
+    COMMA           reduce using rule 45 (calculate -> STRING .)
+    LB              reduce using rule 45 (calculate -> STRING .)
+    RB              reduce using rule 45 (calculate -> STRING .)
+    EQUAL           reduce using rule 45 (calculate -> STRING .)
 
 
 state 48
 
-    (32) condition -> calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (47) calculate -> LSB . calculate RSB
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    RSB             reduce using rule 32 (condition -> calculate .)
-    LB              reduce using rule 32 (condition -> calculate .)
-    RB              reduce using rule 32 (condition -> calculate .)
-    EQUAL           reduce using rule 32 (condition -> calculate .)
-    PLUS            shift and go to state 51
-    MINUS           shift and go to state 52
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
+    calculate                      shift and go to state 65
 
 state 49
 
-    (17) function_head -> FUNCTION IDENTIFIER LSB . empty RSB
-    (18) function_head -> FUNCTION IDENTIFIER LSB . parameter RSB
-    (46) empty -> .
-    (21) parameter -> . parameter COMMA calculate
-    (22) parameter -> . calculate
-    (23) parameter -> . empty
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (22) function_call -> IDENTIFIER LSB parameter . RSB
+    (23) parameter -> parameter . COMMA calculate
 
-    RSB             reduce using rule 46 (empty -> .)
-    COMMA           reduce using rule 46 (empty -> .)
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    RSB             shift and go to state 66
+    COMMA           shift and go to state 67
 
-    empty                          shift and go to state 65
-    parameter                      shift and go to state 66
-    calculate                      shift and go to state 43
 
 state 50
 
-    (34) variable_declaration -> VAR IDENTIFIER EQUAL calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (24) parameter -> calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
 
-    SEMI            reduce using rule 34 (variable_declaration -> VAR IDENTIFIER EQUAL calculate .)
-    PLUS            shift and go to state 51
-    MINUS           shift and go to state 52
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
+    RSB             reduce using rule 24 (parameter -> calculate .)
+    COMMA           reduce using rule 24 (parameter -> calculate .)
+    PLUS            shift and go to state 60
+    MINUS           shift and go to state 61
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
 
 
 state 51
 
-    (36) calculate -> calculate PLUS . calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (25) parameter -> empty .
 
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    RSB             reduce using rule 25 (parameter -> empty .)
+    COMMA           reduce using rule 25 (parameter -> empty .)
 
-    calculate                      shift and go to state 67
 
 state 52
 
-    (37) calculate -> calculate MINUS . calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (28) if_statement_body -> LMB expression . RMB
+    (2) expression -> expression . variable_declaration SEMI
+    (3) expression -> expression . variable_value_change SEMI
+    (4) expression -> expression . if_statement
+    (5) expression -> expression . function
+    (6) expression -> expression . function_call SEMI
+    (7) expression -> expression . repeat
+    (36) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (37) variable_declaration -> . VAR IDENTIFIER
+    (35) variable_value_change -> . IDENTIFIER EQUAL calculate
+    (26) if_statement -> . if_statement_head if_statement_body
+    (18) function -> . function_head function_body
+    (22) function_call -> . IDENTIFIER LSB parameter RSB
+    (15) repeat -> . repeat_head repeat_body
+    (27) if_statement_head -> . IF LSB condition RSB
+    (19) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (20) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (16) repeat_head -> . REPEAT LSB calculate RSB
 
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    RMB             shift and go to state 68
+    VAR             shift and go to state 10
+    IDENTIFIER      shift and go to state 11
+    IF              shift and go to state 15
+    FUNCTION        shift and go to state 16
+    REPEAT          shift and go to state 17
 
-    calculate                      shift and go to state 68
+    variable_declaration           shift and go to state 18
+    variable_value_change          shift and go to state 19
+    if_statement                   shift and go to state 20
+    function                       shift and go to state 21
+    function_call                  shift and go to state 22
+    repeat                         shift and go to state 23
+    if_statement_head              shift and go to state 12
+    function_head                  shift and go to state 13
+    repeat_head                    shift and go to state 14
 
 state 53
 
-    (39) calculate -> calculate MUL . calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (21) function_body -> LMB expression . RMB
+    (2) expression -> expression . variable_declaration SEMI
+    (3) expression -> expression . variable_value_change SEMI
+    (4) expression -> expression . if_statement
+    (5) expression -> expression . function
+    (6) expression -> expression . function_call SEMI
+    (7) expression -> expression . repeat
+    (36) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (37) variable_declaration -> . VAR IDENTIFIER
+    (35) variable_value_change -> . IDENTIFIER EQUAL calculate
+    (26) if_statement -> . if_statement_head if_statement_body
+    (18) function -> . function_head function_body
+    (22) function_call -> . IDENTIFIER LSB parameter RSB
+    (15) repeat -> . repeat_head repeat_body
+    (27) if_statement_head -> . IF LSB condition RSB
+    (19) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (20) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (16) repeat_head -> . REPEAT LSB calculate RSB
 
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    RMB             shift and go to state 69
+    VAR             shift and go to state 10
+    IDENTIFIER      shift and go to state 11
+    IF              shift and go to state 15
+    FUNCTION        shift and go to state 16
+    REPEAT          shift and go to state 17
 
-    calculate                      shift and go to state 69
+    variable_declaration           shift and go to state 18
+    variable_value_change          shift and go to state 19
+    if_statement                   shift and go to state 20
+    function                       shift and go to state 21
+    function_call                  shift and go to state 22
+    repeat                         shift and go to state 23
+    if_statement_head              shift and go to state 12
+    function_head                  shift and go to state 13
+    repeat_head                    shift and go to state 14
 
 state 54
 
-    (40) calculate -> calculate DIV . calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (17) repeat_body -> LMB expression . RMB
+    (2) expression -> expression . variable_declaration SEMI
+    (3) expression -> expression . variable_value_change SEMI
+    (4) expression -> expression . if_statement
+    (5) expression -> expression . function
+    (6) expression -> expression . function_call SEMI
+    (7) expression -> expression . repeat
+    (36) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (37) variable_declaration -> . VAR IDENTIFIER
+    (35) variable_value_change -> . IDENTIFIER EQUAL calculate
+    (26) if_statement -> . if_statement_head if_statement_body
+    (18) function -> . function_head function_body
+    (22) function_call -> . IDENTIFIER LSB parameter RSB
+    (15) repeat -> . repeat_head repeat_body
+    (27) if_statement_head -> . IF LSB condition RSB
+    (19) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (20) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (16) repeat_head -> . REPEAT LSB calculate RSB
 
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    RMB             shift and go to state 70
+    VAR             shift and go to state 10
+    IDENTIFIER      shift and go to state 11
+    IF              shift and go to state 15
+    FUNCTION        shift and go to state 16
+    REPEAT          shift and go to state 17
 
-    calculate                      shift and go to state 70
+    variable_declaration           shift and go to state 18
+    variable_value_change          shift and go to state 19
+    if_statement                   shift and go to state 20
+    function                       shift and go to state 21
+    function_call                  shift and go to state 22
+    repeat                         shift and go to state 23
+    if_statement_head              shift and go to state 12
+    function_head                  shift and go to state 13
+    repeat_head                    shift and go to state 14
 
 state 55
 
-    (38) calculate -> MINUS calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (27) if_statement_head -> IF LSB condition . RSB
+    (29) condition -> condition . LB calculate
+    (30) condition -> condition . RB calculate
+    (31) condition -> condition . LB EQUAL calculate
+    (32) condition -> condition . RB EQUAL calculate
+    (33) condition -> condition . EQUAL calculate
 
-    PLUS            reduce using rule 38 (calculate -> MINUS calculate .)
-    MINUS           reduce using rule 38 (calculate -> MINUS calculate .)
-    MUL             reduce using rule 38 (calculate -> MINUS calculate .)
-    DIV             reduce using rule 38 (calculate -> MINUS calculate .)
-    SEMI            reduce using rule 38 (calculate -> MINUS calculate .)
-    RSB             reduce using rule 38 (calculate -> MINUS calculate .)
-    COMMA           reduce using rule 38 (calculate -> MINUS calculate .)
-    LB              reduce using rule 38 (calculate -> MINUS calculate .)
-    RB              reduce using rule 38 (calculate -> MINUS calculate .)
-    EQUAL           reduce using rule 38 (calculate -> MINUS calculate .)
-
-  ! PLUS            [ shift and go to state 51 ]
-  ! MINUS           [ shift and go to state 52 ]
-  ! MUL             [ shift and go to state 53 ]
-  ! DIV             [ shift and go to state 54 ]
+    RSB             shift and go to state 71
+    LB              shift and go to state 72
+    RB              shift and go to state 73
+    EQUAL           shift and go to state 74
 
 
 state 56
 
-    (45) calculate -> LSB calculate . RSB
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (34) condition -> calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
 
-    RSB             shift and go to state 71
-    PLUS            shift and go to state 51
-    MINUS           shift and go to state 52
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
+    RSB             reduce using rule 34 (condition -> calculate .)
+    LB              reduce using rule 34 (condition -> calculate .)
+    RB              reduce using rule 34 (condition -> calculate .)
+    EQUAL           reduce using rule 34 (condition -> calculate .)
+    PLUS            shift and go to state 60
+    MINUS           shift and go to state 61
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
 
 
 state 57
 
-    (20) function_call -> IDENTIFIER LSB parameter RSB .
+    (19) function_head -> FUNCTION IDENTIFIER LSB . empty RSB
+    (20) function_head -> FUNCTION IDENTIFIER LSB . parameter RSB
+    (48) empty -> .
+    (23) parameter -> . parameter COMMA calculate
+    (24) parameter -> . calculate
+    (25) parameter -> . empty
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    VAR             reduce using rule 20 (function_call -> IDENTIFIER LSB parameter RSB .)
-    IDENTIFIER      reduce using rule 20 (function_call -> IDENTIFIER LSB parameter RSB .)
-    IF              reduce using rule 20 (function_call -> IDENTIFIER LSB parameter RSB .)
-    FUNCTION        reduce using rule 20 (function_call -> IDENTIFIER LSB parameter RSB .)
-    $end            reduce using rule 20 (function_call -> IDENTIFIER LSB parameter RSB .)
-    SEMI            reduce using rule 20 (function_call -> IDENTIFIER LSB parameter RSB .)
-    RMB             reduce using rule 20 (function_call -> IDENTIFIER LSB parameter RSB .)
+    RSB             reduce using rule 48 (empty -> .)
+    COMMA           reduce using rule 48 (empty -> .)
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
+    empty                          shift and go to state 75
+    parameter                      shift and go to state 76
+    calculate                      shift and go to state 50
 
 state 58
 
-    (21) parameter -> parameter COMMA . calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (16) repeat_head -> REPEAT LSB calculate . RSB
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
 
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    RSB             shift and go to state 77
+    PLUS            shift and go to state 60
+    MINUS           shift and go to state 61
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
 
-    calculate                      shift and go to state 72
 
 state 59
 
-    (26) if_statement_body -> LMB expression RMB .
+    (36) variable_declaration -> VAR IDENTIFIER EQUAL calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
 
-    VAR             reduce using rule 26 (if_statement_body -> LMB expression RMB .)
-    IDENTIFIER      reduce using rule 26 (if_statement_body -> LMB expression RMB .)
-    IF              reduce using rule 26 (if_statement_body -> LMB expression RMB .)
-    FUNCTION        reduce using rule 26 (if_statement_body -> LMB expression RMB .)
-    $end            reduce using rule 26 (if_statement_body -> LMB expression RMB .)
-    RMB             reduce using rule 26 (if_statement_body -> LMB expression RMB .)
+    SEMI            reduce using rule 36 (variable_declaration -> VAR IDENTIFIER EQUAL calculate .)
+    PLUS            shift and go to state 60
+    MINUS           shift and go to state 61
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
 
 
 state 60
 
-    (19) function_body -> LMB expression RMB .
+    (38) calculate -> calculate PLUS . calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    VAR             reduce using rule 19 (function_body -> LMB expression RMB .)
-    IDENTIFIER      reduce using rule 19 (function_body -> LMB expression RMB .)
-    IF              reduce using rule 19 (function_body -> LMB expression RMB .)
-    FUNCTION        reduce using rule 19 (function_body -> LMB expression RMB .)
-    $end            reduce using rule 19 (function_body -> LMB expression RMB .)
-    RMB             reduce using rule 19 (function_body -> LMB expression RMB .)
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
+    calculate                      shift and go to state 78
 
 state 61
 
-    (25) if_statement_head -> IF LSB condition RSB .
+    (39) calculate -> calculate MINUS . calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    LMB             reduce using rule 25 (if_statement_head -> IF LSB condition RSB .)
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
+    calculate                      shift and go to state 79
 
 state 62
 
-    (27) condition -> condition LB . calculate
-    (29) condition -> condition LB . EQUAL calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (41) calculate -> calculate MUL . calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    EQUAL           shift and go to state 74
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
-    calculate                      shift and go to state 73
+    calculate                      shift and go to state 80
 
 state 63
 
-    (28) condition -> condition RB . calculate
-    (30) condition -> condition RB . EQUAL calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (42) calculate -> calculate DIV . calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    EQUAL           shift and go to state 76
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
-    calculate                      shift and go to state 75
+    calculate                      shift and go to state 81
 
 state 64
 
-    (31) condition -> condition EQUAL . calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (40) calculate -> MINUS calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
 
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    PLUS            reduce using rule 40 (calculate -> MINUS calculate .)
+    MINUS           reduce using rule 40 (calculate -> MINUS calculate .)
+    MUL             reduce using rule 40 (calculate -> MINUS calculate .)
+    DIV             reduce using rule 40 (calculate -> MINUS calculate .)
+    SEMI            reduce using rule 40 (calculate -> MINUS calculate .)
+    RSB             reduce using rule 40 (calculate -> MINUS calculate .)
+    COMMA           reduce using rule 40 (calculate -> MINUS calculate .)
+    LB              reduce using rule 40 (calculate -> MINUS calculate .)
+    RB              reduce using rule 40 (calculate -> MINUS calculate .)
+    EQUAL           reduce using rule 40 (calculate -> MINUS calculate .)
 
-    calculate                      shift and go to state 77
+  ! PLUS            [ shift and go to state 60 ]
+  ! MINUS           [ shift and go to state 61 ]
+  ! MUL             [ shift and go to state 62 ]
+  ! DIV             [ shift and go to state 63 ]
+
 
 state 65
 
-    (17) function_head -> FUNCTION IDENTIFIER LSB empty . RSB
-    (23) parameter -> empty .
+    (47) calculate -> LSB calculate . RSB
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
 
-  ! shift/reduce conflict for RSB resolved as shift
-    RSB             shift and go to state 78
-    COMMA           reduce using rule 23 (parameter -> empty .)
-
-  ! RSB             [ reduce using rule 23 (parameter -> empty .) ]
+    RSB             shift and go to state 82
+    PLUS            shift and go to state 60
+    MINUS           shift and go to state 61
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
 
 
 state 66
 
-    (18) function_head -> FUNCTION IDENTIFIER LSB parameter . RSB
-    (21) parameter -> parameter . COMMA calculate
+    (22) function_call -> IDENTIFIER LSB parameter RSB .
 
-    RSB             shift and go to state 79
-    COMMA           shift and go to state 58
+    VAR             reduce using rule 22 (function_call -> IDENTIFIER LSB parameter RSB .)
+    IDENTIFIER      reduce using rule 22 (function_call -> IDENTIFIER LSB parameter RSB .)
+    IF              reduce using rule 22 (function_call -> IDENTIFIER LSB parameter RSB .)
+    FUNCTION        reduce using rule 22 (function_call -> IDENTIFIER LSB parameter RSB .)
+    REPEAT          reduce using rule 22 (function_call -> IDENTIFIER LSB parameter RSB .)
+    $end            reduce using rule 22 (function_call -> IDENTIFIER LSB parameter RSB .)
+    SEMI            reduce using rule 22 (function_call -> IDENTIFIER LSB parameter RSB .)
+    RMB             reduce using rule 22 (function_call -> IDENTIFIER LSB parameter RSB .)
 
 
 state 67
 
-    (36) calculate -> calculate PLUS calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (23) parameter -> parameter COMMA . calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    PLUS            reduce using rule 36 (calculate -> calculate PLUS calculate .)
-    MINUS           reduce using rule 36 (calculate -> calculate PLUS calculate .)
-    SEMI            reduce using rule 36 (calculate -> calculate PLUS calculate .)
-    RSB             reduce using rule 36 (calculate -> calculate PLUS calculate .)
-    COMMA           reduce using rule 36 (calculate -> calculate PLUS calculate .)
-    LB              reduce using rule 36 (calculate -> calculate PLUS calculate .)
-    RB              reduce using rule 36 (calculate -> calculate PLUS calculate .)
-    EQUAL           reduce using rule 36 (calculate -> calculate PLUS calculate .)
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
-  ! MUL             [ reduce using rule 36 (calculate -> calculate PLUS calculate .) ]
-  ! DIV             [ reduce using rule 36 (calculate -> calculate PLUS calculate .) ]
-  ! PLUS            [ shift and go to state 51 ]
-  ! MINUS           [ shift and go to state 52 ]
-
+    calculate                      shift and go to state 83
 
 state 68
 
-    (37) calculate -> calculate MINUS calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (28) if_statement_body -> LMB expression RMB .
 
-    PLUS            reduce using rule 37 (calculate -> calculate MINUS calculate .)
-    MINUS           reduce using rule 37 (calculate -> calculate MINUS calculate .)
-    SEMI            reduce using rule 37 (calculate -> calculate MINUS calculate .)
-    RSB             reduce using rule 37 (calculate -> calculate MINUS calculate .)
-    COMMA           reduce using rule 37 (calculate -> calculate MINUS calculate .)
-    LB              reduce using rule 37 (calculate -> calculate MINUS calculate .)
-    RB              reduce using rule 37 (calculate -> calculate MINUS calculate .)
-    EQUAL           reduce using rule 37 (calculate -> calculate MINUS calculate .)
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
-
-  ! MUL             [ reduce using rule 37 (calculate -> calculate MINUS calculate .) ]
-  ! DIV             [ reduce using rule 37 (calculate -> calculate MINUS calculate .) ]
-  ! PLUS            [ shift and go to state 51 ]
-  ! MINUS           [ shift and go to state 52 ]
+    VAR             reduce using rule 28 (if_statement_body -> LMB expression RMB .)
+    IDENTIFIER      reduce using rule 28 (if_statement_body -> LMB expression RMB .)
+    IF              reduce using rule 28 (if_statement_body -> LMB expression RMB .)
+    FUNCTION        reduce using rule 28 (if_statement_body -> LMB expression RMB .)
+    REPEAT          reduce using rule 28 (if_statement_body -> LMB expression RMB .)
+    $end            reduce using rule 28 (if_statement_body -> LMB expression RMB .)
+    RMB             reduce using rule 28 (if_statement_body -> LMB expression RMB .)
 
 
 state 69
 
-    (39) calculate -> calculate MUL calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (21) function_body -> LMB expression RMB .
 
-    PLUS            reduce using rule 39 (calculate -> calculate MUL calculate .)
-    MINUS           reduce using rule 39 (calculate -> calculate MUL calculate .)
-    MUL             reduce using rule 39 (calculate -> calculate MUL calculate .)
-    DIV             reduce using rule 39 (calculate -> calculate MUL calculate .)
-    SEMI            reduce using rule 39 (calculate -> calculate MUL calculate .)
-    RSB             reduce using rule 39 (calculate -> calculate MUL calculate .)
-    COMMA           reduce using rule 39 (calculate -> calculate MUL calculate .)
-    LB              reduce using rule 39 (calculate -> calculate MUL calculate .)
-    RB              reduce using rule 39 (calculate -> calculate MUL calculate .)
-    EQUAL           reduce using rule 39 (calculate -> calculate MUL calculate .)
-
-  ! PLUS            [ shift and go to state 51 ]
-  ! MINUS           [ shift and go to state 52 ]
-  ! MUL             [ shift and go to state 53 ]
-  ! DIV             [ shift and go to state 54 ]
+    VAR             reduce using rule 21 (function_body -> LMB expression RMB .)
+    IDENTIFIER      reduce using rule 21 (function_body -> LMB expression RMB .)
+    IF              reduce using rule 21 (function_body -> LMB expression RMB .)
+    FUNCTION        reduce using rule 21 (function_body -> LMB expression RMB .)
+    REPEAT          reduce using rule 21 (function_body -> LMB expression RMB .)
+    $end            reduce using rule 21 (function_body -> LMB expression RMB .)
+    RMB             reduce using rule 21 (function_body -> LMB expression RMB .)
 
 
 state 70
 
-    (40) calculate -> calculate DIV calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (17) repeat_body -> LMB expression RMB .
 
-    PLUS            reduce using rule 40 (calculate -> calculate DIV calculate .)
-    MINUS           reduce using rule 40 (calculate -> calculate DIV calculate .)
-    MUL             reduce using rule 40 (calculate -> calculate DIV calculate .)
-    DIV             reduce using rule 40 (calculate -> calculate DIV calculate .)
-    SEMI            reduce using rule 40 (calculate -> calculate DIV calculate .)
-    RSB             reduce using rule 40 (calculate -> calculate DIV calculate .)
-    COMMA           reduce using rule 40 (calculate -> calculate DIV calculate .)
-    LB              reduce using rule 40 (calculate -> calculate DIV calculate .)
-    RB              reduce using rule 40 (calculate -> calculate DIV calculate .)
-    EQUAL           reduce using rule 40 (calculate -> calculate DIV calculate .)
-
-  ! PLUS            [ shift and go to state 51 ]
-  ! MINUS           [ shift and go to state 52 ]
-  ! MUL             [ shift and go to state 53 ]
-  ! DIV             [ shift and go to state 54 ]
+    VAR             reduce using rule 17 (repeat_body -> LMB expression RMB .)
+    IDENTIFIER      reduce using rule 17 (repeat_body -> LMB expression RMB .)
+    IF              reduce using rule 17 (repeat_body -> LMB expression RMB .)
+    FUNCTION        reduce using rule 17 (repeat_body -> LMB expression RMB .)
+    REPEAT          reduce using rule 17 (repeat_body -> LMB expression RMB .)
+    $end            reduce using rule 17 (repeat_body -> LMB expression RMB .)
+    RMB             reduce using rule 17 (repeat_body -> LMB expression RMB .)
 
 
 state 71
 
-    (45) calculate -> LSB calculate RSB .
+    (27) if_statement_head -> IF LSB condition RSB .
 
-    PLUS            reduce using rule 45 (calculate -> LSB calculate RSB .)
-    MINUS           reduce using rule 45 (calculate -> LSB calculate RSB .)
-    MUL             reduce using rule 45 (calculate -> LSB calculate RSB .)
-    DIV             reduce using rule 45 (calculate -> LSB calculate RSB .)
-    SEMI            reduce using rule 45 (calculate -> LSB calculate RSB .)
-    RSB             reduce using rule 45 (calculate -> LSB calculate RSB .)
-    COMMA           reduce using rule 45 (calculate -> LSB calculate RSB .)
-    LB              reduce using rule 45 (calculate -> LSB calculate RSB .)
-    RB              reduce using rule 45 (calculate -> LSB calculate RSB .)
-    EQUAL           reduce using rule 45 (calculate -> LSB calculate RSB .)
+    LMB             reduce using rule 27 (if_statement_head -> IF LSB condition RSB .)
 
 
 state 72
 
-    (21) parameter -> parameter COMMA calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (29) condition -> condition LB . calculate
+    (31) condition -> condition LB . EQUAL calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    RSB             reduce using rule 21 (parameter -> parameter COMMA calculate .)
-    COMMA           reduce using rule 21 (parameter -> parameter COMMA calculate .)
-    PLUS            shift and go to state 51
-    MINUS           shift and go to state 52
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
+    EQUAL           shift and go to state 85
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
+    calculate                      shift and go to state 84
 
 state 73
 
-    (27) condition -> condition LB calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (30) condition -> condition RB . calculate
+    (32) condition -> condition RB . EQUAL calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    RSB             reduce using rule 27 (condition -> condition LB calculate .)
-    LB              reduce using rule 27 (condition -> condition LB calculate .)
-    RB              reduce using rule 27 (condition -> condition LB calculate .)
-    EQUAL           reduce using rule 27 (condition -> condition LB calculate .)
-    PLUS            shift and go to state 51
-    MINUS           shift and go to state 52
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
+    EQUAL           shift and go to state 87
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
+    calculate                      shift and go to state 86
 
 state 74
 
-    (29) condition -> condition LB EQUAL . calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (33) condition -> condition EQUAL . calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
 
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
 
-    calculate                      shift and go to state 80
+    calculate                      shift and go to state 88
 
 state 75
 
-    (28) condition -> condition RB calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (19) function_head -> FUNCTION IDENTIFIER LSB empty . RSB
+    (25) parameter -> empty .
 
-    RSB             reduce using rule 28 (condition -> condition RB calculate .)
-    LB              reduce using rule 28 (condition -> condition RB calculate .)
-    RB              reduce using rule 28 (condition -> condition RB calculate .)
-    EQUAL           reduce using rule 28 (condition -> condition RB calculate .)
-    PLUS            shift and go to state 51
-    MINUS           shift and go to state 52
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
+  ! shift/reduce conflict for RSB resolved as shift
+    RSB             shift and go to state 89
+    COMMA           reduce using rule 25 (parameter -> empty .)
+
+  ! RSB             [ reduce using rule 25 (parameter -> empty .) ]
 
 
 state 76
 
-    (30) condition -> condition RB EQUAL . calculate
-    (36) calculate -> . calculate PLUS calculate
-    (37) calculate -> . calculate MINUS calculate
-    (38) calculate -> . MINUS calculate
-    (39) calculate -> . calculate MUL calculate
-    (40) calculate -> . calculate DIV calculate
-    (41) calculate -> . INT
-    (42) calculate -> . FLOAT
-    (43) calculate -> . STRING
-    (44) calculate -> . IDENTIFIER
-    (45) calculate -> . LSB calculate RSB
+    (20) function_head -> FUNCTION IDENTIFIER LSB parameter . RSB
+    (23) parameter -> parameter . COMMA calculate
 
-    MINUS           shift and go to state 37
-    INT             shift and go to state 38
-    FLOAT           shift and go to state 39
-    STRING          shift and go to state 40
-    IDENTIFIER      shift and go to state 35
-    LSB             shift and go to state 41
+    RSB             shift and go to state 90
+    COMMA           shift and go to state 67
 
-    calculate                      shift and go to state 81
 
 state 77
 
-    (31) condition -> condition EQUAL calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (16) repeat_head -> REPEAT LSB calculate RSB .
 
-    RSB             reduce using rule 31 (condition -> condition EQUAL calculate .)
-    LB              reduce using rule 31 (condition -> condition EQUAL calculate .)
-    RB              reduce using rule 31 (condition -> condition EQUAL calculate .)
-    EQUAL           reduce using rule 31 (condition -> condition EQUAL calculate .)
-    PLUS            shift and go to state 51
-    MINUS           shift and go to state 52
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
+    LMB             reduce using rule 16 (repeat_head -> REPEAT LSB calculate RSB .)
 
 
 state 78
 
-    (17) function_head -> FUNCTION IDENTIFIER LSB empty RSB .
+    (38) calculate -> calculate PLUS calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
 
-    LMB             reduce using rule 17 (function_head -> FUNCTION IDENTIFIER LSB empty RSB .)
+    PLUS            reduce using rule 38 (calculate -> calculate PLUS calculate .)
+    MINUS           reduce using rule 38 (calculate -> calculate PLUS calculate .)
+    SEMI            reduce using rule 38 (calculate -> calculate PLUS calculate .)
+    RSB             reduce using rule 38 (calculate -> calculate PLUS calculate .)
+    COMMA           reduce using rule 38 (calculate -> calculate PLUS calculate .)
+    LB              reduce using rule 38 (calculate -> calculate PLUS calculate .)
+    RB              reduce using rule 38 (calculate -> calculate PLUS calculate .)
+    EQUAL           reduce using rule 38 (calculate -> calculate PLUS calculate .)
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
+
+  ! MUL             [ reduce using rule 38 (calculate -> calculate PLUS calculate .) ]
+  ! DIV             [ reduce using rule 38 (calculate -> calculate PLUS calculate .) ]
+  ! PLUS            [ shift and go to state 60 ]
+  ! MINUS           [ shift and go to state 61 ]
 
 
 state 79
 
-    (18) function_head -> FUNCTION IDENTIFIER LSB parameter RSB .
+    (39) calculate -> calculate MINUS calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
 
-    LMB             reduce using rule 18 (function_head -> FUNCTION IDENTIFIER LSB parameter RSB .)
+    PLUS            reduce using rule 39 (calculate -> calculate MINUS calculate .)
+    MINUS           reduce using rule 39 (calculate -> calculate MINUS calculate .)
+    SEMI            reduce using rule 39 (calculate -> calculate MINUS calculate .)
+    RSB             reduce using rule 39 (calculate -> calculate MINUS calculate .)
+    COMMA           reduce using rule 39 (calculate -> calculate MINUS calculate .)
+    LB              reduce using rule 39 (calculate -> calculate MINUS calculate .)
+    RB              reduce using rule 39 (calculate -> calculate MINUS calculate .)
+    EQUAL           reduce using rule 39 (calculate -> calculate MINUS calculate .)
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
+
+  ! MUL             [ reduce using rule 39 (calculate -> calculate MINUS calculate .) ]
+  ! DIV             [ reduce using rule 39 (calculate -> calculate MINUS calculate .) ]
+  ! PLUS            [ shift and go to state 60 ]
+  ! MINUS           [ shift and go to state 61 ]
 
 
 state 80
 
-    (29) condition -> condition LB EQUAL calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (41) calculate -> calculate MUL calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
 
-    RSB             reduce using rule 29 (condition -> condition LB EQUAL calculate .)
-    LB              reduce using rule 29 (condition -> condition LB EQUAL calculate .)
-    RB              reduce using rule 29 (condition -> condition LB EQUAL calculate .)
-    EQUAL           reduce using rule 29 (condition -> condition LB EQUAL calculate .)
-    PLUS            shift and go to state 51
-    MINUS           shift and go to state 52
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
+    PLUS            reduce using rule 41 (calculate -> calculate MUL calculate .)
+    MINUS           reduce using rule 41 (calculate -> calculate MUL calculate .)
+    MUL             reduce using rule 41 (calculate -> calculate MUL calculate .)
+    DIV             reduce using rule 41 (calculate -> calculate MUL calculate .)
+    SEMI            reduce using rule 41 (calculate -> calculate MUL calculate .)
+    RSB             reduce using rule 41 (calculate -> calculate MUL calculate .)
+    COMMA           reduce using rule 41 (calculate -> calculate MUL calculate .)
+    LB              reduce using rule 41 (calculate -> calculate MUL calculate .)
+    RB              reduce using rule 41 (calculate -> calculate MUL calculate .)
+    EQUAL           reduce using rule 41 (calculate -> calculate MUL calculate .)
+
+  ! PLUS            [ shift and go to state 60 ]
+  ! MINUS           [ shift and go to state 61 ]
+  ! MUL             [ shift and go to state 62 ]
+  ! DIV             [ shift and go to state 63 ]
 
 
 state 81
 
-    (30) condition -> condition RB EQUAL calculate .
-    (36) calculate -> calculate . PLUS calculate
-    (37) calculate -> calculate . MINUS calculate
-    (39) calculate -> calculate . MUL calculate
-    (40) calculate -> calculate . DIV calculate
+    (42) calculate -> calculate DIV calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
 
-    RSB             reduce using rule 30 (condition -> condition RB EQUAL calculate .)
-    LB              reduce using rule 30 (condition -> condition RB EQUAL calculate .)
-    RB              reduce using rule 30 (condition -> condition RB EQUAL calculate .)
-    EQUAL           reduce using rule 30 (condition -> condition RB EQUAL calculate .)
-    PLUS            shift and go to state 51
-    MINUS           shift and go to state 52
-    MUL             shift and go to state 53
-    DIV             shift and go to state 54
+    PLUS            reduce using rule 42 (calculate -> calculate DIV calculate .)
+    MINUS           reduce using rule 42 (calculate -> calculate DIV calculate .)
+    MUL             reduce using rule 42 (calculate -> calculate DIV calculate .)
+    DIV             reduce using rule 42 (calculate -> calculate DIV calculate .)
+    SEMI            reduce using rule 42 (calculate -> calculate DIV calculate .)
+    RSB             reduce using rule 42 (calculate -> calculate DIV calculate .)
+    COMMA           reduce using rule 42 (calculate -> calculate DIV calculate .)
+    LB              reduce using rule 42 (calculate -> calculate DIV calculate .)
+    RB              reduce using rule 42 (calculate -> calculate DIV calculate .)
+    EQUAL           reduce using rule 42 (calculate -> calculate DIV calculate .)
+
+  ! PLUS            [ shift and go to state 60 ]
+  ! MINUS           [ shift and go to state 61 ]
+  ! MUL             [ shift and go to state 62 ]
+  ! DIV             [ shift and go to state 63 ]
+
+
+state 82
+
+    (47) calculate -> LSB calculate RSB .
+
+    PLUS            reduce using rule 47 (calculate -> LSB calculate RSB .)
+    MINUS           reduce using rule 47 (calculate -> LSB calculate RSB .)
+    MUL             reduce using rule 47 (calculate -> LSB calculate RSB .)
+    DIV             reduce using rule 47 (calculate -> LSB calculate RSB .)
+    SEMI            reduce using rule 47 (calculate -> LSB calculate RSB .)
+    RSB             reduce using rule 47 (calculate -> LSB calculate RSB .)
+    COMMA           reduce using rule 47 (calculate -> LSB calculate RSB .)
+    LB              reduce using rule 47 (calculate -> LSB calculate RSB .)
+    RB              reduce using rule 47 (calculate -> LSB calculate RSB .)
+    EQUAL           reduce using rule 47 (calculate -> LSB calculate RSB .)
+
+
+state 83
+
+    (23) parameter -> parameter COMMA calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
+
+    RSB             reduce using rule 23 (parameter -> parameter COMMA calculate .)
+    COMMA           reduce using rule 23 (parameter -> parameter COMMA calculate .)
+    PLUS            shift and go to state 60
+    MINUS           shift and go to state 61
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
+
+
+state 84
+
+    (29) condition -> condition LB calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
+
+    RSB             reduce using rule 29 (condition -> condition LB calculate .)
+    LB              reduce using rule 29 (condition -> condition LB calculate .)
+    RB              reduce using rule 29 (condition -> condition LB calculate .)
+    EQUAL           reduce using rule 29 (condition -> condition LB calculate .)
+    PLUS            shift and go to state 60
+    MINUS           shift and go to state 61
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
+
+
+state 85
+
+    (31) condition -> condition LB EQUAL . calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
+
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
+
+    calculate                      shift and go to state 91
+
+state 86
+
+    (30) condition -> condition RB calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
+
+    RSB             reduce using rule 30 (condition -> condition RB calculate .)
+    LB              reduce using rule 30 (condition -> condition RB calculate .)
+    RB              reduce using rule 30 (condition -> condition RB calculate .)
+    EQUAL           reduce using rule 30 (condition -> condition RB calculate .)
+    PLUS            shift and go to state 60
+    MINUS           shift and go to state 61
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
+
+
+state 87
+
+    (32) condition -> condition RB EQUAL . calculate
+    (38) calculate -> . calculate PLUS calculate
+    (39) calculate -> . calculate MINUS calculate
+    (40) calculate -> . MINUS calculate
+    (41) calculate -> . calculate MUL calculate
+    (42) calculate -> . calculate DIV calculate
+    (43) calculate -> . INT
+    (44) calculate -> . FLOAT
+    (45) calculate -> . STRING
+    (46) calculate -> . IDENTIFIER
+    (47) calculate -> . LSB calculate RSB
+
+    MINUS           shift and go to state 44
+    INT             shift and go to state 45
+    FLOAT           shift and go to state 46
+    STRING          shift and go to state 47
+    IDENTIFIER      shift and go to state 42
+    LSB             shift and go to state 48
+
+    calculate                      shift and go to state 92
+
+state 88
+
+    (33) condition -> condition EQUAL calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
+
+    RSB             reduce using rule 33 (condition -> condition EQUAL calculate .)
+    LB              reduce using rule 33 (condition -> condition EQUAL calculate .)
+    RB              reduce using rule 33 (condition -> condition EQUAL calculate .)
+    EQUAL           reduce using rule 33 (condition -> condition EQUAL calculate .)
+    PLUS            shift and go to state 60
+    MINUS           shift and go to state 61
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
+
+
+state 89
+
+    (19) function_head -> FUNCTION IDENTIFIER LSB empty RSB .
+
+    LMB             reduce using rule 19 (function_head -> FUNCTION IDENTIFIER LSB empty RSB .)
+
+
+state 90
+
+    (20) function_head -> FUNCTION IDENTIFIER LSB parameter RSB .
+
+    LMB             reduce using rule 20 (function_head -> FUNCTION IDENTIFIER LSB parameter RSB .)
+
+
+state 91
+
+    (31) condition -> condition LB EQUAL calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
+
+    RSB             reduce using rule 31 (condition -> condition LB EQUAL calculate .)
+    LB              reduce using rule 31 (condition -> condition LB EQUAL calculate .)
+    RB              reduce using rule 31 (condition -> condition LB EQUAL calculate .)
+    EQUAL           reduce using rule 31 (condition -> condition LB EQUAL calculate .)
+    PLUS            shift and go to state 60
+    MINUS           shift and go to state 61
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
+
+
+state 92
+
+    (32) condition -> condition RB EQUAL calculate .
+    (38) calculate -> calculate . PLUS calculate
+    (39) calculate -> calculate . MINUS calculate
+    (41) calculate -> calculate . MUL calculate
+    (42) calculate -> calculate . DIV calculate
+
+    RSB             reduce using rule 32 (condition -> condition RB EQUAL calculate .)
+    LB              reduce using rule 32 (condition -> condition RB EQUAL calculate .)
+    RB              reduce using rule 32 (condition -> condition RB EQUAL calculate .)
+    EQUAL           reduce using rule 32 (condition -> condition RB EQUAL calculate .)
+    PLUS            shift and go to state 60
+    MINUS           shift and go to state 61
+    MUL             shift and go to state 62
+    DIV             shift and go to state 63
 
 WARNING: 
 WARNING: Conflicts:
@@ -1543,12 +1816,20 @@ WARNING: shift/reduce conflict for VAR in state 0 resolved as shift
 WARNING: shift/reduce conflict for IDENTIFIER in state 0 resolved as shift
 WARNING: shift/reduce conflict for IF in state 0 resolved as shift
 WARNING: shift/reduce conflict for FUNCTION in state 0 resolved as shift
-WARNING: shift/reduce conflict for VAR in state 26 resolved as shift
-WARNING: shift/reduce conflict for IDENTIFIER in state 26 resolved as shift
-WARNING: shift/reduce conflict for IF in state 26 resolved as shift
-WARNING: shift/reduce conflict for FUNCTION in state 26 resolved as shift
-WARNING: shift/reduce conflict for VAR in state 28 resolved as shift
-WARNING: shift/reduce conflict for IDENTIFIER in state 28 resolved as shift
-WARNING: shift/reduce conflict for IF in state 28 resolved as shift
-WARNING: shift/reduce conflict for FUNCTION in state 28 resolved as shift
-WARNING: shift/reduce conflict for RSB in state 65 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 0 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 30 resolved as shift
+WARNING: shift/reduce conflict for IDENTIFIER in state 30 resolved as shift
+WARNING: shift/reduce conflict for IF in state 30 resolved as shift
+WARNING: shift/reduce conflict for FUNCTION in state 30 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 30 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 32 resolved as shift
+WARNING: shift/reduce conflict for IDENTIFIER in state 32 resolved as shift
+WARNING: shift/reduce conflict for IF in state 32 resolved as shift
+WARNING: shift/reduce conflict for FUNCTION in state 32 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 32 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 34 resolved as shift
+WARNING: shift/reduce conflict for IDENTIFIER in state 34 resolved as shift
+WARNING: shift/reduce conflict for IF in state 34 resolved as shift
+WARNING: shift/reduce conflict for FUNCTION in state 34 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 34 resolved as shift
+WARNING: shift/reduce conflict for RSB in state 75 resolved as shift

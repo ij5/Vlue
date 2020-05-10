@@ -214,6 +214,12 @@ def p_expression_function_2(t):
     '''
     t[0] = t[1]
 
+def p_expression_repeat_2(t):
+    '''
+    expression : repeat
+    '''
+    t[0] = t[1]
+
 # EMPTY
 
 def p_expression_empty(t):

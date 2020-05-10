@@ -35,6 +35,7 @@ tokens = [
     'RMB',
     'LMB',
     'COMMA',
+    'LIST',
 ] + list(reserved.values())
 
 t_EQUAL = r'='
@@ -71,6 +72,10 @@ def t_INT(t):
 def t_STRING(t):
     r'("(?:\\"|.)*?"|\'(?:\\\'|.)*?\')'
     t.value = bytes(t.value, "utf-8").decode("unicode_escape")
+    return t
+
+def t_LIST(t):
+    r'\[((\d\.\d)|(\d)|("(?:\\"|.)*?"|\'(?:\\\'|.)*?\'))+(\,+((\d\.\d)|(\d)|("(?:\\"|.)*?"|\'(?:\\\'|.)*?\'))+)*\]'
     return t
 
 def t_IDENTIFIER(t):

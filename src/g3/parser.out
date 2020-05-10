@@ -4,6 +4,7 @@ Unused terminals:
 
     COLON
     ELSE
+    LIST
     WHILE
 
 Grammar
@@ -78,6 +79,7 @@ IF                   : 32
 IN                   : 18
 INT                  : 48
 LB                   : 34 36
+LIST                 : 
 LMB                  : 19 22 26 33
 LSB                  : 18 21 24 25 27 32 52
 MINUS                : 44 45

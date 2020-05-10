@@ -413,6 +413,12 @@ def p_condition_4(t):
 
 ######### CHANGE VARIABLE VALUE
 
+def p_variable_value_change_list(t):
+    '''
+    variable_value_change : IDENTIFIER EQUAL LIST
+    '''
+    t[0] = t[1] + t[2] + t[3] + "\n"
+
 def p_variable_value_change(t):
     '''
     variable_value_change : IDENTIFIER EQUAL calculate
@@ -437,6 +443,12 @@ def p_variable_value_change(t):
 #     print(variable)
 
 ######### VARIABLE DECLARATION
+
+def p_variable_declaration_list(t):
+    '''
+    variable_declaration : VAR IDENTIFIER EQUAL LIST
+    '''
+    t[0] = t[2] + t[3] + t[4] + "\n"
 
 def p_variable_declaration_2(t):
     '''
@@ -582,7 +594,9 @@ repeat(5){
 var c = c + 1;
 }
 
-for(c in a){
+c = [1,2,"3",5.6,76];
+
+for(a in c){
     c = "Hello World!";
 }
 

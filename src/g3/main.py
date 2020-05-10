@@ -475,27 +475,13 @@ def error(s):
 parser = yacc.yacc()
 
 data = """
+var a = 3;
+var b = 2;
 if(a<b){
-var a = 43;
-}
-function asd(asd){
-    var d = "Hello World!";
-    var e = 5;
-    
-    if(a<b){
-        var c = 565;
+    function fn(num){
+        
     }
-    function asd(t){
-        var v = 'Helo World!';
-    }
-    
 }
-d = 345;
-asd(d);
-
-d = 345;
-
-
 """
 # while True:
 #     buf = input(">>> ")
@@ -506,3 +492,4 @@ d = 345;
 result = parser.parse(data)
 print(variable)
 print(code)
+exec(code)

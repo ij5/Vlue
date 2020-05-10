@@ -482,6 +482,7 @@ if(a<b){
         
     }
 }
+var c = 5;
 """
 # while True:
 #     buf = input(">>> ")

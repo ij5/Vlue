@@ -224,6 +224,7 @@ def p_function(t):
     function : function_head function_body
     '''
     function_body = re.sub("\n", "\n\t", t[2])
+    function_body = function_body[:-1]
     t[0] = t[1] + ":" + "\n\t" + function_body
 
 def p_function_head(t):
@@ -239,9 +240,11 @@ def p_function_head(t):
 def p_function_body(t):
     '''
     function_body : LMB expression RMB
-        | LMB empty RMB
     '''
-    t[0] = t[2]
+    if(t[2]==None):
+        t[0] = "buf__ = 0\n"
+    else:
+        t[0] = t[2]
 
 # CALL
 
@@ -249,7 +252,7 @@ def p_function_call(t):
     '''
     function_call : IDENTIFIER LSB parameter RSB
     '''
-    pass
+    t[0] = t[1] + t[2] + t[3] + t[4]
 
 # PARAMETER
 
@@ -276,6 +279,7 @@ def p_if_statement(t):      #TODO if expression tab problem
     if_statement : if_statement_head if_statement_body
     '''
     if_statement_body = re.sub("\n", "\n\t", t[2])
+    if_statement_body = if_statement_body[:-1]
     t[0] = t[1] + ":" + "\n\t" + if_statement_body
 
 def p_if_statement_head(t):
@@ -471,10 +475,22 @@ def error(s):
 parser = yacc.yacc()
 
 data = """
-
-function asd(asd){
-var d = "Hello World!";
+if(a<b){
+var a = 43;
 }
+function asd(asd){
+    var d = "Hello World!";
+    var e = 5;
+    
+    if(a<b){
+        var c = 565;
+    }
+    function asd(t){
+        var v = 'Helo World!';
+    }
+    
+}
+
 d = 345;
 
 

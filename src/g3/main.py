@@ -9,6 +9,7 @@ reserved = {
     'if': 'IF',
     'else': 'ELSE',
     'function': 'FUNCTION',
+    'repeat': 'REPEAT',
 }
 
 tokens = [
@@ -94,6 +95,7 @@ var e = " Hello?";
 e = "var";
 var str = d+e;
 function
+repeat
 '''
 
 lexer.input(data)
@@ -177,6 +179,12 @@ def p_expression_function(t):
     '''
     t[0] = t[1] + t[2]
 
+def p_expression_repeat(t):
+    '''
+    expression : expression repeat
+    '''
+    t[0] = t[1] + t[2]
+
 # EXPRESSION
 
 def p_expression_variable_2(t):       #TODO 변수 중복 선언 문제
@@ -214,6 +222,31 @@ def p_expression_empty(t):
     '''
     global code
     code = code + ""
+
+############### REPEAT
+
+def p_repeat(t):
+    '''
+    repeat : repeat_head repeat_body
+    '''
+    repeat_body = re.sub("\n", "\n\t", t[2])
+    repeat_body = repeat_body[:-1]
+    t[0] = t[1] + repeat_body
+
+def p_repeat_head(t):
+    '''
+    repeat_head : REPEAT LSB calculate RSB
+    '''
+    t[0] = "for i in range(0," + str(t[3]) + "):\n\t"
+
+def p_repeat_body(t):
+    '''
+    repeat_body : LMB expression RMB
+    '''
+    if(t[2]==None):
+        t[0] = "buf___ = 0"
+    else:
+        t[0] = t[2]
 
 ############### FUNCTION
 

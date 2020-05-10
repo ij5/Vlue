@@ -250,7 +250,7 @@ def p_repeat_body(t):
     repeat_body : LMB expression RMB
     '''
     if(t[2]==None):
-        t[0] = "buf___ = 0"
+        t[0] = "buf___ = 0\n"
     else:
         t[0] = t[2]
 
@@ -450,7 +450,16 @@ def p_add(t):
         elif(t[3].startswith("'")):
             t[0] = t[1][:-1] + t[3][1:]
     else:
-        t[0] = t[1] + t[3]
+        if(isinstance(t[1], str)):
+            if(isinstance(t[3], str)):
+                t[0] = t[1] + t[3]
+            else:
+                t[0] = t[1] + "+" + str(t[3])
+        else:
+            if(isinstance(t[3], str)):
+                t[0] = str(t[1]) + "+" + t[3]
+            else:
+                t[0] = t[1] + t[3]
 
 def p_sub(t):
     'calculate : calculate MINUS calculate'
@@ -522,6 +531,9 @@ if(a<b){
     }
 }
 var c = 5;
+repeat(5){
+var c = c + 1;
+}
 """
 # while True:
 #     buf = input(">>> ")

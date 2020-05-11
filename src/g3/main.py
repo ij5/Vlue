@@ -199,6 +199,9 @@ def p_expression_for(t):
     '''
     t[0] = t[1] + t[2]
 
+def p_expression_while(t):
+    ''''''
+
 # EXPRESSION
 
 def p_expression_variable_2(t):       #TODO 변수 중복 선언 문제
@@ -240,6 +243,12 @@ def p_expression_for_2(t):
     '''
     t[0] = t[1]
 
+def p_expression_while_2(t):
+    '''
+    expression : while
+    '''
+    t[0] = t[1]
+
 # EMPTY
 
 def p_expression_empty(t):
@@ -275,6 +284,30 @@ def p_for_body(t):
         t[0] = t[2]
 
 ############### WHILE
+
+def p_while(t):
+    '''
+    while : while_head while_body
+    '''
+    while_body = re.sub("\n", "\n\t", t[2])
+    while_body = while_body[:-1]
+    t[0] = t[1] + while_body
+
+def p_while_head(t):
+    '''
+    while_head : WHILE LSB condition RSB
+    '''
+    t[0] = "while("+t[3]+"):\n\t"
+
+def p_while_body(t):
+    '''
+    while_body : LMB expression RMB
+    '''
+    if(t[2]==None):
+        t[0] = "buf___ = 0\n"
+    else:
+        t[0] = t[2]
+
 
 ############### REPEAT
 

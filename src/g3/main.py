@@ -200,7 +200,10 @@ def p_expression_for(t):
     t[0] = t[1] + t[2]
 
 def p_expression_while(t):
-    ''''''
+    '''
+    expression : expression while
+    '''
+    t[0] = t[1] + t[2]
 
 # EXPRESSION
 
@@ -631,6 +634,10 @@ c = [1,2,"3",5.6,76];
 
 for(a in c){
     c = "Hello World!";
+}
+
+while(c=5){
+    c = 3*5;
 }
 
 """

@@ -533,7 +533,7 @@ def p_variable_declaration_1(t):
 
 ######### CALCULATE
 
-def p_add(t):
+def p_add(t):   #TODO add error
     'calculate : calculate PLUS calculate'
     if(isinstance(t[1], str)):
         if(isinstance(t[3], str)):

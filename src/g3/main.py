@@ -464,6 +464,7 @@ def p_variable_value_change(t):
         variable[t[1]] = t[3]
         t[0] = t[1]+t[2]+str(t[3])+"\n"
     else:
+        print(variable)
         error("변수는 선언 후 사용할 수 있습니다.")
 
 # def p_variable_value_change_string(t):
@@ -636,13 +637,8 @@ var c = c + 1;
 
 c = [1,2,"3",5.6,76];
 
-for(a in c){
-    c = "Hello World!";
-}
 
-while(c=5){
-    c = 3*5;
-}
+
 
 """
 # while True:

@@ -326,7 +326,7 @@ def p_repeat_head(t):
     '''
     repeat_head : REPEAT LSB calculate RSB
     '''
-    t[0] = "for i in range(0," + str(t[3]) + "):\n\t"
+    t[0] = "for repeat___ in range(0," + str(t[3]) + "):\n\t"
 
 def p_repeat_body(t):
     '''
@@ -632,7 +632,7 @@ if(a<b){
 }
 var c = 5;
 repeat(5){
-var c = c + 1;
+c = c + 1;
 }
 
 c = [1,2,"3",5.6,76];

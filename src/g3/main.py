@@ -535,29 +535,27 @@ def p_variable_declaration_1(t):
 
 def p_add(t):   #TODO add error
     'calculate : calculate PLUS calculate'
-    if(isinstance(t[1], str)):
-        if(isinstance(t[3], str)):
-            if(t[1].startswith('"')):
-                if(t[3].startswith('"')):
-                    t[0] = t[1][:-1] + t[3][1:]
-                elif(t[3].startswith("'")):
-                    t[0] = t[1][:-1] + t[3][1:-1]+'"'
-            elif(t[1].startswith("'")):
-                if(t[3].startswith('"')):
-                    t[0] = t[1][:-1] + t[3][1:-1]+"'"
-                elif(t[3].startswith("'")):
-                    t[0] = t[1][:-1] + t[3][1:]
+    if(t[1].startswith('"')):
+        if(t[3].startswith('"')):
+            t[0] = t[1][:-1] + t[3][1:]
+        elif(t[3].startswith("'")):
+            t[0] = t[1][:-1] + t[3][1:-1]+'"'
+    elif(t[1].startswith("'")):
+        if(t[3].startswith('"')):
+            t[0] = t[1][:-1] + t[3][1:-1]+"'"
+        elif(t[3].startswith("'")):
+            t[0] = t[1][:-1] + t[3][1:]
+    else:
+        if(isinstance(t[1], str)):
+            if(isinstance(t[3], str)):
+                t[0] = t[1] + t[3]
             else:
-                if(isinstance(t[1], str)):
-                    if(isinstance(t[3], str)):
-                        t[0] = t[1] + t[3]
-                    else:
-                        t[0] = t[1] + "+" + str(t[3])
-                else:
-                    if(isinstance(t[3], str)):
-                        t[0] = str(t[1]) + "+" + t[3]
-                    else:
-                        t[0] = t[1] + t[3]
+                t[0] = t[1] + "+" + str(t[3])
+        else:
+            if(isinstance(t[3], str)):
+                t[0] = str(t[1]) + "+" + t[3]
+            else:
+                t[0] = t[1] + t[3]
     else:
         t[0] = t[1] + t[3]
 

@@ -461,9 +461,10 @@ def p_use(t):
     '''
     global f
     global fi
-    os.path.isfile()
-    fi += 1
-    f.append(open(t[2]+".blib", 'r', encoding='UTF-8'))
+    filename = t[2]+".blib"
+    if os.path.isfile("./lib/"+filename):
+        fi += 1
+        f.append(open(filename, 'r', encoding='UTF-8'))
 
 
 ############### CHANGE VARIABLE VALUE

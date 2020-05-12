@@ -124,10 +124,13 @@ print()
 from ply import yacc
 import ast
 import re
+import os
 
 variable = {}
 code = "buf___ = 0\n"
 state = []
+f = []
+fi = -1
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -448,12 +451,20 @@ def p_condition_4(t):
     '''
     t[0] = t[1]
 
-############### LIBRARY
+############## LIBRARY
+
+############### USE
 
 def p_use(t):
     '''
     use : USE IDENTIFIER
     '''
+    global f
+    global fi
+    os.path.isfile()
+    fi += 1
+    f.append(open(t[2]+".blib", 'r', encoding='UTF-8'))
+
 
 ############### CHANGE VARIABLE VALUE
 
@@ -661,6 +672,8 @@ while(c<9){
     c = 5;
     c = c+1;
 }
+
+fn();
 
 """
 # while True:

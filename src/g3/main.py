@@ -13,6 +13,7 @@ reserved = {
     'for': 'FOR',
     'while': 'WHILE',
     'in': 'IN',
+    'use': 'USE',
 }
 
 tokens = [

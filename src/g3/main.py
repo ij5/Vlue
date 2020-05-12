@@ -465,6 +465,8 @@ def p_use(t):
     if os.path.isfile("./lib/"+filename):
         fi += 1
         f.append(open(filename, 'r', encoding='UTF-8'))
+    else:
+        error("존재하지 않는 라이브러리입니다.")
 
 
 ############### CHANGE VARIABLE VALUE

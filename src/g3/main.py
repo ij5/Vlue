@@ -535,29 +535,39 @@ def p_variable_declaration_1(t):
 
 def p_add(t):   #TODO add error
     'calculate : calculate PLUS calculate'
-    if(t[1].startswith('"')):
-        if(t[3].startswith('"')):
-            t[0] = t[1][:-1] + t[3][1:]
-        elif(t[3].startswith("'")):
-            t[0] = t[1][:-1] + t[3][1:-1]+'"'
-    elif(t[1].startswith("'")):
-        if(t[3].startswith('"')):
-            t[0] = t[1][:-1] + t[3][1:-1]+"'"
-        elif(t[3].startswith("'")):
-            t[0] = t[1][:-1] + t[3][1:]
-    else:
-        if(isinstance(t[1], str)):
-            if(isinstance(t[3], str)):
+    try:
+        if(t[1].startswith('"')):
+            if(t[3].startswith('"')):
+                t[0] = t[1][:-1] + t[3][1:]
+            elif(t[3].startswith("'")):
+                t[0] = t[1][:-1] + t[3][1:-1]+'"'
+        elif(t[1].startswith("'")):
+            if(t[3].startswith('"')):
+                t[0] = t[1][:-1] + t[3][1:-1]+"'"
+            elif(t[3].startswith("'")):
+                t[0] = t[1][:-1] + t[3][1:]
+        else:
+            if(isinstance(t[1], str)):
+                if(isinstance(t[3], str)):
+                    t[0] = t[1] + t[3]
+                else:
+                    t[0] = t[1] + "+" + str(t[3])
+            else:
+                if(isinstance(t[3], str)):
+                    t[0] = str(t[1]) + "+" + t[3]
+                else:
+                    t[0] = t[1] + t[3]
+    except AttributeError:
+        if (isinstance(t[1], str)):
+            if (isinstance(t[3], str)):
                 t[0] = t[1] + t[3]
             else:
                 t[0] = t[1] + "+" + str(t[3])
         else:
-            if(isinstance(t[3], str)):
+            if (isinstance(t[3], str)):
                 t[0] = str(t[1]) + "+" + t[3]
             else:
                 t[0] = t[1] + t[3]
-    else:
-        t[0] = t[1] + t[3]
 
 def p_sub(t):
     'calculate : calculate MINUS calculate'
@@ -635,7 +645,9 @@ c = c + 1;
 
 c = [1,2,"3",5.6,76];
 
-
+for(i in c){
+    c = 2+c;
+}
 
 
 """

@@ -209,6 +209,12 @@ def p_expression_while(t):
     '''
     t[0] = t[1] + t[2]
 
+def p_expression_use(t):
+    '''
+    expression : expression use
+    '''
+    t[0] = t[1] + t[2]
+
 # EXPRESSION
 
 def p_expression_variable_2(t):       #TODO 변수 중복 선언 문제
@@ -253,6 +259,12 @@ def p_expression_for_2(t):
 def p_expression_while_2(t):
     '''
     expression : while
+    '''
+    t[0] = t[1]
+
+def p_expression_use_2(t):
+    '''
+    expression : use
     '''
     t[0] = t[1]
 
@@ -464,9 +476,10 @@ def p_use(t):
     filename = t[2]+".blib"
     if os.path.isfile("./lib/"+filename):
         fi += 1
-        f.append(open(filename, 'r', encoding='UTF-8'))
+        f.append(open("./lib/"+filename, 'r', encoding='UTF-8'))
     else:
         error("존재하지 않는 라이브러리입니다.")
+    t[0] = ""
 
 
 ############### CHANGE VARIABLE VALUE
@@ -656,10 +669,9 @@ data = """
 var a = 3;
 var b = 2;
 if(a<b){
-    function fn(num){
-        
-    }
+    a = b;
 }
+function fn(){}
 var c = 5;
 repeat(5){
 c = c + 1;
@@ -677,6 +689,8 @@ while(c<9){
 }
 
 fn();
+
+use test
 
 """
 # while True:

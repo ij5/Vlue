@@ -649,6 +649,10 @@ for(i in c){
     c = 4+5+6;
 }
 
+while(c<9){
+    c = 5;
+    c = c+1;
+}
 
 """
 # while True:

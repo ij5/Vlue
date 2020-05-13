@@ -430,9 +430,13 @@ def p_if_statement_head_2(t):
     '''
     if_statement_head_2 : ELSE IF LSB condition RSB
     '''
+    t[0] = t[1] + t[2] + t[3] + t[4] + t[5]
+
+def p_if_statement_head_3(t):
+    '''
+    if_statement_head_3 : ELSE LSB condition RSB
+    '''
     t[0] = t[1] + t[2] + t[3] + t[4]
-
-
 
 def p_if_statement_body(t):
     '''

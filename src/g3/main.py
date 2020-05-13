@@ -414,7 +414,8 @@ def p_parameter_2(t):
 
 def p_if_statement(t):
     '''
-    if_statement : if_statement_1 if_statement_2 if_statement_3
+    if_statement : if_statement if_statement_2 if_statement_3
+        | if_statement_1
     '''
     t[0] = t[1]
 
@@ -717,9 +718,7 @@ var b = 2;
 if(a<b){
     a = b;
 }
-else if{
-a = b;
-}
+
 function fn(){}
 var c = 5;
 repeat(5){

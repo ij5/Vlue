@@ -426,6 +426,14 @@ def p_if_statement_head_1(t):
     '''
     t[0] = t[1] + t[2] + t[3] + t[4]
 
+def p_if_statement_head_2(t):
+    '''
+    if_statement_head_2 : ELSE IF LSB condition RSB
+    '''
+    t[0] = t[1] + t[2] + t[3] + t[4]
+
+
+
 def p_if_statement_body(t):
     '''
     if_statement_body : LMB expression RMB

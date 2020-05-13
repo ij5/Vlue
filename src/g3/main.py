@@ -89,6 +89,7 @@ def t_NEWLINE(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
     t.lexer.linepos = 0
+    pass
 
 def t_error(t):
     print("error on token %s" % t.value)
@@ -427,21 +428,6 @@ def p_if_statement_1(t):      #TODO if expression tab problem
     if_statement_body = if_statement_body[:-1]
     t[0] = t[1] + ":" + "\n\t" + if_statement_body
 
-def p_if_statement_3(t):
-    '''
-    if_statement_3 : if_statement_head_3 if_statement_body
-    '''
-    if_statement_body = re.sub("\n", "\n\t", t[2])
-    if_statement_body = if_statement_body[:-1]
-    t[0] = t[1] + ":" + "\n\t" + if_statement_body
-
-def p_if_statement_3_empty(t):
-    '''
-    if_statement_3 : empty
-    '''
-    t[0] = ""
-
-
 def p_if_statement_2(t):
     '''
     if_statement_2 : if_statement_head_2 if_statement_body
@@ -453,6 +439,20 @@ def p_if_statement_2(t):
 def p_if_statement_2_empty(t):
     '''
     if_statement_2 : empty
+    '''
+    t[0] = ""
+
+def p_if_statement_3(t):
+    '''
+    if_statement_3 : if_statement_head_3 if_statement_body
+    '''
+    if_statement_body = re.sub("\n", "\n\t", t[2])
+    if_statement_body = if_statement_body[:-1]
+    t[0] = t[1] + ":" + "\n\t" + if_statement_body
+
+def p_if_statement_3_empty(t):
+    '''
+    if_statement_3 : empty
     '''
     t[0] = ""
 
@@ -702,8 +702,7 @@ def p_empty(t):
 # 토큰 에러 처리
 def p_error(t):
     if(t):
-        print(t)
-        print("Error on token '%s'" % t.value)
+        print("Error on token '"+t.value+"', line " + str(t.lineno))
     else:
         print("Error on EOF")
 
@@ -728,7 +727,6 @@ var c = 5;
 repeat(5){
 c = c + 1;
 }
-
 c = [1,2,"3",5.6,76];
 
 for(i in c){

@@ -414,15 +414,15 @@ def p_parameter_2(t):
 
 def p_if_statement(t):      #TODO if expression tab problem
     '''
-    if_statement : if_statement_head if_statement_body
+    if_statement : if_statement_head_1 if_statement_body
     '''
     if_statement_body = re.sub("\n", "\n\t", t[2])
     if_statement_body = if_statement_body[:-1]
     t[0] = t[1] + ":" + "\n\t" + if_statement_body
 
-def p_if_statement_head(t):
+def p_if_statement_head_1(t):
     '''
-    if_statement_head : IF LSB condition RSB
+    if_statement_head_1 : IF LSB condition RSB
     '''
     t[0] = t[1] + t[2] + t[3] + t[4]
 

@@ -427,6 +427,7 @@ def p_if_statement_1(t):
 def p_if_statement_2(t):
     '''
     if_statement_2 : ELSE IF LSB condition RSB LMB expression RMB
+        | if_statement_2 ELSE IF LSB condition RSB LMB expression RMB
         | empty
     '''
     t[0] = ""

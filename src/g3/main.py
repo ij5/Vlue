@@ -438,8 +438,12 @@ def p_if_statement_3(t):
     '''
     if_statement_3 : ELSE LMB expression RMB
     '''
-    t[0] = ""
-    pass
+    if(t[3]==None):
+        t[0] = "buf___ = 0\n"
+    else:
+        body = re.sub("\n", "\n\t", t[3])
+        body = body[:-1]
+        t[0] = t[1] + ":" + "\n\t" + body
 
 ############ CONDITION
 

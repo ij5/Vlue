@@ -45,12 +45,12 @@ Rule 35    parameter -> parameter COMMA calculate
 Rule 36    parameter -> calculate
 Rule 37    parameter -> empty
 Rule 38    if_statement -> if_statement_1 if_statement_2 if_statement_3
-Rule 39    if_statement_1 -> IF LSB condition RSB LMB expression RMB
-Rule 40    if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB
-Rule 41    if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB
-Rule 42    if_statement_2 -> empty
-Rule 43    if_statement_3 -> ELSE LMB expression RMB
-Rule 44    if_statement_3 -> empty
+Rule 39    if_statement -> if_statement_1 if_statement_2
+Rule 40    if_statement -> if_statement_1 if_statement_3
+Rule 41    if_statement_1 -> IF LSB condition RSB LMB expression RMB
+Rule 42    if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB
+Rule 43    if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB
+Rule 44    if_statement_3 -> ELSE LMB expression RMB
 Rule 45    condition -> condition LB calculate
 Rule 46    condition -> condition RB calculate
 Rule 47    condition -> condition LB EQUAL calculate
@@ -80,26 +80,26 @@ Terminals, with rules where they appear
 COLON                : 
 COMMA                : 35
 DIV                  : 61
-ELSE                 : 40 41 43
+ELSE                 : 42 43 44
 EQUAL                : 47 48 49 52 53 54 55
 FLOAT                : 63
 FOR                  : 22
 FUNCTION             : 31 32
 IDENTIFIER           : 22 22 31 32 34 51 52 53 54 55 56 65
-IF                   : 39 40 41
+IF                   : 41 42 43
 IN                   : 22
 INT                  : 62
 LB                   : 45 47
 LIST                 : 52 54
-LMB                  : 23 26 29 33 39 40 41 43
-LSB                  : 22 25 28 31 32 34 39 40 41 66
+LMB                  : 23 26 29 33 41 42 43 44
+LSB                  : 22 25 28 31 32 34 41 42 43 66
 MINUS                : 58 59
 MUL                  : 60
 PLUS                 : 57
 RB                   : 46 48
 REPEAT               : 28
-RMB                  : 23 26 29 33 39 40 41 43
-RSB                  : 22 25 28 31 32 34 39 40 41 66
+RMB                  : 23 26 29 33 41 42 43 44
+RSB                  : 22 25 28 31 32 34 41 42 43 66
 SEMI                 : 2 3 6 11 12
 STRING               : 64
 USE                  : 51
@@ -110,9 +110,9 @@ error                :
 Nonterminals, with rules where they appear
 
 calculate            : 28 35 36 45 46 47 48 49 50 53 55 57 57 58 58 59 60 60 61 61 66
-condition            : 25 39 40 41 45 46 47 48 49
-empty                : 20 31 37 42 44
-expression           : 1 2 3 4 5 6 7 8 9 10 23 26 29 33 39 40 41 43
+condition            : 25 41 42 43 45 46 47 48 49
+empty                : 20 31 37
+expression           : 1 2 3 4 5 6 7 8 9 10 23 26 29 33 41 42 43 44
 for                  : 8 17
 for_body             : 21
 for_head             : 21
@@ -121,9 +121,9 @@ function_body        : 30
 function_call        : 6 15
 function_head        : 30
 if_statement         : 4 13
-if_statement_1       : 38
-if_statement_2       : 38 41
-if_statement_3       : 38
+if_statement_1       : 38 39 40
+if_statement_2       : 38 39 43
+if_statement_3       : 38 40
 parameter            : 32 34 35
 repeat               : 7 16
 repeat_body          : 27
@@ -167,6 +167,8 @@ state 0
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
@@ -174,7 +176,7 @@ state 0
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
     (67) empty -> .
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -250,13 +252,15 @@ state 2
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
     (21) for -> . for_head for_body
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -452,28 +456,16 @@ state 14
 state 15
 
     (38) if_statement -> if_statement_1 . if_statement_2 if_statement_3
-    (40) if_statement_2 -> . ELSE IF LSB condition RSB LMB expression RMB
-    (41) if_statement_2 -> . if_statement_2 ELSE IF LSB condition RSB LMB expression RMB
-    (42) if_statement_2 -> . empty
-    (67) empty -> .
+    (39) if_statement -> if_statement_1 . if_statement_2
+    (40) if_statement -> if_statement_1 . if_statement_3
+    (42) if_statement_2 -> . ELSE IF LSB condition RSB LMB expression RMB
+    (43) if_statement_2 -> . if_statement_2 ELSE IF LSB condition RSB LMB expression RMB
+    (44) if_statement_3 -> . ELSE LMB expression RMB
 
-  ! shift/reduce conflict for ELSE resolved as shift
-    ELSE            shift and go to state 41
-    VAR             reduce using rule 67 (empty -> .)
-    IDENTIFIER      reduce using rule 67 (empty -> .)
-    USE             reduce using rule 67 (empty -> .)
-    IF              reduce using rule 67 (empty -> .)
-    FUNCTION        reduce using rule 67 (empty -> .)
-    REPEAT          reduce using rule 67 (empty -> .)
-    FOR             reduce using rule 67 (empty -> .)
-    WHILE           reduce using rule 67 (empty -> .)
-    $end            reduce using rule 67 (empty -> .)
-    RMB             reduce using rule 67 (empty -> .)
-
-  ! ELSE            [ reduce using rule 67 (empty -> .) ]
+    ELSE            shift and go to state 42
 
     if_statement_2                 shift and go to state 40
-    empty                          shift and go to state 42
+    if_statement_3                 shift and go to state 41
 
 state 16
 
@@ -520,7 +512,7 @@ state 20
 
 state 21
 
-    (39) if_statement_1 -> IF . LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> IF . LSB condition RSB LMB expression RMB
 
     LSB             shift and go to state 52
 
@@ -772,48 +764,47 @@ state 39
 state 40
 
     (38) if_statement -> if_statement_1 if_statement_2 . if_statement_3
-    (41) if_statement_2 -> if_statement_2 . ELSE IF LSB condition RSB LMB expression RMB
-    (43) if_statement_3 -> . ELSE LMB expression RMB
-    (44) if_statement_3 -> . empty
-    (67) empty -> .
+    (39) if_statement -> if_statement_1 if_statement_2 .
+    (43) if_statement_2 -> if_statement_2 . ELSE IF LSB condition RSB LMB expression RMB
+    (44) if_statement_3 -> . ELSE LMB expression RMB
 
+    VAR             reduce using rule 39 (if_statement -> if_statement_1 if_statement_2 .)
+    IDENTIFIER      reduce using rule 39 (if_statement -> if_statement_1 if_statement_2 .)
+    USE             reduce using rule 39 (if_statement -> if_statement_1 if_statement_2 .)
+    IF              reduce using rule 39 (if_statement -> if_statement_1 if_statement_2 .)
+    FUNCTION        reduce using rule 39 (if_statement -> if_statement_1 if_statement_2 .)
+    REPEAT          reduce using rule 39 (if_statement -> if_statement_1 if_statement_2 .)
+    FOR             reduce using rule 39 (if_statement -> if_statement_1 if_statement_2 .)
+    WHILE           reduce using rule 39 (if_statement -> if_statement_1 if_statement_2 .)
+    $end            reduce using rule 39 (if_statement -> if_statement_1 if_statement_2 .)
+    RMB             reduce using rule 39 (if_statement -> if_statement_1 if_statement_2 .)
     ELSE            shift and go to state 73
-    VAR             reduce using rule 67 (empty -> .)
-    IDENTIFIER      reduce using rule 67 (empty -> .)
-    USE             reduce using rule 67 (empty -> .)
-    IF              reduce using rule 67 (empty -> .)
-    FUNCTION        reduce using rule 67 (empty -> .)
-    REPEAT          reduce using rule 67 (empty -> .)
-    FOR             reduce using rule 67 (empty -> .)
-    WHILE           reduce using rule 67 (empty -> .)
-    $end            reduce using rule 67 (empty -> .)
-    RMB             reduce using rule 67 (empty -> .)
 
     if_statement_3                 shift and go to state 72
-    empty                          shift and go to state 74
 
 state 41
 
-    (40) if_statement_2 -> ELSE . IF LSB condition RSB LMB expression RMB
+    (40) if_statement -> if_statement_1 if_statement_3 .
 
-    IF              shift and go to state 75
+    VAR             reduce using rule 40 (if_statement -> if_statement_1 if_statement_3 .)
+    IDENTIFIER      reduce using rule 40 (if_statement -> if_statement_1 if_statement_3 .)
+    USE             reduce using rule 40 (if_statement -> if_statement_1 if_statement_3 .)
+    IF              reduce using rule 40 (if_statement -> if_statement_1 if_statement_3 .)
+    FUNCTION        reduce using rule 40 (if_statement -> if_statement_1 if_statement_3 .)
+    REPEAT          reduce using rule 40 (if_statement -> if_statement_1 if_statement_3 .)
+    FOR             reduce using rule 40 (if_statement -> if_statement_1 if_statement_3 .)
+    WHILE           reduce using rule 40 (if_statement -> if_statement_1 if_statement_3 .)
+    $end            reduce using rule 40 (if_statement -> if_statement_1 if_statement_3 .)
+    RMB             reduce using rule 40 (if_statement -> if_statement_1 if_statement_3 .)
 
 
 state 42
 
-    (42) if_statement_2 -> empty .
+    (42) if_statement_2 -> ELSE . IF LSB condition RSB LMB expression RMB
+    (44) if_statement_3 -> ELSE . LMB expression RMB
 
-    ELSE            reduce using rule 42 (if_statement_2 -> empty .)
-    VAR             reduce using rule 42 (if_statement_2 -> empty .)
-    IDENTIFIER      reduce using rule 42 (if_statement_2 -> empty .)
-    USE             reduce using rule 42 (if_statement_2 -> empty .)
-    IF              reduce using rule 42 (if_statement_2 -> empty .)
-    FUNCTION        reduce using rule 42 (if_statement_2 -> empty .)
-    REPEAT          reduce using rule 42 (if_statement_2 -> empty .)
-    FOR             reduce using rule 42 (if_statement_2 -> empty .)
-    WHILE           reduce using rule 42 (if_statement_2 -> empty .)
-    $end            reduce using rule 42 (if_statement_2 -> empty .)
-    RMB             reduce using rule 42 (if_statement_2 -> empty .)
+    IF              shift and go to state 74
+    LMB             shift and go to state 75
 
 
 state 43
@@ -860,6 +851,8 @@ state 44
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
@@ -867,7 +860,7 @@ state 44
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
     (67) empty -> .
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -962,6 +955,8 @@ state 46
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
@@ -969,7 +964,7 @@ state 46
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
     (67) empty -> .
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -1064,6 +1059,8 @@ state 48
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
@@ -1071,7 +1068,7 @@ state 48
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
     (67) empty -> .
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -1166,6 +1163,8 @@ state 50
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
@@ -1173,7 +1172,7 @@ state 50
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
     (67) empty -> .
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -1242,7 +1241,7 @@ state 51
 
 state 52
 
-    (39) if_statement_1 -> IF LSB . condition RSB LMB expression RMB
+    (41) if_statement_1 -> IF LSB . condition RSB LMB expression RMB
     (45) condition -> . condition LB calculate
     (46) condition -> . condition RB calculate
     (47) condition -> . condition LB EQUAL calculate
@@ -1594,35 +1593,107 @@ state 72
 
 state 73
 
-    (41) if_statement_2 -> if_statement_2 ELSE . IF LSB condition RSB LMB expression RMB
-    (43) if_statement_3 -> ELSE . LMB expression RMB
+    (43) if_statement_2 -> if_statement_2 ELSE . IF LSB condition RSB LMB expression RMB
+    (44) if_statement_3 -> ELSE . LMB expression RMB
 
     IF              shift and go to state 96
-    LMB             shift and go to state 97
+    LMB             shift and go to state 75
 
 
 state 74
 
-    (44) if_statement_3 -> empty .
+    (42) if_statement_2 -> ELSE IF . LSB condition RSB LMB expression RMB
 
-    VAR             reduce using rule 44 (if_statement_3 -> empty .)
-    IDENTIFIER      reduce using rule 44 (if_statement_3 -> empty .)
-    USE             reduce using rule 44 (if_statement_3 -> empty .)
-    IF              reduce using rule 44 (if_statement_3 -> empty .)
-    FUNCTION        reduce using rule 44 (if_statement_3 -> empty .)
-    REPEAT          reduce using rule 44 (if_statement_3 -> empty .)
-    FOR             reduce using rule 44 (if_statement_3 -> empty .)
-    WHILE           reduce using rule 44 (if_statement_3 -> empty .)
-    $end            reduce using rule 44 (if_statement_3 -> empty .)
-    RMB             reduce using rule 44 (if_statement_3 -> empty .)
+    LSB             shift and go to state 97
 
 
 state 75
 
-    (40) if_statement_2 -> ELSE IF . LSB condition RSB LMB expression RMB
+    (44) if_statement_3 -> ELSE LMB . expression RMB
+    (2) expression -> . expression variable_declaration SEMI
+    (3) expression -> . expression variable_value_change SEMI
+    (4) expression -> . expression if_statement
+    (5) expression -> . expression function
+    (6) expression -> . expression function_call SEMI
+    (7) expression -> . expression repeat
+    (8) expression -> . expression for
+    (9) expression -> . expression while
+    (10) expression -> . expression use
+    (11) expression -> . variable_declaration SEMI
+    (12) expression -> . variable_value_change SEMI
+    (13) expression -> . if_statement
+    (14) expression -> . function
+    (15) expression -> . function_call
+    (16) expression -> . repeat
+    (17) expression -> . for
+    (18) expression -> . while
+    (19) expression -> . use
+    (20) expression -> . empty
+    (54) variable_declaration -> . VAR IDENTIFIER EQUAL LIST
+    (55) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (56) variable_declaration -> . VAR IDENTIFIER
+    (52) variable_value_change -> . IDENTIFIER EQUAL LIST
+    (53) variable_value_change -> . IDENTIFIER EQUAL calculate
+    (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
+    (30) function -> . function_head function_body
+    (34) function_call -> . IDENTIFIER LSB parameter RSB
+    (27) repeat -> . repeat_head repeat_body
+    (21) for -> . for_head for_body
+    (24) while -> . while_head while_body
+    (51) use -> . USE IDENTIFIER
+    (67) empty -> .
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (28) repeat_head -> . REPEAT LSB calculate RSB
+    (22) for_head -> . FOR LSB IDENTIFIER IN IDENTIFIER RSB
+    (25) while_head -> . WHILE LSB condition RSB
 
-    LSB             shift and go to state 98
+  ! shift/reduce conflict for VAR resolved as shift
+  ! shift/reduce conflict for IDENTIFIER resolved as shift
+  ! shift/reduce conflict for USE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for FUNCTION resolved as shift
+  ! shift/reduce conflict for REPEAT resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+    VAR             shift and go to state 13
+    IDENTIFIER      shift and go to state 14
+    USE             shift and go to state 20
+    RMB             reduce using rule 67 (empty -> .)
+    IF              shift and go to state 21
+    FUNCTION        shift and go to state 22
+    REPEAT          shift and go to state 23
+    FOR             shift and go to state 24
+    WHILE           shift and go to state 25
 
+  ! VAR             [ reduce using rule 67 (empty -> .) ]
+  ! IDENTIFIER      [ reduce using rule 67 (empty -> .) ]
+  ! USE             [ reduce using rule 67 (empty -> .) ]
+  ! IF              [ reduce using rule 67 (empty -> .) ]
+  ! FUNCTION        [ reduce using rule 67 (empty -> .) ]
+  ! REPEAT          [ reduce using rule 67 (empty -> .) ]
+  ! FOR             [ reduce using rule 67 (empty -> .) ]
+  ! WHILE           [ reduce using rule 67 (empty -> .) ]
+
+    expression                     shift and go to state 98
+    variable_declaration           shift and go to state 3
+    variable_value_change          shift and go to state 4
+    if_statement                   shift and go to state 5
+    function                       shift and go to state 6
+    function_call                  shift and go to state 7
+    repeat                         shift and go to state 8
+    for                            shift and go to state 9
+    while                          shift and go to state 10
+    use                            shift and go to state 11
+    empty                          shift and go to state 12
+    if_statement_1                 shift and go to state 15
+    function_head                  shift and go to state 16
+    repeat_head                    shift and go to state 17
+    for_head                       shift and go to state 18
+    while_head                     shift and go to state 19
 
 state 76
 
@@ -1642,13 +1713,15 @@ state 76
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
     (21) for -> . for_head for_body
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -1698,13 +1771,15 @@ state 77
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
     (21) for -> . for_head for_body
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -1754,13 +1829,15 @@ state 78
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
     (21) for -> . for_head for_body
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -1810,13 +1887,15 @@ state 79
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
     (21) for -> . for_head for_body
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -1850,7 +1929,7 @@ state 79
 
 state 80
 
-    (39) if_statement_1 -> IF LSB condition . RSB LMB expression RMB
+    (41) if_statement_1 -> IF LSB condition . RSB LMB expression RMB
     (45) condition -> condition . LB calculate
     (46) condition -> condition . RB calculate
     (47) condition -> condition . LB EQUAL calculate
@@ -2146,100 +2225,14 @@ state 95
 
 state 96
 
-    (41) if_statement_2 -> if_statement_2 ELSE IF . LSB condition RSB LMB expression RMB
+    (43) if_statement_2 -> if_statement_2 ELSE IF . LSB condition RSB LMB expression RMB
 
     LSB             shift and go to state 118
 
 
 state 97
 
-    (43) if_statement_3 -> ELSE LMB . expression RMB
-    (2) expression -> . expression variable_declaration SEMI
-    (3) expression -> . expression variable_value_change SEMI
-    (4) expression -> . expression if_statement
-    (5) expression -> . expression function
-    (6) expression -> . expression function_call SEMI
-    (7) expression -> . expression repeat
-    (8) expression -> . expression for
-    (9) expression -> . expression while
-    (10) expression -> . expression use
-    (11) expression -> . variable_declaration SEMI
-    (12) expression -> . variable_value_change SEMI
-    (13) expression -> . if_statement
-    (14) expression -> . function
-    (15) expression -> . function_call
-    (16) expression -> . repeat
-    (17) expression -> . for
-    (18) expression -> . while
-    (19) expression -> . use
-    (20) expression -> . empty
-    (54) variable_declaration -> . VAR IDENTIFIER EQUAL LIST
-    (55) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (56) variable_declaration -> . VAR IDENTIFIER
-    (52) variable_value_change -> . IDENTIFIER EQUAL LIST
-    (53) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
-    (30) function -> . function_head function_body
-    (34) function_call -> . IDENTIFIER LSB parameter RSB
-    (27) repeat -> . repeat_head repeat_body
-    (21) for -> . for_head for_body
-    (24) while -> . while_head while_body
-    (51) use -> . USE IDENTIFIER
-    (67) empty -> .
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
-    (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
-    (28) repeat_head -> . REPEAT LSB calculate RSB
-    (22) for_head -> . FOR LSB IDENTIFIER IN IDENTIFIER RSB
-    (25) while_head -> . WHILE LSB condition RSB
-
-  ! shift/reduce conflict for VAR resolved as shift
-  ! shift/reduce conflict for IDENTIFIER resolved as shift
-  ! shift/reduce conflict for USE resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for FUNCTION resolved as shift
-  ! shift/reduce conflict for REPEAT resolved as shift
-  ! shift/reduce conflict for FOR resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-    VAR             shift and go to state 13
-    IDENTIFIER      shift and go to state 14
-    USE             shift and go to state 20
-    RMB             reduce using rule 67 (empty -> .)
-    IF              shift and go to state 21
-    FUNCTION        shift and go to state 22
-    REPEAT          shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
-
-  ! VAR             [ reduce using rule 67 (empty -> .) ]
-  ! IDENTIFIER      [ reduce using rule 67 (empty -> .) ]
-  ! USE             [ reduce using rule 67 (empty -> .) ]
-  ! IF              [ reduce using rule 67 (empty -> .) ]
-  ! FUNCTION        [ reduce using rule 67 (empty -> .) ]
-  ! REPEAT          [ reduce using rule 67 (empty -> .) ]
-  ! FOR             [ reduce using rule 67 (empty -> .) ]
-  ! WHILE           [ reduce using rule 67 (empty -> .) ]
-
-    expression                     shift and go to state 119
-    variable_declaration           shift and go to state 3
-    variable_value_change          shift and go to state 4
-    if_statement                   shift and go to state 5
-    function                       shift and go to state 6
-    function_call                  shift and go to state 7
-    repeat                         shift and go to state 8
-    for                            shift and go to state 9
-    while                          shift and go to state 10
-    use                            shift and go to state 11
-    empty                          shift and go to state 12
-    if_statement_1                 shift and go to state 15
-    function_head                  shift and go to state 16
-    repeat_head                    shift and go to state 17
-    for_head                       shift and go to state 18
-    while_head                     shift and go to state 19
-
-state 98
-
-    (40) if_statement_2 -> ELSE IF LSB . condition RSB LMB expression RMB
+    (42) if_statement_2 -> ELSE IF LSB . condition RSB LMB expression RMB
     (45) condition -> . condition LB calculate
     (46) condition -> . condition RB calculate
     (47) condition -> . condition LB EQUAL calculate
@@ -2264,8 +2257,66 @@ state 98
     IDENTIFIER      shift and go to state 61
     LSB             shift and go to state 68
 
-    condition                      shift and go to state 120
+    condition                      shift and go to state 119
     calculate                      shift and go to state 81
+
+state 98
+
+    (44) if_statement_3 -> ELSE LMB expression . RMB
+    (2) expression -> expression . variable_declaration SEMI
+    (3) expression -> expression . variable_value_change SEMI
+    (4) expression -> expression . if_statement
+    (5) expression -> expression . function
+    (6) expression -> expression . function_call SEMI
+    (7) expression -> expression . repeat
+    (8) expression -> expression . for
+    (9) expression -> expression . while
+    (10) expression -> expression . use
+    (54) variable_declaration -> . VAR IDENTIFIER EQUAL LIST
+    (55) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (56) variable_declaration -> . VAR IDENTIFIER
+    (52) variable_value_change -> . IDENTIFIER EQUAL LIST
+    (53) variable_value_change -> . IDENTIFIER EQUAL calculate
+    (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
+    (30) function -> . function_head function_body
+    (34) function_call -> . IDENTIFIER LSB parameter RSB
+    (27) repeat -> . repeat_head repeat_body
+    (21) for -> . for_head for_body
+    (24) while -> . while_head while_body
+    (51) use -> . USE IDENTIFIER
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (28) repeat_head -> . REPEAT LSB calculate RSB
+    (22) for_head -> . FOR LSB IDENTIFIER IN IDENTIFIER RSB
+    (25) while_head -> . WHILE LSB condition RSB
+
+    RMB             shift and go to state 120
+    VAR             shift and go to state 13
+    IDENTIFIER      shift and go to state 14
+    USE             shift and go to state 20
+    IF              shift and go to state 21
+    FUNCTION        shift and go to state 22
+    REPEAT          shift and go to state 23
+    FOR             shift and go to state 24
+    WHILE           shift and go to state 25
+
+    variable_declaration           shift and go to state 26
+    variable_value_change          shift and go to state 27
+    if_statement                   shift and go to state 28
+    function                       shift and go to state 29
+    function_call                  shift and go to state 30
+    repeat                         shift and go to state 31
+    for                            shift and go to state 32
+    while                          shift and go to state 33
+    use                            shift and go to state 34
+    if_statement_1                 shift and go to state 15
+    function_head                  shift and go to state 16
+    repeat_head                    shift and go to state 17
+    for_head                       shift and go to state 18
+    while_head                     shift and go to state 19
 
 state 99
 
@@ -2333,7 +2384,7 @@ state 102
 
 state 103
 
-    (39) if_statement_1 -> IF LSB condition RSB . LMB expression RMB
+    (41) if_statement_1 -> IF LSB condition RSB . LMB expression RMB
 
     LMB             shift and go to state 121
 
@@ -2587,7 +2638,7 @@ state 117
 
 state 118
 
-    (41) if_statement_2 -> if_statement_2 ELSE IF LSB . condition RSB LMB expression RMB
+    (43) if_statement_2 -> if_statement_2 ELSE IF LSB . condition RSB LMB expression RMB
     (45) condition -> . condition LB calculate
     (46) condition -> . condition RB calculate
     (47) condition -> . condition LB EQUAL calculate
@@ -2617,78 +2668,38 @@ state 118
 
 state 119
 
-    (43) if_statement_3 -> ELSE LMB expression . RMB
-    (2) expression -> expression . variable_declaration SEMI
-    (3) expression -> expression . variable_value_change SEMI
-    (4) expression -> expression . if_statement
-    (5) expression -> expression . function
-    (6) expression -> expression . function_call SEMI
-    (7) expression -> expression . repeat
-    (8) expression -> expression . for
-    (9) expression -> expression . while
-    (10) expression -> expression . use
-    (54) variable_declaration -> . VAR IDENTIFIER EQUAL LIST
-    (55) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (56) variable_declaration -> . VAR IDENTIFIER
-    (52) variable_value_change -> . IDENTIFIER EQUAL LIST
-    (53) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
-    (30) function -> . function_head function_body
-    (34) function_call -> . IDENTIFIER LSB parameter RSB
-    (27) repeat -> . repeat_head repeat_body
-    (21) for -> . for_head for_body
-    (24) while -> . while_head while_body
-    (51) use -> . USE IDENTIFIER
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
-    (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
-    (28) repeat_head -> . REPEAT LSB calculate RSB
-    (22) for_head -> . FOR LSB IDENTIFIER IN IDENTIFIER RSB
-    (25) while_head -> . WHILE LSB condition RSB
-
-    RMB             shift and go to state 131
-    VAR             shift and go to state 13
-    IDENTIFIER      shift and go to state 14
-    USE             shift and go to state 20
-    IF              shift and go to state 21
-    FUNCTION        shift and go to state 22
-    REPEAT          shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
-
-    variable_declaration           shift and go to state 26
-    variable_value_change          shift and go to state 27
-    if_statement                   shift and go to state 28
-    function                       shift and go to state 29
-    function_call                  shift and go to state 30
-    repeat                         shift and go to state 31
-    for                            shift and go to state 32
-    while                          shift and go to state 33
-    use                            shift and go to state 34
-    if_statement_1                 shift and go to state 15
-    function_head                  shift and go to state 16
-    repeat_head                    shift and go to state 17
-    for_head                       shift and go to state 18
-    while_head                     shift and go to state 19
-
-state 120
-
-    (40) if_statement_2 -> ELSE IF LSB condition . RSB LMB expression RMB
+    (42) if_statement_2 -> ELSE IF LSB condition . RSB LMB expression RMB
     (45) condition -> condition . LB calculate
     (46) condition -> condition . RB calculate
     (47) condition -> condition . LB EQUAL calculate
     (48) condition -> condition . RB EQUAL calculate
     (49) condition -> condition . EQUAL calculate
 
-    RSB             shift and go to state 132
+    RSB             shift and go to state 131
     LB              shift and go to state 104
     RB              shift and go to state 105
     EQUAL           shift and go to state 106
 
 
+state 120
+
+    (44) if_statement_3 -> ELSE LMB expression RMB .
+
+    VAR             reduce using rule 44 (if_statement_3 -> ELSE LMB expression RMB .)
+    IDENTIFIER      reduce using rule 44 (if_statement_3 -> ELSE LMB expression RMB .)
+    USE             reduce using rule 44 (if_statement_3 -> ELSE LMB expression RMB .)
+    IF              reduce using rule 44 (if_statement_3 -> ELSE LMB expression RMB .)
+    FUNCTION        reduce using rule 44 (if_statement_3 -> ELSE LMB expression RMB .)
+    REPEAT          reduce using rule 44 (if_statement_3 -> ELSE LMB expression RMB .)
+    FOR             reduce using rule 44 (if_statement_3 -> ELSE LMB expression RMB .)
+    WHILE           reduce using rule 44 (if_statement_3 -> ELSE LMB expression RMB .)
+    $end            reduce using rule 44 (if_statement_3 -> ELSE LMB expression RMB .)
+    RMB             reduce using rule 44 (if_statement_3 -> ELSE LMB expression RMB .)
+
+
 state 121
 
-    (39) if_statement_1 -> IF LSB condition RSB LMB . expression RMB
+    (41) if_statement_1 -> IF LSB condition RSB LMB . expression RMB
     (2) expression -> . expression variable_declaration SEMI
     (3) expression -> . expression variable_value_change SEMI
     (4) expression -> . expression if_statement
@@ -2714,6 +2725,8 @@ state 121
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
@@ -2721,7 +2734,7 @@ state 121
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
     (67) empty -> .
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -2755,7 +2768,7 @@ state 121
   ! FOR             [ reduce using rule 67 (empty -> .) ]
   ! WHILE           [ reduce using rule 67 (empty -> .) ]
 
-    expression                     shift and go to state 133
+    expression                     shift and go to state 132
     variable_declaration           shift and go to state 3
     variable_value_change          shift and go to state 4
     if_statement                   shift and go to state 5
@@ -2811,7 +2824,7 @@ state 123
     IDENTIFIER      shift and go to state 61
     LSB             shift and go to state 68
 
-    calculate                      shift and go to state 134
+    calculate                      shift and go to state 133
 
 state 124
 
@@ -2852,7 +2865,7 @@ state 125
     IDENTIFIER      shift and go to state 61
     LSB             shift and go to state 68
 
-    calculate                      shift and go to state 135
+    calculate                      shift and go to state 134
 
 state 126
 
@@ -2890,19 +2903,19 @@ state 129
 
     (22) for_head -> FOR LSB IDENTIFIER IN IDENTIFIER . RSB
 
-    RSB             shift and go to state 136
+    RSB             shift and go to state 135
 
 
 state 130
 
-    (41) if_statement_2 -> if_statement_2 ELSE IF LSB condition . RSB LMB expression RMB
+    (43) if_statement_2 -> if_statement_2 ELSE IF LSB condition . RSB LMB expression RMB
     (45) condition -> condition . LB calculate
     (46) condition -> condition . RB calculate
     (47) condition -> condition . LB EQUAL calculate
     (48) condition -> condition . RB EQUAL calculate
     (49) condition -> condition . EQUAL calculate
 
-    RSB             shift and go to state 137
+    RSB             shift and go to state 136
     LB              shift and go to state 104
     RB              shift and go to state 105
     EQUAL           shift and go to state 106
@@ -2910,30 +2923,14 @@ state 130
 
 state 131
 
-    (43) if_statement_3 -> ELSE LMB expression RMB .
+    (42) if_statement_2 -> ELSE IF LSB condition RSB . LMB expression RMB
 
-    VAR             reduce using rule 43 (if_statement_3 -> ELSE LMB expression RMB .)
-    IDENTIFIER      reduce using rule 43 (if_statement_3 -> ELSE LMB expression RMB .)
-    USE             reduce using rule 43 (if_statement_3 -> ELSE LMB expression RMB .)
-    IF              reduce using rule 43 (if_statement_3 -> ELSE LMB expression RMB .)
-    FUNCTION        reduce using rule 43 (if_statement_3 -> ELSE LMB expression RMB .)
-    REPEAT          reduce using rule 43 (if_statement_3 -> ELSE LMB expression RMB .)
-    FOR             reduce using rule 43 (if_statement_3 -> ELSE LMB expression RMB .)
-    WHILE           reduce using rule 43 (if_statement_3 -> ELSE LMB expression RMB .)
-    $end            reduce using rule 43 (if_statement_3 -> ELSE LMB expression RMB .)
-    RMB             reduce using rule 43 (if_statement_3 -> ELSE LMB expression RMB .)
+    LMB             shift and go to state 137
 
 
 state 132
 
-    (40) if_statement_2 -> ELSE IF LSB condition RSB . LMB expression RMB
-
-    LMB             shift and go to state 138
-
-
-state 133
-
-    (39) if_statement_1 -> IF LSB condition RSB LMB expression . RMB
+    (41) if_statement_1 -> IF LSB condition RSB LMB expression . RMB
     (2) expression -> expression . variable_declaration SEMI
     (3) expression -> expression . variable_value_change SEMI
     (4) expression -> expression . if_statement
@@ -2949,20 +2946,22 @@ state 133
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
     (21) for -> . for_head for_body
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
     (22) for_head -> . FOR LSB IDENTIFIER IN IDENTIFIER RSB
     (25) while_head -> . WHILE LSB condition RSB
 
-    RMB             shift and go to state 139
+    RMB             shift and go to state 138
     VAR             shift and go to state 13
     IDENTIFIER      shift and go to state 14
     USE             shift and go to state 20
@@ -2987,7 +2986,7 @@ state 133
     for_head                       shift and go to state 18
     while_head                     shift and go to state 19
 
-state 134
+state 133
 
     (47) condition -> condition LB EQUAL calculate .
     (57) calculate -> calculate . PLUS calculate
@@ -3005,7 +3004,7 @@ state 134
     DIV             shift and go to state 91
 
 
-state 135
+state 134
 
     (48) condition -> condition RB EQUAL calculate .
     (57) calculate -> calculate . PLUS calculate
@@ -3023,23 +3022,23 @@ state 135
     DIV             shift and go to state 91
 
 
-state 136
+state 135
 
     (22) for_head -> FOR LSB IDENTIFIER IN IDENTIFIER RSB .
 
     LMB             reduce using rule 22 (for_head -> FOR LSB IDENTIFIER IN IDENTIFIER RSB .)
 
 
+state 136
+
+    (43) if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB . LMB expression RMB
+
+    LMB             shift and go to state 139
+
+
 state 137
 
-    (41) if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB . LMB expression RMB
-
-    LMB             shift and go to state 140
-
-
-state 138
-
-    (40) if_statement_2 -> ELSE IF LSB condition RSB LMB . expression RMB
+    (42) if_statement_2 -> ELSE IF LSB condition RSB LMB . expression RMB
     (2) expression -> . expression variable_declaration SEMI
     (3) expression -> . expression variable_value_change SEMI
     (4) expression -> . expression if_statement
@@ -3065,6 +3064,8 @@ state 138
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
@@ -3072,7 +3073,102 @@ state 138
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
     (67) empty -> .
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (28) repeat_head -> . REPEAT LSB calculate RSB
+    (22) for_head -> . FOR LSB IDENTIFIER IN IDENTIFIER RSB
+    (25) while_head -> . WHILE LSB condition RSB
+
+  ! shift/reduce conflict for VAR resolved as shift
+  ! shift/reduce conflict for IDENTIFIER resolved as shift
+  ! shift/reduce conflict for USE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for FUNCTION resolved as shift
+  ! shift/reduce conflict for REPEAT resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+    VAR             shift and go to state 13
+    IDENTIFIER      shift and go to state 14
+    USE             shift and go to state 20
+    RMB             reduce using rule 67 (empty -> .)
+    IF              shift and go to state 21
+    FUNCTION        shift and go to state 22
+    REPEAT          shift and go to state 23
+    FOR             shift and go to state 24
+    WHILE           shift and go to state 25
+
+  ! VAR             [ reduce using rule 67 (empty -> .) ]
+  ! IDENTIFIER      [ reduce using rule 67 (empty -> .) ]
+  ! USE             [ reduce using rule 67 (empty -> .) ]
+  ! IF              [ reduce using rule 67 (empty -> .) ]
+  ! FUNCTION        [ reduce using rule 67 (empty -> .) ]
+  ! REPEAT          [ reduce using rule 67 (empty -> .) ]
+  ! FOR             [ reduce using rule 67 (empty -> .) ]
+  ! WHILE           [ reduce using rule 67 (empty -> .) ]
+
+    expression                     shift and go to state 140
+    variable_declaration           shift and go to state 3
+    variable_value_change          shift and go to state 4
+    if_statement                   shift and go to state 5
+    function                       shift and go to state 6
+    function_call                  shift and go to state 7
+    repeat                         shift and go to state 8
+    for                            shift and go to state 9
+    while                          shift and go to state 10
+    use                            shift and go to state 11
+    empty                          shift and go to state 12
+    if_statement_1                 shift and go to state 15
+    function_head                  shift and go to state 16
+    repeat_head                    shift and go to state 17
+    for_head                       shift and go to state 18
+    while_head                     shift and go to state 19
+
+state 138
+
+    (41) if_statement_1 -> IF LSB condition RSB LMB expression RMB .
+
+    ELSE            reduce using rule 41 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
+
+
+state 139
+
+    (43) if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB . expression RMB
+    (2) expression -> . expression variable_declaration SEMI
+    (3) expression -> . expression variable_value_change SEMI
+    (4) expression -> . expression if_statement
+    (5) expression -> . expression function
+    (6) expression -> . expression function_call SEMI
+    (7) expression -> . expression repeat
+    (8) expression -> . expression for
+    (9) expression -> . expression while
+    (10) expression -> . expression use
+    (11) expression -> . variable_declaration SEMI
+    (12) expression -> . variable_value_change SEMI
+    (13) expression -> . if_statement
+    (14) expression -> . function
+    (15) expression -> . function_call
+    (16) expression -> . repeat
+    (17) expression -> . for
+    (18) expression -> . while
+    (19) expression -> . use
+    (20) expression -> . empty
+    (54) variable_declaration -> . VAR IDENTIFIER EQUAL LIST
+    (55) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (56) variable_declaration -> . VAR IDENTIFIER
+    (52) variable_value_change -> . IDENTIFIER EQUAL LIST
+    (53) variable_value_change -> . IDENTIFIER EQUAL calculate
+    (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
+    (30) function -> . function_head function_body
+    (34) function_call -> . IDENTIFIER LSB parameter RSB
+    (27) repeat -> . repeat_head repeat_body
+    (21) for -> . for_head for_body
+    (24) while -> . while_head while_body
+    (51) use -> . USE IDENTIFIER
+    (67) empty -> .
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -3123,112 +3219,9 @@ state 138
     for_head                       shift and go to state 18
     while_head                     shift and go to state 19
 
-state 139
-
-    (39) if_statement_1 -> IF LSB condition RSB LMB expression RMB .
-
-    ELSE            reduce using rule 39 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
-    VAR             reduce using rule 39 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
-    IDENTIFIER      reduce using rule 39 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
-    USE             reduce using rule 39 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
-    IF              reduce using rule 39 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
-    FUNCTION        reduce using rule 39 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
-    REPEAT          reduce using rule 39 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
-    FOR             reduce using rule 39 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
-    WHILE           reduce using rule 39 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
-    $end            reduce using rule 39 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
-    RMB             reduce using rule 39 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
-
-
 state 140
 
-    (41) if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB . expression RMB
-    (2) expression -> . expression variable_declaration SEMI
-    (3) expression -> . expression variable_value_change SEMI
-    (4) expression -> . expression if_statement
-    (5) expression -> . expression function
-    (6) expression -> . expression function_call SEMI
-    (7) expression -> . expression repeat
-    (8) expression -> . expression for
-    (9) expression -> . expression while
-    (10) expression -> . expression use
-    (11) expression -> . variable_declaration SEMI
-    (12) expression -> . variable_value_change SEMI
-    (13) expression -> . if_statement
-    (14) expression -> . function
-    (15) expression -> . function_call
-    (16) expression -> . repeat
-    (17) expression -> . for
-    (18) expression -> . while
-    (19) expression -> . use
-    (20) expression -> . empty
-    (54) variable_declaration -> . VAR IDENTIFIER EQUAL LIST
-    (55) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (56) variable_declaration -> . VAR IDENTIFIER
-    (52) variable_value_change -> . IDENTIFIER EQUAL LIST
-    (53) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
-    (30) function -> . function_head function_body
-    (34) function_call -> . IDENTIFIER LSB parameter RSB
-    (27) repeat -> . repeat_head repeat_body
-    (21) for -> . for_head for_body
-    (24) while -> . while_head while_body
-    (51) use -> . USE IDENTIFIER
-    (67) empty -> .
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
-    (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
-    (28) repeat_head -> . REPEAT LSB calculate RSB
-    (22) for_head -> . FOR LSB IDENTIFIER IN IDENTIFIER RSB
-    (25) while_head -> . WHILE LSB condition RSB
-
-  ! shift/reduce conflict for VAR resolved as shift
-  ! shift/reduce conflict for IDENTIFIER resolved as shift
-  ! shift/reduce conflict for USE resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for FUNCTION resolved as shift
-  ! shift/reduce conflict for REPEAT resolved as shift
-  ! shift/reduce conflict for FOR resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-    VAR             shift and go to state 13
-    IDENTIFIER      shift and go to state 14
-    USE             shift and go to state 20
-    RMB             reduce using rule 67 (empty -> .)
-    IF              shift and go to state 21
-    FUNCTION        shift and go to state 22
-    REPEAT          shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
-
-  ! VAR             [ reduce using rule 67 (empty -> .) ]
-  ! IDENTIFIER      [ reduce using rule 67 (empty -> .) ]
-  ! USE             [ reduce using rule 67 (empty -> .) ]
-  ! IF              [ reduce using rule 67 (empty -> .) ]
-  ! FUNCTION        [ reduce using rule 67 (empty -> .) ]
-  ! REPEAT          [ reduce using rule 67 (empty -> .) ]
-  ! FOR             [ reduce using rule 67 (empty -> .) ]
-  ! WHILE           [ reduce using rule 67 (empty -> .) ]
-
-    expression                     shift and go to state 142
-    variable_declaration           shift and go to state 3
-    variable_value_change          shift and go to state 4
-    if_statement                   shift and go to state 5
-    function                       shift and go to state 6
-    function_call                  shift and go to state 7
-    repeat                         shift and go to state 8
-    for                            shift and go to state 9
-    while                          shift and go to state 10
-    use                            shift and go to state 11
-    empty                          shift and go to state 12
-    if_statement_1                 shift and go to state 15
-    function_head                  shift and go to state 16
-    repeat_head                    shift and go to state 17
-    for_head                       shift and go to state 18
-    while_head                     shift and go to state 19
-
-state 141
-
-    (40) if_statement_2 -> ELSE IF LSB condition RSB LMB expression . RMB
+    (42) if_statement_2 -> ELSE IF LSB condition RSB LMB expression . RMB
     (2) expression -> expression . variable_declaration SEMI
     (3) expression -> expression . variable_value_change SEMI
     (4) expression -> expression . if_statement
@@ -3244,13 +3237,73 @@ state 141
     (52) variable_value_change -> . IDENTIFIER EQUAL LIST
     (53) variable_value_change -> . IDENTIFIER EQUAL calculate
     (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
     (30) function -> . function_head function_body
     (34) function_call -> . IDENTIFIER LSB parameter RSB
     (27) repeat -> . repeat_head repeat_body
     (21) for -> . for_head for_body
     (24) while -> . while_head while_body
     (51) use -> . USE IDENTIFIER
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
+    (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
+    (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
+    (28) repeat_head -> . REPEAT LSB calculate RSB
+    (22) for_head -> . FOR LSB IDENTIFIER IN IDENTIFIER RSB
+    (25) while_head -> . WHILE LSB condition RSB
+
+    RMB             shift and go to state 142
+    VAR             shift and go to state 13
+    IDENTIFIER      shift and go to state 14
+    USE             shift and go to state 20
+    IF              shift and go to state 21
+    FUNCTION        shift and go to state 22
+    REPEAT          shift and go to state 23
+    FOR             shift and go to state 24
+    WHILE           shift and go to state 25
+
+    variable_declaration           shift and go to state 26
+    variable_value_change          shift and go to state 27
+    if_statement                   shift and go to state 28
+    function                       shift and go to state 29
+    function_call                  shift and go to state 30
+    repeat                         shift and go to state 31
+    for                            shift and go to state 32
+    while                          shift and go to state 33
+    use                            shift and go to state 34
+    if_statement_1                 shift and go to state 15
+    function_head                  shift and go to state 16
+    repeat_head                    shift and go to state 17
+    for_head                       shift and go to state 18
+    while_head                     shift and go to state 19
+
+state 141
+
+    (43) if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression . RMB
+    (2) expression -> expression . variable_declaration SEMI
+    (3) expression -> expression . variable_value_change SEMI
+    (4) expression -> expression . if_statement
+    (5) expression -> expression . function
+    (6) expression -> expression . function_call SEMI
+    (7) expression -> expression . repeat
+    (8) expression -> expression . for
+    (9) expression -> expression . while
+    (10) expression -> expression . use
+    (54) variable_declaration -> . VAR IDENTIFIER EQUAL LIST
+    (55) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
+    (56) variable_declaration -> . VAR IDENTIFIER
+    (52) variable_value_change -> . IDENTIFIER EQUAL LIST
+    (53) variable_value_change -> . IDENTIFIER EQUAL calculate
+    (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
+    (39) if_statement -> . if_statement_1 if_statement_2
+    (40) if_statement -> . if_statement_1 if_statement_3
+    (30) function -> . function_head function_body
+    (34) function_call -> . IDENTIFIER LSB parameter RSB
+    (27) repeat -> . repeat_head repeat_body
+    (21) for -> . for_head for_body
+    (24) while -> . while_head while_body
+    (51) use -> . USE IDENTIFIER
+    (41) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
     (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
     (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
     (28) repeat_head -> . REPEAT LSB calculate RSB
@@ -3284,92 +3337,36 @@ state 141
 
 state 142
 
-    (41) if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression . RMB
-    (2) expression -> expression . variable_declaration SEMI
-    (3) expression -> expression . variable_value_change SEMI
-    (4) expression -> expression . if_statement
-    (5) expression -> expression . function
-    (6) expression -> expression . function_call SEMI
-    (7) expression -> expression . repeat
-    (8) expression -> expression . for
-    (9) expression -> expression . while
-    (10) expression -> expression . use
-    (54) variable_declaration -> . VAR IDENTIFIER EQUAL LIST
-    (55) variable_declaration -> . VAR IDENTIFIER EQUAL calculate
-    (56) variable_declaration -> . VAR IDENTIFIER
-    (52) variable_value_change -> . IDENTIFIER EQUAL LIST
-    (53) variable_value_change -> . IDENTIFIER EQUAL calculate
-    (38) if_statement -> . if_statement_1 if_statement_2 if_statement_3
-    (30) function -> . function_head function_body
-    (34) function_call -> . IDENTIFIER LSB parameter RSB
-    (27) repeat -> . repeat_head repeat_body
-    (21) for -> . for_head for_body
-    (24) while -> . while_head while_body
-    (51) use -> . USE IDENTIFIER
-    (39) if_statement_1 -> . IF LSB condition RSB LMB expression RMB
-    (31) function_head -> . FUNCTION IDENTIFIER LSB empty RSB
-    (32) function_head -> . FUNCTION IDENTIFIER LSB parameter RSB
-    (28) repeat_head -> . REPEAT LSB calculate RSB
-    (22) for_head -> . FOR LSB IDENTIFIER IN IDENTIFIER RSB
-    (25) while_head -> . WHILE LSB condition RSB
+    (42) if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .
 
-    RMB             shift and go to state 144
-    VAR             shift and go to state 13
-    IDENTIFIER      shift and go to state 14
-    USE             shift and go to state 20
-    IF              shift and go to state 21
-    FUNCTION        shift and go to state 22
-    REPEAT          shift and go to state 23
-    FOR             shift and go to state 24
-    WHILE           shift and go to state 25
+    ELSE            reduce using rule 42 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
+    VAR             reduce using rule 42 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
+    IDENTIFIER      reduce using rule 42 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
+    USE             reduce using rule 42 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
+    IF              reduce using rule 42 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
+    FUNCTION        reduce using rule 42 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
+    REPEAT          reduce using rule 42 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
+    FOR             reduce using rule 42 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
+    WHILE           reduce using rule 42 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
+    $end            reduce using rule 42 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
+    RMB             reduce using rule 42 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
 
-    variable_declaration           shift and go to state 26
-    variable_value_change          shift and go to state 27
-    if_statement                   shift and go to state 28
-    function                       shift and go to state 29
-    function_call                  shift and go to state 30
-    repeat                         shift and go to state 31
-    for                            shift and go to state 32
-    while                          shift and go to state 33
-    use                            shift and go to state 34
-    if_statement_1                 shift and go to state 15
-    function_head                  shift and go to state 16
-    repeat_head                    shift and go to state 17
-    for_head                       shift and go to state 18
-    while_head                     shift and go to state 19
 
 state 143
 
-    (40) if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .
+    (43) if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .
 
-    ELSE            reduce using rule 40 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
-    VAR             reduce using rule 40 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
-    IDENTIFIER      reduce using rule 40 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
-    USE             reduce using rule 40 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
-    IF              reduce using rule 40 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
-    FUNCTION        reduce using rule 40 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
-    REPEAT          reduce using rule 40 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
-    FOR             reduce using rule 40 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
-    WHILE           reduce using rule 40 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
-    $end            reduce using rule 40 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
-    RMB             reduce using rule 40 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
-
-
-state 144
-
-    (41) if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .
-
-    ELSE            reduce using rule 41 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
-    VAR             reduce using rule 41 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
-    IDENTIFIER      reduce using rule 41 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
-    USE             reduce using rule 41 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
-    IF              reduce using rule 41 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
-    FUNCTION        reduce using rule 41 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
-    REPEAT          reduce using rule 41 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
-    FOR             reduce using rule 41 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
-    WHILE           reduce using rule 41 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
-    $end            reduce using rule 41 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
-    RMB             reduce using rule 41 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
+    ELSE            reduce using rule 43 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
+    VAR             reduce using rule 43 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
+    IDENTIFIER      reduce using rule 43 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
+    USE             reduce using rule 43 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
+    IF              reduce using rule 43 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
+    FUNCTION        reduce using rule 43 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
+    REPEAT          reduce using rule 43 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
+    FOR             reduce using rule 43 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
+    WHILE           reduce using rule 43 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
+    $end            reduce using rule 43 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
+    RMB             reduce using rule 43 (if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .)
 
 WARNING: 
 WARNING: Conflicts:
@@ -3382,7 +3379,6 @@ WARNING: shift/reduce conflict for FUNCTION in state 0 resolved as shift
 WARNING: shift/reduce conflict for REPEAT in state 0 resolved as shift
 WARNING: shift/reduce conflict for FOR in state 0 resolved as shift
 WARNING: shift/reduce conflict for WHILE in state 0 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 15 resolved as shift
 WARNING: shift/reduce conflict for VAR in state 44 resolved as shift
 WARNING: shift/reduce conflict for IDENTIFIER in state 44 resolved as shift
 WARNING: shift/reduce conflict for USE in state 44 resolved as shift
@@ -3415,14 +3411,14 @@ WARNING: shift/reduce conflict for FUNCTION in state 50 resolved as shift
 WARNING: shift/reduce conflict for REPEAT in state 50 resolved as shift
 WARNING: shift/reduce conflict for FOR in state 50 resolved as shift
 WARNING: shift/reduce conflict for WHILE in state 50 resolved as shift
-WARNING: shift/reduce conflict for VAR in state 97 resolved as shift
-WARNING: shift/reduce conflict for IDENTIFIER in state 97 resolved as shift
-WARNING: shift/reduce conflict for USE in state 97 resolved as shift
-WARNING: shift/reduce conflict for IF in state 97 resolved as shift
-WARNING: shift/reduce conflict for FUNCTION in state 97 resolved as shift
-WARNING: shift/reduce conflict for REPEAT in state 97 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 97 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 97 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 75 resolved as shift
+WARNING: shift/reduce conflict for IDENTIFIER in state 75 resolved as shift
+WARNING: shift/reduce conflict for USE in state 75 resolved as shift
+WARNING: shift/reduce conflict for IF in state 75 resolved as shift
+WARNING: shift/reduce conflict for FUNCTION in state 75 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 75 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 75 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 75 resolved as shift
 WARNING: shift/reduce conflict for RSB in state 107 resolved as shift
 WARNING: shift/reduce conflict for VAR in state 121 resolved as shift
 WARNING: shift/reduce conflict for IDENTIFIER in state 121 resolved as shift
@@ -3432,19 +3428,19 @@ WARNING: shift/reduce conflict for FUNCTION in state 121 resolved as shift
 WARNING: shift/reduce conflict for REPEAT in state 121 resolved as shift
 WARNING: shift/reduce conflict for FOR in state 121 resolved as shift
 WARNING: shift/reduce conflict for WHILE in state 121 resolved as shift
-WARNING: shift/reduce conflict for VAR in state 138 resolved as shift
-WARNING: shift/reduce conflict for IDENTIFIER in state 138 resolved as shift
-WARNING: shift/reduce conflict for USE in state 138 resolved as shift
-WARNING: shift/reduce conflict for IF in state 138 resolved as shift
-WARNING: shift/reduce conflict for FUNCTION in state 138 resolved as shift
-WARNING: shift/reduce conflict for REPEAT in state 138 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 138 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 138 resolved as shift
-WARNING: shift/reduce conflict for VAR in state 140 resolved as shift
-WARNING: shift/reduce conflict for IDENTIFIER in state 140 resolved as shift
-WARNING: shift/reduce conflict for USE in state 140 resolved as shift
-WARNING: shift/reduce conflict for IF in state 140 resolved as shift
-WARNING: shift/reduce conflict for FUNCTION in state 140 resolved as shift
-WARNING: shift/reduce conflict for REPEAT in state 140 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 140 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 140 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 137 resolved as shift
+WARNING: shift/reduce conflict for IDENTIFIER in state 137 resolved as shift
+WARNING: shift/reduce conflict for USE in state 137 resolved as shift
+WARNING: shift/reduce conflict for IF in state 137 resolved as shift
+WARNING: shift/reduce conflict for FUNCTION in state 137 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 137 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 137 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 137 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 139 resolved as shift
+WARNING: shift/reduce conflict for IDENTIFIER in state 139 resolved as shift
+WARNING: shift/reduce conflict for USE in state 139 resolved as shift
+WARNING: shift/reduce conflict for IF in state 139 resolved as shift
+WARNING: shift/reduce conflict for FUNCTION in state 139 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 139 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 139 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 139 resolved as shift

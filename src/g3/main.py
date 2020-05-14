@@ -420,16 +420,17 @@ def p_if_statement(t):
 
 def p_if_statement_1:
     '''
-
+    if_statement_1 : IF LSB condition RSB LMB expression RMB
     '''
 
 def p_if_statement_2:
     '''
+    if_statement_2 : ELSE IF LSB condition RSB LMB expression RMB
     '''
 
 def p_if_statement_3:
     '''
-
+    if_statement_3 : ELSE LMB expression RMB
     '''
 
 

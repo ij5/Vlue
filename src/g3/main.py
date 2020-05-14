@@ -97,15 +97,12 @@ def t_error(t):
 
 lexer = lex.lex()
 
-data = '''var a = 4;
-var b = 34.88;
-var c = a * b;
-var d = "Hello World!";
-var e = " Hello?";
-e = "var";
-var str = d+e;
-function
-repeat
+data = '''
+if(a<b){
+    a = b;
+}else{
+a = b;
+}
 '''
 
 lexer.input(data)
@@ -679,7 +676,9 @@ var b = 2;
 if(a<b){
     a = b;
 }
-
+else{
+    a = b;
+}
 function fn(){}
 var c = 5;
 repeat(5){

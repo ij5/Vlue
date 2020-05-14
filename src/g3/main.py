@@ -415,8 +415,24 @@ def p_parameter_2(t):
 
 def p_if_statement(t):
     '''
-    
+    if_statement : if_statement_1 if_statement_2 if_statement_3
     '''
+
+def p_if_statement_1:
+    '''
+
+    '''
+
+def p_if_statement_2:
+    '''
+    '''
+
+def p_if_statement_3:
+    '''
+
+    '''
+
+
 
 ############ CONDITION
 

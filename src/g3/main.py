@@ -430,6 +430,7 @@ def p_if_statement_1(t):
 def p_if_statement_2(t):
     '''
     if_statement_2 : ELSE IF LSB condition RSB LMB expression RMB
+        | empty
     '''
     t[0] = ""
     pass
@@ -437,6 +438,7 @@ def p_if_statement_2(t):
 def p_if_statement_3(t):
     '''
     if_statement_3 : ELSE LMB expression RMB
+        | empty
     '''
     t[0] = ""
     pass
@@ -676,8 +678,6 @@ var a = 3;
 var b = 2;
 if(a<b){
     a = b;
-}else{
-a=b;
 }
 
 function fn(){}

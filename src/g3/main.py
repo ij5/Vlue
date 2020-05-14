@@ -418,17 +418,17 @@ def p_if_statement(t):
     if_statement : if_statement_1 if_statement_2 if_statement_3
     '''
 
-def p_if_statement_1:
+def p_if_statement_1(t):
     '''
     if_statement_1 : IF LSB condition RSB LMB expression RMB
     '''
 
-def p_if_statement_2:
+def p_if_statement_2(t):
     '''
     if_statement_2 : ELSE IF LSB condition RSB LMB expression RMB
     '''
 
-def p_if_statement_3:
+def p_if_statement_3(t):
     '''
     if_statement_3 : ELSE LMB expression RMB
     '''

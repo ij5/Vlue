@@ -429,10 +429,14 @@ def p_if_statement_1(t):
 def p_if_statement_2(t):
     '''
     if_statement_2 : ELSE IF LSB condition RSB LMB expression RMB
-        | if_statement_2 ELSE IF LSB condition RSB LMB expression RMB
     '''
     t[0] = ""
     pass
+
+def p_if_statement_2_2(t):
+    '''
+    if_statement_2 : if_statement_2 ELSE IF LSB condition RSB LMB expression RMB
+    '''
 
 def p_if_statement_3(t):        #TODO
     '''

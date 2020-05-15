@@ -416,10 +416,10 @@ def p_if_statement(t):
         | if_statement_1 if_statement_2
         | if_statement_1 if_statement_3
     '''
-    if(t[3]==None):
-        t[0] = t[1] + t[2]
-    else:
+    try:
         t[0] = t[1] + t[2] + t[3]
+    except IndexError:
+        t[0] = t[1] + t[2]
 
 def p_if_statement_1(t):
     '''
@@ -701,8 +701,6 @@ if(a<b){
 }
 else if(a<b){
     a = b;
-    a = b;
-}else{
     a = b;
 }
 function fn(){}

@@ -415,11 +415,15 @@ def p_if_statement(t):
     if_statement : if_statement_1 if_statement_2 if_statement_3
         | if_statement_1 if_statement_2
         | if_statement_1 if_statement_3
+        | if_statement_1
     '''
     try:
         t[0] = t[1] + t[2] + t[3]
     except IndexError:
-        t[0] = t[1] + t[2]
+        try:
+            t[0] = t[1] + t[2]
+        except IndexError:
+            t[0] = t[1]
 
 def p_if_statement_1(t):
     '''
@@ -699,10 +703,7 @@ var b = 2;
 if(a<b){
     a = b;
 }
-else if(a<b){
-    a = b;
-    a = b;
-}
+
 function fn(){}
 var c = 5;
 repeat(5){

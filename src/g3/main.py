@@ -423,8 +423,10 @@ def p_if_statement_1(t):
     '''
     if_statement_1 : IF LSB condition RSB LMB expression RMB
     '''
-    t[0] = ""
-    pass
+    if(t[6]==None):
+        t[0] = t[1] + t[2] + t[3] + t[4] + ":" + "\n\t" + "buf___ = 0\n"
+    else:
+        t[0] = t[1] + t[2] + t[3] + t[4] + ":" + "\n\t" + t[6]
 
 def p_if_statement_2(t):
     '''

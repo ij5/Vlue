@@ -430,8 +430,12 @@ def p_if_statement_2(t):
     '''
     if_statement_2 : ELSE IF LSB condition RSB LMB expression RMB
     '''
-    t[0] = ""
-    pass
+    if(t[7]==None):
+        t[0] = "elif" + t[3] + t[4] + t[5] + ":\n\t" + "buf___ = 0\n"
+    else:
+        body = re.sub("\n", "\n\t", t[7])
+        body = body[:-1]
+        t[0] = "elif" + t[3] + t[4] + t[5] + ":" + "\n\t" + body
 
 def p_if_statement_2_2(t):
     '''

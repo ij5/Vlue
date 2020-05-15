@@ -550,7 +550,7 @@ def p_variable_value_change(t):
 
 def p_variable_declaration_list(t):
     '''
-    variable_declaration : VAR IDENTIFIER EQUAL LIST
+    variable_declaration : VAR IDENTIFIER LIST EQUAL calculate
     '''
     t[0] = t[2] + t[3] + t[4] + "\n"
 
@@ -673,6 +673,18 @@ def p_calculate2str(t):
     except LookupError:
         error("Unknown variable "+t[1])
 
+def p_calculate2list(t):
+    '''
+    calculate : IDENTIFIER LIST
+    '''
+    t[0] = t[1]+t[2]
+
+def p_calculate2list_2(t):
+    '''
+    calculate : LIST
+    '''
+    t[0] = t[1]
+
 def p_parens(t):
     'calculate : LSB calculate RSB'
     t[0] = t[2]
@@ -721,6 +733,7 @@ while(c<9){
 }
 
 fn();
+var asd = [1];
 
 use test
 

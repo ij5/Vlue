@@ -416,8 +416,10 @@ def p_if_statement(t):
         | if_statement_1 if_statement_2
         | if_statement_1 if_statement_3
     '''
-    t[0] = ""
-    pass
+    if(t[3]==None):
+        t[0] = t[1] + t[2]
+    else:
+        t[0] = t[1] + t[2] + t[3]
 
 def p_if_statement_1(t):
     '''

@@ -456,7 +456,7 @@ def p_if_statement_2_2(t):
         body = body[:-1]
         t[0] = t[1] + "elif" + t[4] + t[5] + t[6] + ":" + "\n\t" + body
 
-def p_if_statement_3(t):        #TODO
+def p_if_statement_3(t):
     '''
     if_statement_3 : ELSE LMB expression RMB
     '''
@@ -506,11 +506,17 @@ def p_use(t):       #TODO
     global f
     global fi
     filename = t[2]+".blib"
-    if os.path.isfile("./lib/"+filename):
+    realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"lib",filename)
+    if os.path.isfile(realpath):
         fi += 1
-        f.append(open("./lib/"+filename, 'r', encoding='UTF-8'))
+        f.append(open(realpath, 'r', encoding='UTF-8'))
     else:
-        error("존재하지 않는 라이브러리입니다.")
+        currentpath = os.path.join(os.getcwd(), filename)
+        if os.path.isfile(currentpath):
+            print("존재하는 라이브러리입니다.")
+            t[0] = open(currentpath, 'r', encoding='UTF-8').read()
+        else:
+            error("존재하지 않는 라이브러리입니다.")
     t[0] = ""
 
 
@@ -735,7 +741,7 @@ while(c<9){
 fn();
 var asd = [];
 
-use test
+use test1
 
 """
 # while True:
@@ -748,3 +754,4 @@ result = parser.parse(data)
 print(variable)
 print(code)
 exec(code)
+print(os.getcwd())

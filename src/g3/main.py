@@ -741,7 +741,7 @@ while(c<9){
 fn();
 var asd = [];
 
-use test1
+use test
 
 """
 # while True:

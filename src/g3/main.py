@@ -296,7 +296,7 @@ def p_for_body(t):
     for_body : LMB expression RMB
     '''
     if(t[2]==None):
-        t[0] = "buf___ = 0\n"
+        t[0] = "buf___ = 1\n"
     else:
         t[0] = t[2]
 
@@ -321,7 +321,7 @@ def p_while_body(t):
     while_body : LMB expression RMB
     '''
     if(t[2]==None):
-        t[0] = "buf___ = 0\n"
+        t[0] = "buf___ = 2\n"
     else:
         t[0] = t[2]
 
@@ -347,7 +347,7 @@ def p_repeat_body(t):
     repeat_body : LMB expression RMB
     '''
     if(t[2]==None):
-        t[0] = "buf___ = 0\n"
+        t[0] = "buf___ = 3\n"
     else:
         t[0] = t[2]
 
@@ -430,7 +430,7 @@ def p_if_statement_1(t):
     if_statement_1 : IF LSB condition RSB LMB expression RMB
     '''
     if(t[6]==None):
-        t[0] = t[1] + t[2] + t[3] + t[4] + ":" + "\n\t" + "buf___ = 0\n"
+        t[0] = t[1] + t[2] + t[3] + t[4] + ":" + "\n\t" + "buf___ = 4\n"
     else:
         t[0] = t[1] + t[2] + t[3] + t[4] + ":" + "\n\t" + t[6]
 
@@ -439,7 +439,7 @@ def p_if_statement_2(t):
     if_statement_2 : ELSE IF LSB condition RSB LMB expression RMB
     '''
     if(t[7]==None):
-        t[0] = "elif" + t[3] + t[4] + t[5] + ":\n\t" + "buf___ = 0\n"
+        t[0] = "elif" + t[3] + t[4] + t[5] + ":\n\t" + "buf___ = 5\n"
     else:
         body = re.sub("\n", "\n\t", t[7])
         body = body[:-1]
@@ -450,7 +450,7 @@ def p_if_statement_2_2(t):
     if_statement_2 : if_statement_2 ELSE IF LSB condition RSB LMB expression RMB
     '''
     if(t[8]==None):
-        t[0] = t[1] + "elif" + t[4] + t[5] + t[6] + ":\n\t" + "buf___ = 0\n"
+        t[0] = t[1] + "elif" + t[4] + t[5] + t[6] + ":\n\t" + "buf___ = 6\n"
     else:
         body = re.sub("\n", "\n\t", t[8])
         body = body[:-1]
@@ -461,7 +461,7 @@ def p_if_statement_3(t):
     if_statement_3 : ELSE LMB expression RMB
     '''
     if(t[3]==None):
-        t[0] = "buf___ = 0\n"
+        t[0] = "buf___ = 7\n"
     else:
         body = re.sub("\n", "\n\t", t[3])
         body = body[:-1]
@@ -502,7 +502,7 @@ def p_condition_4(t):
 def p_use(t):       #TODO
     '''
     use : USE IDENTIFIER
-    ''' 
+    '''
     global f
     global fi
     filename = t[2]+".blib"

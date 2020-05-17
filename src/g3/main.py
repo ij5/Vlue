@@ -290,6 +290,10 @@ def p_try(t):
     '''
     if(t[6]==None):
         t[0] = "try:\nbuf___ = 0\n"
+    else:
+        try_body = re.sub("\n", "\n\t", t[3])
+        try_body = try_body[:-1]
+        t[0] = t[1] +
 
 def p_catch(t):
     '''
@@ -300,7 +304,7 @@ def p_catch(t):
     else:
         catch_body = re.sub("\n", "\n\t", t[6])
         catch_body = catch_body[:-1]
-        t[0] = t[1] + catch_body
+        t[0] = "except " + t[3] + ":\n" + catch_body
 
 ############### FOR
 

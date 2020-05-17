@@ -14,6 +14,8 @@ reserved = {
     'while': 'WHILE',
     'in': 'IN',
     'use': 'USE',
+    'try': 'TRY',
+    'catch': 'CATCH',
 }
 
 tokens = [
@@ -274,6 +276,19 @@ def p_expression_empty(t):
     '''
     global code
     code = code + ""
+
+############### ERROR HANDLING
+
+def p_try(t):
+    '''
+    try : TRY LMB expression RMB
+    '''
+    
+
+def p_catch(t):
+    '''
+    catch : CATCH LSB IDENTIFIER RSB LMB expression RMB
+    '''
 
 ############### FOR
 

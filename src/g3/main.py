@@ -288,14 +288,15 @@ def p_try(t):
     '''
     try : TRY LMB expression RMB
     '''
-
+    if(t[6]==None):
+        t[0] = "try:\nbuf___ = 0\n"
 
 def p_catch(t):
     '''
     catch : CATCH LSB IDENTIFIER RSB LMB expression RMB
     '''
     if(t[6]==None):
-        t[0] = "except " + t[3] + ":\n" + "buf___ = 0"
+        t[0] = "except " + t[3] + ":\n" + "buf___ = 0\n"
     else:
         catch_body = re.sub("\n", "\n\t", t[6])
         catch_body = catch_body[:-1]

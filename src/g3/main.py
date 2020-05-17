@@ -293,7 +293,7 @@ def p_try(t):
     else:
         try_body = re.sub("\n", "\n\t", t[3])
         try_body = try_body[:-1]
-        t[0] = t[1] +
+        t[0] = t[1] + ":\n" + try_body
 
 def p_catch(t):
     '''

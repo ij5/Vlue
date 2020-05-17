@@ -505,13 +505,14 @@ def p_use(t):       #TODO
     '''
     global f
     global fi
-    filename = t[2]+".blib"
-    realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"lib",filename)
+    libfile = t[2]+".blib"
+    codefile = t[2]+".bl"
+    realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"lib",libfile)
     if os.path.isfile(realpath):
         fi += 1
         f.append(open(realpath, 'r', encoding='UTF-8'))
     else:
-        currentpath = os.path.join(os.getcwd(), filename)
+        currentpath = os.path.join(os.getcwd(), codefile)
         if os.path.isfile(currentpath):
             print("존재하는 라이브러리입니다.")
             t[0] = open(currentpath, 'r', encoding='UTF-8').read()

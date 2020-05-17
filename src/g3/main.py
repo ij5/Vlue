@@ -279,16 +279,27 @@ def p_expression_empty(t):
 
 ############### ERROR HANDLING
 
+def p_error_handling(t):
+    '''
+    error_handling : try catch
+    '''
+
 def p_try(t):
     '''
     try : TRY LMB expression RMB
     '''
-    
+
 
 def p_catch(t):
     '''
     catch : CATCH LSB IDENTIFIER RSB LMB expression RMB
     '''
+    if(t[6]==None):
+        t[0] = "except " + t[3] + ":\n" + "buf___ = 0"
+    else:
+        catch_body = re.sub("\n", "\n\t", t[6])
+        catch_body = catch_body[:-1]
+        t[0] = t[1] + catch_body
 
 ############### FOR
 

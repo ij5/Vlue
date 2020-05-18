@@ -1,9 +1,8 @@
-from ply import lex
-
-
 ############################
 #####LEXER
 ############################
+
+from ply import lex
 
 reserved = {
     'if': 'IF',

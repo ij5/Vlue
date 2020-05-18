@@ -283,6 +283,7 @@ def p_error_handling(t):
     '''
     error_handling : try catch
     '''
+    t[0] = t[1] + t[2]
 
 def p_try(t):
     '''
@@ -772,6 +773,12 @@ while(c<9){
 
 fn();
 var asd = [];
+
+try{
+    var a = "Hello";
+}catch(e){
+    var b = "Hello!";
+}
 
 use test
 

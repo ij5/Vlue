@@ -540,15 +540,6 @@ def p_condition_4(t):
 
 ############## LIBRARY
 
-libtokens = [
-    'IDENTIFIER',
-    'QT',
-    'PYTHON'
-]
-
-def t_IDENTIFIER(t):
-    
-
 ############### USE
 
 def p_use(t):       #TODO

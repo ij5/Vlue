@@ -220,6 +220,12 @@ def p_expression_error_handling(t):
     '''
     t[0] = t[1] + t[2]
 
+def p_expression_variable_alone(t):
+    '''
+    expression : expression variable_alone
+    '''
+    t[0] = t[1] + t[2]
+
 # EXPRESSION
 
 def p_expression_variable_2(t):       #TODO 변수 중복 선언 문제
@@ -276,6 +282,12 @@ def p_expression_use_2(t):
 def p_expression_error_handling_2(t):
     '''
     expression : error_handling
+    '''
+    t[0] = t[1]
+
+def p_expression_variable_alone_2(t):
+    '''
+    expression : variable_alone
     '''
     t[0] = t[1]
 

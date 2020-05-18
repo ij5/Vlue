@@ -540,6 +540,9 @@ def p_condition_4(t):
 
 ############## LIBRARY
 
+import lib
+
+
 ############### USE
 
 def p_use(t):       #TODO
@@ -563,6 +566,13 @@ def p_use(t):       #TODO
             error("존재하지 않는 라이브러리입니다.")
     t[0] = ""
 
+############### VARIABLE ALONE
+
+def p_variable_alone(t):
+    '''
+    variable_alone : IDENTIFIER
+    '''
+    t[0] = t[1]
 
 ############### CHANGE VARIABLE VALUE
 

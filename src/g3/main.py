@@ -121,7 +121,6 @@ print()
 ###################
 
 from ply import yacc
-import ast
 import re
 import os
 

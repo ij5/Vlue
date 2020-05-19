@@ -9,6 +9,9 @@ def t_IDENTIFIER(t):
     r'[a-zA-Z_]+[a-zA-Z_0-9]*'
     return t
 
+def t_STRING(t):
+    r''
+
 def t_PYTHON(t):
     r'`[^`]*`'
     return t
@@ -71,11 +74,10 @@ def p_expression_2(t):
     global pythoncommand
     global grammar
     pythoncommand.append(t[3])
-    grammar = grammar + " | " + t[2]
     if (grammar == ""):
         grammar = grammar + t[1]
     else:
-        grammar = grammar + " | " + t[1]
+        grammar = grammar + " | " + t[2]
 
 def p_identifier(t):
     '''

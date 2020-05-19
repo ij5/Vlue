@@ -43,7 +43,6 @@ grammar = ""
 def p_root(t):
     '''
     root : expression
-        | expression expression
     '''
     t[0] = t[1]
 
@@ -52,12 +51,16 @@ def p_expression(t):
     expression : identifier PYTHON
     '''
     t[0] = t[1] + t[2]
-    pythoncommand
+    pythoncommand.append(t[2])
+    grammar.append(t[1])
 
 def p_expression_2(t):
     '''
     expression : expression identifier PYTHON
     '''
+    t[0] = t[1] + t[2] + t[3]
+    pythoncommand.append(t[3])
+    grammar.append(t[2])
 
 def p_identifier(t):
     '''

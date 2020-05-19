@@ -227,6 +227,12 @@ def p_expression_variable_alone(t):
     '''
     t[0] = t[1] + t[2]
 
+def p_expression_global_variable(t):
+    '''
+    expression : expression global_variable
+    '''
+    t[0] = t[1] + t[2]
+
 # EXPRESSION
 
 def p_expression_variable_2(t):       #TODO 변수 중복 선언 문제

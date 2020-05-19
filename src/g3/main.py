@@ -15,6 +15,7 @@ reserved = {
     'use': 'USE',
     'try': 'TRY',
     'catch': 'CATCH',
+    'global': 'GLOBAL'
 }
 
 tokens = [
@@ -38,6 +39,7 @@ tokens = [
     'LMB',
     'COMMA',
     'LIST',
+    'GLOBAL',
 ] + list(reserved.values())
 
 t_EQUAL = r'='
@@ -287,6 +289,12 @@ def p_expression_error_handling_2(t):
 def p_expression_variable_alone_2(t):
     '''
     expression : variable_alone
+    '''
+    t[0] = t[1]
+
+def p_expression_global_variable_2(t):
+    '''
+    expression : global_variable
     '''
     t[0] = t[1]
 
@@ -576,6 +584,12 @@ def p_use(t):       #TODO
         else:
             error("존재하지 않는 라이브러리입니다.")
     t[0] = ""
+
+############### GLOBAL VARIABLE
+def p_global_variable(t):
+    '''
+    global_variable : GLOBAL IDENTIFIER
+    '''
 
 ############### VARIABLE ALONE
 

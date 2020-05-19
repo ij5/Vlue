@@ -27,9 +27,9 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> root","S'",1,None,None,None),
-  ('root -> expression','root',1,'p_root','lib.py',45),
-  ('expression -> identifier PYTHON','expression',2,'p_expression','lib.py',51),
-  ('expression -> expression identifier PYTHON','expression',3,'p_expression_2','lib.py',59),
-  ('identifier -> identifier IDENTIFIER','identifier',2,'p_identifier','lib.py',67),
-  ('identifier -> IDENTIFIER','identifier',1,'p_identifier_2','lib.py',73),
+  ('root -> expression','root',1,'p_root','lib.py',49),
+  ('expression -> identifier PYTHON','expression',2,'p_expression','lib.py',55),
+  ('expression -> expression identifier PYTHON','expression',3,'p_expression_2','lib.py',68),
+  ('identifier -> identifier IDENTIFIER','identifier',2,'p_identifier','lib.py',82),
+  ('identifier -> IDENTIFIER','identifier',1,'p_identifier_2','lib.py',88),
 ]

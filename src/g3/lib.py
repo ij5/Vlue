@@ -23,6 +23,10 @@ lexer = lex.lex()
 
 data = """
 IDENTIFIER LSB RSB `print("Hello World!")`
+IDENTIFIER LSB RSB 
+`
+print("a")
+`
 
 """
 
@@ -44,7 +48,7 @@ def p_root(t):
     '''
     root : expression
     '''
-    t[0] = t[1]
+    pass
 
 def p_expression(t):
     '''
@@ -53,7 +57,7 @@ def p_expression(t):
     t[0] = t[1] + t[2]
     global pythoncommand
     global grammar
-    pythoncommand = pythoncommand + t[2]
+    pythoncommand.append(t[2])
     if(grammar==""):
         grammar = grammar + t[1]
     else:
@@ -66,7 +70,7 @@ def p_expression_2(t):
     t[0] = t[1] + t[2] + t[3]
     global pythoncommand
     global grammar
-    pythoncommand = pythoncommand + t[3]
+    pythoncommand.append(t[3])
     grammar = grammar + " | " + t[2]
     if (grammar == ""):
         grammar = grammar + t[1]
@@ -88,6 +92,7 @@ def p_identifier_2(t):
 
 data = """
 IDENTIFIER LSB RSB `print("Hello")`
+IDENTIFIER RSB LSB `print("HLO")`
 """
 
 parser = yacc.yacc()

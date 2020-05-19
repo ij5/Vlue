@@ -37,6 +37,9 @@ print()
 
 from ply import yacc
 
+pythoncommand = ""
+grammar = ""
+
 def p_root(t):
     '''
     root : expression
@@ -47,6 +50,13 @@ def p_root(t):
 def p_expression(t):
     '''
     expression : identifier PYTHON
+    '''
+    t[0] = t[1] + t[2]
+    pythoncommand
+
+def p_expression_2(t):
+    '''
+    expression : expression identifier PYTHON
     '''
 
 def p_identifier(t):

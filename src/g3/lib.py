@@ -37,3 +37,16 @@ print()
 
 from ply import yacc
 
+def p_root(t):
+    '''
+    root : expression
+    '''
+    t[0] = t[1]
+
+
+data = """
+
+"""
+
+parser = yacc.yacc()
+result = parser.parse(data)

@@ -40,6 +40,24 @@ from ply import yacc
 def p_root(t):
     '''
     root : expression
+        | expression expression
+    '''
+    t[0] = t[1]
+
+def p_expression(t):
+    '''
+    expression : identifier PYTHON
+    '''
+
+def p_identifier(t):
+    '''
+    identifier : identifier IDENTIFIER
+    '''
+    t[0] = t[1] + t[2]
+
+def p_identifier_2(t):
+    '''
+    identifier : IDENTIFIER
     '''
     t[0] = t[1]
 

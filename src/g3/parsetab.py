@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'IDENTIFIER PYTHON\n    root : expression\n    \n    expression : identifier PYTHON\n    \n    expression : expression identifier PYTHON\n    \n    identifier : identifier IDENTIFIER\n    \n    identifier : IDENTIFIER\n    '
+_lr_signature = 'IDENTIFIER PYTHON STRING\n    root : expression\n    \n    expression : identifier PYTHON\n    \n    expression : expression identifier PYTHON\n    \n    identifier : identifier IDENTIFIER\n        | identifier STRING\n    \n    identifier : IDENTIFIER\n        | STRING\n    '
     
-_lr_action_items = {'IDENTIFIER':([0,2,3,4,5,6,7,8,],[4,4,7,-5,7,-2,-4,-3,]),'$end':([1,2,6,8,],[0,-1,-2,-3,]),'PYTHON':([3,4,5,7,],[6,-5,8,-4,]),}
+_lr_action_items = {'IDENTIFIER':([0,2,3,4,5,6,7,8,9,10,],[4,4,8,-6,-7,8,-2,-4,-5,-3,]),'STRING':([0,2,3,4,5,6,7,8,9,10,],[5,5,9,-6,-7,9,-2,-4,-5,-3,]),'$end':([1,2,7,10,],[0,-1,-2,-3,]),'PYTHON':([3,4,5,6,8,9,],[7,-6,-7,10,-4,-5,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'root':([0,],[1,]),'expression':([0,],[2,]),'identifier':([0,2,],[3,5,]),}
+_lr_goto_items = {'root':([0,],[1,]),'expression':([0,],[2,]),'identifier':([0,2,],[3,6,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,9 +27,11 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> root","S'",1,None,None,None),
-  ('root -> expression','root',1,'p_root','lib.py',49),
-  ('expression -> identifier PYTHON','expression',2,'p_expression','lib.py',55),
-  ('expression -> expression identifier PYTHON','expression',3,'p_expression_2','lib.py',68),
-  ('identifier -> identifier IDENTIFIER','identifier',2,'p_identifier','lib.py',82),
-  ('identifier -> IDENTIFIER','identifier',1,'p_identifier_2','lib.py',88),
+  ('root -> expression','root',1,'p_root','lib.py',54),
+  ('expression -> identifier PYTHON','expression',2,'p_expression','lib.py',60),
+  ('expression -> expression identifier PYTHON','expression',3,'p_expression_2','lib.py',73),
+  ('identifier -> identifier IDENTIFIER','identifier',2,'p_identifier','lib.py',86),
+  ('identifier -> identifier STRING','identifier',2,'p_identifier','lib.py',87),
+  ('identifier -> IDENTIFIER','identifier',1,'p_identifier_2','lib.py',93),
+  ('identifier -> STRING','identifier',1,'p_identifier_2','lib.py',94),
 ]

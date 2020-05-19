@@ -7,18 +7,21 @@ Rule 1     root -> expression
 Rule 2     expression -> identifier PYTHON
 Rule 3     expression -> expression identifier PYTHON
 Rule 4     identifier -> identifier IDENTIFIER
-Rule 5     identifier -> IDENTIFIER
+Rule 5     identifier -> identifier STRING
+Rule 6     identifier -> IDENTIFIER
+Rule 7     identifier -> STRING
 
 Terminals, with rules where they appear
 
-IDENTIFIER           : 4 5
+IDENTIFIER           : 4 6
 PYTHON               : 2 3
+STRING               : 5 7
 error                : 
 
 Nonterminals, with rules where they appear
 
 expression           : 1 3
-identifier           : 2 3 4
+identifier           : 2 3 4 5
 root                 : 0
 
 Parsing method: LALR
@@ -30,9 +33,12 @@ state 0
     (2) expression -> . identifier PYTHON
     (3) expression -> . expression identifier PYTHON
     (4) identifier -> . identifier IDENTIFIER
-    (5) identifier -> . IDENTIFIER
+    (5) identifier -> . identifier STRING
+    (6) identifier -> . IDENTIFIER
+    (7) identifier -> . STRING
 
     IDENTIFIER      shift and go to state 4
+    STRING          shift and go to state 5
 
     root                           shift and go to state 1
     expression                     shift and go to state 2
@@ -49,59 +55,88 @@ state 2
     (1) root -> expression .
     (3) expression -> expression . identifier PYTHON
     (4) identifier -> . identifier IDENTIFIER
-    (5) identifier -> . IDENTIFIER
+    (5) identifier -> . identifier STRING
+    (6) identifier -> . IDENTIFIER
+    (7) identifier -> . STRING
 
     $end            reduce using rule 1 (root -> expression .)
     IDENTIFIER      shift and go to state 4
+    STRING          shift and go to state 5
 
-    identifier                     shift and go to state 5
+    identifier                     shift and go to state 6
 
 state 3
 
     (2) expression -> identifier . PYTHON
     (4) identifier -> identifier . IDENTIFIER
+    (5) identifier -> identifier . STRING
 
-    PYTHON          shift and go to state 6
-    IDENTIFIER      shift and go to state 7
+    PYTHON          shift and go to state 7
+    IDENTIFIER      shift and go to state 8
+    STRING          shift and go to state 9
 
 
 state 4
 
-    (5) identifier -> IDENTIFIER .
+    (6) identifier -> IDENTIFIER .
 
-    PYTHON          reduce using rule 5 (identifier -> IDENTIFIER .)
-    IDENTIFIER      reduce using rule 5 (identifier -> IDENTIFIER .)
+    PYTHON          reduce using rule 6 (identifier -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 6 (identifier -> IDENTIFIER .)
+    STRING          reduce using rule 6 (identifier -> IDENTIFIER .)
 
 
 state 5
 
-    (3) expression -> expression identifier . PYTHON
-    (4) identifier -> identifier . IDENTIFIER
+    (7) identifier -> STRING .
 
-    PYTHON          shift and go to state 8
-    IDENTIFIER      shift and go to state 7
+    PYTHON          reduce using rule 7 (identifier -> STRING .)
+    IDENTIFIER      reduce using rule 7 (identifier -> STRING .)
+    STRING          reduce using rule 7 (identifier -> STRING .)
 
 
 state 6
 
-    (2) expression -> identifier PYTHON .
+    (3) expression -> expression identifier . PYTHON
+    (4) identifier -> identifier . IDENTIFIER
+    (5) identifier -> identifier . STRING
 
-    IDENTIFIER      reduce using rule 2 (expression -> identifier PYTHON .)
-    $end            reduce using rule 2 (expression -> identifier PYTHON .)
+    PYTHON          shift and go to state 10
+    IDENTIFIER      shift and go to state 8
+    STRING          shift and go to state 9
 
 
 state 7
+
+    (2) expression -> identifier PYTHON .
+
+    IDENTIFIER      reduce using rule 2 (expression -> identifier PYTHON .)
+    STRING          reduce using rule 2 (expression -> identifier PYTHON .)
+    $end            reduce using rule 2 (expression -> identifier PYTHON .)
+
+
+state 8
 
     (4) identifier -> identifier IDENTIFIER .
 
     PYTHON          reduce using rule 4 (identifier -> identifier IDENTIFIER .)
     IDENTIFIER      reduce using rule 4 (identifier -> identifier IDENTIFIER .)
+    STRING          reduce using rule 4 (identifier -> identifier IDENTIFIER .)
 
 
-state 8
+state 9
+
+    (5) identifier -> identifier STRING .
+
+    PYTHON          reduce using rule 5 (identifier -> identifier STRING .)
+    IDENTIFIER      reduce using rule 5 (identifier -> identifier STRING .)
+    STRING          reduce using rule 5 (identifier -> identifier STRING .)
+
+
+state 10
 
     (3) expression -> expression identifier PYTHON .
 
     IDENTIFIER      reduce using rule 3 (expression -> expression identifier PYTHON .)
+    STRING          reduce using rule 3 (expression -> expression identifier PYTHON .)
     $end            reduce using rule 3 (expression -> expression identifier PYTHON .)
 

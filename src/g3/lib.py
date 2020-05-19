@@ -2,7 +2,8 @@ from ply import lex
 
 tokens = [
     'IDENTIFIER',
-    'PYTHON'
+    'PYTHON',
+    'STRING'
 ]
 
 def t_IDENTIFIER(t):
@@ -10,7 +11,8 @@ def t_IDENTIFIER(t):
     return t
 
 def t_STRING(t):
-    r''
+    r'\'[^\']+\''
+    return t
 
 def t_PYTHON(t):
     r'`[^`]*`'
@@ -25,7 +27,7 @@ t_ignore = " \t\n"
 lexer = lex.lex()
 
 data = """
-IDENTIFIER LSB RSB `print("Hello World!")`
+'print' '(' ')' `print("Hello World!")`
 IDENTIFIER LSB RSB 
 `
 print("a")
@@ -82,18 +84,20 @@ def p_expression_2(t):
 def p_identifier(t):
     '''
     identifier : identifier IDENTIFIER
+        | identifier STRING
     '''
     t[0] = t[1] + " " + t[2]
 
 def p_identifier_2(t):
     '''
     identifier : IDENTIFIER
+        | STRING
     '''
     t[0] = t[1]
 
 
 data = """
-IDENTIFIER LSB RSB `print("Hello")`
+'print' LSB RSB `print("Hello")`
 IDENTIFIER RSB LSB `print("HLO")`
 """
 

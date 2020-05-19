@@ -37,7 +37,7 @@ print()
 
 from ply import yacc
 
-pythoncommand = ""
+pythoncommand = []
 grammar = ""
 
 def p_root(t):
@@ -54,7 +54,10 @@ def p_expression(t):
     global pythoncommand
     global grammar
     pythoncommand = pythoncommand + t[2]
-    grammar = grammar + t[1]
+    if(grammar==""):
+        grammar = grammar + t[1]
+    else:
+        grammar = grammar + " | " + t[1]
 
 def p_expression_2(t):
     '''
@@ -63,14 +66,18 @@ def p_expression_2(t):
     t[0] = t[1] + t[2] + t[3]
     global pythoncommand
     global grammar
-    pythoncommand = pythoncommand + (t[3])
-    grammar = grammar + t[2]
+    pythoncommand = pythoncommand + t[3]
+    grammar = grammar + " | " + t[2]
+    if (grammar == ""):
+        grammar = grammar + t[1]
+    else:
+        grammar = grammar + " | " + t[1]
 
 def p_identifier(t):
     '''
     identifier : identifier IDENTIFIER
     '''
-    t[0] = t[1] + t[2]
+    t[0] = t[1] + " " + t[2]
 
 def p_identifier_2(t):
     '''

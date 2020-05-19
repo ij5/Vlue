@@ -211,7 +211,7 @@ def p_expression_while(t):
 
 def p_expression_use(t):
     '''
-    expression : expression use
+    expression : expression use SEMI
     '''
     t[0] = t[1] + t[2]
 
@@ -223,13 +223,13 @@ def p_expression_error_handling(t):
 
 def p_expression_variable_alone(t):
     '''
-    expression : expression variable_alone
+    expression : expression variable_alone SEMI
     '''
     t[0] = t[1] + t[2]
 
 def p_expression_global_variable(t):
     '''
-    expression : expression global_variable
+    expression : expression global_variable SEMI
     '''
     t[0] = t[1] + t[2]
 
@@ -282,7 +282,7 @@ def p_expression_while_2(t):
 
 def p_expression_use_2(t):
     '''
-    expression : use
+    expression : use SEMI
     '''
     t[0] = t[1]
 
@@ -294,13 +294,13 @@ def p_expression_error_handling_2(t):
 
 def p_expression_variable_alone_2(t):
     '''
-    expression : variable_alone
+    expression : variable_alone SEMI
     '''
     t[0] = t[1]
 
 def p_expression_global_variable_2(t):
     '''
-    expression : global_variable
+    expression : global_variable SEMI
     '''
     t[0] = t[1]
 

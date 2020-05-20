@@ -591,6 +591,13 @@ def p_use(t):       #TODO
         else:
             error("존재하지 않는 라이브러리입니다.")
 
+############### CLASS
+
+def p_class_def(t):
+    '''
+    class_def : 
+    '''
+
 ############### GLOBAL VARIABLE
 def p_global_variable(t):
     '''

@@ -15,7 +15,8 @@ reserved = {
     'use': 'USE',
     'try': 'TRY',
     'catch': 'CATCH',
-    'global': 'GLOBAL'
+    'global': 'GLOBAL',
+    'class': 'CLASS',
 }
 
 tokens = [

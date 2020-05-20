@@ -572,7 +572,7 @@ import lib
 
 def p_use(t):       #TODO
     '''
-    use : USE IDENTIFIER
+    use : USE use_params
     '''
     global f
     global fi
@@ -590,6 +590,12 @@ def p_use(t):       #TODO
             t[0] = open(currentpath, 'r', encoding='UTF-8').read()
         else:
             error("존재하지 않는 라이브러리입니다.")
+
+def use_params(t):
+    '''
+    use_params : IDENTIFIER
+    '''
+    t[0] = t[1]
 
 ############### CLASS
 

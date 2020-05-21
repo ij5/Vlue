@@ -602,6 +602,23 @@ def p_class_def(t):
     '''
     class_def : CLASS IDENTIFIER LMB expression RMB
     '''
+    if (t[4] == None):
+        t[0] = "buf___ = 7\n"
+    else:
+        body = re.sub("\n", "\n\t", t[4])
+        body = body[:-1]
+        t[0] = t[1] + ":" + "\n\t" + body
+
+def p_class_call(t):
+    '''
+    class_call : variable_alone EQUAL default_class
+        | default_class
+    '''
+
+def p_default_class(t):
+    '''
+    default_class : IDENTIFIER LSB parameter RSB
+    '''
 
 ############### GLOBAL VARIABLE
 def p_global_variable(t):

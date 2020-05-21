@@ -455,8 +455,12 @@ def p_function_body(t):
 def p_function_call(t):
     '''
     function_call : IDENTIFIER LSB parameter RSB
+        | IDENTIFIER LSB empty LSB
     '''
-    t[0] = t[1] + t[2] + t[3] + t[4] + "\n"
+    if(t[3]==None):
+        t[0] = t[1] + t[2] + "" + t[4] + "\n"
+    else:
+        t[0] = t[1] + t[2] + t[3] + t[4] + "\n"
 
 # PARAMETER
 
@@ -469,7 +473,6 @@ def p_parameter(t):
 def p_parameter_2(t):
     '''
     parameter : calculate
-        | empty
     '''
     if(t[1]==None):
         t[0] = ""
@@ -872,7 +875,7 @@ use test;
 #         break
 #     data = data+buf
 
-result = parser.parse(data)
+result = parser.parse(data, debug=1)
 print(variable)
 print(code)
 exec(code)

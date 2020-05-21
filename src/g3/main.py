@@ -600,7 +600,7 @@ def p_use_params(t):
 
 def p_class_def(t):
     '''
-    class_def :
+    class_def : CLASS IDENTIFIER LMB expression RMB
     '''
 
 ############### GLOBAL VARIABLE

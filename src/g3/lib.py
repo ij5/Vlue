@@ -1,16 +1,115 @@
-import sys
-import re
+from ply import lex
 
-def lex(character):
-    IDENTIFIER = re.compile("[a-zA-Z_]+")
-    PYTHON = re.compile('`[^`]*`')
-    STRING = re.compile('\'[^\']+\'')
-    if(IDENTIFIER.match(character)):
-        return "IDENTIFIER"
-    elif(PYTHON.match(character)):
-        return "PYTHON"
-    elif(STRING.match(character)):
-        return "STRING"
+tokens = [
+    'IDENTIFIER',
+    'PYTHON',
+    'STRING'
+]
+
+def t_IDENTIFIER(t):
+    r'[a-zA-Z_]+[a-zA-Z_0-9]*'
+    return t
+
+def t_STRING(t):
+    r'\'[^\']+\''
+    return t
+
+def t_PYTHON(t):
+    r'`[^`]*`'
+    return t
+
+def t_error(t):
+    print("error on token %s" % t.value)
+    t.lexer.skip(1)
+
+t_ignore = " \t\n"
+
+lexer = lex.lex()
+
+data = """
+'print' '(' ')' `print("Hello World!")`
+IDENTIFIER LSB RSB 
+`
+print("a")
+`
+"""
+
+lexer.input(data)
+
+while True:
+    tok = lexer.token()
+    if not tok:
+        break
+    print(tok)
+print()
+
+from ply import yacc
+
+pythoncommand = []
+grammar = ""
+PYTHON = "PYTHON"
+
+def p_root(t):
+    '''
+    root : expression
+    '''
+    pass
+
+def p_expression(t):
+    '''
+    expression : identifier PYTHON
+    '''
+    t[0] = t[1] + t[2]
+    global pythoncommand
+    global grammar
+    pythoncommand.append(t[2])
+    if(grammar==""):
+        grammar = grammar + t[1]
     else:
-        return "ERROR"
+        grammar = grammar + " | " + t[1]
 
+def p_expression_2(t):
+    '''
+    expression : expression identifier PYTHON
+    '''
+    t[0] = t[1] + t[2] + t[3]
+    global pythoncommand
+    global grammar
+    pythoncommand.append(t[3])
+    if (grammar == ""):
+        grammar = grammar + t[1]
+    else:
+        grammar = grammar + " | " + t[2]
+
+def p_identifier(t):
+    '''
+    identifier : identifier IDENTIFIER
+        | identifier STRING
+    '''
+    t[0] = t[1] + " " + t[2]
+
+def p_identifier_2(t):
+    '''
+    identifier : IDENTIFIER
+        | STRING
+    '''
+    t[0] = t[1]
+
+def p_error(t):
+    if(t):
+        print("Error on token '"+t.value+"', line " + str(t.lineno))
+    else:
+        print("Error on EOF")
+
+
+data = """
+'print' LSB RSB `print("Hello")`
+IDENTIFIER RSB LSB `print("HLO")`
+"""
+
+parser = yacc.yacc()
+def parsing(data):
+    parser.parse(data)
+
+print(pythoncommand)
+print(grammar)

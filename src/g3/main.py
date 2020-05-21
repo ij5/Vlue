@@ -155,7 +155,7 @@ def p_root(t):
 
 # EXPRESSION EXPRESSION
 
-def p_expression_variable(t):
+def p_expression_variable(t):       #TODO 변수 중복 선언 문제
     '''
     expression : expression variable_declaration SEMI
         | expression variable_value_change SEMI
@@ -235,7 +235,7 @@ def p_expression_global_variable(t):
 
 # EXPRESSION
 
-def p_expression_variable_2(t):
+def p_expression_variable_2(t):       #TODO 변수 중복 선언 문제
     '''
     expression : variable_declaration SEMI
         | variable_value_change SEMI
@@ -582,7 +582,6 @@ def p_use(t):       #TODO
     if os.path.isfile(realpath):
         fi += 1
         f.append(open(realpath, 'r', encoding='UTF-8'))
-        t[0] = ""
     else:
         currentpath = os.path.join(os.getcwd(), codefile)
         if os.path.isfile(currentpath):
@@ -590,6 +589,7 @@ def p_use(t):       #TODO
             t[0] = open(currentpath, 'r', encoding='UTF-8').read()
         else:
             error("존재하지 않는 라이브러리입니다.")
+    t[0] = ""
 
 def p_use_params(t):
     '''

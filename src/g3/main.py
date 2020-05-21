@@ -15,7 +15,8 @@ reserved = {
     'use': 'USE',
     'try': 'TRY',
     'catch': 'CATCH',
-    'global': 'GLOBAL'
+    'global': 'GLOBAL',
+    'class': 'CLASS',
 }
 
 tokens = [
@@ -39,7 +40,6 @@ tokens = [
     'LMB',
     'COMMA',
     'LIST',
-    'GLOBAL',
 ] + list(reserved.values())
 
 t_EQUAL = r'='
@@ -155,7 +155,7 @@ def p_root(t):
 
 # EXPRESSION EXPRESSION
 
-def p_expression_variable(t):       #TODO 변수 중복 선언 문제
+def p_expression_variable(t):
     '''
     expression : expression variable_declaration SEMI
         | expression variable_value_change SEMI
@@ -235,7 +235,7 @@ def p_expression_global_variable(t):
 
 # EXPRESSION
 
-def p_expression_variable_2(t):       #TODO 변수 중복 선언 문제
+def p_expression_variable_2(t):
     '''
     expression : variable_declaration SEMI
         | variable_value_change SEMI
@@ -565,7 +565,6 @@ def p_condition_4(t):
 
 ############## LIBRARY
 
-import lib
 
 
 ############### USE
@@ -582,6 +581,7 @@ def p_use(t):       #TODO
     if os.path.isfile(realpath):
         fi += 1
         f.append(open(realpath, 'r', encoding='UTF-8'))
+        t[0] = ""
     else:
         currentpath = os.path.join(os.getcwd(), codefile)
         if os.path.isfile(currentpath):
@@ -589,7 +589,6 @@ def p_use(t):       #TODO
             t[0] = open(currentpath, 'r', encoding='UTF-8').read()
         else:
             error("존재하지 않는 라이브러리입니다.")
-    t[0] = ""
 
 def p_use_params(t):
     '''
@@ -599,7 +598,10 @@ def p_use_params(t):
 
 ############### CLASS
 
-
+def p_class_def(t):
+    '''
+    class_def :
+    '''
 
 ############### GLOBAL VARIABLE
 def p_global_variable(t):
@@ -800,9 +802,8 @@ def p_empty(t):
 
 # 토큰 에러 처리
 def p_error(t):
-    stack_state_str = ' '.join([symbol.type for symbol in parser.symstack][1:])
     if(t):
-        print("Error on token '"+t.value+"', line " + str(t.lineno)+"|parser state:{} {} . {}".format(parser.state,stack_state_str, t))
+        print("Error on token '"+t.value+"', line " + str(t.lineno))
     else:
         print("Error on EOF")
 
@@ -845,7 +846,7 @@ try{
     var b = "Hello!";
 }
 
-
+use test;
 
 """
 # while True:
@@ -854,9 +855,8 @@ try{
 #         break
 #     data = data+buf
 
-result = parser.parse(data, debug=1)
+result = parser.parse(data)
 print(variable)
 print(code)
 exec(code)
 print(os.getcwd())
-print("aasdasdasd")

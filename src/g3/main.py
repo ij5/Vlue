@@ -800,8 +800,9 @@ def p_empty(t):
 
 # 토큰 에러 처리
 def p_error(t):
+    stack_state_str = ' '.join([symbol.type for symbol in parser.symstack][1:])
     if(t):
-        print("Error on token '"+t.value+"', line " + str(t.lineno))
+        print("Error on token '"+t.value+"', line " + str(t.lineno)+"|parser state:{} {} . {}".format(parser.state,stack_state_str, t))
     else:
         print("Error on EOF")
 
@@ -853,8 +854,9 @@ try{
 #         break
 #     data = data+buf
 
-result = parser.parse(data)
+result = parser.parse(data, debug=1)
 print(variable)
 print(code)
 exec(code)
 print(os.getcwd())
+print("aasdasdasd")

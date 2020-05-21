@@ -2,7 +2,6 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    CLASS
     COLON
 
 Grammar
@@ -94,7 +93,6 @@ Rule 82    empty -> <empty>
 Terminals, with rules where they appear
 
 CATCH                : 29
-CLASS                : 
 COLON                : 
 COMMA                : 44
 DIV                  : 74

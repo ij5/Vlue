@@ -433,8 +433,8 @@ def p_function(t):
 
 def p_function_head(t):
     '''
-    function_head : FUNCTION IDENTIFIER LSB empty RSB
-        | FUNCTION IDENTIFIER LSB parameter RSB
+    function_head : FUNCTION IDENTIFIER LSB parameter RSB
+        | FUNCTION IDENTIFIER LSB empty RSB
     '''
     if(t[4]==None):
         t[0] = "def " + t[2] + t[3] + "" + t[5]
@@ -468,7 +468,7 @@ def p_parameter(t):
     '''
     parameter : parameter COMMA calculate
     '''
-    t[0] = t[1] + t[2]
+    t[0] = t[1] + t[2] + t[3]
 
 def p_parameter_2(t):
     '''
@@ -834,48 +834,15 @@ def error(s):
 
 parser = yacc.yacc()
 
-data = """
-var a = 3;
-var b = 2;
-if(a<b){
-    a = b;
-}
 
-function fn(){}
-var c = 5;
-repeat(5){
-c = c + 1;
-}
-c = [1,2,"3",5.6,76];
-
-for(i in c){
-    c = 4+5+6;
-}
-
-while(c<9){
-    c = 5;
-    c = c+1;
-}
-
-fn();
-var asd = [];
-
-try{
-    var a = "Hello";
-}catch(e){
-    var b = "Hello!";
-}
-
-use test;
-
-"""
+data = open('test.bl', 'r', encoding='UTF-8').read()
 # while True:
 #     buf = input(">>> ")
 #     if(buf=="exit"):
 #         break
 #     data = data+buf
 
-result = parser.parse(data, debug=1)
+result = parser.parse(data, debug=0)
 print(variable)
 print(code)
 exec(code)

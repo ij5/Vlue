@@ -1,0 +1,32 @@
+var a = 3;
+var b = 2;
+if(a<b){
+    a = b;
+}
+
+function fn(){}
+var c = 5;
+repeat(5){
+c = c + 1;
+}
+c = [1,2,"3",5.6,76];
+
+for(i in c){
+    c = 4+5+6;
+}
+
+while(c<9){
+    c = 5;
+    c = c+1;
+}
+
+fn();
+var asd = [];
+
+try{
+    var a = "Hello";
+}catch(e){
+    var b = "Hello!";
+}
+
+use test;

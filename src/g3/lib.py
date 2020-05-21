@@ -48,6 +48,7 @@ from ply import yacc
 
 pythoncommand = []
 grammar = ""
+PYTHON = "PYTHON"
 
 def p_root(t):
     '''
@@ -94,6 +95,12 @@ def p_identifier_2(t):
         | STRING
     '''
     t[0] = t[1]
+
+def p_error(t):
+    if(t):
+        print("Error on token '"+t.value+"', line " + str(t.lineno))
+    else:
+        print("Error on EOF")
 
 
 data = """

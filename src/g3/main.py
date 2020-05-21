@@ -568,6 +568,7 @@ def p_condition_4(t):
 
 import lib
 
+
 ############### USE
 
 def p_use(t):       #TODO
@@ -591,7 +592,7 @@ def p_use(t):       #TODO
         else:
             error("존재하지 않는 라이브러리입니다.")
 
-def use_params(t):
+def p_use_params(t):
     '''
     use_params : IDENTIFIER
     '''
@@ -599,10 +600,7 @@ def use_params(t):
 
 ############### CLASS
 
-def p_class_def(t):
-    '''
-    class_def : 
-    '''
+
 
 ############### GLOBAL VARIABLE
 def p_global_variable(t):
@@ -847,7 +845,7 @@ try{
     var b = "Hello!";
 }
 
-use test
+
 
 """
 # while True:

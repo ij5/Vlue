@@ -50,7 +50,7 @@ Rule 40    function_head -> FUNCTION IDENTIFIER LSB parameter RSB
 Rule 41    function_head -> FUNCTION IDENTIFIER LSB empty RSB
 Rule 42    function_body -> LMB expression RMB
 Rule 43    function_call -> IDENTIFIER LSB parameter RSB
-Rule 44    function_call -> IDENTIFIER LSB empty LSB
+Rule 44    function_call -> IDENTIFIER LSB empty RSB
 Rule 45    parameter -> parameter COMMA calculate
 Rule 46    parameter -> calculate
 Rule 47    if_statement -> if_statement_1 if_statement_2 if_statement_3
@@ -114,14 +114,14 @@ INT                  : 79
 LB                   : 55 57
 LIST                 : 69 71 83 84
 LMB                  : 28 29 32 35 38 42 51 52 53 54 63
-LSB                  : 29 31 34 37 40 41 43 44 44 51 52 53 66 85
+LSB                  : 29 31 34 37 40 41 43 44 51 52 53 66 85
 MINUS                : 75 76
 MUL                  : 77
 PLUS                 : 74
 RB                   : 56 58
 REPEAT               : 37
 RMB                  : 28 29 32 35 38 42 51 52 53 54 63
-RSB                  : 29 31 34 37 40 41 43 51 52 53 66 85
+RSB                  : 29 31 34 37 40 41 43 44 51 52 53 66 85
 SEMI                 : 2 3 6 10 12 13 14 15 22 24 25
 STRING               : 81
 TRY                  : 28
@@ -210,7 +210,7 @@ state 0
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -314,7 +314,7 @@ state 2
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -554,7 +554,7 @@ state 17
     (69) variable_value_change -> IDENTIFIER . EQUAL LIST
     (70) variable_value_change -> IDENTIFIER . EQUAL calculate
     (43) function_call -> IDENTIFIER . LSB parameter RSB
-    (44) function_call -> IDENTIFIER . LSB empty LSB
+    (44) function_call -> IDENTIFIER . LSB empty RSB
     (68) variable_alone -> IDENTIFIER .
 
     EQUAL           shift and go to state 50
@@ -974,7 +974,7 @@ state 50
 state 51
 
     (43) function_call -> IDENTIFIER LSB . parameter RSB
-    (44) function_call -> IDENTIFIER LSB . empty LSB
+    (44) function_call -> IDENTIFIER LSB . empty RSB
     (45) parameter -> . parameter COMMA calculate
     (46) parameter -> . calculate
     (86) empty -> .
@@ -991,7 +991,7 @@ state 51
     (84) calculate -> . LIST
     (85) calculate -> . LSB calculate RSB
 
-  ! shift/reduce conflict for LSB resolved as shift
+    RSB             reduce using rule 86 (empty -> .)
     MINUS           shift and go to state 85
     INT             shift and go to state 86
     FLOAT           shift and go to state 87
@@ -999,8 +999,6 @@ state 51
     IDENTIFIER      shift and go to state 82
     LIST            shift and go to state 93
     LSB             shift and go to state 89
-
-  ! LSB             [ reduce using rule 86 (empty -> .) ]
 
     parameter                      shift and go to state 90
     empty                          shift and go to state 91
@@ -1113,7 +1111,7 @@ state 56
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -1241,7 +1239,7 @@ state 58
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -1369,7 +1367,7 @@ state 60
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -1497,7 +1495,7 @@ state 62
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -1760,7 +1758,7 @@ state 73
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -2131,9 +2129,9 @@ state 90
 
 state 91
 
-    (44) function_call -> IDENTIFIER LSB empty . LSB
+    (44) function_call -> IDENTIFIER LSB empty . RSB
 
-    LSB             shift and go to state 121
+    RSB             shift and go to state 121
 
 
 state 92
@@ -2241,7 +2239,7 @@ state 97
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -2338,7 +2336,7 @@ state 98
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -2411,7 +2409,7 @@ state 99
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -2484,7 +2482,7 @@ state 100
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -2557,7 +2555,7 @@ state 101
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -2740,7 +2738,7 @@ state 109
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -3035,21 +3033,21 @@ state 120
 
 state 121
 
-    (44) function_call -> IDENTIFIER LSB empty LSB .
+    (44) function_call -> IDENTIFIER LSB empty RSB .
 
-    VAR             reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
-    IDENTIFIER      reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
-    USE             reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
-    GLOBAL          reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
-    IF              reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
-    FUNCTION        reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
-    REPEAT          reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
-    FOR             reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
-    WHILE           reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
-    TRY             reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
-    $end            reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
-    SEMI            reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
-    RMB             reduce using rule 44 (function_call -> IDENTIFIER LSB empty LSB .)
+    VAR             reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
+    IDENTIFIER      reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
+    USE             reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
+    GLOBAL          reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
+    IF              reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
+    FUNCTION        reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
+    REPEAT          reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
+    FOR             reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
+    WHILE           reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
+    TRY             reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
+    $end            reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
+    SEMI            reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
+    RMB             reduce using rule 44 (function_call -> IDENTIFIER LSB empty RSB .)
 
 
 state 122
@@ -3118,7 +3116,7 @@ state 124
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -3636,7 +3634,7 @@ state 151
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -3895,7 +3893,7 @@ state 162
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -3992,7 +3990,7 @@ state 163
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -4128,7 +4126,7 @@ state 168
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -4225,7 +4223,7 @@ state 169
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -4330,7 +4328,7 @@ state 171
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -4427,7 +4425,7 @@ state 172
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -4518,7 +4516,7 @@ state 174
     (50) if_statement -> . if_statement_1
     (39) function -> . function_head function_body
     (43) function_call -> . IDENTIFIER LSB parameter RSB
-    (44) function_call -> . IDENTIFIER LSB empty LSB
+    (44) function_call -> . IDENTIFIER LSB empty RSB
     (36) repeat -> . repeat_head repeat_body
     (30) for -> . for_head for_body
     (33) while -> . while_head while_body
@@ -4615,7 +4613,6 @@ WARNING: shift/reduce conflict for REPEAT in state 0 resolved as shift
 WARNING: shift/reduce conflict for FOR in state 0 resolved as shift
 WARNING: shift/reduce conflict for WHILE in state 0 resolved as shift
 WARNING: shift/reduce conflict for TRY in state 0 resolved as shift
-WARNING: shift/reduce conflict for LSB in state 51 resolved as shift
 WARNING: shift/reduce conflict for VAR in state 56 resolved as shift
 WARNING: shift/reduce conflict for IDENTIFIER in state 56 resolved as shift
 WARNING: shift/reduce conflict for USE in state 56 resolved as shift

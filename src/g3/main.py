@@ -455,7 +455,7 @@ def p_function_body(t):
 def p_function_call(t):
     '''
     function_call : IDENTIFIER LSB parameter RSB
-        | IDENTIFIER LSB empty LSB
+        | IDENTIFIER LSB empty RSB
     '''
     if(t[3]==None):
         t[0] = t[1] + t[2] + "" + t[4] + "\n"
@@ -464,7 +464,7 @@ def p_function_call(t):
 
 # PARAMETER
 
-def p_parameter(t):
+def p_parameter(t):     #TODO 함수 호출 에러
     '''
     parameter : parameter COMMA calculate
     '''

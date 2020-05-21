@@ -4,7 +4,7 @@ if(a<b){
     a = b;
 }
 
-function fn(){}
+function fn(a,b){}
 var c = 5;
 repeat(5){
 c = c + 1;

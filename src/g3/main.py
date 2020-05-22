@@ -583,7 +583,7 @@ def p_library_2(t):
     library : library identifier PYTHON
     '''
     exec(t[3][1:-1])
-    
+
 
 def p_identifier(t):
     '''

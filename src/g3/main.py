@@ -40,6 +40,7 @@ tokens = [
     'LMB',
     'COMMA',
     'LIST',
+    'PYTHON',
 ] + list(reserved.values())
 
 t_EQUAL = r'='
@@ -568,7 +569,25 @@ def p_condition_4(t):
 
 ############## LIBRARY
 
+def p_library(t):
+    '''
+    library : identifier PYTHON
+    '''
 
+def p_library_2(t):
+    '''
+    library : library identifier PYTHON
+    '''
+
+def p_identifier(t):
+    '''
+    identifier : identifier IDENTIFIER
+    '''
+
+def p_identifier_2(t):
+    '''
+    identifier : IDENTIFIER
+    '''
 
 ############### USE
 

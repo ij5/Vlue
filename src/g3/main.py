@@ -578,6 +578,7 @@ def p_use(t):       #TODO
     '''
     global f
     global fi
+    import main
     libfile = t[2]+".blib"
     codefile = t[2]+".bl"
     realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"lib",libfile)
@@ -590,6 +591,7 @@ def p_use(t):       #TODO
         if os.path.isfile(currentpath):
             print("존재하는 라이브러리입니다.")
             t[0] = open(currentpath, 'r', encoding='UTF-8').read()
+            main.parse(t[0])
         else:
             error("존재하지 않는 라이브러리입니다.")
 
@@ -832,18 +834,23 @@ def error(s):
     print(s)
     exit(-1)
 
-parser = yacc.yacc()
-
-
 data = open('test.bl', 'r', encoding='UTF-8').read()
+
+def parse(data):
+    parser = yacc.yacc()
+    result = parser.parse(data, debug=0)
+    print(variable)
+    print(code)
+    exec(code)
+    print(os.getcwd())
+
+parse(data)
+
 # while True:
 #     buf = input(">>> ")
 #     if(buf=="exit"):
 #         break
 #     data = data+buf
 
-result = parser.parse(data, debug=0)
-print(variable)
-print(code)
-exec(code)
-print(os.getcwd())
+
+

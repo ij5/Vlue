@@ -79,6 +79,10 @@ def t_STRING(t):
     t.value = bytes(t.value, "utf-8").decode("unicode_escape")
     return t
 
+def t_PYTHON(t):
+    r'`[^`]*`'
+    return t
+
 def t_LIST(t):
     r'\[(((\d\.\d)|(\d)|("(?:\\"|.)*?"|\'(?:\\\'|.)*?\'))+(\,+((\d\.\d)|(\d)|("(?:\\"|.)*?"|\'(?:\\\'|.)*?\'))+)+)*\]'
     return t
@@ -578,16 +582,20 @@ def p_library_2(t):
     '''
     library : library identifier PYTHON
     '''
+    exec(t[3][1:-1])
+    
 
 def p_identifier(t):
     '''
     identifier : identifier IDENTIFIER
     '''
+    t[0] = t[1] + t[2]
 
 def p_identifier_2(t):
     '''
     identifier : IDENTIFIER
     '''
+    t[0] = t[1]
 
 ############### USE
 

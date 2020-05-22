@@ -108,8 +108,7 @@ IDENTIFIER RSB LSB `print("HLO")`
 """
 
 parser = yacc.yacc()
-def parsing(data):
+def parse(data):
     parser.parse(data)
-
-print(pythoncommand)
-print(grammar)
+    print(pythoncommand)
+    print(grammar)

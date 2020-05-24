@@ -965,11 +965,6 @@ def parse(data):
 
 parse(data)
 
-# while True:
-#     buf = input(">>> ")
-#     if(buf=="exit"):
-#         break
-#     data = data+buf
 
 
 

@@ -201,6 +201,12 @@ def p_expression_function(t):
     '''
     t[0] = t[1] + t[2]
 
+def p_expression_function_call(t):
+    '''
+    expression : expression function_call SEMI
+    '''
+    t[0] = t[1] + t[2]
+
 def p_expression_repeat(t):
     '''
     expression : expression repeat
@@ -261,11 +267,11 @@ def p_expression_function_class(t):
     '''
     t[0] = t[1] + t[2]
 
-def p_expression_inside(t):
-    '''
-    expression : expression inside SEMI
-    '''
-    t[0] = t[1] + t[2]
+# def p_expression_inside(t):
+#     '''
+#     expression : expression inside SEMI
+#     '''
+#     t[0] = t[1] + t[2]
 
 # EXPRESSION
 
@@ -292,6 +298,12 @@ def p_expression_if_statement_2(t):
 def p_expression_function_2(t):
     '''
     expression : function
+    '''
+    t[0] = t[1]
+
+def p_expression_function_call_2(t):
+    '''
+    expression : function_call SEMI
     '''
     t[0] = t[1]
 
@@ -355,11 +367,11 @@ def p_expression_function_class_2(t):
     '''
     t[0] = t[1]
 
-def p_expression_inside_2(t):
-    '''
-    expression : inside SEMI
-    '''
-    t[0] = t[1]
+# def p_expression_inside_2(t):
+#     '''
+#     expression : inside SEMI
+#     '''
+#     t[0] = t[1]
 
 # EMPTY
 
@@ -478,29 +490,29 @@ def p_repeat_body(t):
 
 ############### INSIDE
 
-def p_inside(t):
-    '''
-    inside : inside DOT IDENTIFIER LSB parameter RSB
-    '''
-    t[0] = t[1] + t[2] + t[3] + t[4] + t[5]
-
-def p_inside_2(t):
-    '''
-    inside : inside DOT IDENTIFIER
-    '''
-    t[0] = t[1] + t[2] + t[3]
-
-def p_inside_3(t):
-    '''
-    inside : IDENTIFIER LSB parameter RSB
-    '''
-    t[0] = t[1] + t[2] + t[3]
-
-def p_inside_4(t):
-    '''
-    inside : IDENTIFIER
-    '''
-    t[0] = t[1]
+# def p_inside(t):
+#     '''
+#     inside : inside DOT IDENTIFIER LSB parameter RSB
+#     '''
+#     t[0] = t[1] + t[2] + t[3] + t[4] + t[5]
+#
+# def p_inside_2(t):
+#     '''
+#     inside : inside DOT IDENTIFIER
+#     '''
+#     t[0] = t[1] + t[2] + t[3]
+#
+# def p_inside_3(t):
+#     '''
+#     inside : IDENTIFIER LSB parameter RSB
+#     '''
+#     t[0] = t[1] + t[2] + t[3]
+#
+# def p_inside_4(t):
+#     '''
+#     inside : IDENTIFIER
+#     '''
+#     t[0] = t[1]
 
 ############### FUNCTION CLASS
 
@@ -570,15 +582,15 @@ def p_function_body(t):
 
 # CALL
 
-# def p_function_call(t):
-#     '''
-#     function_call : IDENTIFIER LSB parameter RSB
-#         | IDENTIFIER LSB empty RSB
-#     '''
-#     if(t[3]==None):
-#         t[0] = t[1] + t[2] + "" + t[4] + "\n"
-#     else:
-#         t[0] = t[1] + t[2] + t[3] + t[4] + "\n"
+def p_function_call(t):
+    '''
+    function_call : IDENTIFIER LSB parameter RSB
+        | IDENTIFIER LSB empty RSB
+    '''
+    if(t[3]==None):
+        t[0] = t[1] + t[2] + "" + t[4] + "\n"
+    else:
+        t[0] = t[1] + t[2] + t[3] + t[4] + "\n"
 
 # PARAMETER
 

@@ -1,12 +1,12 @@
 use debug;
 
-var a = 3;
-var b = 2;
-if(a<b){
-    a = b;
+var asd = 3;
+var bsa = 2;
+if(asd<bsa){
+    a = bsa;
 }
 
-function fn(a,b){}
+function fn(d,b){}
 var c = 5;
 repeat(5){
 c = c + 1;
@@ -22,21 +22,20 @@ while(c<9){
     c = c+1;
 }
 
-fn(a,b);
+fn(asd,bsa);
 var asd = [];
 
 try{
-    var a = "Hello";
+    var asd = "Hello";
 }catch(e){
-    var b = "Hello!";
+    var bsa = "Hello!";
 }
 
 
 class Hello{
     function asd(a,b){
-        global a;
+
     }
-    asfffd(a,b);
 }
 
 var asd = "Hello";

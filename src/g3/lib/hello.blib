@@ -1,1 +1,1 @@
-IDENTIFIER LSB RSB `print("Hello World!")`
+'print' LSB RSB `print("Hello World!")`

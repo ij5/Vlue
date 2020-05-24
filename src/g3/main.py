@@ -1,3 +1,6 @@
+import sys
+import lib
+
 ############################
 #####LEXER
 ############################
@@ -655,30 +658,6 @@ def p_condition_4(t):
     t[0] = t[1]
 
 ############## LIBRARY
-
-def p_library(t):
-    '''
-    library : identifier PYTHON
-    '''
-
-def p_library_2(t):
-    '''
-    library : library identifier PYTHON
-    '''
-    exec(t[3][1:-1])
-
-
-def p_identifier(t):
-    '''
-    identifier : identifier IDENTIFIER
-    '''
-    t[0] = t[1] + t[2]
-
-def p_identifier_2(t):
-    '''
-    identifier : IDENTIFIER
-    '''
-    t[0] = t[1]
 
 ############### USE
 

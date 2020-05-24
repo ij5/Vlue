@@ -31,9 +31,13 @@ try{
     var b = "Hello!";
 }
 
-global a;
 
 class Hello{
-    function asd(){}
-    var asd = "Hello";
+    function asd(){
+        global a;
+    }
 }
+
+var asd = "Hello";
+
+var c = Hello();

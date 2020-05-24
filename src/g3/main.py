@@ -251,6 +251,12 @@ def p_expression_debug(t):
     '''
     t[0] = ""
 
+def p_expression_function_class(t):
+    '''
+    expression : expression function_class SEMI
+    '''
+    t[0] = t[1] + t[2]
+
 # EXPRESSION
 
 def p_expression_variable_2(t):
@@ -333,6 +339,12 @@ def p_expression_debug_2(t):
     expression : debug SEMI
     '''
     t[0] = ""
+
+def p_expression_function_class_2(t):
+    '''
+    expression : function_class SEMI
+    '''
+    t[0] = t[1]
 
 # EMPTY
 
@@ -455,7 +467,7 @@ def p_function_class(t):
     '''
     function_class : IDENTIFIER EQUAL IDENTIFIER LSB parameter RSB
     '''
-    pass
+    t[0] = t[1] + t[2] + t[3] + t[4] + t[5] + t[6]
 
 ############### CLASS
 

@@ -20,7 +20,7 @@ reserved = {
     'catch': 'CATCH',
     'global': 'GLOBAL',
     'class': 'CLASS',
-    'debug': 'DEBUG'
+    'debug': 'DEBUG',
 }
 
 tokens = [
@@ -45,6 +45,7 @@ tokens = [
     'COMMA',
     'LIST',
     'PYTHON',
+    'DOT',
 ] + list(reserved.values())
 
 t_EQUAL = r'='
@@ -61,6 +62,7 @@ t_RB = r'\>'
 t_COLON = r'\:'
 t_SEMI = r'\;'
 t_COMMA = r'\,'
+t_DOT = r'\.'
 
 t_ignore = ' \t'
 
@@ -196,7 +198,6 @@ def p_expression_if_statement(t):
 def p_expression_function(t):
     '''
     expression : expression function
-        | expression function_call SEMI
     '''
     t[0] = t[1] + t[2]
 
@@ -252,11 +253,17 @@ def p_expression_debug(t):
     '''
     expression : expression debug SEMI
     '''
-    t[0] = ""
+    t[0] = t[1]
 
 def p_expression_function_class(t):
     '''
     expression : expression function_class SEMI
+    '''
+    t[0] = t[1] + t[2]
+
+def p_expression_inside(t):
+    '''
+    expression : expression inside SEMI
     '''
     t[0] = t[1] + t[2]
 
@@ -285,7 +292,6 @@ def p_expression_if_statement_2(t):
 def p_expression_function_2(t):
     '''
     expression : function
-        | function_call
     '''
     t[0] = t[1]
 
@@ -346,6 +352,12 @@ def p_expression_debug_2(t):
 def p_expression_function_class_2(t):
     '''
     expression : function_class SEMI
+    '''
+    t[0] = t[1]
+
+def p_expression_inside_2(t):
+    '''
+    expression : inside SEMI
     '''
     t[0] = t[1]
 
@@ -464,6 +476,32 @@ def p_repeat_body(t):
     else:
         t[0] = t[2]
 
+############### INSIDE
+
+def p_inside(t):
+    '''
+    inside : inside DOT IDENTIFIER LSB parameter RSB
+    '''
+    t[0] = t[1] + t[2] + t[3] + t[4] + t[5]
+
+def p_inside_2(t):
+    '''
+    inside : inside DOT IDENTIFIER
+    '''
+    t[0] = t[1] + t[2] + t[3]
+
+def p_inside_3(t):
+    '''
+    inside : IDENTIFIER LSB parameter RSB
+    '''
+    t[0] = t[1] + t[2] + t[3]
+
+def p_inside_4(t):
+    '''
+    inside : IDENTIFIER
+    '''
+    t[0] = t[1]
+
 ############### FUNCTION CLASS
 
 def p_function_class_declaration(t):
@@ -472,9 +510,9 @@ def p_function_class_declaration(t):
         | VAR IDENTIFIER EQUAL IDENTIFIER LSB empty RSB
     '''
     if(t[6]==None):
-        t[0] = t[2] + t[3] + t[4] + t[5] + "" + t[7]
+        t[0] = t[2] + t[3] + t[4] + t[5] + "" + t[7] + "\n"
     else:
-        t[0] = + t[2] + t[3] + t[4] + t[5] + t[6] + t[7]
+        t[0] = + t[2] + t[3] + t[4] + t[5] + t[6] + t[7] + "\n"
 
 def p_function_class_call(t):
     '''
@@ -482,9 +520,9 @@ def p_function_class_call(t):
         | IDENTIFIER EQUAL IDENTIFIER LSB empty RSB
     '''
     if(t[5]==None):
-        t[0] = t[1] + t[2] + t[3] + t[4] + "" + t[6]
+        t[0] = t[1] + t[2] + t[3] + t[4] + "" + t[6] + "\n"
     else:
-        t[0] = t[1] + t[2] + t[3] + t[4] + t[5] + t[6]
+        t[0] = t[1] + t[2] + t[3] + t[4] + t[5] + t[6] + "\n"
 
 ############### CLASS
 
@@ -532,15 +570,15 @@ def p_function_body(t):
 
 # CALL
 
-def p_function_call(t):
-    '''
-    function_call : IDENTIFIER LSB parameter RSB
-        | IDENTIFIER LSB empty RSB
-    '''
-    if(t[3]==None):
-        t[0] = t[1] + t[2] + "" + t[4] + "\n"
-    else:
-        t[0] = t[1] + t[2] + t[3] + t[4] + "\n"
+# def p_function_call(t):
+#     '''
+#     function_call : IDENTIFIER LSB parameter RSB
+#         | IDENTIFIER LSB empty RSB
+#     '''
+#     if(t[3]==None):
+#         t[0] = t[1] + t[2] + "" + t[4] + "\n"
+#     else:
+#         t[0] = t[1] + t[2] + t[3] + t[4] + "\n"
 
 # PARAMETER
 
@@ -674,6 +712,8 @@ def p_use(t):       #TODO
         fi += 1
         f.append(open(realpath, 'r', encoding='UTF-8'))
         t[0] = ""
+        for li in f:
+            lib.parse(li)
     else:
         currentpath = os.path.join(os.getcwd(), codefile)
         if os.path.isfile(currentpath):

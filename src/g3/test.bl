@@ -33,9 +33,10 @@ try{
 
 
 class Hello{
-    function asd(){
+    function asd(a,b){
         global a;
     }
+    asfffd(a,b);
 }
 
 var asd = "Hello";

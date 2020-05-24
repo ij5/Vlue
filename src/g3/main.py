@@ -476,6 +476,7 @@ def p_function_class_declaration(t):
 def p_function_class_call(t):
     '''
     function_class : IDENTIFIER EQUAL IDENTIFIER LSB parameter RSB
+        | IDENTIFIER EQUAL IDENTIFIER LSB empty RSB
     '''
     if(t[5]==None):
         t[0] = t[1] + t[2] + t[3] + t[4] + "" + t[6]

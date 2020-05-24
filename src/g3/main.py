@@ -17,6 +17,7 @@ reserved = {
     'catch': 'CATCH',
     'global': 'GLOBAL',
     'class': 'CLASS',
+    'debug': 'DEBUG'
 }
 
 tokens = [
@@ -238,6 +239,18 @@ def p_expression_global_variable(t):
     '''
     t[0] = t[1] + t[2]
 
+def p_expression_class_def(t):
+    '''
+    expression : expression class_def
+    '''
+    t[0] = t[1] + t[2]
+
+def p_expression_debug(t):
+    '''
+    expression : expression debug SEMI
+    '''
+    t[0] = ""
+
 # EXPRESSION
 
 def p_expression_variable_2(t):
@@ -308,6 +321,18 @@ def p_expression_global_variable_2(t):
     expression : global_variable SEMI
     '''
     t[0] = t[1]
+
+def p_expression_class_def_2(t):
+    '''
+    expression : class_def
+    '''
+    t[0] = t[1]
+
+def p_expression_debug_2(t):
+    '''
+    expression : debug SEMI
+    '''
+    t[0] = ""
 
 # EMPTY
 
@@ -424,6 +449,27 @@ def p_repeat_body(t):
     else:
         t[0] = t[2]
 
+############### FUNCTION CLASS
+
+def p_function_class(t):
+    '''
+    function_class : IDENTIFIER EQUAL IDENTIFIER LSB parameter RSB
+    '''
+    pass
+
+############### CLASS
+
+def p_class_def(t):
+    '''
+    class_def : CLASS IDENTIFIER LMB expression RMB
+    '''
+    if (t[4] == None):
+        t[0] = "buf___ = 7\n"
+    else:
+        body = re.sub("\n", "\n\t", t[4])
+        body = body[:-1]
+        t[0] = t[1] + " " + t[2] + ":" + "\n\t" + body
+
 ############### FUNCTION
 
 # DECLARATION
@@ -483,6 +529,17 @@ def p_parameter_2(t):
         t[0] = ""
     else:
         t[0] = t[1]
+
+############## DEBUG
+
+debug = False
+def p_debug(t):
+    '''
+    debug : USE DEBUG
+    '''
+    global debug
+    debug = True
+
 
 ############### IF STATEMENT
 
@@ -626,35 +683,12 @@ def p_use_params(t):
     '''
     t[0] = t[1]
 
-############### CLASS
-
-def p_class_def(t):
-    '''
-    class_def : CLASS IDENTIFIER LMB expression RMB
-    '''
-    if (t[4] == None):
-        t[0] = "buf___ = 7\n"
-    else:
-        body = re.sub("\n", "\n\t", t[4])
-        body = body[:-1]
-        t[0] = t[1] + ":" + "\n\t" + body
-
-def p_class_call(t):
-    '''
-    class_call : variable_alone EQUAL default_class
-        | default_class
-    '''
-
-def p_default_class(t):
-    '''
-    default_class : IDENTIFIER LSB parameter RSB
-    '''
-
 ############### GLOBAL VARIABLE
 def p_global_variable(t):
     '''
     global_variable : GLOBAL IDENTIFIER
     '''
+    t[0] = t[1] + " " + t[2] + "\n"
 
 ############### VARIABLE ALONE
 
@@ -862,12 +896,15 @@ def error(s):
 data = open('test.bl', 'r', encoding='UTF-8').read()
 
 def parse(data):
+    global debug
     parser = yacc.yacc()
     result = parser.parse(data, debug=0)
-    print(variable)
-    print(code)
+    if(debug==True):
+        print(variable)
+        print(code)
+        print(os.getcwd())
     exec(code)
-    print(os.getcwd())
+
 
 parse(data)
 

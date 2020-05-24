@@ -463,11 +463,20 @@ def p_repeat_body(t):
 
 ############### FUNCTION CLASS
 
-def p_function_class(t):
+def p_function_class_declaration(t):
+    '''
+    function_class : VAR IDENTIFIER EQUAL IDENTIFIER LSB parameter RSB
+        | VAR IDENTIFIER EQUAL IDENTIFIER LSB empty RSB
+    '''
+    if(t[5]==None):
+        t[0] = t[2] + t[3] + t[4] + t[5] + "" + t[6]
+    else:
+        t[0] = + t[2] + t[3] + t[4] + t[5] + t[6] + t[7]
+
+def p_function_class_call(t):
     '''
     function_class : IDENTIFIER EQUAL IDENTIFIER LSB parameter RSB
     '''
-    t[0] = t[1] + t[2] + t[3] + t[4] + t[5] + t[6]
 
 ############### CLASS
 

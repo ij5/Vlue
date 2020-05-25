@@ -724,8 +724,8 @@ def p_use(t):       #TODO
         fi += 1
         f.append(open(realpath, 'r', encoding='UTF-8'))
         t[0] = ""
-        for li in f:
-            lib.parse(li)
+        for ff in f:
+            pass
     else:
         currentpath = os.path.join(os.getcwd(), codefile)
         if os.path.isfile(currentpath):

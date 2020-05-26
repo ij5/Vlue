@@ -719,10 +719,11 @@ def p_library(t):
     global tokens
     global reserved
     tokens = tokens + list(string.values())
-    for sr in string.keys():
-        reserved[]
+    reserved.update(string)
     '''
     expressoin : ''' + grammar
+    for pyc in pythoncommand:
+        exec(pyc, globals())
 
 ############### USE
 

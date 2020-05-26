@@ -543,7 +543,7 @@ def p_class_def(t):
     class_def : CLASS IDENTIFIER LMB expression RMB
     '''
     if (t[4] == None):
-        t[0] = "buf___ = 7\n"
+        t[0] = t[1] + " " + t[2] + ":" + "\n\t" + "buf___ = 7\n"
     else:
         body = re.sub("\n", "\n\t", t[4])
         body = body[:-1]
@@ -736,7 +736,8 @@ def p_use(t):       #TODO
         currentpath = os.path.join(os.getcwd(), codefile)
         if os.path.isfile(currentpath):
             print("존재하는 라이브러리입니다.")
-            t[0] = open(currentpath, 'r', encoding='UTF-8').read()
+            code = open(currentpath, 'r', encoding='UTF-8').read()
+            
         else:
             error("존재하지 않는 라이브러리입니다.")
 

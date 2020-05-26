@@ -710,9 +710,11 @@ def p_condition_4(t):
 ############## LIBRARY
 
 def p_library(t):
+    from lib import parse as ModuleParser
     from lib import getpythoncommand
     from lib import getgrammar
     from lib import getstring
+    ModuleParser()
     grammar = getgrammar()
     pythoncommand = getpythoncommand()
     string = getstring()
@@ -721,7 +723,7 @@ def p_library(t):
     tokens = tokens + list(string.values())
     reserved.update(string)
     '''
-    expressoin : ''' + grammar
+    expression : ''' + grammar
     for pyc in pythoncommand:
         exec(pyc, globals())
 

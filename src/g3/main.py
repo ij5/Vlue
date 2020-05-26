@@ -109,24 +109,24 @@ def t_error(t):
     print("error on token %s" % t.value)
     t.lexer.skip(1)
 
-lexer = lex.lex()
 
-data = '''
-if(a<b){
-    a = b;
-}else{
-a = b;
-}
-'''
 
-lexer.input(data)
+# data = '''
+# if(a<b){
+#     a = b;
+# }else{
+# a = b;
+# }
+# '''
+#
+# lexer.input(data)
 
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)
-print()
+# while True:
+#     tok = lexer.token()
+#     if not tok:
+#         break
+#     print(tok)
+# print()
 
 
 ###################
@@ -709,6 +709,20 @@ def p_condition_4(t):
 
 ############## LIBRARY
 
+def p_library(t):
+    from lib import getpythoncommand
+    from lib import getgrammar
+    from lib import getstring
+    grammar = getgrammar()
+    pythoncommand = getpythoncommand()
+    string = getstring()
+    global tokens
+    global reserved
+    tokens = tokens + list(string.values())
+    for sr in string.keys():
+        reserved[]
+    '''
+    expressoin : ''' + grammar
 
 ############### USE
 
@@ -725,10 +739,6 @@ def p_use(t):       #TODO
         fi += 1
         f.append(open(realpath, 'r', encoding='UTF-8'))
         t[0] = ""
-        from lib import parse as ModuleParser
-        from lib import getpythoncommand
-        from lib import getgrammar
-        from lib import getstring
 
     else:
         print("라이브러리 없음")
@@ -959,7 +969,7 @@ def error(s):
     exit(-1)
 
 data = open('test.bl', 'r', encoding='UTF-8').read()
-
+lexer = lex.lex()
 def parse(data):
     global debug
     parser = yacc.yacc()

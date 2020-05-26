@@ -1,5 +1,5 @@
 import sys
-import lib
+
 
 ############################
 #####LEXER
@@ -709,6 +709,14 @@ def p_condition_4(t):
 
 ############## LIBRARY
 
+def p_library(t):
+    '''
+    expression :
+    '''
+    global f
+    for ff in f:
+        exec(ff.read(), globals())
+
 ############### USE
 
 def p_use(t):       #TODO
@@ -724,8 +732,6 @@ def p_use(t):       #TODO
         fi += 1
         f.append(open(realpath, 'r', encoding='UTF-8'))
         t[0] = ""
-        for ff in f:
-            pass
     else:
         currentpath = os.path.join(os.getcwd(), codefile)
         if os.path.isfile(currentpath):

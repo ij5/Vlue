@@ -1,6 +1,10 @@
 use debug;
 use hello;
 
+
+class asd{
+
+}
 var asd = 3;
 var bsa = 2;
 if(asd<bsa){

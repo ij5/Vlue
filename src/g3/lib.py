@@ -121,4 +121,15 @@ def parse(data):
     print(pythoncommand)
     print(grammar)
 
+def getpythoncommand():
+    global pythoncommand
+    return pythoncommand
+
+def getstring():
+    global string
+    return string
+
+def getgrammar():
+    global grammar
+    return grammar
 parse(data)

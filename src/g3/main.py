@@ -709,13 +709,6 @@ def p_condition_4(t):
 
 ############## LIBRARY
 
-def p_library(t):
-    '''
-    expression :
-    '''
-    global f
-    for ff in f:
-        exec(ff.read(), globals())
 
 ############### USE
 
@@ -732,6 +725,11 @@ def p_use(t):       #TODO
         fi += 1
         f.append(open(realpath, 'r', encoding='UTF-8'))
         t[0] = ""
+        from lib import parse as ModuleParser
+        from lib import getpythoncommand
+        from lib import getgrammar
+        from lib import getstring
+
     else:
         print("라이브러리 없음")
         t[0] = ""

@@ -733,13 +733,16 @@ def p_use(t):       #TODO
         f.append(open(realpath, 'r', encoding='UTF-8'))
         t[0] = ""
     else:
-        currentpath = os.path.join(os.getcwd(), codefile)
-        if os.path.isfile(currentpath):
-            print("존재하는 라이브러리입니다.")
-            code = open(currentpath, 'r', encoding='UTF-8').read()
-            
-        else:
-            error("존재하지 않는 라이브러리입니다.")
+        print("라이브러리 없음")
+        t[0] = ""
+    # else:
+    #     currentpath = os.path.join(os.getcwd(), codefile)
+    #     if os.path.isfile(currentpath):
+    #         print("존재하는 라이브러리입니다.")
+    #         code = open(currentpath, 'r', encoding='UTF-8').read()    #TODO: 라이브러리
+    #
+    #     else:
+    #         error("존재하지 않는 라이브러리입니다.")
 
 def p_use_params(t):
     '''

@@ -1,6 +1,6 @@
 import sys
 
-
+data = open('test.bl', 'r', encoding='UTF-8').read()
 ############################
 #####LEXER
 ############################
@@ -382,6 +382,23 @@ def p_expression_empty(t):
     global code
     code = code + ""
 
+
+############## LIBRARY
+
+dt = re.compile("use\s+[a-zA-Z0-9_]+")
+libres = dt.findall(data)
+for lib in libres:
+    lib = lib[3:].strip()
+    libfile = lib + ".blib"
+    realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib", libfile)
+    if os.path.isfile(realpath):
+        f.append(open(realpath, 'r', encoding='UTF-8').read())
+    else:
+        print("라이브러리 없음")
+
+for ff in f:
+    exec(ff, globals())
+
 ############### ERROR HANDLING
 
 def p_error_handling(t):
@@ -707,26 +724,6 @@ def p_condition_4(t):
     '''
     t[0] = t[1]
 
-############## LIBRARY
-
-def p_library(t):
-    from lib import parse as ModuleParser
-    from lib import getpythoncommand
-    from lib import getgrammar
-    from lib import getstring
-    ModuleParser()
-    grammar = getgrammar()
-    pythoncommand = getpythoncommand()
-    string = getstring()
-    global tokens
-    global reserved
-    tokens = tokens + list(string.values())
-    reserved.update(string)
-    '''
-    expression : ''' + grammar
-    for pyc in pythoncommand:
-        exec(pyc, globals())
-
 ############### USE
 
 def p_use(t):       #TODO
@@ -739,8 +736,6 @@ def p_use(t):       #TODO
     codefile = t[2]+".bl"
     realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"lib",libfile)
     if os.path.isfile(realpath):
-        fi += 1
-        f.append(open(realpath, 'r', encoding='UTF-8'))
         t[0] = ""
 
     else:
@@ -971,7 +966,7 @@ def error(s):
     print(s)
     exit(-1)
 
-data = open('test.bl', 'r', encoding='UTF-8').read()
+
 lexer = lex.lex()
 def parse(data):
     global debug

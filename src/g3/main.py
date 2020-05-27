@@ -730,17 +730,18 @@ def p_use(t):       #TODO
     '''
     use : USE use_params
     '''
-    global f
-    global fi
-    libfile = t[2]+".blib"
-    codefile = t[2]+".bl"
-    realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"lib",libfile)
-    if os.path.isfile(realpath):
-        t[0] = ""
-
-    else:
-        print("라이브러리 없음")
-        t[0] = ""
+    t[0] = ""
+    # global f
+    # global fi
+    # libfile = t[2]+".blib"
+    # codefile = t[2]+".bl"
+    # realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"lib",libfile)
+    # if os.path.isfile(realpath):
+    #     t[0] = ""
+    #
+    # else:
+    #     print("라이브러리 없음")
+    #     t[0] = ""
     # else:
     #     currentpath = os.path.join(os.getcwd(), codefile)
     #     if os.path.isfile(currentpath):

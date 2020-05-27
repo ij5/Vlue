@@ -1,0 +1,22 @@
+tokens.append("PRINT")
+
+def t_PRINT(t):
+    r"print"
+
+def p_expression_print(t):
+    '''
+    expression : print
+    '''
+    t[0] = t[1]
+
+def p_expression_print_2(t):
+    '''
+    expression : expression print
+    '''
+    t[0] = t[1] + t[2]
+
+def p_print(t):
+    '''
+    print : PRINT LSB STRING RSB SEMI
+    '''
+    t[0] = t[1] + t[2] + t[3] + t[4]

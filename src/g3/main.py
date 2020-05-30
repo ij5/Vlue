@@ -514,12 +514,13 @@ def p_inside(t):
     '''
     inside : IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB parameter RSB
     '''
-    t[0] = t[1] + t[2] + t[3] + t[4] + t[5]
+    t[0] = t[1] + t[2] + t[3] + t[4] + t[5] + t[6] + t[7] + t[8] + t[9]
 
 def p_inside_2(t):
     '''
     inside : IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     '''
+    t[0] = t[1] + t[2] + t[3] + t[4] + t[5] + t[6]
 
 def p_inside_3(t):
     '''

@@ -510,17 +510,38 @@ def p_repeat_body(t):
 
 ############### INSIDE
 
-def p_inside(t):
+def p_inside_1_1(t):
     '''
     inside : IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB parameter RSB
     '''
     t[0] = t[1] + t[2] + t[3] + t[4] + t[5] + t[6] + t[7] + t[8] + t[9]
 
-def p_inside_2(t):
+def p_inside_1_2(t):
+    '''
+    inside : IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB empty RSB
+    '''
+
+def p_inside_1_3(t):
+    '''
+    inside : IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB empty RSB
+    '''
+
+def p_inside_1_4(t):
+    '''
+    inside : IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
+    '''
+
+def p_inside_2_1(t):
     '''
     inside : IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     '''
     t[0] = t[1] + t[2] + t[3] + t[4] + t[5] + t[6]
+
+def p_inside_2_2(t):
+    '''
+    inside : IDENTIFIER DOT IDENTIFIER LSB empty RSB
+    '''
+    t[0] = t[1] + t[2] + t[3] + t[4] + "" + t[6]
 
 def p_inside_3(t):
     '''

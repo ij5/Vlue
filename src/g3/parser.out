@@ -4,6 +4,7 @@ Unused terminals:
 
     COLON
     DOT
+    PRINT
     PYTHON
 
 Grammar
@@ -130,6 +131,7 @@ LSB                  : 35 37 40 43 45 46 47 48 51 52 54 55 63 64 65 93
 MINUS                : 83 84
 MUL                  : 85
 PLUS                 : 82
+PRINT                : 
 PYTHON               : 
 RB                   : 68 70
 REPEAT               : 43

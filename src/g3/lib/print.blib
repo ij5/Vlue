@@ -15,4 +15,3 @@ def p_expression_print_2(t):
 def p_print(t):
     'print : PRINT LSB STRING RSB SEMI'
     t[0] = t[1] + t[2] + t[3] + t[4]
-

@@ -1,5 +1,5 @@
 use debug;
-use execc;
+use print;
 
 class Asd{
 
@@ -52,3 +52,5 @@ class Hello{
 var asd = "Hello";
 
 c = Hello();
+
+print("Hello!!");

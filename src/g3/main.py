@@ -162,6 +162,26 @@ def p_root(t):
     else:
         code = code + t[1]
 
+
+############## LIBRARY
+
+dt = re.compile("use\s+[a-zA-Z0-9_]+")
+libres = dt.findall(data)
+for lib in libres:
+    lib = lib[3:].strip()
+    libfile = lib + ".blib"
+    realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib", libfile)
+    if os.path.isfile(realpath):
+        f.append(open(realpath, 'r', encoding='UTF-8').read())
+    else:
+        print("라이브러리 없음")
+
+d = dict(locals(), **globals())
+for ff in f:
+    exec(ff, d,d)
+
+
+
 ################ EXPRESSION
 
 # EXPRESSION EXPRESSION
@@ -381,23 +401,6 @@ def p_expression_empty(t):
     '''
     global code
     code = code + ""
-
-
-############## LIBRARY
-
-dt = re.compile("use\s+[a-zA-Z0-9_]+")
-libres = dt.findall(data)
-for lib in libres:
-    lib = lib[3:].strip()
-    libfile = lib + ".blib"
-    realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib", libfile)
-    if os.path.isfile(realpath):
-        f.append(open(realpath, 'r', encoding='UTF-8').read())
-    else:
-        print("라이브러리 없음")
-
-for ff in f:
-    exec(ff, globals())
 
 ############### ERROR HANDLING
 

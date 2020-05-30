@@ -287,11 +287,11 @@ def p_expression_function_class(t):
     '''
     t[0] = t[1] + t[2]
 
-# def p_expression_inside(t):
-#     '''
-#     expression : expression inside SEMI
-#     '''
-#     t[0] = t[1] + t[2]
+def p_expression_inside(t):
+    '''
+    expression : expression inside SEMI
+    '''
+    t[0] = t[1] + t[2]
 
 # EXPRESSION
 
@@ -387,11 +387,11 @@ def p_expression_function_class_2(t):
     '''
     t[0] = t[1]
 
-# def p_expression_inside_2(t):
-#     '''
-#     expression : inside SEMI
-#     '''
-#     t[0] = t[1]
+def p_expression_inside_2(t):
+    '''
+    expression : inside SEMI
+    '''
+    t[0] = t[1]
 
 # EMPTY
 
@@ -510,29 +510,28 @@ def p_repeat_body(t):
 
 ############### INSIDE
 
-# def p_inside(t):
-#     '''
-#     inside : inside DOT IDENTIFIER LSB parameter RSB
-#     '''
-#     t[0] = t[1] + t[2] + t[3] + t[4] + t[5]
-#
-# def p_inside_2(t):
-#     '''
-#     inside : inside DOT IDENTIFIER
-#     '''
-#     t[0] = t[1] + t[2] + t[3]
-#
-# def p_inside_3(t):
-#     '''
-#     inside : IDENTIFIER LSB parameter RSB
-#     '''
-#     t[0] = t[1] + t[2] + t[3]
-#
-# def p_inside_4(t):
-#     '''
-#     inside : IDENTIFIER
-#     '''
-#     t[0] = t[1]
+def p_inside(t):
+    '''
+    inside : IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB parameter RSB
+    '''
+    t[0] = t[1] + t[2] + t[3] + t[4] + t[5]
+
+def p_inside_2(t):
+    '''
+    inside : IDENTIFIER DOT IDENTIFIER LSB parameter RSB
+    '''
+
+def p_inside_3(t):
+    '''
+    inside : IDENTIFIER LSB parameter DOT IDENTIFIER
+    '''
+    t[0] = t[1] + t[2] + t[3] + t[4] + t[5]
+
+def p_inside_4(t):
+    '''
+    inside : IDENTIFIER DOT IDENTIFIER
+    '''
+    t[0] = t[1] + t[2] + t[3]
 
 ############### FUNCTION CLASS
 

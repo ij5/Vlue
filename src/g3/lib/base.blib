@@ -1,4 +1,5 @@
 tokens.append("PRINT")
+tokens.append("INPUT")
 
 def t_PRINT(t):
     r'print'
@@ -15,3 +16,21 @@ def p_expression_print_2(t):
 def p_print(t):
     'print : PRINT LSB STRING RSB SEMI'
     t[0] = t[1] + t[2] + t[3] + t[4]
+
+
+def t_INPUT(t):
+    r'input'
+    return t
+
+def p_expression_input(t):
+    'expression : input'
+    t[0] = t[1]
+
+def p_expression_input_2(t):
+    'expression : expression input'
+    t[0] = t[1] + t[2]
+
+def p_input(t):
+    'input : INPUT LSB STRING RSB SEMI'
+    t[0] = t[1] + t[2] + t[3] + t[4] + t[5]
+

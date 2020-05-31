@@ -1,5 +1,5 @@
 use debug;
-use print;
+use base;
 
 class Asd{
 

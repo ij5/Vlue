@@ -524,8 +524,9 @@ def p_inside_root_2(t):
 
 def p_inside_root_3(t):
     '''
-    inside DOT IDENTIFIER LSB empty RSB
+    inside : DOT IDENTIFIER LSB empty RSB
     '''
+    t[0] = t[1] + t[2] + t[3] + "" + t[5]
 
 def p_inside_root_4(t):
     '''

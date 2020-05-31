@@ -572,7 +572,7 @@ def p_inside_2_2(t):
 
 def p_inside_3(t):
     '''
-    inside : IDENTIFIER LSB parameter DOT IDENTIFIER
+    inside : IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     '''
     t[0] = t[1] + t[2] + t[3] + t[4] + t[5] + "\n"
 
@@ -666,7 +666,10 @@ def p_parameter(t):     #TODO 함수 호출 에러
     '''
     parameter : parameter COMMA calculate
     '''
-    t[0] = t[1] + t[2] + t[3]
+    if(t[3]==None):
+        t[0] = t[1] + t[2] + ""
+    else:
+        t[0] = str(t[1]) + t[2] + str(t[3])
 
 def p_parameter_2(t):
     '''

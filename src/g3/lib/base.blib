@@ -1,5 +1,6 @@
 tokens.append("PRINT")
 tokens.append("INPUT")
+tokens.append("SLICE")
 
 ##############PRINT
 
@@ -17,6 +18,10 @@ def p_expression_print_2(t):
 
 def p_print(t):
     'print : PRINT LSB STRING RSB SEMI'
+    t[0] = t[1] + t[2] + t[3] + t[4]
+
+def p_print_2(t):
+    'print : PRINT LSB IDENTIFIER RSB SEMI'
     t[0] = t[1] + t[2] + t[3] + t[4]
 
 ####################INPUT

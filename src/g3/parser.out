@@ -6,6 +6,7 @@ Unused terminals:
     INPUT
     PRINT
     PYTHON
+    SLICE
 
 Grammar
 
@@ -66,7 +67,7 @@ Rule 53    inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB empty RSB
 Rule 54    inside -> IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
 Rule 55    inside -> IDENTIFIER DOT IDENTIFIER LSB parameter RSB
 Rule 56    inside -> IDENTIFIER DOT IDENTIFIER LSB empty RSB
-Rule 57    inside -> IDENTIFIER LSB parameter DOT IDENTIFIER
+Rule 57    inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER
 Rule 58    inside -> IDENTIFIER DOT IDENTIFIER
 Rule 59    function_class -> VAR IDENTIFIER EQUAL IDENTIFIER LSB parameter RSB
 Rule 60    function_class -> VAR IDENTIFIER EQUAL IDENTIFIER LSB empty RSB
@@ -151,8 +152,9 @@ PYTHON               :
 RB                   : 82 84
 REPEAT               : 45
 RMB                  : 36 37 40 43 46 63 67 77 78 79 80
-RSB                  : 37 39 42 45 48 49 51 51 52 52 53 53 54 54 55 56 59 60 61 62 65 66 68 69 77 78 79 107
+RSB                  : 37 39 42 45 48 49 51 51 52 52 53 53 54 54 55 56 57 59 60 61 62 65 66 68 69 77 78 79 107
 SEMI                 : 2 3 6 10 12 13 15 16 17 18 19 22 26 28 29 31 32 33
+SLICE                : 
 STRING               : 103
 TRY                  : 36
 USE                  : 72 87
@@ -282,7 +284,7 @@ state 0
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
   ! shift/reduce conflict for VAR resolved as shift
@@ -418,7 +420,7 @@ state 2
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
     $end            reduce using rule 1 (root -> expression .)
@@ -708,7 +710,7 @@ state 21
     (54) inside -> IDENTIFIER . LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> IDENTIFIER . DOT IDENTIFIER LSB parameter RSB
     (56) inside -> IDENTIFIER . DOT IDENTIFIER LSB empty RSB
-    (57) inside -> IDENTIFIER . LSB parameter DOT IDENTIFIER
+    (57) inside -> IDENTIFIER . LSB parameter RSB DOT IDENTIFIER
     (58) inside -> IDENTIFIER . DOT IDENTIFIER
 
     EQUAL           shift and go to state 65
@@ -1309,7 +1311,7 @@ state 66
     (52) inside -> IDENTIFIER LSB . empty RSB DOT IDENTIFIER LSB empty RSB
     (53) inside -> IDENTIFIER LSB . parameter RSB DOT IDENTIFIER LSB empty RSB
     (54) inside -> IDENTIFIER LSB . empty RSB DOT IDENTIFIER LSB parameter RSB
-    (57) inside -> IDENTIFIER LSB . parameter DOT IDENTIFIER
+    (57) inside -> IDENTIFIER LSB . parameter RSB DOT IDENTIFIER
     (70) parameter -> . parameter COMMA calculate
     (71) parameter -> . calculate
     (108) empty -> .
@@ -1501,7 +1503,7 @@ state 72
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
   ! shift/reduce conflict for VAR resolved as shift
@@ -1668,7 +1670,7 @@ state 74
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
   ! shift/reduce conflict for VAR resolved as shift
@@ -1835,7 +1837,7 @@ state 76
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
   ! shift/reduce conflict for VAR resolved as shift
@@ -2002,7 +2004,7 @@ state 78
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
   ! shift/reduce conflict for VAR resolved as shift
@@ -2333,7 +2335,7 @@ state 93
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
   ! shift/reduce conflict for VAR resolved as shift
@@ -2724,7 +2726,6 @@ state 110
     DIV             reduce using rule 101 (calculate -> INT .)
     SEMI            reduce using rule 101 (calculate -> INT .)
     RSB             reduce using rule 101 (calculate -> INT .)
-    DOT             reduce using rule 101 (calculate -> INT .)
     COMMA           reduce using rule 101 (calculate -> INT .)
     LB              reduce using rule 101 (calculate -> INT .)
     RB              reduce using rule 101 (calculate -> INT .)
@@ -2741,7 +2742,6 @@ state 111
     DIV             reduce using rule 102 (calculate -> FLOAT .)
     SEMI            reduce using rule 102 (calculate -> FLOAT .)
     RSB             reduce using rule 102 (calculate -> FLOAT .)
-    DOT             reduce using rule 102 (calculate -> FLOAT .)
     COMMA           reduce using rule 102 (calculate -> FLOAT .)
     LB              reduce using rule 102 (calculate -> FLOAT .)
     RB              reduce using rule 102 (calculate -> FLOAT .)
@@ -2758,7 +2758,6 @@ state 112
     DIV             reduce using rule 103 (calculate -> STRING .)
     SEMI            reduce using rule 103 (calculate -> STRING .)
     RSB             reduce using rule 103 (calculate -> STRING .)
-    DOT             reduce using rule 103 (calculate -> STRING .)
     COMMA           reduce using rule 103 (calculate -> STRING .)
     LB              reduce using rule 103 (calculate -> STRING .)
     RB              reduce using rule 103 (calculate -> STRING .)
@@ -2775,7 +2774,6 @@ state 113
     MUL             reduce using rule 104 (calculate -> IDENTIFIER .)
     DIV             reduce using rule 104 (calculate -> IDENTIFIER .)
     RSB             reduce using rule 104 (calculate -> IDENTIFIER .)
-    DOT             reduce using rule 104 (calculate -> IDENTIFIER .)
     COMMA           reduce using rule 104 (calculate -> IDENTIFIER .)
     LB              reduce using rule 104 (calculate -> IDENTIFIER .)
     RB              reduce using rule 104 (calculate -> IDENTIFIER .)
@@ -2789,12 +2787,11 @@ state 114
     (68) function_call -> IDENTIFIER LSB parameter . RSB
     (51) inside -> IDENTIFIER LSB parameter . RSB DOT IDENTIFIER LSB parameter RSB
     (53) inside -> IDENTIFIER LSB parameter . RSB DOT IDENTIFIER LSB empty RSB
-    (57) inside -> IDENTIFIER LSB parameter . DOT IDENTIFIER
+    (57) inside -> IDENTIFIER LSB parameter . RSB DOT IDENTIFIER
     (70) parameter -> parameter . COMMA calculate
 
     RSB             shift and go to state 149
-    DOT             shift and go to state 150
-    COMMA           shift and go to state 151
+    COMMA           shift and go to state 150
 
 
 state 115
@@ -2803,7 +2800,7 @@ state 115
     (52) inside -> IDENTIFIER LSB empty . RSB DOT IDENTIFIER LSB empty RSB
     (54) inside -> IDENTIFIER LSB empty . RSB DOT IDENTIFIER LSB parameter RSB
 
-    RSB             shift and go to state 152
+    RSB             shift and go to state 151
 
 
 state 116
@@ -2815,7 +2812,6 @@ state 116
     (100) calculate -> calculate . DIV calculate
 
     RSB             reduce using rule 71 (parameter -> calculate .)
-    DOT             reduce using rule 71 (parameter -> calculate .)
     COMMA           reduce using rule 71 (parameter -> calculate .)
     PLUS            shift and go to state 143
     MINUS           shift and go to state 144
@@ -2832,7 +2828,6 @@ state 117
     MUL             reduce using rule 106 (calculate -> LIST .)
     DIV             reduce using rule 106 (calculate -> LIST .)
     RSB             reduce using rule 106 (calculate -> LIST .)
-    DOT             reduce using rule 106 (calculate -> LIST .)
     COMMA           reduce using rule 106 (calculate -> LIST .)
     LB              reduce using rule 106 (calculate -> LIST .)
     RB              reduce using rule 106 (calculate -> LIST .)
@@ -2846,7 +2841,7 @@ state 118
     (56) inside -> IDENTIFIER DOT IDENTIFIER . LSB empty RSB
     (58) inside -> IDENTIFIER DOT IDENTIFIER .
 
-    LSB             shift and go to state 153
+    LSB             shift and go to state 152
     DOT             reduce using rule 58 (inside -> IDENTIFIER DOT IDENTIFIER .)
     SEMI            reduce using rule 58 (inside -> IDENTIFIER DOT IDENTIFIER .)
 
@@ -2876,7 +2871,7 @@ state 120
     (79) if_statement_2 -> if_statement_2 ELSE . IF LSB condition RSB LMB expression RMB
     (80) if_statement_3 -> ELSE . LMB expression RMB
 
-    IF              shift and go to state 154
+    IF              shift and go to state 153
     LMB             shift and go to state 122
 
 
@@ -2884,7 +2879,7 @@ state 121
 
     (78) if_statement_2 -> ELSE IF . LSB condition RSB LMB expression RMB
 
-    LSB             shift and go to state 155
+    LSB             shift and go to state 154
 
 
 state 122
@@ -2966,7 +2961,7 @@ state 122
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
   ! shift/reduce conflict for VAR resolved as shift
@@ -3008,7 +3003,7 @@ state 122
   ! TRY             [ reduce using rule 108 (empty -> .) ]
   ! DOT             [ reduce using rule 108 (empty -> .) ]
 
-    expression                     shift and go to state 156
+    expression                     shift and go to state 155
     variable_declaration           shift and go to state 3
     variable_value_change          shift and go to state 4
     if_statement                   shift and go to state 5
@@ -3095,10 +3090,10 @@ state 123
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
-    RMB             shift and go to state 157
+    RMB             shift and go to state 156
     VAR             shift and go to state 20
     IDENTIFIER      shift and go to state 21
     USE             shift and go to state 27
@@ -3197,10 +3192,10 @@ state 124
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
-    RMB             shift and go to state 158
+    RMB             shift and go to state 157
     VAR             shift and go to state 20
     IDENTIFIER      shift and go to state 21
     USE             shift and go to state 27
@@ -3299,10 +3294,10 @@ state 125
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
-    RMB             shift and go to state 159
+    RMB             shift and go to state 158
     VAR             shift and go to state 20
     IDENTIFIER      shift and go to state 21
     USE             shift and go to state 27
@@ -3401,10 +3396,10 @@ state 126
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
-    RMB             shift and go to state 160
+    RMB             shift and go to state 159
     VAR             shift and go to state 20
     IDENTIFIER      shift and go to state 21
     USE             shift and go to state 27
@@ -3446,7 +3441,7 @@ state 127
 
     (37) catch -> CATCH LSB . IDENTIFIER RSB LMB expression RMB
 
-    IDENTIFIER      shift and go to state 161
+    IDENTIFIER      shift and go to state 160
 
 
 state 128
@@ -3528,7 +3523,7 @@ state 128
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
   ! shift/reduce conflict for VAR resolved as shift
@@ -3570,7 +3565,7 @@ state 128
   ! TRY             [ reduce using rule 108 (empty -> .) ]
   ! DOT             [ reduce using rule 108 (empty -> .) ]
 
-    expression                     shift and go to state 162
+    expression                     shift and go to state 161
     variable_declaration           shift and go to state 3
     variable_value_change          shift and go to state 4
     if_statement                   shift and go to state 5
@@ -3601,7 +3596,7 @@ state 129
     (48) inside_root -> inside DOT IDENTIFIER . LSB parameter RSB
     (50) inside -> inside DOT IDENTIFIER .
 
-    LSB             shift and go to state 163
+    LSB             shift and go to state 162
     DOT             reduce using rule 50 (inside -> inside DOT IDENTIFIER .)
     SEMI            reduce using rule 50 (inside -> inside DOT IDENTIFIER .)
 
@@ -3613,7 +3608,7 @@ state 130
 
     RSB             reduce using rule 108 (empty -> .)
 
-    empty                          shift and go to state 164
+    empty                          shift and go to state 163
 
 state 131
 
@@ -3624,10 +3619,10 @@ state 131
     (84) condition -> condition . RB EQUAL calculate
     (85) condition -> condition . EQUAL calculate
 
-    RSB             shift and go to state 165
-    LB              shift and go to state 166
-    RB              shift and go to state 167
-    EQUAL           shift and go to state 168
+    RSB             shift and go to state 164
+    LB              shift and go to state 165
+    RB              shift and go to state 166
+    EQUAL           shift and go to state 167
 
 
 state 132
@@ -3677,8 +3672,8 @@ state 133
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    parameter                      shift and go to state 169
-    empty                          shift and go to state 170
+    parameter                      shift and go to state 168
+    empty                          shift and go to state 169
     calculate                      shift and go to state 116
 
 state 134
@@ -3689,7 +3684,7 @@ state 134
     (99) calculate -> calculate . MUL calculate
     (100) calculate -> calculate . DIV calculate
 
-    RSB             shift and go to state 171
+    RSB             shift and go to state 170
     PLUS            shift and go to state 143
     MINUS           shift and go to state 144
     MUL             shift and go to state 145
@@ -3700,7 +3695,7 @@ state 135
 
     (39) for_head -> FOR LSB IDENTIFIER . IN IDENTIFIER RSB
 
-    IN              shift and go to state 172
+    IN              shift and go to state 171
 
 
 state 136
@@ -3712,10 +3707,10 @@ state 136
     (84) condition -> condition . RB EQUAL calculate
     (85) condition -> condition . EQUAL calculate
 
-    RSB             shift and go to state 173
-    LB              shift and go to state 166
-    RB              shift and go to state 167
-    EQUAL           shift and go to state 168
+    RSB             shift and go to state 172
+    LB              shift and go to state 165
+    RB              shift and go to state 166
+    EQUAL           shift and go to state 167
 
 
 state 137
@@ -3779,10 +3774,10 @@ state 137
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
-    RMB             shift and go to state 174
+    RMB             shift and go to state 173
     VAR             shift and go to state 20
     IDENTIFIER      shift and go to state 21
     USE             shift and go to state 27
@@ -3844,7 +3839,7 @@ state 138
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    calculate                      shift and go to state 175
+    calculate                      shift and go to state 174
 
 state 139
 
@@ -3853,7 +3848,7 @@ state 139
     (104) calculate -> IDENTIFIER .
     (105) calculate -> IDENTIFIER . LIST
 
-    LSB             shift and go to state 176
+    LSB             shift and go to state 175
     PLUS            reduce using rule 104 (calculate -> IDENTIFIER .)
     MINUS           reduce using rule 104 (calculate -> IDENTIFIER .)
     MUL             reduce using rule 104 (calculate -> IDENTIFIER .)
@@ -3906,8 +3901,8 @@ state 141
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    parameter                      shift and go to state 177
-    empty                          shift and go to state 178
+    parameter                      shift and go to state 176
+    empty                          shift and go to state 177
     calculate                      shift and go to state 116
 
 state 142
@@ -3920,7 +3915,6 @@ state 142
     DIV             reduce using rule 105 (calculate -> IDENTIFIER LIST .)
     SEMI            reduce using rule 105 (calculate -> IDENTIFIER LIST .)
     RSB             reduce using rule 105 (calculate -> IDENTIFIER LIST .)
-    DOT             reduce using rule 105 (calculate -> IDENTIFIER LIST .)
     COMMA           reduce using rule 105 (calculate -> IDENTIFIER LIST .)
     LB              reduce using rule 105 (calculate -> IDENTIFIER LIST .)
     RB              reduce using rule 105 (calculate -> IDENTIFIER LIST .)
@@ -3951,7 +3945,7 @@ state 143
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    calculate                      shift and go to state 179
+    calculate                      shift and go to state 178
 
 state 144
 
@@ -3977,7 +3971,7 @@ state 144
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    calculate                      shift and go to state 180
+    calculate                      shift and go to state 179
 
 state 145
 
@@ -4003,7 +3997,7 @@ state 145
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    calculate                      shift and go to state 181
+    calculate                      shift and go to state 180
 
 state 146
 
@@ -4029,7 +4023,7 @@ state 146
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    calculate                      shift and go to state 182
+    calculate                      shift and go to state 181
 
 state 147
 
@@ -4039,7 +4033,7 @@ state 147
     (99) calculate -> calculate . MUL calculate
     (100) calculate -> calculate . DIV calculate
 
-    RSB             shift and go to state 183
+    RSB             shift and go to state 182
     PLUS            shift and go to state 143
     MINUS           shift and go to state 144
     MUL             shift and go to state 145
@@ -4060,7 +4054,6 @@ state 148
     DIV             reduce using rule 98 (calculate -> MINUS calculate .)
     SEMI            reduce using rule 98 (calculate -> MINUS calculate .)
     RSB             reduce using rule 98 (calculate -> MINUS calculate .)
-    DOT             reduce using rule 98 (calculate -> MINUS calculate .)
     COMMA           reduce using rule 98 (calculate -> MINUS calculate .)
     LB              reduce using rule 98 (calculate -> MINUS calculate .)
     RB              reduce using rule 98 (calculate -> MINUS calculate .)
@@ -4077,19 +4070,13 @@ state 149
     (68) function_call -> IDENTIFIER LSB parameter RSB .
     (51) inside -> IDENTIFIER LSB parameter RSB . DOT IDENTIFIER LSB parameter RSB
     (53) inside -> IDENTIFIER LSB parameter RSB . DOT IDENTIFIER LSB empty RSB
+    (57) inside -> IDENTIFIER LSB parameter RSB . DOT IDENTIFIER
 
     SEMI            reduce using rule 68 (function_call -> IDENTIFIER LSB parameter RSB .)
-    DOT             shift and go to state 184
+    DOT             shift and go to state 183
 
 
 state 150
-
-    (57) inside -> IDENTIFIER LSB parameter DOT . IDENTIFIER
-
-    IDENTIFIER      shift and go to state 185
-
-
-state 151
 
     (70) parameter -> parameter COMMA . calculate
     (96) calculate -> . calculate PLUS calculate
@@ -4113,19 +4100,19 @@ state 151
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    calculate                      shift and go to state 186
+    calculate                      shift and go to state 184
 
-state 152
+state 151
 
     (69) function_call -> IDENTIFIER LSB empty RSB .
     (52) inside -> IDENTIFIER LSB empty RSB . DOT IDENTIFIER LSB empty RSB
     (54) inside -> IDENTIFIER LSB empty RSB . DOT IDENTIFIER LSB parameter RSB
 
     SEMI            reduce using rule 69 (function_call -> IDENTIFIER LSB empty RSB .)
-    DOT             shift and go to state 187
+    DOT             shift and go to state 185
 
 
-state 153
+state 152
 
     (55) inside -> IDENTIFIER DOT IDENTIFIER LSB . parameter RSB
     (56) inside -> IDENTIFIER DOT IDENTIFIER LSB . empty RSB
@@ -4154,18 +4141,18 @@ state 153
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    parameter                      shift and go to state 188
-    empty                          shift and go to state 189
+    parameter                      shift and go to state 186
+    empty                          shift and go to state 187
     calculate                      shift and go to state 116
 
-state 154
+state 153
 
     (79) if_statement_2 -> if_statement_2 ELSE IF . LSB condition RSB LMB expression RMB
 
-    LSB             shift and go to state 190
+    LSB             shift and go to state 188
 
 
-state 155
+state 154
 
     (78) if_statement_2 -> ELSE IF LSB . condition RSB LMB expression RMB
     (81) condition -> . condition LB calculate
@@ -4195,10 +4182,10 @@ state 155
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    condition                      shift and go to state 191
+    condition                      shift and go to state 189
     calculate                      shift and go to state 132
 
-state 156
+state 155
 
     (80) if_statement_3 -> ELSE LMB expression . RMB
     (2) expression -> expression . variable_declaration SEMI
@@ -4259,10 +4246,10 @@ state 156
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
-    RMB             shift and go to state 192
+    RMB             shift and go to state 190
     VAR             shift and go to state 20
     IDENTIFIER      shift and go to state 21
     USE             shift and go to state 27
@@ -4300,7 +4287,7 @@ state 156
     try                            shift and go to state 28
     inside                         shift and go to state 31
 
-state 157
+state 156
 
     (67) function_body -> LMB expression RMB .
 
@@ -4320,7 +4307,7 @@ state 157
     RMB             reduce using rule 67 (function_body -> LMB expression RMB .)
 
 
-state 158
+state 157
 
     (46) repeat_body -> LMB expression RMB .
 
@@ -4340,7 +4327,7 @@ state 158
     RMB             reduce using rule 46 (repeat_body -> LMB expression RMB .)
 
 
-state 159
+state 158
 
     (40) for_body -> LMB expression RMB .
 
@@ -4360,7 +4347,7 @@ state 159
     RMB             reduce using rule 40 (for_body -> LMB expression RMB .)
 
 
-state 160
+state 159
 
     (43) while_body -> LMB expression RMB .
 
@@ -4380,14 +4367,14 @@ state 160
     RMB             reduce using rule 43 (while_body -> LMB expression RMB .)
 
 
-state 161
+state 160
 
     (37) catch -> CATCH LSB IDENTIFIER . RSB LMB expression RMB
 
-    RSB             shift and go to state 193
+    RSB             shift and go to state 191
 
 
-state 162
+state 161
 
     (63) class_def -> CLASS IDENTIFIER LMB expression . RMB
     (2) expression -> expression . variable_declaration SEMI
@@ -4448,10 +4435,10 @@ state 162
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
-    RMB             shift and go to state 194
+    RMB             shift and go to state 192
     VAR             shift and go to state 20
     IDENTIFIER      shift and go to state 21
     USE             shift and go to state 27
@@ -4489,7 +4476,7 @@ state 162
     try                            shift and go to state 28
     inside                         shift and go to state 31
 
-state 163
+state 162
 
     (48) inside_root -> inside DOT IDENTIFIER LSB . parameter RSB
     (70) parameter -> . parameter COMMA calculate
@@ -4515,27 +4502,55 @@ state 163
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    parameter                      shift and go to state 195
+    parameter                      shift and go to state 193
     calculate                      shift and go to state 116
 
-state 164
+state 163
 
     (49) inside -> DOT IDENTIFIER LSB empty . RSB
 
-    RSB             shift and go to state 196
+    RSB             shift and go to state 194
+
+
+state 164
+
+    (77) if_statement_1 -> IF LSB condition RSB . LMB expression RMB
+
+    LMB             shift and go to state 195
 
 
 state 165
 
-    (77) if_statement_1 -> IF LSB condition RSB . LMB expression RMB
+    (81) condition -> condition LB . calculate
+    (83) condition -> condition LB . EQUAL calculate
+    (96) calculate -> . calculate PLUS calculate
+    (97) calculate -> . calculate MINUS calculate
+    (98) calculate -> . MINUS calculate
+    (99) calculate -> . calculate MUL calculate
+    (100) calculate -> . calculate DIV calculate
+    (101) calculate -> . INT
+    (102) calculate -> . FLOAT
+    (103) calculate -> . STRING
+    (104) calculate -> . IDENTIFIER
+    (105) calculate -> . IDENTIFIER LIST
+    (106) calculate -> . LIST
+    (107) calculate -> . LSB calculate RSB
 
-    LMB             shift and go to state 197
+    EQUAL           shift and go to state 197
+    MINUS           shift and go to state 109
+    INT             shift and go to state 110
+    FLOAT           shift and go to state 111
+    STRING          shift and go to state 112
+    IDENTIFIER      shift and go to state 113
+    LIST            shift and go to state 117
+    LSB             shift and go to state 108
 
+    calculate                      shift and go to state 196
 
 state 166
 
-    (81) condition -> condition LB . calculate
-    (83) condition -> condition LB . EQUAL calculate
+    (82) condition -> condition RB . calculate
+    (84) condition -> condition RB . EQUAL calculate
     (96) calculate -> . calculate PLUS calculate
     (97) calculate -> . calculate MINUS calculate
     (98) calculate -> . MINUS calculate
@@ -4562,34 +4577,6 @@ state 166
 
 state 167
 
-    (82) condition -> condition RB . calculate
-    (84) condition -> condition RB . EQUAL calculate
-    (96) calculate -> . calculate PLUS calculate
-    (97) calculate -> . calculate MINUS calculate
-    (98) calculate -> . MINUS calculate
-    (99) calculate -> . calculate MUL calculate
-    (100) calculate -> . calculate DIV calculate
-    (101) calculate -> . INT
-    (102) calculate -> . FLOAT
-    (103) calculate -> . STRING
-    (104) calculate -> . IDENTIFIER
-    (105) calculate -> . IDENTIFIER LIST
-    (106) calculate -> . LIST
-    (107) calculate -> . LSB calculate RSB
-
-    EQUAL           shift and go to state 201
-    MINUS           shift and go to state 109
-    INT             shift and go to state 110
-    FLOAT           shift and go to state 111
-    STRING          shift and go to state 112
-    IDENTIFIER      shift and go to state 113
-    LIST            shift and go to state 117
-    LSB             shift and go to state 108
-
-    calculate                      shift and go to state 200
-
-state 168
-
     (85) condition -> condition EQUAL . calculate
     (96) calculate -> . calculate PLUS calculate
     (97) calculate -> . calculate MINUS calculate
@@ -4612,53 +4599,53 @@ state 168
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    calculate                      shift and go to state 202
+    calculate                      shift and go to state 200
 
-state 169
+state 168
 
     (65) function_head -> FUNCTION IDENTIFIER LSB parameter . RSB
     (70) parameter -> parameter . COMMA calculate
 
-    RSB             shift and go to state 203
-    COMMA           shift and go to state 151
+    RSB             shift and go to state 201
+    COMMA           shift and go to state 150
 
 
-state 170
+state 169
 
     (66) function_head -> FUNCTION IDENTIFIER LSB empty . RSB
 
-    RSB             shift and go to state 204
+    RSB             shift and go to state 202
 
 
-state 171
+state 170
 
     (45) repeat_head -> REPEAT LSB calculate RSB .
 
     LMB             reduce using rule 45 (repeat_head -> REPEAT LSB calculate RSB .)
 
 
-state 172
+state 171
 
     (39) for_head -> FOR LSB IDENTIFIER IN . IDENTIFIER RSB
 
-    IDENTIFIER      shift and go to state 205
+    IDENTIFIER      shift and go to state 203
 
 
-state 173
+state 172
 
     (42) while_head -> WHILE LSB condition RSB .
 
     LMB             reduce using rule 42 (while_head -> WHILE LSB condition RSB .)
 
 
-state 174
+state 173
 
     (36) try -> TRY LMB expression RMB .
 
     CATCH           reduce using rule 36 (try -> TRY LMB expression RMB .)
 
 
-state 175
+state 174
 
     (93) variable_declaration -> VAR IDENTIFIER LIST EQUAL calculate .
     (96) calculate -> calculate . PLUS calculate
@@ -4673,7 +4660,7 @@ state 175
     DIV             shift and go to state 146
 
 
-state 176
+state 175
 
     (59) function_class -> VAR IDENTIFIER EQUAL IDENTIFIER LSB . parameter RSB
     (60) function_class -> VAR IDENTIFIER EQUAL IDENTIFIER LSB . empty RSB
@@ -4702,27 +4689,27 @@ state 176
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    parameter                      shift and go to state 206
-    empty                          shift and go to state 207
+    parameter                      shift and go to state 204
+    empty                          shift and go to state 205
     calculate                      shift and go to state 116
 
-state 177
+state 176
 
     (61) function_class -> IDENTIFIER EQUAL IDENTIFIER LSB parameter . RSB
     (70) parameter -> parameter . COMMA calculate
 
-    RSB             shift and go to state 208
-    COMMA           shift and go to state 151
+    RSB             shift and go to state 206
+    COMMA           shift and go to state 150
 
 
-state 178
+state 177
 
     (62) function_class -> IDENTIFIER EQUAL IDENTIFIER LSB empty . RSB
 
-    RSB             shift and go to state 209
+    RSB             shift and go to state 207
 
 
-state 179
+state 178
 
     (96) calculate -> calculate PLUS calculate .
     (96) calculate -> calculate . PLUS calculate
@@ -4734,7 +4721,6 @@ state 179
     MINUS           reduce using rule 96 (calculate -> calculate PLUS calculate .)
     SEMI            reduce using rule 96 (calculate -> calculate PLUS calculate .)
     RSB             reduce using rule 96 (calculate -> calculate PLUS calculate .)
-    DOT             reduce using rule 96 (calculate -> calculate PLUS calculate .)
     COMMA           reduce using rule 96 (calculate -> calculate PLUS calculate .)
     LB              reduce using rule 96 (calculate -> calculate PLUS calculate .)
     RB              reduce using rule 96 (calculate -> calculate PLUS calculate .)
@@ -4748,7 +4734,7 @@ state 179
   ! MINUS           [ shift and go to state 144 ]
 
 
-state 180
+state 179
 
     (97) calculate -> calculate MINUS calculate .
     (96) calculate -> calculate . PLUS calculate
@@ -4760,7 +4746,6 @@ state 180
     MINUS           reduce using rule 97 (calculate -> calculate MINUS calculate .)
     SEMI            reduce using rule 97 (calculate -> calculate MINUS calculate .)
     RSB             reduce using rule 97 (calculate -> calculate MINUS calculate .)
-    DOT             reduce using rule 97 (calculate -> calculate MINUS calculate .)
     COMMA           reduce using rule 97 (calculate -> calculate MINUS calculate .)
     LB              reduce using rule 97 (calculate -> calculate MINUS calculate .)
     RB              reduce using rule 97 (calculate -> calculate MINUS calculate .)
@@ -4774,7 +4759,7 @@ state 180
   ! MINUS           [ shift and go to state 144 ]
 
 
-state 181
+state 180
 
     (99) calculate -> calculate MUL calculate .
     (96) calculate -> calculate . PLUS calculate
@@ -4788,7 +4773,6 @@ state 181
     DIV             reduce using rule 99 (calculate -> calculate MUL calculate .)
     SEMI            reduce using rule 99 (calculate -> calculate MUL calculate .)
     RSB             reduce using rule 99 (calculate -> calculate MUL calculate .)
-    DOT             reduce using rule 99 (calculate -> calculate MUL calculate .)
     COMMA           reduce using rule 99 (calculate -> calculate MUL calculate .)
     LB              reduce using rule 99 (calculate -> calculate MUL calculate .)
     RB              reduce using rule 99 (calculate -> calculate MUL calculate .)
@@ -4800,7 +4784,7 @@ state 181
   ! DIV             [ shift and go to state 146 ]
 
 
-state 182
+state 181
 
     (100) calculate -> calculate DIV calculate .
     (96) calculate -> calculate . PLUS calculate
@@ -4814,7 +4798,6 @@ state 182
     DIV             reduce using rule 100 (calculate -> calculate DIV calculate .)
     SEMI            reduce using rule 100 (calculate -> calculate DIV calculate .)
     RSB             reduce using rule 100 (calculate -> calculate DIV calculate .)
-    DOT             reduce using rule 100 (calculate -> calculate DIV calculate .)
     COMMA           reduce using rule 100 (calculate -> calculate DIV calculate .)
     LB              reduce using rule 100 (calculate -> calculate DIV calculate .)
     RB              reduce using rule 100 (calculate -> calculate DIV calculate .)
@@ -4826,7 +4809,7 @@ state 182
   ! DIV             [ shift and go to state 146 ]
 
 
-state 183
+state 182
 
     (107) calculate -> LSB calculate RSB .
 
@@ -4836,30 +4819,22 @@ state 183
     DIV             reduce using rule 107 (calculate -> LSB calculate RSB .)
     SEMI            reduce using rule 107 (calculate -> LSB calculate RSB .)
     RSB             reduce using rule 107 (calculate -> LSB calculate RSB .)
-    DOT             reduce using rule 107 (calculate -> LSB calculate RSB .)
     COMMA           reduce using rule 107 (calculate -> LSB calculate RSB .)
     LB              reduce using rule 107 (calculate -> LSB calculate RSB .)
     RB              reduce using rule 107 (calculate -> LSB calculate RSB .)
     EQUAL           reduce using rule 107 (calculate -> LSB calculate RSB .)
 
 
-state 184
+state 183
 
     (51) inside -> IDENTIFIER LSB parameter RSB DOT . IDENTIFIER LSB parameter RSB
     (53) inside -> IDENTIFIER LSB parameter RSB DOT . IDENTIFIER LSB empty RSB
+    (57) inside -> IDENTIFIER LSB parameter RSB DOT . IDENTIFIER
 
-    IDENTIFIER      shift and go to state 210
-
-
-state 185
-
-    (57) inside -> IDENTIFIER LSB parameter DOT IDENTIFIER .
-
-    DOT             reduce using rule 57 (inside -> IDENTIFIER LSB parameter DOT IDENTIFIER .)
-    SEMI            reduce using rule 57 (inside -> IDENTIFIER LSB parameter DOT IDENTIFIER .)
+    IDENTIFIER      shift and go to state 208
 
 
-state 186
+state 184
 
     (70) parameter -> parameter COMMA calculate .
     (96) calculate -> calculate . PLUS calculate
@@ -4868,7 +4843,6 @@ state 186
     (100) calculate -> calculate . DIV calculate
 
     RSB             reduce using rule 70 (parameter -> parameter COMMA calculate .)
-    DOT             reduce using rule 70 (parameter -> parameter COMMA calculate .)
     COMMA           reduce using rule 70 (parameter -> parameter COMMA calculate .)
     PLUS            shift and go to state 143
     MINUS           shift and go to state 144
@@ -4876,31 +4850,31 @@ state 186
     DIV             shift and go to state 146
 
 
-state 187
+state 185
 
     (52) inside -> IDENTIFIER LSB empty RSB DOT . IDENTIFIER LSB empty RSB
     (54) inside -> IDENTIFIER LSB empty RSB DOT . IDENTIFIER LSB parameter RSB
 
-    IDENTIFIER      shift and go to state 211
+    IDENTIFIER      shift and go to state 209
 
 
-state 188
+state 186
 
     (55) inside -> IDENTIFIER DOT IDENTIFIER LSB parameter . RSB
     (70) parameter -> parameter . COMMA calculate
 
-    RSB             shift and go to state 212
-    COMMA           shift and go to state 151
+    RSB             shift and go to state 210
+    COMMA           shift and go to state 150
 
 
-state 189
+state 187
 
     (56) inside -> IDENTIFIER DOT IDENTIFIER LSB empty . RSB
 
-    RSB             shift and go to state 213
+    RSB             shift and go to state 211
 
 
-state 190
+state 188
 
     (79) if_statement_2 -> if_statement_2 ELSE IF LSB . condition RSB LMB expression RMB
     (81) condition -> . condition LB calculate
@@ -4930,10 +4904,10 @@ state 190
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    condition                      shift and go to state 214
+    condition                      shift and go to state 212
     calculate                      shift and go to state 132
 
-state 191
+state 189
 
     (78) if_statement_2 -> ELSE IF LSB condition . RSB LMB expression RMB
     (81) condition -> condition . LB calculate
@@ -4942,13 +4916,13 @@ state 191
     (84) condition -> condition . RB EQUAL calculate
     (85) condition -> condition . EQUAL calculate
 
-    RSB             shift and go to state 215
-    LB              shift and go to state 166
-    RB              shift and go to state 167
-    EQUAL           shift and go to state 168
+    RSB             shift and go to state 213
+    LB              shift and go to state 165
+    RB              shift and go to state 166
+    EQUAL           shift and go to state 167
 
 
-state 192
+state 190
 
     (80) if_statement_3 -> ELSE LMB expression RMB .
 
@@ -4968,14 +4942,14 @@ state 192
     RMB             reduce using rule 80 (if_statement_3 -> ELSE LMB expression RMB .)
 
 
-state 193
+state 191
 
     (37) catch -> CATCH LSB IDENTIFIER RSB . LMB expression RMB
 
-    LMB             shift and go to state 216
+    LMB             shift and go to state 214
 
 
-state 194
+state 192
 
     (63) class_def -> CLASS IDENTIFIER LMB expression RMB .
 
@@ -4995,16 +4969,16 @@ state 194
     RMB             reduce using rule 63 (class_def -> CLASS IDENTIFIER LMB expression RMB .)
 
 
-state 195
+state 193
 
     (48) inside_root -> inside DOT IDENTIFIER LSB parameter . RSB
     (70) parameter -> parameter . COMMA calculate
 
-    RSB             shift and go to state 217
-    COMMA           shift and go to state 151
+    RSB             shift and go to state 215
+    COMMA           shift and go to state 150
 
 
-state 196
+state 194
 
     (49) inside -> DOT IDENTIFIER LSB empty RSB .
 
@@ -5012,7 +4986,7 @@ state 196
     SEMI            reduce using rule 49 (inside -> DOT IDENTIFIER LSB empty RSB .)
 
 
-state 197
+state 195
 
     (77) if_statement_1 -> IF LSB condition RSB LMB . expression RMB
     (2) expression -> . expression variable_declaration SEMI
@@ -5091,7 +5065,7 @@ state 197
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
   ! shift/reduce conflict for VAR resolved as shift
@@ -5133,7 +5107,7 @@ state 197
   ! TRY             [ reduce using rule 108 (empty -> .) ]
   ! DOT             [ reduce using rule 108 (empty -> .) ]
 
-    expression                     shift and go to state 218
+    expression                     shift and go to state 216
     variable_declaration           shift and go to state 3
     variable_value_change          shift and go to state 4
     if_statement                   shift and go to state 5
@@ -5159,7 +5133,7 @@ state 197
     try                            shift and go to state 28
     inside                         shift and go to state 31
 
-state 198
+state 196
 
     (81) condition -> condition LB calculate .
     (96) calculate -> calculate . PLUS calculate
@@ -5177,7 +5151,7 @@ state 198
     DIV             shift and go to state 146
 
 
-state 199
+state 197
 
     (83) condition -> condition LB EQUAL . calculate
     (96) calculate -> . calculate PLUS calculate
@@ -5201,9 +5175,9 @@ state 199
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    calculate                      shift and go to state 219
+    calculate                      shift and go to state 217
 
-state 200
+state 198
 
     (82) condition -> condition RB calculate .
     (96) calculate -> calculate . PLUS calculate
@@ -5221,7 +5195,7 @@ state 200
     DIV             shift and go to state 146
 
 
-state 201
+state 199
 
     (84) condition -> condition RB EQUAL . calculate
     (96) calculate -> . calculate PLUS calculate
@@ -5245,9 +5219,9 @@ state 201
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    calculate                      shift and go to state 220
+    calculate                      shift and go to state 218
 
-state 202
+state 200
 
     (85) condition -> condition EQUAL calculate .
     (96) calculate -> calculate . PLUS calculate
@@ -5265,74 +5239,77 @@ state 202
     DIV             shift and go to state 146
 
 
-state 203
+state 201
 
     (65) function_head -> FUNCTION IDENTIFIER LSB parameter RSB .
 
     LMB             reduce using rule 65 (function_head -> FUNCTION IDENTIFIER LSB parameter RSB .)
 
 
-state 204
+state 202
 
     (66) function_head -> FUNCTION IDENTIFIER LSB empty RSB .
 
     LMB             reduce using rule 66 (function_head -> FUNCTION IDENTIFIER LSB empty RSB .)
 
 
-state 205
+state 203
 
     (39) for_head -> FOR LSB IDENTIFIER IN IDENTIFIER . RSB
+
+    RSB             shift and go to state 219
+
+
+state 204
+
+    (59) function_class -> VAR IDENTIFIER EQUAL IDENTIFIER LSB parameter . RSB
+    (70) parameter -> parameter . COMMA calculate
+
+    RSB             shift and go to state 220
+    COMMA           shift and go to state 150
+
+
+state 205
+
+    (60) function_class -> VAR IDENTIFIER EQUAL IDENTIFIER LSB empty . RSB
 
     RSB             shift and go to state 221
 
 
 state 206
 
-    (59) function_class -> VAR IDENTIFIER EQUAL IDENTIFIER LSB parameter . RSB
-    (70) parameter -> parameter . COMMA calculate
-
-    RSB             shift and go to state 222
-    COMMA           shift and go to state 151
-
-
-state 207
-
-    (60) function_class -> VAR IDENTIFIER EQUAL IDENTIFIER LSB empty . RSB
-
-    RSB             shift and go to state 223
-
-
-state 208
-
     (61) function_class -> IDENTIFIER EQUAL IDENTIFIER LSB parameter RSB .
 
     SEMI            reduce using rule 61 (function_class -> IDENTIFIER EQUAL IDENTIFIER LSB parameter RSB .)
 
 
-state 209
+state 207
 
     (62) function_class -> IDENTIFIER EQUAL IDENTIFIER LSB empty RSB .
 
     SEMI            reduce using rule 62 (function_class -> IDENTIFIER EQUAL IDENTIFIER LSB empty RSB .)
 
 
-state 210
+state 208
 
     (51) inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER . LSB parameter RSB
     (53) inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER . LSB empty RSB
+    (57) inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER .
 
-    LSB             shift and go to state 224
+    LSB             shift and go to state 222
+    DOT             reduce using rule 57 (inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER .)
+    SEMI            reduce using rule 57 (inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER .)
 
 
-state 211
+state 209
 
     (52) inside -> IDENTIFIER LSB empty RSB DOT IDENTIFIER . LSB empty RSB
     (54) inside -> IDENTIFIER LSB empty RSB DOT IDENTIFIER . LSB parameter RSB
 
-    LSB             shift and go to state 225
+    LSB             shift and go to state 223
 
 
-state 212
+state 210
 
     (55) inside -> IDENTIFIER DOT IDENTIFIER LSB parameter RSB .
 
@@ -5340,7 +5317,7 @@ state 212
     SEMI            reduce using rule 55 (inside -> IDENTIFIER DOT IDENTIFIER LSB parameter RSB .)
 
 
-state 213
+state 211
 
     (56) inside -> IDENTIFIER DOT IDENTIFIER LSB empty RSB .
 
@@ -5348,7 +5325,7 @@ state 213
     SEMI            reduce using rule 56 (inside -> IDENTIFIER DOT IDENTIFIER LSB empty RSB .)
 
 
-state 214
+state 212
 
     (79) if_statement_2 -> if_statement_2 ELSE IF LSB condition . RSB LMB expression RMB
     (81) condition -> condition . LB calculate
@@ -5357,20 +5334,20 @@ state 214
     (84) condition -> condition . RB EQUAL calculate
     (85) condition -> condition . EQUAL calculate
 
-    RSB             shift and go to state 226
-    LB              shift and go to state 166
-    RB              shift and go to state 167
-    EQUAL           shift and go to state 168
+    RSB             shift and go to state 224
+    LB              shift and go to state 165
+    RB              shift and go to state 166
+    EQUAL           shift and go to state 167
 
 
-state 215
+state 213
 
     (78) if_statement_2 -> ELSE IF LSB condition RSB . LMB expression RMB
 
-    LMB             shift and go to state 227
+    LMB             shift and go to state 225
 
 
-state 216
+state 214
 
     (37) catch -> CATCH LSB IDENTIFIER RSB LMB . expression RMB
     (2) expression -> . expression variable_declaration SEMI
@@ -5449,7 +5426,7 @@ state 216
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
   ! shift/reduce conflict for VAR resolved as shift
@@ -5491,7 +5468,7 @@ state 216
   ! TRY             [ reduce using rule 108 (empty -> .) ]
   ! DOT             [ reduce using rule 108 (empty -> .) ]
 
-    expression                     shift and go to state 228
+    expression                     shift and go to state 226
     variable_declaration           shift and go to state 3
     variable_value_change          shift and go to state 4
     if_statement                   shift and go to state 5
@@ -5517,14 +5494,14 @@ state 216
     try                            shift and go to state 28
     inside                         shift and go to state 31
 
-state 217
+state 215
 
     (48) inside_root -> inside DOT IDENTIFIER LSB parameter RSB .
 
     SEMI            reduce using rule 48 (inside_root -> inside DOT IDENTIFIER LSB parameter RSB .)
 
 
-state 218
+state 216
 
     (77) if_statement_1 -> IF LSB condition RSB LMB expression . RMB
     (2) expression -> expression . variable_declaration SEMI
@@ -5585,10 +5562,10 @@ state 218
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
-    RMB             shift and go to state 229
+    RMB             shift and go to state 227
     VAR             shift and go to state 20
     IDENTIFIER      shift and go to state 21
     USE             shift and go to state 27
@@ -5626,7 +5603,7 @@ state 218
     try                            shift and go to state 28
     inside                         shift and go to state 31
 
-state 219
+state 217
 
     (83) condition -> condition LB EQUAL calculate .
     (96) calculate -> calculate . PLUS calculate
@@ -5644,7 +5621,7 @@ state 219
     DIV             shift and go to state 146
 
 
-state 220
+state 218
 
     (84) condition -> condition RB EQUAL calculate .
     (96) calculate -> calculate . PLUS calculate
@@ -5662,28 +5639,28 @@ state 220
     DIV             shift and go to state 146
 
 
-state 221
+state 219
 
     (39) for_head -> FOR LSB IDENTIFIER IN IDENTIFIER RSB .
 
     LMB             reduce using rule 39 (for_head -> FOR LSB IDENTIFIER IN IDENTIFIER RSB .)
 
 
-state 222
+state 220
 
     (59) function_class -> VAR IDENTIFIER EQUAL IDENTIFIER LSB parameter RSB .
 
     SEMI            reduce using rule 59 (function_class -> VAR IDENTIFIER EQUAL IDENTIFIER LSB parameter RSB .)
 
 
-state 223
+state 221
 
     (60) function_class -> VAR IDENTIFIER EQUAL IDENTIFIER LSB empty RSB .
 
     SEMI            reduce using rule 60 (function_class -> VAR IDENTIFIER EQUAL IDENTIFIER LSB empty RSB .)
 
 
-state 224
+state 222
 
     (51) inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB . parameter RSB
     (53) inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB . empty RSB
@@ -5712,11 +5689,11 @@ state 224
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    parameter                      shift and go to state 230
-    empty                          shift and go to state 231
+    parameter                      shift and go to state 228
+    empty                          shift and go to state 229
     calculate                      shift and go to state 116
 
-state 225
+state 223
 
     (52) inside -> IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB . empty RSB
     (54) inside -> IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB . parameter RSB
@@ -5745,18 +5722,18 @@ state 225
     LIST            shift and go to state 117
     LSB             shift and go to state 108
 
-    empty                          shift and go to state 232
-    parameter                      shift and go to state 233
+    empty                          shift and go to state 230
+    parameter                      shift and go to state 231
     calculate                      shift and go to state 116
 
-state 226
+state 224
 
     (79) if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB . LMB expression RMB
 
-    LMB             shift and go to state 234
+    LMB             shift and go to state 232
 
 
-state 227
+state 225
 
     (78) if_statement_2 -> ELSE IF LSB condition RSB LMB . expression RMB
     (2) expression -> . expression variable_declaration SEMI
@@ -5835,7 +5812,7 @@ state 227
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
   ! shift/reduce conflict for VAR resolved as shift
@@ -5877,7 +5854,7 @@ state 227
   ! TRY             [ reduce using rule 108 (empty -> .) ]
   ! DOT             [ reduce using rule 108 (empty -> .) ]
 
-    expression                     shift and go to state 235
+    expression                     shift and go to state 233
     variable_declaration           shift and go to state 3
     variable_value_change          shift and go to state 4
     if_statement                   shift and go to state 5
@@ -5903,7 +5880,7 @@ state 227
     try                            shift and go to state 28
     inside                         shift and go to state 31
 
-state 228
+state 226
 
     (37) catch -> CATCH LSB IDENTIFIER RSB LMB expression . RMB
     (2) expression -> expression . variable_declaration SEMI
@@ -5964,10 +5941,10 @@ state 228
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
-    RMB             shift and go to state 236
+    RMB             shift and go to state 234
     VAR             shift and go to state 20
     IDENTIFIER      shift and go to state 21
     USE             shift and go to state 27
@@ -6005,7 +5982,7 @@ state 228
     try                            shift and go to state 28
     inside                         shift and go to state 31
 
-state 229
+state 227
 
     (77) if_statement_1 -> IF LSB condition RSB LMB expression RMB .
 
@@ -6026,39 +6003,39 @@ state 229
     RMB             reduce using rule 77 (if_statement_1 -> IF LSB condition RSB LMB expression RMB .)
 
 
-state 230
+state 228
 
     (51) inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB parameter . RSB
     (70) parameter -> parameter . COMMA calculate
 
+    RSB             shift and go to state 235
+    COMMA           shift and go to state 150
+
+
+state 229
+
+    (53) inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB empty . RSB
+
+    RSB             shift and go to state 236
+
+
+state 230
+
+    (52) inside -> IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB empty . RSB
+
     RSB             shift and go to state 237
-    COMMA           shift and go to state 151
 
 
 state 231
 
-    (53) inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB empty . RSB
-
-    RSB             shift and go to state 238
-
-
-state 232
-
-    (52) inside -> IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB empty . RSB
-
-    RSB             shift and go to state 239
-
-
-state 233
-
     (54) inside -> IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter . RSB
     (70) parameter -> parameter . COMMA calculate
 
-    RSB             shift and go to state 240
-    COMMA           shift and go to state 151
+    RSB             shift and go to state 238
+    COMMA           shift and go to state 150
 
 
-state 234
+state 232
 
     (79) if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB . expression RMB
     (2) expression -> . expression variable_declaration SEMI
@@ -6137,7 +6114,7 @@ state 234
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
   ! shift/reduce conflict for VAR resolved as shift
@@ -6179,7 +6156,7 @@ state 234
   ! TRY             [ reduce using rule 108 (empty -> .) ]
   ! DOT             [ reduce using rule 108 (empty -> .) ]
 
-    expression                     shift and go to state 241
+    expression                     shift and go to state 239
     variable_declaration           shift and go to state 3
     variable_value_change          shift and go to state 4
     if_statement                   shift and go to state 5
@@ -6205,7 +6182,7 @@ state 234
     try                            shift and go to state 28
     inside                         shift and go to state 31
 
-state 235
+state 233
 
     (78) if_statement_2 -> ELSE IF LSB condition RSB LMB expression . RMB
     (2) expression -> expression . variable_declaration SEMI
@@ -6266,10 +6243,10 @@ state 235
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
-    RMB             shift and go to state 242
+    RMB             shift and go to state 240
     VAR             shift and go to state 20
     IDENTIFIER      shift and go to state 21
     USE             shift and go to state 27
@@ -6307,7 +6284,7 @@ state 235
     try                            shift and go to state 28
     inside                         shift and go to state 31
 
-state 236
+state 234
 
     (37) catch -> CATCH LSB IDENTIFIER RSB LMB expression RMB .
 
@@ -6327,7 +6304,7 @@ state 236
     RMB             reduce using rule 37 (catch -> CATCH LSB IDENTIFIER RSB LMB expression RMB .)
 
 
-state 237
+state 235
 
     (51) inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB parameter RSB .
 
@@ -6335,7 +6312,7 @@ state 237
     SEMI            reduce using rule 51 (inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB parameter RSB .)
 
 
-state 238
+state 236
 
     (53) inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB empty RSB .
 
@@ -6343,7 +6320,7 @@ state 238
     SEMI            reduce using rule 53 (inside -> IDENTIFIER LSB parameter RSB DOT IDENTIFIER LSB empty RSB .)
 
 
-state 239
+state 237
 
     (52) inside -> IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB empty RSB .
 
@@ -6351,7 +6328,7 @@ state 239
     SEMI            reduce using rule 52 (inside -> IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB empty RSB .)
 
 
-state 240
+state 238
 
     (54) inside -> IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB .
 
@@ -6359,7 +6336,7 @@ state 240
     SEMI            reduce using rule 54 (inside -> IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB .)
 
 
-state 241
+state 239
 
     (79) if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression . RMB
     (2) expression -> expression . variable_declaration SEMI
@@ -6420,10 +6397,10 @@ state 241
     (54) inside -> . IDENTIFIER LSB empty RSB DOT IDENTIFIER LSB parameter RSB
     (55) inside -> . IDENTIFIER DOT IDENTIFIER LSB parameter RSB
     (56) inside -> . IDENTIFIER DOT IDENTIFIER LSB empty RSB
-    (57) inside -> . IDENTIFIER LSB parameter DOT IDENTIFIER
+    (57) inside -> . IDENTIFIER LSB parameter RSB DOT IDENTIFIER
     (58) inside -> . IDENTIFIER DOT IDENTIFIER
 
-    RMB             shift and go to state 243
+    RMB             shift and go to state 241
     VAR             shift and go to state 20
     IDENTIFIER      shift and go to state 21
     USE             shift and go to state 27
@@ -6461,7 +6438,7 @@ state 241
     try                            shift and go to state 28
     inside                         shift and go to state 31
 
-state 242
+state 240
 
     (78) if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .
 
@@ -6482,7 +6459,7 @@ state 242
     RMB             reduce using rule 78 (if_statement_2 -> ELSE IF LSB condition RSB LMB expression RMB .)
 
 
-state 243
+state 241
 
     (79) if_statement_2 -> if_statement_2 ELSE IF LSB condition RSB LMB expression RMB .
 
@@ -6601,53 +6578,53 @@ WARNING: shift/reduce conflict for FOR in state 128 resolved as shift
 WARNING: shift/reduce conflict for WHILE in state 128 resolved as shift
 WARNING: shift/reduce conflict for TRY in state 128 resolved as shift
 WARNING: shift/reduce conflict for DOT in state 128 resolved as shift
-WARNING: shift/reduce conflict for VAR in state 197 resolved as shift
-WARNING: shift/reduce conflict for IDENTIFIER in state 197 resolved as shift
-WARNING: shift/reduce conflict for USE in state 197 resolved as shift
-WARNING: shift/reduce conflict for GLOBAL in state 197 resolved as shift
-WARNING: shift/reduce conflict for CLASS in state 197 resolved as shift
-WARNING: shift/reduce conflict for IF in state 197 resolved as shift
-WARNING: shift/reduce conflict for FUNCTION in state 197 resolved as shift
-WARNING: shift/reduce conflict for REPEAT in state 197 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 197 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 197 resolved as shift
-WARNING: shift/reduce conflict for TRY in state 197 resolved as shift
-WARNING: shift/reduce conflict for DOT in state 197 resolved as shift
-WARNING: shift/reduce conflict for VAR in state 216 resolved as shift
-WARNING: shift/reduce conflict for IDENTIFIER in state 216 resolved as shift
-WARNING: shift/reduce conflict for USE in state 216 resolved as shift
-WARNING: shift/reduce conflict for GLOBAL in state 216 resolved as shift
-WARNING: shift/reduce conflict for CLASS in state 216 resolved as shift
-WARNING: shift/reduce conflict for IF in state 216 resolved as shift
-WARNING: shift/reduce conflict for FUNCTION in state 216 resolved as shift
-WARNING: shift/reduce conflict for REPEAT in state 216 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 216 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 216 resolved as shift
-WARNING: shift/reduce conflict for TRY in state 216 resolved as shift
-WARNING: shift/reduce conflict for DOT in state 216 resolved as shift
-WARNING: shift/reduce conflict for VAR in state 227 resolved as shift
-WARNING: shift/reduce conflict for IDENTIFIER in state 227 resolved as shift
-WARNING: shift/reduce conflict for USE in state 227 resolved as shift
-WARNING: shift/reduce conflict for GLOBAL in state 227 resolved as shift
-WARNING: shift/reduce conflict for CLASS in state 227 resolved as shift
-WARNING: shift/reduce conflict for IF in state 227 resolved as shift
-WARNING: shift/reduce conflict for FUNCTION in state 227 resolved as shift
-WARNING: shift/reduce conflict for REPEAT in state 227 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 227 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 227 resolved as shift
-WARNING: shift/reduce conflict for TRY in state 227 resolved as shift
-WARNING: shift/reduce conflict for DOT in state 227 resolved as shift
-WARNING: shift/reduce conflict for VAR in state 234 resolved as shift
-WARNING: shift/reduce conflict for IDENTIFIER in state 234 resolved as shift
-WARNING: shift/reduce conflict for USE in state 234 resolved as shift
-WARNING: shift/reduce conflict for GLOBAL in state 234 resolved as shift
-WARNING: shift/reduce conflict for CLASS in state 234 resolved as shift
-WARNING: shift/reduce conflict for IF in state 234 resolved as shift
-WARNING: shift/reduce conflict for FUNCTION in state 234 resolved as shift
-WARNING: shift/reduce conflict for REPEAT in state 234 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 234 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 234 resolved as shift
-WARNING: shift/reduce conflict for TRY in state 234 resolved as shift
-WARNING: shift/reduce conflict for DOT in state 234 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 195 resolved as shift
+WARNING: shift/reduce conflict for IDENTIFIER in state 195 resolved as shift
+WARNING: shift/reduce conflict for USE in state 195 resolved as shift
+WARNING: shift/reduce conflict for GLOBAL in state 195 resolved as shift
+WARNING: shift/reduce conflict for CLASS in state 195 resolved as shift
+WARNING: shift/reduce conflict for IF in state 195 resolved as shift
+WARNING: shift/reduce conflict for FUNCTION in state 195 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 195 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 195 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 195 resolved as shift
+WARNING: shift/reduce conflict for TRY in state 195 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 195 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 214 resolved as shift
+WARNING: shift/reduce conflict for IDENTIFIER in state 214 resolved as shift
+WARNING: shift/reduce conflict for USE in state 214 resolved as shift
+WARNING: shift/reduce conflict for GLOBAL in state 214 resolved as shift
+WARNING: shift/reduce conflict for CLASS in state 214 resolved as shift
+WARNING: shift/reduce conflict for IF in state 214 resolved as shift
+WARNING: shift/reduce conflict for FUNCTION in state 214 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 214 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 214 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 214 resolved as shift
+WARNING: shift/reduce conflict for TRY in state 214 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 214 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 225 resolved as shift
+WARNING: shift/reduce conflict for IDENTIFIER in state 225 resolved as shift
+WARNING: shift/reduce conflict for USE in state 225 resolved as shift
+WARNING: shift/reduce conflict for GLOBAL in state 225 resolved as shift
+WARNING: shift/reduce conflict for CLASS in state 225 resolved as shift
+WARNING: shift/reduce conflict for IF in state 225 resolved as shift
+WARNING: shift/reduce conflict for FUNCTION in state 225 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 225 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 225 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 225 resolved as shift
+WARNING: shift/reduce conflict for TRY in state 225 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 225 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 232 resolved as shift
+WARNING: shift/reduce conflict for IDENTIFIER in state 232 resolved as shift
+WARNING: shift/reduce conflict for USE in state 232 resolved as shift
+WARNING: shift/reduce conflict for GLOBAL in state 232 resolved as shift
+WARNING: shift/reduce conflict for CLASS in state 232 resolved as shift
+WARNING: shift/reduce conflict for IF in state 232 resolved as shift
+WARNING: shift/reduce conflict for FUNCTION in state 232 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 232 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 232 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 232 resolved as shift
+WARNING: shift/reduce conflict for TRY in state 232 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 232 resolved as shift
 WARNING: reduce/reduce conflict in state 106 resolved using rule (variable_value_change -> IDENTIFIER EQUAL LIST)
 WARNING: rejected rule (calculate -> LIST) in state 106

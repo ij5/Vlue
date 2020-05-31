@@ -532,6 +532,7 @@ def p_inside_root_4(t):
     '''
     inside : inside DOT IDENTIFIER
     '''
+    t[0] = t[1] + t[2] + t[3] + "\n"
 
 def p_inside_1_1(t):
     '''

@@ -56,4 +56,5 @@ c = Hello();
 
 c.asd(asd);
 
+asd = input(">>> ");
 print(asd);

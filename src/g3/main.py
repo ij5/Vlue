@@ -289,7 +289,7 @@ def p_expression_function_class(t):
 
 def p_expression_inside(t):
     '''
-    expression : expression inside SEMI
+    expression : expression inside_root SEMI
     '''
     t[0] = t[1] + t[2]
 
@@ -389,7 +389,7 @@ def p_expression_function_class_2(t):
 
 def p_expression_inside_2(t):
     '''
-    expression : inside SEMI
+    expression : inside_root SEMI
     '''
     t[0] = t[1]
 
@@ -509,6 +509,27 @@ def p_repeat_body(t):
         t[0] = t[2]
 
 ############### INSIDE
+
+def p_inside_root_1(t):
+    '''
+    inside_root : inside
+    '''
+    t[0] = t[1]
+
+def p_inside_root_2(t):
+    '''
+    inside_root : inside DOT IDENTIFIER LSB parameter RSB
+    '''
+
+def p_inside_root_3(t):
+    '''
+    inside DOT IDENTIFIER LSB empty RSB
+    '''
+
+def p_inside_root_4(t):
+    '''
+    inside : inside DOT IDENTIFIER
+    '''
 
 def p_inside_1_1(t):
     '''

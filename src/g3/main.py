@@ -520,6 +520,7 @@ def p_inside_root_2(t):
     '''
     inside_root : inside DOT IDENTIFIER LSB parameter RSB
     '''
+    t[0] = t[1] + t[2] + t[3] + t[4] + t[5] + t[6] + "\n"
 
 def p_inside_root_3(t):
     '''

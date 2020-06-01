@@ -257,9 +257,9 @@ def p_expression_error_handling(t):
     '''
     t[0] = t[1] + t[2]
 
-def p_expression_variable_alone(t):
+def p_exp_variable_alone(t):
     '''
-    expression : expression variable_alone SEMI
+    exp : expression variable_alone SEMI
     '''
     t[0] = t[1] + t[2]
 

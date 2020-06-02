@@ -185,9 +185,14 @@ for ff in f:
 def p_exex(t):
     '''
     exex : exex expression
-        | expression
     '''
-    pass
+    t[0] = t[1] + t[2]
+
+def p_exex_2(t):
+    '''
+    exex : expression
+    '''
+    t[0] = t[1]
 
 
 # ################ EXP

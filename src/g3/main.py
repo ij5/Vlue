@@ -208,112 +208,112 @@ def p_exex_2(t):
 
 # EXPRESSION EXPRESSION
 
-# def p_expression_variable(t):
-#     '''
-#     expression : expression variable_declaration SEMI
-#         | expression variable_value_change SEMI
-#     '''
-#     global code
-#     # if(t[1]==None):
-#     #     if(t[2]==None):
-#     #         code = code + ""
-#     #     else:
-#     #         code = code + t[2]
-#     # else:
-#     #     if(t[2]==None):
-#     #         code = code + t[1]
-#     #     else:
-#     #         code = code + t[2]
-#     t[0] = t[1] + t[2]
-#
-# def p_expression_if_statement(t):
-#     '''
-#     expression : expression if_statement
-#     '''
-#     global code
-#     # if(t[1]==None):
-#     #     code = code + t[2]
-#     # else:
-#     #     code = code + t[2]
-#     t[0] = t[1] + t[2]
-#
-# def p_expression_function(t):
-#     '''
-#     expression : expression function
-#     '''
-#     t[0] = t[1] + t[2]
-#
-# def p_expression_function_call(t):
-#     '''
-#     expression : expression function_call SEMI
-#     '''
-#     t[0] = t[1] + t[2]
-#
-# def p_expression_repeat(t):
-#     '''
-#     expression : expression repeat
-#     '''
-#     t[0] = t[1] + t[2]
-#
-# def p_expression_for(t):
-#     '''
-#     expression : expression for
-#     '''
-#     t[0] = t[1] + t[2]
-#
-# def p_expression_while(t):
-#     '''
-#     expression : expression while
-#     '''
-#     t[0] = t[1] + t[2]
-#
-# def p_expression_use(t):
-#     '''
-#     expression : expression use SEMI
-#     '''
-#     t[0] = t[1] + t[2]
-#
-# def p_expression_error_handling(t):
-#     '''
-#     expression : expression error_handling
-#     '''
-#     t[0] = t[1] + t[2]
-#
-# def p_exp_variable_alone(t):
-#     '''
-#     expression : expression variable_alone SEMI
-#     '''
-#     t[0] = t[1] + t[2]
-#
-# def p_expression_global_variable(t):
-#     '''
-#     expression : expression global_variable SEMI
-#     '''
-#     t[0] = t[1] + t[2]
-#
-# def p_expression_class_def(t):
-#     '''
-#     expression : expression class_def
-#     '''
-#     t[0] = t[1] + t[2]
-#
-# def p_expression_debug(t):
-#     '''
-#     expression : expression debug SEMI
-#     '''
-#     t[0] = t[1]
-#
-# def p_expression_function_class(t):
-#     '''
-#     expression : expression function_class SEMI
-#     '''
-#     t[0] = t[1] + t[2]
-#
-# def p_expression_inside(t):
-#     '''
-#     expression : expression inside_root SEMI
-#     '''
-#     t[0] = t[1] + t[2]
+def p_expression_variable(t):
+    '''
+    expression : expression variable_declaration SEMI
+        | expression variable_value_change SEMI
+    '''
+    global code
+    # if(t[1]==None):
+    #     if(t[2]==None):
+    #         code = code + ""
+    #     else:
+    #         code = code + t[2]
+    # else:
+    #     if(t[2]==None):
+    #         code = code + t[1]
+    #     else:
+    #         code = code + t[2]
+    t[0] = t[1] + t[2]
+
+def p_expression_if_statement(t):
+    '''
+    expression : expression if_statement
+    '''
+    global code
+    # if(t[1]==None):
+    #     code = code + t[2]
+    # else:
+    #     code = code + t[2]
+    t[0] = t[1] + t[2]
+
+def p_expression_function(t):
+    '''
+    expression : expression function
+    '''
+    t[0] = t[1] + t[2]
+
+def p_expression_function_call(t):
+    '''
+    expression : expression function_call SEMI
+    '''
+    t[0] = t[1] + t[2]
+
+def p_expression_repeat(t):
+    '''
+    expression : expression repeat
+    '''
+    t[0] = t[1] + t[2]
+
+def p_expression_for(t):
+    '''
+    expression : expression for
+    '''
+    t[0] = t[1] + t[2]
+
+def p_expression_while(t):
+    '''
+    expression : expression while
+    '''
+    t[0] = t[1] + t[2]
+
+def p_expression_use(t):
+    '''
+    expression : expression use SEMI
+    '''
+    t[0] = t[1] + t[2]
+
+def p_expression_error_handling(t):
+    '''
+    expression : expression error_handling
+    '''
+    t[0] = t[1] + t[2]
+
+def p_exp_variable_alone(t):
+    '''
+    expression : expression variable_alone SEMI
+    '''
+    t[0] = t[1] + t[2]
+
+def p_expression_global_variable(t):
+    '''
+    expression : expression global_variable SEMI
+    '''
+    t[0] = t[1] + t[2]
+
+def p_expression_class_def(t):
+    '''
+    expression : expression class_def
+    '''
+    t[0] = t[1] + t[2]
+
+def p_expression_debug(t):
+    '''
+    expression : expression debug SEMI
+    '''
+    t[0] = t[1]
+
+def p_expression_function_class(t):
+    '''
+    expression : expression function_class SEMI
+    '''
+    t[0] = t[1] + t[2]
+
+def p_expression_inside(t):
+    '''
+    expression : expression inside_root SEMI
+    '''
+    t[0] = t[1] + t[2]
 
 # EXPRESSION
 
@@ -860,7 +860,6 @@ def p_variable_value_change(t):
     '''
     variable_value_change : IDENTIFIER EQUAL calculate
     '''
-    global code
     if variable.get(t[1]):
         variable[t[1]] = t[3]
         t[0] = t[1]+t[2]+str(t[3])+"\n"

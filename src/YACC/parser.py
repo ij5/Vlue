@@ -35,6 +35,7 @@ def p_empty(t):
     '''
     empty : 
     '''
+    t[0] = ""
 
 def p_error(t):
     print("error on token "+t.value)

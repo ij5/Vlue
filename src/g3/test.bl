@@ -1,6 +1,6 @@
 use debug;
 use base;
-
+c = 3+4;
 class Asd{
 
 }
@@ -29,7 +29,7 @@ for(i in c){
 
 while(c<9){
     c = 5+2;
-    c = c+1;
+    c= c+1;
 }
 
 fn(asd,bsa);

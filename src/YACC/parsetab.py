@@ -6,7 +6,7 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'IF INT LB LMB LSB RB RMB RSB\n    statement : expression\n        | if_statement\n    \n    if_statement : IF LSB expression RSB LMB statement RMB\n    \n    expression : condition\n        | empty\n    \n    condition : INT operator INT\n    \n    operator : LB\n        | RB\n    \n    empty : \n    '
+_lr_signature = 'CATCH CLASS COLON COMMA DEBUG DIV DOT ELSE EQUAL FLOAT FOR FUNCTION GLOBAL IDENTIFIER IF IN INT LB LIST LMB LSB MINUS MUL PLUS PYTHON RB REPEAT RMB RSB SEMI STRING TRY USE VAR WHILE\n    statement : expression\n        | if_statement\n    \n    if_statement : IF LSB expression RSB LMB statement RMB\n    \n    expression : condition\n        | empty\n    \n    condition : INT operator INT\n    \n    operator : LB\n        | RB\n    \n    empty : \n    '
     
 _lr_action_items = {'IF':([0,15,],[6,6,]),'INT':([0,8,9,10,11,15,],[7,7,13,-7,-8,7,]),'$end':([0,1,2,3,4,5,13,17,],[-9,0,-1,-2,-4,-5,-6,-3,]),'RMB':([2,3,4,5,13,15,16,17,],[-1,-2,-4,-5,-6,-9,17,-3,]),'RSB':([4,5,8,12,13,],[-4,-5,-9,14,-6,]),'LSB':([6,],[8,]),'LB':([7,],[10,]),'RB':([7,],[11,]),'LMB':([14,],[15,]),}
 

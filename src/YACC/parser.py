@@ -13,6 +13,7 @@ def p_if_statement(t):
     '''
     if_statement : IF LSB expression RSB LMB statement RMB
     '''
+    pass
 
 def p_expression(t):
     '''
@@ -36,7 +37,6 @@ def p_empty(t):
     empty : 
     '''
     t[0] = ""
-    print(t[-2])
 
 def p_error(t):
     print("error on token "+t.value)

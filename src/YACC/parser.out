@@ -10,7 +10,6 @@ Unused terminals:
     DIV
     DOT
     ELSE
-    EQUAL
     FLOAT
     FOR
     FUNCTION
@@ -18,9 +17,7 @@ Unused terminals:
     IDENTIFIER
     IN
     LIST
-    MINUS
     MUL
-    PLUS
     PYTHON
     REPEAT
     SEMI
@@ -33,15 +30,23 @@ Unused terminals:
 Grammar
 
 Rule 0     S' -> statement
-Rule 1     statement -> expression
-Rule 2     statement -> if_statement
-Rule 3     if_statement -> IF LSB expression RSB LMB statement RMB
-Rule 4     expression -> condition
-Rule 5     expression -> empty
-Rule 6     condition -> INT operator INT
-Rule 7     operator -> LB
-Rule 8     operator -> RB
-Rule 9     empty -> <empty>
+Rule 1     statement -> statement expression
+Rule 2     statement -> statement if_statement
+Rule 3     statement -> expression
+Rule 4     statement -> if_statement
+Rule 5     if_statement -> IF LSB expression RSB LMB statement RMB
+Rule 6     expression -> condition
+Rule 7     expression -> empty
+Rule 8     condition -> INT operator INT
+Rule 9     operator -> LB
+Rule 10    operator -> RB
+Rule 11    operator -> LB EQUAL
+Rule 12    operator -> RB EQUAL
+Rule 13    operator -> PLUS
+Rule 14    operator -> MINUS
+Rule 15    operator -> EQUAL
+Rule 16    operator -> empty
+Rule 17    empty -> <empty>
 
 Terminals, with rules where they appear
 
@@ -53,27 +58,27 @@ DEBUG                :
 DIV                  : 
 DOT                  : 
 ELSE                 : 
-EQUAL                : 
+EQUAL                : 11 12 15
 FLOAT                : 
 FOR                  : 
 FUNCTION             : 
 GLOBAL               : 
 IDENTIFIER           : 
-IF                   : 3
+IF                   : 5
 IN                   : 
-INT                  : 6 6
-LB                   : 7
+INT                  : 8 8
+LB                   : 9 11
 LIST                 : 
-LMB                  : 3
-LSB                  : 3
-MINUS                : 
+LMB                  : 5
+LSB                  : 5
+MINUS                : 14
 MUL                  : 
-PLUS                 : 
+PLUS                 : 13
 PYTHON               : 
-RB                   : 8
+RB                   : 10 12
 REPEAT               : 
-RMB                  : 3
-RSB                  : 3
+RMB                  : 5
+RSB                  : 5
 SEMI                 : 
 STRING               : 
 TRY                  : 
@@ -84,29 +89,36 @@ error                :
 
 Nonterminals, with rules where they appear
 
-condition            : 4
-empty                : 5
-expression           : 1 3
-if_statement         : 2
-operator             : 6
-statement            : 3 0
+condition            : 6
+empty                : 7 16
+expression           : 1 3 5
+if_statement         : 2 4
+operator             : 8
+statement            : 1 2 5 0
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . statement
-    (1) statement -> . expression
-    (2) statement -> . if_statement
-    (4) expression -> . condition
-    (5) expression -> . empty
-    (3) if_statement -> . IF LSB expression RSB LMB statement RMB
-    (6) condition -> . INT operator INT
-    (9) empty -> .
+    (1) statement -> . statement expression
+    (2) statement -> . statement if_statement
+    (3) statement -> . expression
+    (4) statement -> . if_statement
+    (6) expression -> . condition
+    (7) expression -> . empty
+    (5) if_statement -> . IF LSB expression RSB LMB statement RMB
+    (8) condition -> . INT operator INT
+    (17) empty -> .
 
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for INT resolved as shift
     IF              shift and go to state 6
     INT             shift and go to state 7
-    $end            reduce using rule 9 (empty -> .)
+    $end            reduce using rule 17 (empty -> .)
+
+  ! IF              [ reduce using rule 17 (empty -> .) ]
+  ! INT             [ reduce using rule 17 (empty -> .) ]
 
     statement                      shift and go to state 1
     expression                     shift and go to state 2
@@ -117,152 +129,13 @@ state 0
 state 1
 
     (0) S' -> statement .
-
-
-
-state 2
-
-    (1) statement -> expression .
-
-    $end            reduce using rule 1 (statement -> expression .)
-    RMB             reduce using rule 1 (statement -> expression .)
-
-
-state 3
-
-    (2) statement -> if_statement .
-
-    $end            reduce using rule 2 (statement -> if_statement .)
-    RMB             reduce using rule 2 (statement -> if_statement .)
-
-
-state 4
-
-    (4) expression -> condition .
-
-    $end            reduce using rule 4 (expression -> condition .)
-    RSB             reduce using rule 4 (expression -> condition .)
-    RMB             reduce using rule 4 (expression -> condition .)
-
-
-state 5
-
-    (5) expression -> empty .
-
-    $end            reduce using rule 5 (expression -> empty .)
-    RSB             reduce using rule 5 (expression -> empty .)
-    RMB             reduce using rule 5 (expression -> empty .)
-
-
-state 6
-
-    (3) if_statement -> IF . LSB expression RSB LMB statement RMB
-
-    LSB             shift and go to state 8
-
-
-state 7
-
-    (6) condition -> INT . operator INT
-    (7) operator -> . LB
-    (8) operator -> . RB
-
-    LB              shift and go to state 10
-    RB              shift and go to state 11
-
-    operator                       shift and go to state 9
-
-state 8
-
-    (3) if_statement -> IF LSB . expression RSB LMB statement RMB
-    (4) expression -> . condition
-    (5) expression -> . empty
-    (6) condition -> . INT operator INT
-    (9) empty -> .
-
-    INT             shift and go to state 7
-    RSB             reduce using rule 9 (empty -> .)
-
-    expression                     shift and go to state 12
-    condition                      shift and go to state 4
-    empty                          shift and go to state 5
-
-state 9
-
-    (6) condition -> INT operator . INT
-
-    INT             shift and go to state 13
-
-
-state 10
-
-    (7) operator -> LB .
-
-    INT             reduce using rule 7 (operator -> LB .)
-
-
-state 11
-
-    (8) operator -> RB .
-
-    INT             reduce using rule 8 (operator -> RB .)
-
-
-state 12
-
-    (3) if_statement -> IF LSB expression . RSB LMB statement RMB
-
-    RSB             shift and go to state 14
-
-
-state 13
-
-    (6) condition -> INT operator INT .
-
-    $end            reduce using rule 6 (condition -> INT operator INT .)
-    RSB             reduce using rule 6 (condition -> INT operator INT .)
-    RMB             reduce using rule 6 (condition -> INT operator INT .)
-
-
-state 14
-
-    (3) if_statement -> IF LSB expression RSB . LMB statement RMB
-
-    LMB             shift and go to state 15
-
-
-state 15
-
-    (3) if_statement -> IF LSB expression RSB LMB . statement RMB
-    (1) statement -> . expression
-    (2) statement -> . if_statement
-    (4) expression -> . condition
-    (5) expression -> . empty
-    (3) if_statement -> . IF LSB expression RSB LMB statement RMB
-    (6) condition -> . INT operator INT
-    (9) empty -> .
-
-    IF              shift and go to state 6
-    INT             shift and go to state 7
-    RMB             reduce using rule 9 (empty -> .)
-
-    expression                     shift and go to state 2
-    statement                      shift and go to state 16
-    if_statement                   shift and go to state 3
-    condition                      shift and go to state 4
-    empty                          shift and go to state 5
-
-state 16
-
-    (3) if_statement -> IF LSB expression RSB LMB statement . RMB
-
-    RMB             shift and go to state 17
-
-
-state 17
-
-    (3) if_statement -> IF LSB expression RSB LMB statement RMB .
-
-    $end            reduce using rule 3 (if_statement -> IF LSB expression RSB LMB statement RMB .)
-    RMB             reduce using rule 3 (if_statement -> IF LSB expression RSB LMB statement RMB .)
-
+    (1) statement -> statement . expression
+    (2) statement -> statement . if_statement
+    (6) expression -> . condition
+    (7) expression -> . empty
+    (5) if_statement -> . IF LSB expression RSB LMB statement RMB
+    (8) condition -> . INT operator INT
+    (17) empty -> .
+
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for INT resolved as shift

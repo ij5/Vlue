@@ -12,4 +12,6 @@ class BLUEParser(Parser):
         ('right', 'UNARY')
     )
 
-    
+    @_('statement')
+    def root(self, p):
+        

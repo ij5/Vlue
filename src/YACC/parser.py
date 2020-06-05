@@ -13,5 +13,5 @@ class BLUEParser(Parser):
     )
 
     @_('statement')
-    def root(self, p):
-        
+    def root(self, t):
+        return t.statement

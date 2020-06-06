@@ -44,6 +44,8 @@ tokens = [
     'LSB',
     'RMB',
     'LMB',
+    'LBB',
+    'RBB',
     'COMMA',
     'LIST',
     'PYTHON',
@@ -65,6 +67,8 @@ t_COLON = r'\:'
 t_SEMI = r'\;'
 t_COMMA = r'\,'
 t_DOT = r'\.'
+t_LBB = r'\['
+t_RBB = r'\]'
 
 t_ignore = ' \t'
 
@@ -1104,7 +1108,7 @@ def p_while_statement(t):
 ################## IF
 
 def p_if_statement(t):
-    '''if_statement : IF compare_expression DO statement END'''
+    '''if_statement : IF LSB compare_expression RSB LMB statement RMB'''
     pass
 
 ################## COMPARE
@@ -1118,10 +1122,10 @@ def p_compare_expression(t):
 
 def p_compare_operator(t):
     '''
-    compare_operator : LBB
-        | RBB
-        | LBB EQUAL
-        | RBB EQUAL
+    compare_operator : LB
+        | RB
+        | LB EQUAL
+        | RB EQUAL
     '''
     pass
 

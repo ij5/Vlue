@@ -21,6 +21,8 @@ reserved = {
     'global': 'GLOBAL',
     'class': 'CLASS',
     'debug': 'DEBUG',
+    'do': 'DO',
+    'end': 'END',
 }
 
 tokens = [
@@ -1014,7 +1016,7 @@ for ff in f:
 #     'calculate : LSB calculate RSB'
 #     t[0] = t[2]
 
-def string_escape(s):
+def DecodeEscape(s):
     res = ''
     i = iter(s)
     for c in i:
@@ -1053,25 +1055,66 @@ def string_escape(s):
             res += c
     return res
 
+##################### PROGRAM
 
-############ ROOT
+def p_program(t):
+    '''
+    program : root
+    '''
+    pass
+
+##################### ROOT
 
 def p_root(t):
-    '''root : statement'''
+    '''
+    root : root statement
+        | statement
+    '''
     pass
+
+################### STATEMENT
 
 def p_statement(t):
-    '''statement : expression'''
+    '''
+    statement : expression
+        | if_statement
+        | while_statement
+        | variable_declaration
+    '''
     pass
 
+################## EXPRESSION
+
+def p_expression(t):
+    '''expression : calculate'''
+    pass
+
+################### VARIABLE DECLARATION
+
+def p_variable_declaration(t):
+    '''variable_declaration : VAR IDENTIFIER EQUAL calculate'''
+    pass
+
+################### WHILE
+
+def p_while_statement(t):
+    '''while_statement : WHILE compare_expression DO statement END'''
+    pass
+
+################## IF
+
 def p_if_statement(t):
-    '''if_statement : IF LSB compare_expression RSB LMB '''
+    '''if_statement : IF compare_expression DO statement END'''
+    pass
+
+################## COMPARE
 
 def p_compare_expression(t):
     '''
     compare_expression : compare_expression compare_operator calculate
         | calculate
     '''
+    pass
 
 def p_compare_operator(t):
     '''
@@ -1080,10 +1123,9 @@ def p_compare_operator(t):
         | LBB EQUAL
         | RBB EQUAL
     '''
-
-def p_expression(t):
-    '''expression : calculate'''
     pass
+
+################### CALCULATE
 
 def p_calculate(t):
     '''

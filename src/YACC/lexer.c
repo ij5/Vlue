@@ -1,5 +1,5 @@
-//
-// Created by USER on 2020-06-06.
-//
-
 #include "lexer.h"
+
+int main(void){
+    printf("Hello World!");
+}

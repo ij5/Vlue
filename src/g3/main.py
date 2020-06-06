@@ -140,11 +140,11 @@ import os
 code = "buf___ = 0\n"
 state = []
 f = []
+debug = False
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
-    ('left', 'MUL', 'DIV'),
-    ('right', 'UMINUS')
+    ('left', 'MUL', 'DIV')
 )
 
 
@@ -1043,8 +1043,7 @@ def string_escape(s):
                 try:
                     x = int(x, 16)
                     res += chr(x)
-                except ValueError
-                    :
+                except ValueError:
                     res += '\\x' + x
             elif c == '\\':
                 res += '\\'
@@ -1059,9 +1058,33 @@ def string_escape(s):
 
 def p_root(t):
     '''root : statement'''
+    pass
 
 def p_statement(t):
     '''statement : expression'''
+    pass
+
+def p_expression(t):
+    '''expression : calculate'''
+    pass
+
+def p_calculate(t):
+    '''
+    calculate : calculate baseoperator INT
+        | calculate baseoperator FLOAT
+        | INT
+        | FLOAT
+    '''
+    pass
+
+def p_baseOperator(t):
+    '''
+    baseoperator : PLUS
+        | MINUS
+        | MUL
+        | DIV
+    '''
+    pass
 
 ############ EMPTY
 
@@ -1086,9 +1109,9 @@ lexer = lex.lex()
 def parse(data):
     global debug
     parser = yacc.yacc()
-    result = parser.parse(data, debug=1)
+    result = parser.parse(data, debug=0)
     if(debug==True):
-        print(variable)
+        print()
         print(code)
         print(os.getcwd())
     exec(code)

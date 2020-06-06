@@ -1084,6 +1084,7 @@ def p_statement(t):
         | if_statement
         | while_statement
         | variable_declaration
+        | empty
     '''
     pass
 
@@ -1096,13 +1097,13 @@ def p_expression(t):
 ################### VARIABLE DECLARATION
 
 def p_variable_declaration(t):
-    '''variable_declaration : VAR IDENTIFIER EQUAL calculate'''
+    '''variable_declaration : VAR IDENTIFIER EQUAL calculate SEMI'''
     pass
 
 ################### WHILE
 
 def p_while_statement(t):
-    '''while_statement : WHILE compare_expression DO statement END'''
+    '''while_statement : WHILE LSB compare_expression RSB LMB statement RMB'''
     pass
 
 ################## IF
@@ -1135,8 +1136,10 @@ def p_calculate(t):
     '''
     calculate : calculate baseoperator INT
         | calculate baseoperator FLOAT
+        | calculate baseoperator IDENTIFIER
         | INT
         | FLOAT
+        | IDENTIFIER
     '''
     pass
 

@@ -1018,7 +1018,7 @@ def string_escape(s):
     res = ''
     i = iter(s)
     for c in i:
-        if c=='\\':
+        if c == '\\':
             c = next(i)
             if c == 'n':
                 res += '\n'
@@ -1063,6 +1063,23 @@ def p_root(t):
 def p_statement(t):
     '''statement : expression'''
     pass
+
+def p_if_statement(t):
+    '''if_statement : IF LSB compare_expression RSB LMB '''
+
+def p_compare_expression(t):
+    '''
+    compare_expression : compare_expression compare_operator calculate
+        | calculate
+    '''
+
+def p_compare_operator(t):
+    '''
+    compare_operator : LBB
+        | RBB
+        | LBB EQUAL
+        | RBB EQUAL
+    '''
 
 def p_expression(t):
     '''expression : calculate'''

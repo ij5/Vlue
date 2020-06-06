@@ -1014,6 +1014,47 @@ for ff in f:
 #     'calculate : LSB calculate RSB'
 #     t[0] = t[2]
 
+def string_escape(s):
+    res = ''
+    i = iter(s)
+    for c in i:
+        if c=='\\':
+            c = next(i)
+            if c == 'n':
+                res += '\n'
+            elif c == 'r':
+                res += '\r'
+            elif c == 't':
+                res += '\t'
+            elif c == '"':
+                res += '"'
+            elif c == "'":
+                res += "'"
+            elif c == 'x':
+                try:
+                    x = next(i)
+                except StopIteration:
+                    res += "\\x"
+                    break
+                try:
+                    x += next(i)
+                except StopIteration:
+                    pass
+                try:
+                    x = int(x, 16)
+                    res += chr(x)
+                except ValueError
+                    :
+                    res += '\\x' + x
+            elif c == '\\':
+                res += '\\'
+            else:
+                res += c
+        else:
+            res += c
+    return res
+
+
 ############ ROOT
 
 def p_root(t):

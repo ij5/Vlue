@@ -34,93 +34,94 @@ Rule 7     statement -> variable_declaration
 Rule 8     statement -> function_declaration
 Rule 9     statement -> empty
 Rule 10    expression -> calculate
-Rule 11    variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI
-Rule 12    function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
-Rule 13    function_parameter -> function_parameter COMMA IDENTIFIER
-Rule 14    function_parameter -> IDENTIFIER
-Rule 15    function_parameter -> empty
-Rule 16    while_statement -> WHILE LSB compare_expression RSB LMB statement RMB
-Rule 17    if_statement -> IF LSB compare_expression RSB LMB statement RMB
-Rule 18    if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
-Rule 19    if_statement -> if_statement ELSE LMB statement RMB
-Rule 20    compare_expression -> compare_expression compare_operator calculate
-Rule 21    compare_expression -> calculate
-Rule 22    compare_operator -> LB
-Rule 23    compare_operator -> RB
-Rule 24    compare_operator -> LB EQUAL
-Rule 25    compare_operator -> RB EQUAL
-Rule 26    compare_operator -> EQUAL EQUAL
-Rule 27    compare_operator -> NOTEQUAL EQUAL
-Rule 28    calculate -> calculate baseoperator INT
-Rule 29    calculate -> calculate baseoperator FLOAT
-Rule 30    calculate -> calculate baseoperator IDENTIFIER
-Rule 31    calculate -> INT
-Rule 32    calculate -> FLOAT
-Rule 33    calculate -> IDENTIFIER
-Rule 34    baseoperator -> PLUS
-Rule 35    baseoperator -> MINUS
-Rule 36    baseoperator -> MUL
-Rule 37    baseoperator -> DIV
-Rule 38    empty -> <empty>
+Rule 11    expression -> compare_expression
+Rule 12    variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI
+Rule 13    function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
+Rule 14    function_parameter -> function_parameter COMMA IDENTIFIER
+Rule 15    function_parameter -> IDENTIFIER
+Rule 16    function_parameter -> empty
+Rule 17    while_statement -> WHILE LSB compare_expression RSB LMB statement RMB
+Rule 18    if_statement -> IF LSB compare_expression RSB LMB statement RMB
+Rule 19    if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
+Rule 20    if_statement -> if_statement ELSE LMB statement RMB
+Rule 21    compare_expression -> compare_expression compare_operator calculate
+Rule 22    compare_expression -> calculate
+Rule 23    compare_operator -> LB
+Rule 24    compare_operator -> RB
+Rule 25    compare_operator -> LB EQUAL
+Rule 26    compare_operator -> RB EQUAL
+Rule 27    compare_operator -> EQUAL EQUAL
+Rule 28    compare_operator -> NOTEQUAL EQUAL
+Rule 29    calculate -> calculate baseoperator INT
+Rule 30    calculate -> calculate baseoperator FLOAT
+Rule 31    calculate -> calculate baseoperator IDENTIFIER
+Rule 32    calculate -> INT
+Rule 33    calculate -> FLOAT
+Rule 34    calculate -> IDENTIFIER
+Rule 35    baseoperator -> PLUS
+Rule 36    baseoperator -> MINUS
+Rule 37    baseoperator -> MUL
+Rule 38    baseoperator -> DIV
+Rule 39    empty -> <empty>
 
 Terminals, with rules where they appear
 
 CATCH                : 
 CLASS                : 
 COLON                : 
-COMMA                : 13
+COMMA                : 14
 DEBUG                : 
-DIV                  : 37
+DIV                  : 38
 DO                   : 
 DOT                  : 
-ELSE                 : 18 19
+ELSE                 : 19 20
 END                  : 
-EQUAL                : 11 24 25 26 26 27
-FLOAT                : 29 32
+EQUAL                : 12 25 26 27 27 28
+FLOAT                : 30 33
 FOR                  : 
-FUNCTION             : 12
+FUNCTION             : 13
 GLOBAL               : 
-IDENTIFIER           : 11 12 13 14 30 33
-IF                   : 17 18
+IDENTIFIER           : 12 13 14 15 31 34
+IF                   : 18 19
 IN                   : 
-INT                  : 28 31
-LB                   : 22 24
+INT                  : 29 32
+LB                   : 23 25
 LBB                  : 
 LIST                 : 
-LMB                  : 12 16 17 18 19
-LSB                  : 12 16 17 18
-MINUS                : 35
-MUL                  : 36
-NOTEQUAL             : 27
-PLUS                 : 34
+LMB                  : 13 17 18 19 20
+LSB                  : 13 17 18 19
+MINUS                : 36
+MUL                  : 37
+NOTEQUAL             : 28
+PLUS                 : 35
 PYTHON               : 
-RB                   : 23 25
+RB                   : 24 26
 RBB                  : 
 REPEAT               : 
-RMB                  : 12 16 17 18 19
-RSB                  : 12 16 17 18
-SEMI                 : 11
+RMB                  : 13 17 18 19 20
+RSB                  : 13 17 18 19
+SEMI                 : 12
 STRING               : 
 TRY                  : 
 USE                  : 
-VAR                  : 11
-WHILE                : 16
+VAR                  : 12
+WHILE                : 17
 error                : 
 
 Nonterminals, with rules where they appear
 
-baseoperator         : 28 29 30
-calculate            : 10 20 21 28 29 30
-compare_expression   : 16 17 18 20
-compare_operator     : 20
-empty                : 9 15
-expression           : 4 11
+baseoperator         : 29 30 31
+calculate            : 10 21 22 29 30 31
+compare_expression   : 11 17 18 19 21
+compare_operator     : 21
+empty                : 9 16
+expression           : 4 12
 function_declaration : 8
-function_parameter   : 12 13
-if_statement         : 5 18 19
+function_parameter   : 13 14
+if_statement         : 5 19 20
 program              : 0
 root                 : 1 2
-statement            : 2 3 12 16 17 18 19
+statement            : 2 3 13 17 18 19 20
 variable_declaration : 7
 while_statement      : 6
 
@@ -139,19 +140,22 @@ state 0
     (8) statement -> . function_declaration
     (9) statement -> . empty
     (10) expression -> . calculate
-    (17) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
-    (18) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
-    (19) if_statement -> . if_statement ELSE LMB statement RMB
-    (16) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
-    (11) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
-    (12) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
-    (38) empty -> .
-    (28) calculate -> . calculate baseoperator INT
-    (29) calculate -> . calculate baseoperator FLOAT
-    (30) calculate -> . calculate baseoperator IDENTIFIER
-    (31) calculate -> . INT
-    (32) calculate -> . FLOAT
-    (33) calculate -> . IDENTIFIER
+    (11) expression -> . compare_expression
+    (18) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
+    (19) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
+    (20) if_statement -> . if_statement ELSE LMB statement RMB
+    (17) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
+    (12) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
+    (13) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
+    (39) empty -> .
+    (29) calculate -> . calculate baseoperator INT
+    (30) calculate -> . calculate baseoperator FLOAT
+    (31) calculate -> . calculate baseoperator IDENTIFIER
+    (32) calculate -> . INT
+    (33) calculate -> . FLOAT
+    (34) calculate -> . IDENTIFIER
+    (21) compare_expression -> . compare_expression compare_operator calculate
+    (22) compare_expression -> . calculate
 
   ! shift/reduce conflict for IF resolved as shift
   ! shift/reduce conflict for WHILE resolved as shift
@@ -160,22 +164,22 @@ state 0
   ! shift/reduce conflict for INT resolved as shift
   ! shift/reduce conflict for FLOAT resolved as shift
   ! shift/reduce conflict for IDENTIFIER resolved as shift
-    IF              shift and go to state 11
-    WHILE           shift and go to state 12
-    VAR             shift and go to state 13
-    FUNCTION        shift and go to state 15
-    $end            reduce using rule 38 (empty -> .)
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    IDENTIFIER      shift and go to state 14
+    IF              shift and go to state 12
+    WHILE           shift and go to state 13
+    VAR             shift and go to state 14
+    FUNCTION        shift and go to state 16
+    $end            reduce using rule 39 (empty -> .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    IDENTIFIER      shift and go to state 15
 
-  ! IF              [ reduce using rule 38 (empty -> .) ]
-  ! WHILE           [ reduce using rule 38 (empty -> .) ]
-  ! VAR             [ reduce using rule 38 (empty -> .) ]
-  ! FUNCTION        [ reduce using rule 38 (empty -> .) ]
-  ! INT             [ reduce using rule 38 (empty -> .) ]
-  ! FLOAT           [ reduce using rule 38 (empty -> .) ]
-  ! IDENTIFIER      [ reduce using rule 38 (empty -> .) ]
+  ! IF              [ reduce using rule 39 (empty -> .) ]
+  ! WHILE           [ reduce using rule 39 (empty -> .) ]
+  ! VAR             [ reduce using rule 39 (empty -> .) ]
+  ! FUNCTION        [ reduce using rule 39 (empty -> .) ]
+  ! INT             [ reduce using rule 39 (empty -> .) ]
+  ! FLOAT           [ reduce using rule 39 (empty -> .) ]
+  ! IDENTIFIER      [ reduce using rule 39 (empty -> .) ]
 
     program                        shift and go to state 1
     root                           shift and go to state 2
@@ -187,6 +191,7 @@ state 0
     function_declaration           shift and go to state 8
     empty                          shift and go to state 9
     calculate                      shift and go to state 10
+    compare_expression             shift and go to state 11
 
 state 1
 
@@ -205,19 +210,22 @@ state 2
     (8) statement -> . function_declaration
     (9) statement -> . empty
     (10) expression -> . calculate
-    (17) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
-    (18) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
-    (19) if_statement -> . if_statement ELSE LMB statement RMB
-    (16) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
-    (11) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
-    (12) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
-    (38) empty -> .
-    (28) calculate -> . calculate baseoperator INT
-    (29) calculate -> . calculate baseoperator FLOAT
-    (30) calculate -> . calculate baseoperator IDENTIFIER
-    (31) calculate -> . INT
-    (32) calculate -> . FLOAT
-    (33) calculate -> . IDENTIFIER
+    (11) expression -> . compare_expression
+    (18) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
+    (19) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
+    (20) if_statement -> . if_statement ELSE LMB statement RMB
+    (17) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
+    (12) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
+    (13) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
+    (39) empty -> .
+    (29) calculate -> . calculate baseoperator INT
+    (30) calculate -> . calculate baseoperator FLOAT
+    (31) calculate -> . calculate baseoperator IDENTIFIER
+    (32) calculate -> . INT
+    (33) calculate -> . FLOAT
+    (34) calculate -> . IDENTIFIER
+    (21) compare_expression -> . compare_expression compare_operator calculate
+    (22) compare_expression -> . calculate
 
   ! shift/reduce conflict for IF resolved as shift
   ! shift/reduce conflict for WHILE resolved as shift
@@ -228,24 +236,24 @@ state 2
   ! shift/reduce conflict for FLOAT resolved as shift
   ! shift/reduce conflict for IDENTIFIER resolved as shift
     $end            reduce using rule 1 (program -> root .)
-    IF              shift and go to state 11
-    WHILE           shift and go to state 12
-    VAR             shift and go to state 13
-    FUNCTION        shift and go to state 15
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    IDENTIFIER      shift and go to state 14
+    IF              shift and go to state 12
+    WHILE           shift and go to state 13
+    VAR             shift and go to state 14
+    FUNCTION        shift and go to state 16
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    IDENTIFIER      shift and go to state 15
 
-  ! IF              [ reduce using rule 38 (empty -> .) ]
-  ! WHILE           [ reduce using rule 38 (empty -> .) ]
-  ! VAR             [ reduce using rule 38 (empty -> .) ]
-  ! FUNCTION        [ reduce using rule 38 (empty -> .) ]
-  ! INT             [ reduce using rule 38 (empty -> .) ]
-  ! FLOAT           [ reduce using rule 38 (empty -> .) ]
-  ! IDENTIFIER      [ reduce using rule 38 (empty -> .) ]
-  ! $end            [ reduce using rule 38 (empty -> .) ]
+  ! IF              [ reduce using rule 39 (empty -> .) ]
+  ! WHILE           [ reduce using rule 39 (empty -> .) ]
+  ! VAR             [ reduce using rule 39 (empty -> .) ]
+  ! FUNCTION        [ reduce using rule 39 (empty -> .) ]
+  ! INT             [ reduce using rule 39 (empty -> .) ]
+  ! FLOAT           [ reduce using rule 39 (empty -> .) ]
+  ! IDENTIFIER      [ reduce using rule 39 (empty -> .) ]
+  ! $end            [ reduce using rule 39 (empty -> .) ]
 
-    statement                      shift and go to state 18
+    statement                      shift and go to state 19
     expression                     shift and go to state 4
     if_statement                   shift and go to state 5
     while_statement                shift and go to state 6
@@ -253,6 +261,7 @@ state 2
     function_declaration           shift and go to state 8
     empty                          shift and go to state 9
     calculate                      shift and go to state 10
+    compare_expression             shift and go to state 11
 
 state 3
 
@@ -286,8 +295,8 @@ state 4
 state 5
 
     (5) statement -> if_statement .
-    (18) if_statement -> if_statement . ELSE IF LSB compare_expression RSB LMB statement RMB
-    (19) if_statement -> if_statement . ELSE LMB statement RMB
+    (19) if_statement -> if_statement . ELSE IF LSB compare_expression RSB LMB statement RMB
+    (20) if_statement -> if_statement . ELSE LMB statement RMB
 
     IF              reduce using rule 5 (statement -> if_statement .)
     WHILE           reduce using rule 5 (statement -> if_statement .)
@@ -298,7 +307,7 @@ state 5
     IDENTIFIER      reduce using rule 5 (statement -> if_statement .)
     $end            reduce using rule 5 (statement -> if_statement .)
     RMB             reduce using rule 5 (statement -> if_statement .)
-    ELSE            shift and go to state 19
+    ELSE            shift and go to state 20
 
 
 state 6
@@ -364,14 +373,25 @@ state 9
 state 10
 
     (10) expression -> calculate .
-    (28) calculate -> calculate . baseoperator INT
-    (29) calculate -> calculate . baseoperator FLOAT
-    (30) calculate -> calculate . baseoperator IDENTIFIER
-    (34) baseoperator -> . PLUS
-    (35) baseoperator -> . MINUS
-    (36) baseoperator -> . MUL
-    (37) baseoperator -> . DIV
+    (29) calculate -> calculate . baseoperator INT
+    (30) calculate -> calculate . baseoperator FLOAT
+    (31) calculate -> calculate . baseoperator IDENTIFIER
+    (22) compare_expression -> calculate .
+    (35) baseoperator -> . PLUS
+    (36) baseoperator -> . MINUS
+    (37) baseoperator -> . MUL
+    (38) baseoperator -> . DIV
 
+  ! reduce/reduce conflict for IF resolved using rule 10 (expression -> calculate .)
+  ! reduce/reduce conflict for WHILE resolved using rule 10 (expression -> calculate .)
+  ! reduce/reduce conflict for VAR resolved using rule 10 (expression -> calculate .)
+  ! reduce/reduce conflict for FUNCTION resolved using rule 10 (expression -> calculate .)
+  ! reduce/reduce conflict for INT resolved using rule 10 (expression -> calculate .)
+  ! reduce/reduce conflict for FLOAT resolved using rule 10 (expression -> calculate .)
+  ! reduce/reduce conflict for IDENTIFIER resolved using rule 10 (expression -> calculate .)
+  ! reduce/reduce conflict for $end resolved using rule 10 (expression -> calculate .)
+  ! reduce/reduce conflict for RMB resolved using rule 10 (expression -> calculate .)
+  ! reduce/reduce conflict for SEMI resolved using rule 10 (expression -> calculate .)
     IF              reduce using rule 10 (expression -> calculate .)
     WHILE           reduce using rule 10 (expression -> calculate .)
     VAR             reduce using rule 10 (expression -> calculate .)
@@ -382,117 +402,160 @@ state 10
     $end            reduce using rule 10 (expression -> calculate .)
     RMB             reduce using rule 10 (expression -> calculate .)
     SEMI            reduce using rule 10 (expression -> calculate .)
-    PLUS            shift and go to state 21
-    MINUS           shift and go to state 22
-    MUL             shift and go to state 23
-    DIV             shift and go to state 24
+    LB              reduce using rule 22 (compare_expression -> calculate .)
+    RB              reduce using rule 22 (compare_expression -> calculate .)
+    EQUAL           reduce using rule 22 (compare_expression -> calculate .)
+    NOTEQUAL        reduce using rule 22 (compare_expression -> calculate .)
+    PLUS            shift and go to state 22
+    MINUS           shift and go to state 23
+    MUL             shift and go to state 24
+    DIV             shift and go to state 25
 
-    baseoperator                   shift and go to state 20
+  ! IF              [ reduce using rule 22 (compare_expression -> calculate .) ]
+  ! WHILE           [ reduce using rule 22 (compare_expression -> calculate .) ]
+  ! VAR             [ reduce using rule 22 (compare_expression -> calculate .) ]
+  ! FUNCTION        [ reduce using rule 22 (compare_expression -> calculate .) ]
+  ! INT             [ reduce using rule 22 (compare_expression -> calculate .) ]
+  ! FLOAT           [ reduce using rule 22 (compare_expression -> calculate .) ]
+  ! IDENTIFIER      [ reduce using rule 22 (compare_expression -> calculate .) ]
+  ! $end            [ reduce using rule 22 (compare_expression -> calculate .) ]
+  ! RMB             [ reduce using rule 22 (compare_expression -> calculate .) ]
+  ! SEMI            [ reduce using rule 22 (compare_expression -> calculate .) ]
+
+    baseoperator                   shift and go to state 21
 
 state 11
 
-    (17) if_statement -> IF . LSB compare_expression RSB LMB statement RMB
+    (11) expression -> compare_expression .
+    (21) compare_expression -> compare_expression . compare_operator calculate
+    (23) compare_operator -> . LB
+    (24) compare_operator -> . RB
+    (25) compare_operator -> . LB EQUAL
+    (26) compare_operator -> . RB EQUAL
+    (27) compare_operator -> . EQUAL EQUAL
+    (28) compare_operator -> . NOTEQUAL EQUAL
 
-    LSB             shift and go to state 25
+    IF              reduce using rule 11 (expression -> compare_expression .)
+    WHILE           reduce using rule 11 (expression -> compare_expression .)
+    VAR             reduce using rule 11 (expression -> compare_expression .)
+    FUNCTION        reduce using rule 11 (expression -> compare_expression .)
+    INT             reduce using rule 11 (expression -> compare_expression .)
+    FLOAT           reduce using rule 11 (expression -> compare_expression .)
+    IDENTIFIER      reduce using rule 11 (expression -> compare_expression .)
+    $end            reduce using rule 11 (expression -> compare_expression .)
+    RMB             reduce using rule 11 (expression -> compare_expression .)
+    SEMI            reduce using rule 11 (expression -> compare_expression .)
+    LB              shift and go to state 27
+    RB              shift and go to state 28
+    EQUAL           shift and go to state 29
+    NOTEQUAL        shift and go to state 30
 
+    compare_operator               shift and go to state 26
 
 state 12
 
-    (16) while_statement -> WHILE . LSB compare_expression RSB LMB statement RMB
+    (18) if_statement -> IF . LSB compare_expression RSB LMB statement RMB
 
-    LSB             shift and go to state 26
+    LSB             shift and go to state 31
 
 
 state 13
 
-    (11) variable_declaration -> VAR . IDENTIFIER EQUAL expression SEMI
+    (17) while_statement -> WHILE . LSB compare_expression RSB LMB statement RMB
 
-    IDENTIFIER      shift and go to state 27
+    LSB             shift and go to state 32
 
 
 state 14
 
-    (33) calculate -> IDENTIFIER .
+    (12) variable_declaration -> VAR . IDENTIFIER EQUAL expression SEMI
 
-    PLUS            reduce using rule 33 (calculate -> IDENTIFIER .)
-    MINUS           reduce using rule 33 (calculate -> IDENTIFIER .)
-    MUL             reduce using rule 33 (calculate -> IDENTIFIER .)
-    DIV             reduce using rule 33 (calculate -> IDENTIFIER .)
-    IF              reduce using rule 33 (calculate -> IDENTIFIER .)
-    WHILE           reduce using rule 33 (calculate -> IDENTIFIER .)
-    VAR             reduce using rule 33 (calculate -> IDENTIFIER .)
-    FUNCTION        reduce using rule 33 (calculate -> IDENTIFIER .)
-    INT             reduce using rule 33 (calculate -> IDENTIFIER .)
-    FLOAT           reduce using rule 33 (calculate -> IDENTIFIER .)
-    IDENTIFIER      reduce using rule 33 (calculate -> IDENTIFIER .)
-    $end            reduce using rule 33 (calculate -> IDENTIFIER .)
-    RSB             reduce using rule 33 (calculate -> IDENTIFIER .)
-    LB              reduce using rule 33 (calculate -> IDENTIFIER .)
-    RB              reduce using rule 33 (calculate -> IDENTIFIER .)
-    EQUAL           reduce using rule 33 (calculate -> IDENTIFIER .)
-    NOTEQUAL        reduce using rule 33 (calculate -> IDENTIFIER .)
-    RMB             reduce using rule 33 (calculate -> IDENTIFIER .)
-    SEMI            reduce using rule 33 (calculate -> IDENTIFIER .)
+    IDENTIFIER      shift and go to state 33
 
 
 state 15
 
-    (12) function_declaration -> FUNCTION . IDENTIFIER LSB function_parameter RSB LMB statement RMB
+    (34) calculate -> IDENTIFIER .
 
-    IDENTIFIER      shift and go to state 28
+    PLUS            reduce using rule 34 (calculate -> IDENTIFIER .)
+    MINUS           reduce using rule 34 (calculate -> IDENTIFIER .)
+    MUL             reduce using rule 34 (calculate -> IDENTIFIER .)
+    DIV             reduce using rule 34 (calculate -> IDENTIFIER .)
+    IF              reduce using rule 34 (calculate -> IDENTIFIER .)
+    WHILE           reduce using rule 34 (calculate -> IDENTIFIER .)
+    VAR             reduce using rule 34 (calculate -> IDENTIFIER .)
+    FUNCTION        reduce using rule 34 (calculate -> IDENTIFIER .)
+    INT             reduce using rule 34 (calculate -> IDENTIFIER .)
+    FLOAT           reduce using rule 34 (calculate -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 34 (calculate -> IDENTIFIER .)
+    $end            reduce using rule 34 (calculate -> IDENTIFIER .)
+    LB              reduce using rule 34 (calculate -> IDENTIFIER .)
+    RB              reduce using rule 34 (calculate -> IDENTIFIER .)
+    EQUAL           reduce using rule 34 (calculate -> IDENTIFIER .)
+    NOTEQUAL        reduce using rule 34 (calculate -> IDENTIFIER .)
+    RSB             reduce using rule 34 (calculate -> IDENTIFIER .)
+    RMB             reduce using rule 34 (calculate -> IDENTIFIER .)
+    SEMI            reduce using rule 34 (calculate -> IDENTIFIER .)
 
 
 state 16
 
-    (31) calculate -> INT .
+    (13) function_declaration -> FUNCTION . IDENTIFIER LSB function_parameter RSB LMB statement RMB
 
-    PLUS            reduce using rule 31 (calculate -> INT .)
-    MINUS           reduce using rule 31 (calculate -> INT .)
-    MUL             reduce using rule 31 (calculate -> INT .)
-    DIV             reduce using rule 31 (calculate -> INT .)
-    IF              reduce using rule 31 (calculate -> INT .)
-    WHILE           reduce using rule 31 (calculate -> INT .)
-    VAR             reduce using rule 31 (calculate -> INT .)
-    FUNCTION        reduce using rule 31 (calculate -> INT .)
-    INT             reduce using rule 31 (calculate -> INT .)
-    FLOAT           reduce using rule 31 (calculate -> INT .)
-    IDENTIFIER      reduce using rule 31 (calculate -> INT .)
-    $end            reduce using rule 31 (calculate -> INT .)
-    RSB             reduce using rule 31 (calculate -> INT .)
-    LB              reduce using rule 31 (calculate -> INT .)
-    RB              reduce using rule 31 (calculate -> INT .)
-    EQUAL           reduce using rule 31 (calculate -> INT .)
-    NOTEQUAL        reduce using rule 31 (calculate -> INT .)
-    RMB             reduce using rule 31 (calculate -> INT .)
-    SEMI            reduce using rule 31 (calculate -> INT .)
+    IDENTIFIER      shift and go to state 34
 
 
 state 17
 
-    (32) calculate -> FLOAT .
+    (32) calculate -> INT .
 
-    PLUS            reduce using rule 32 (calculate -> FLOAT .)
-    MINUS           reduce using rule 32 (calculate -> FLOAT .)
-    MUL             reduce using rule 32 (calculate -> FLOAT .)
-    DIV             reduce using rule 32 (calculate -> FLOAT .)
-    IF              reduce using rule 32 (calculate -> FLOAT .)
-    WHILE           reduce using rule 32 (calculate -> FLOAT .)
-    VAR             reduce using rule 32 (calculate -> FLOAT .)
-    FUNCTION        reduce using rule 32 (calculate -> FLOAT .)
-    INT             reduce using rule 32 (calculate -> FLOAT .)
-    FLOAT           reduce using rule 32 (calculate -> FLOAT .)
-    IDENTIFIER      reduce using rule 32 (calculate -> FLOAT .)
-    $end            reduce using rule 32 (calculate -> FLOAT .)
-    RSB             reduce using rule 32 (calculate -> FLOAT .)
-    LB              reduce using rule 32 (calculate -> FLOAT .)
-    RB              reduce using rule 32 (calculate -> FLOAT .)
-    EQUAL           reduce using rule 32 (calculate -> FLOAT .)
-    NOTEQUAL        reduce using rule 32 (calculate -> FLOAT .)
-    RMB             reduce using rule 32 (calculate -> FLOAT .)
-    SEMI            reduce using rule 32 (calculate -> FLOAT .)
+    PLUS            reduce using rule 32 (calculate -> INT .)
+    MINUS           reduce using rule 32 (calculate -> INT .)
+    MUL             reduce using rule 32 (calculate -> INT .)
+    DIV             reduce using rule 32 (calculate -> INT .)
+    IF              reduce using rule 32 (calculate -> INT .)
+    WHILE           reduce using rule 32 (calculate -> INT .)
+    VAR             reduce using rule 32 (calculate -> INT .)
+    FUNCTION        reduce using rule 32 (calculate -> INT .)
+    INT             reduce using rule 32 (calculate -> INT .)
+    FLOAT           reduce using rule 32 (calculate -> INT .)
+    IDENTIFIER      reduce using rule 32 (calculate -> INT .)
+    $end            reduce using rule 32 (calculate -> INT .)
+    LB              reduce using rule 32 (calculate -> INT .)
+    RB              reduce using rule 32 (calculate -> INT .)
+    EQUAL           reduce using rule 32 (calculate -> INT .)
+    NOTEQUAL        reduce using rule 32 (calculate -> INT .)
+    RSB             reduce using rule 32 (calculate -> INT .)
+    RMB             reduce using rule 32 (calculate -> INT .)
+    SEMI            reduce using rule 32 (calculate -> INT .)
 
 
 state 18
+
+    (33) calculate -> FLOAT .
+
+    PLUS            reduce using rule 33 (calculate -> FLOAT .)
+    MINUS           reduce using rule 33 (calculate -> FLOAT .)
+    MUL             reduce using rule 33 (calculate -> FLOAT .)
+    DIV             reduce using rule 33 (calculate -> FLOAT .)
+    IF              reduce using rule 33 (calculate -> FLOAT .)
+    WHILE           reduce using rule 33 (calculate -> FLOAT .)
+    VAR             reduce using rule 33 (calculate -> FLOAT .)
+    FUNCTION        reduce using rule 33 (calculate -> FLOAT .)
+    INT             reduce using rule 33 (calculate -> FLOAT .)
+    FLOAT           reduce using rule 33 (calculate -> FLOAT .)
+    IDENTIFIER      reduce using rule 33 (calculate -> FLOAT .)
+    $end            reduce using rule 33 (calculate -> FLOAT .)
+    LB              reduce using rule 33 (calculate -> FLOAT .)
+    RB              reduce using rule 33 (calculate -> FLOAT .)
+    EQUAL           reduce using rule 33 (calculate -> FLOAT .)
+    NOTEQUAL        reduce using rule 33 (calculate -> FLOAT .)
+    RSB             reduce using rule 33 (calculate -> FLOAT .)
+    RMB             reduce using rule 33 (calculate -> FLOAT .)
+    SEMI            reduce using rule 33 (calculate -> FLOAT .)
+
+
+state 19
 
     (2) root -> root statement .
 
@@ -506,494 +569,176 @@ state 18
     $end            reduce using rule 2 (root -> root statement .)
 
 
-state 19
-
-    (18) if_statement -> if_statement ELSE . IF LSB compare_expression RSB LMB statement RMB
-    (19) if_statement -> if_statement ELSE . LMB statement RMB
-
-    IF              shift and go to state 29
-    LMB             shift and go to state 30
-
-
 state 20
 
-    (28) calculate -> calculate baseoperator . INT
-    (29) calculate -> calculate baseoperator . FLOAT
-    (30) calculate -> calculate baseoperator . IDENTIFIER
+    (19) if_statement -> if_statement ELSE . IF LSB compare_expression RSB LMB statement RMB
+    (20) if_statement -> if_statement ELSE . LMB statement RMB
 
-    INT             shift and go to state 31
-    FLOAT           shift and go to state 32
-    IDENTIFIER      shift and go to state 33
+    IF              shift and go to state 35
+    LMB             shift and go to state 36
 
 
 state 21
 
-    (34) baseoperator -> PLUS .
+    (29) calculate -> calculate baseoperator . INT
+    (30) calculate -> calculate baseoperator . FLOAT
+    (31) calculate -> calculate baseoperator . IDENTIFIER
 
-    INT             reduce using rule 34 (baseoperator -> PLUS .)
-    FLOAT           reduce using rule 34 (baseoperator -> PLUS .)
-    IDENTIFIER      reduce using rule 34 (baseoperator -> PLUS .)
+    INT             shift and go to state 37
+    FLOAT           shift and go to state 38
+    IDENTIFIER      shift and go to state 39
 
 
 state 22
 
-    (35) baseoperator -> MINUS .
+    (35) baseoperator -> PLUS .
 
-    INT             reduce using rule 35 (baseoperator -> MINUS .)
-    FLOAT           reduce using rule 35 (baseoperator -> MINUS .)
-    IDENTIFIER      reduce using rule 35 (baseoperator -> MINUS .)
+    INT             reduce using rule 35 (baseoperator -> PLUS .)
+    FLOAT           reduce using rule 35 (baseoperator -> PLUS .)
+    IDENTIFIER      reduce using rule 35 (baseoperator -> PLUS .)
 
 
 state 23
 
-    (36) baseoperator -> MUL .
+    (36) baseoperator -> MINUS .
 
-    INT             reduce using rule 36 (baseoperator -> MUL .)
-    FLOAT           reduce using rule 36 (baseoperator -> MUL .)
-    IDENTIFIER      reduce using rule 36 (baseoperator -> MUL .)
+    INT             reduce using rule 36 (baseoperator -> MINUS .)
+    FLOAT           reduce using rule 36 (baseoperator -> MINUS .)
+    IDENTIFIER      reduce using rule 36 (baseoperator -> MINUS .)
 
 
 state 24
 
-    (37) baseoperator -> DIV .
+    (37) baseoperator -> MUL .
 
-    INT             reduce using rule 37 (baseoperator -> DIV .)
-    FLOAT           reduce using rule 37 (baseoperator -> DIV .)
-    IDENTIFIER      reduce using rule 37 (baseoperator -> DIV .)
+    INT             reduce using rule 37 (baseoperator -> MUL .)
+    FLOAT           reduce using rule 37 (baseoperator -> MUL .)
+    IDENTIFIER      reduce using rule 37 (baseoperator -> MUL .)
 
 
 state 25
 
-    (17) if_statement -> IF LSB . compare_expression RSB LMB statement RMB
-    (20) compare_expression -> . compare_expression compare_operator calculate
-    (21) compare_expression -> . calculate
-    (28) calculate -> . calculate baseoperator INT
-    (29) calculate -> . calculate baseoperator FLOAT
-    (30) calculate -> . calculate baseoperator IDENTIFIER
-    (31) calculate -> . INT
-    (32) calculate -> . FLOAT
-    (33) calculate -> . IDENTIFIER
+    (38) baseoperator -> DIV .
 
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    IDENTIFIER      shift and go to state 14
+    INT             reduce using rule 38 (baseoperator -> DIV .)
+    FLOAT           reduce using rule 38 (baseoperator -> DIV .)
+    IDENTIFIER      reduce using rule 38 (baseoperator -> DIV .)
 
-    compare_expression             shift and go to state 34
-    calculate                      shift and go to state 35
 
 state 26
 
-    (16) while_statement -> WHILE LSB . compare_expression RSB LMB statement RMB
-    (20) compare_expression -> . compare_expression compare_operator calculate
-    (21) compare_expression -> . calculate
-    (28) calculate -> . calculate baseoperator INT
-    (29) calculate -> . calculate baseoperator FLOAT
-    (30) calculate -> . calculate baseoperator IDENTIFIER
-    (31) calculate -> . INT
-    (32) calculate -> . FLOAT
-    (33) calculate -> . IDENTIFIER
+    (21) compare_expression -> compare_expression compare_operator . calculate
+    (29) calculate -> . calculate baseoperator INT
+    (30) calculate -> . calculate baseoperator FLOAT
+    (31) calculate -> . calculate baseoperator IDENTIFIER
+    (32) calculate -> . INT
+    (33) calculate -> . FLOAT
+    (34) calculate -> . IDENTIFIER
 
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    IDENTIFIER      shift and go to state 14
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    IDENTIFIER      shift and go to state 15
 
-    compare_expression             shift and go to state 36
-    calculate                      shift and go to state 35
+    calculate                      shift and go to state 40
 
 state 27
 
-    (11) variable_declaration -> VAR IDENTIFIER . EQUAL expression SEMI
+    (23) compare_operator -> LB .
+    (25) compare_operator -> LB . EQUAL
 
-    EQUAL           shift and go to state 37
+    INT             reduce using rule 23 (compare_operator -> LB .)
+    FLOAT           reduce using rule 23 (compare_operator -> LB .)
+    IDENTIFIER      reduce using rule 23 (compare_operator -> LB .)
+    EQUAL           shift and go to state 41
 
 
 state 28
 
-    (12) function_declaration -> FUNCTION IDENTIFIER . LSB function_parameter RSB LMB statement RMB
+    (24) compare_operator -> RB .
+    (26) compare_operator -> RB . EQUAL
 
-    LSB             shift and go to state 38
+    INT             reduce using rule 24 (compare_operator -> RB .)
+    FLOAT           reduce using rule 24 (compare_operator -> RB .)
+    IDENTIFIER      reduce using rule 24 (compare_operator -> RB .)
+    EQUAL           shift and go to state 42
 
 
 state 29
 
-    (18) if_statement -> if_statement ELSE IF . LSB compare_expression RSB LMB statement RMB
+    (27) compare_operator -> EQUAL . EQUAL
 
-    LSB             shift and go to state 39
+    EQUAL           shift and go to state 43
 
 
 state 30
 
-    (19) if_statement -> if_statement ELSE LMB . statement RMB
-    (4) statement -> . expression
-    (5) statement -> . if_statement
-    (6) statement -> . while_statement
-    (7) statement -> . variable_declaration
-    (8) statement -> . function_declaration
-    (9) statement -> . empty
-    (10) expression -> . calculate
-    (17) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
-    (18) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
-    (19) if_statement -> . if_statement ELSE LMB statement RMB
-    (16) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
-    (11) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
-    (12) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
-    (38) empty -> .
-    (28) calculate -> . calculate baseoperator INT
-    (29) calculate -> . calculate baseoperator FLOAT
-    (30) calculate -> . calculate baseoperator IDENTIFIER
-    (31) calculate -> . INT
-    (32) calculate -> . FLOAT
-    (33) calculate -> . IDENTIFIER
+    (28) compare_operator -> NOTEQUAL . EQUAL
 
-    IF              shift and go to state 11
-    WHILE           shift and go to state 12
-    VAR             shift and go to state 13
-    FUNCTION        shift and go to state 15
-    RMB             reduce using rule 38 (empty -> .)
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    IDENTIFIER      shift and go to state 14
+    EQUAL           shift and go to state 44
 
-    if_statement                   shift and go to state 5
-    statement                      shift and go to state 40
-    expression                     shift and go to state 4
-    while_statement                shift and go to state 6
-    variable_declaration           shift and go to state 7
-    function_declaration           shift and go to state 8
-    empty                          shift and go to state 9
-    calculate                      shift and go to state 10
 
 state 31
 
-    (28) calculate -> calculate baseoperator INT .
+    (18) if_statement -> IF LSB . compare_expression RSB LMB statement RMB
+    (21) compare_expression -> . compare_expression compare_operator calculate
+    (22) compare_expression -> . calculate
+    (29) calculate -> . calculate baseoperator INT
+    (30) calculate -> . calculate baseoperator FLOAT
+    (31) calculate -> . calculate baseoperator IDENTIFIER
+    (32) calculate -> . INT
+    (33) calculate -> . FLOAT
+    (34) calculate -> . IDENTIFIER
 
-    PLUS            reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    MINUS           reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    MUL             reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    DIV             reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    IF              reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    WHILE           reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    VAR             reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    FUNCTION        reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    INT             reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    FLOAT           reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    IDENTIFIER      reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    $end            reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    RSB             reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    LB              reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    RB              reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    EQUAL           reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    NOTEQUAL        reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    RMB             reduce using rule 28 (calculate -> calculate baseoperator INT .)
-    SEMI            reduce using rule 28 (calculate -> calculate baseoperator INT .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    IDENTIFIER      shift and go to state 15
 
+    compare_expression             shift and go to state 45
+    calculate                      shift and go to state 46
 
 state 32
 
-    (29) calculate -> calculate baseoperator FLOAT .
+    (17) while_statement -> WHILE LSB . compare_expression RSB LMB statement RMB
+    (21) compare_expression -> . compare_expression compare_operator calculate
+    (22) compare_expression -> . calculate
+    (29) calculate -> . calculate baseoperator INT
+    (30) calculate -> . calculate baseoperator FLOAT
+    (31) calculate -> . calculate baseoperator IDENTIFIER
+    (32) calculate -> . INT
+    (33) calculate -> . FLOAT
+    (34) calculate -> . IDENTIFIER
 
-    PLUS            reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    MINUS           reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    MUL             reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    DIV             reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    IF              reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    WHILE           reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    VAR             reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    FUNCTION        reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    INT             reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    FLOAT           reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    IDENTIFIER      reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    $end            reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    RSB             reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    LB              reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    RB              reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    EQUAL           reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    NOTEQUAL        reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    RMB             reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
-    SEMI            reduce using rule 29 (calculate -> calculate baseoperator FLOAT .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    IDENTIFIER      shift and go to state 15
 
+    compare_expression             shift and go to state 47
+    calculate                      shift and go to state 46
 
 state 33
 
-    (30) calculate -> calculate baseoperator IDENTIFIER .
+    (12) variable_declaration -> VAR IDENTIFIER . EQUAL expression SEMI
 
-    PLUS            reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    MINUS           reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    MUL             reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    DIV             reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    IF              reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    WHILE           reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    VAR             reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    FUNCTION        reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    INT             reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    FLOAT           reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    IDENTIFIER      reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    $end            reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    RSB             reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    LB              reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    RB              reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    EQUAL           reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    NOTEQUAL        reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    RMB             reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
-    SEMI            reduce using rule 30 (calculate -> calculate baseoperator IDENTIFIER .)
+    EQUAL           shift and go to state 48
 
 
 state 34
 
-    (17) if_statement -> IF LSB compare_expression . RSB LMB statement RMB
-    (20) compare_expression -> compare_expression . compare_operator calculate
-    (22) compare_operator -> . LB
-    (23) compare_operator -> . RB
-    (24) compare_operator -> . LB EQUAL
-    (25) compare_operator -> . RB EQUAL
-    (26) compare_operator -> . EQUAL EQUAL
-    (27) compare_operator -> . NOTEQUAL EQUAL
+    (13) function_declaration -> FUNCTION IDENTIFIER . LSB function_parameter RSB LMB statement RMB
 
-    RSB             shift and go to state 41
-    LB              shift and go to state 43
-    RB              shift and go to state 44
-    EQUAL           shift and go to state 45
-    NOTEQUAL        shift and go to state 46
+    LSB             shift and go to state 49
 
-    compare_operator               shift and go to state 42
 
 state 35
 
-    (21) compare_expression -> calculate .
-    (28) calculate -> calculate . baseoperator INT
-    (29) calculate -> calculate . baseoperator FLOAT
-    (30) calculate -> calculate . baseoperator IDENTIFIER
-    (34) baseoperator -> . PLUS
-    (35) baseoperator -> . MINUS
-    (36) baseoperator -> . MUL
-    (37) baseoperator -> . DIV
+    (19) if_statement -> if_statement ELSE IF . LSB compare_expression RSB LMB statement RMB
 
-    RSB             reduce using rule 21 (compare_expression -> calculate .)
-    LB              reduce using rule 21 (compare_expression -> calculate .)
-    RB              reduce using rule 21 (compare_expression -> calculate .)
-    EQUAL           reduce using rule 21 (compare_expression -> calculate .)
-    NOTEQUAL        reduce using rule 21 (compare_expression -> calculate .)
-    PLUS            shift and go to state 21
-    MINUS           shift and go to state 22
-    MUL             shift and go to state 23
-    DIV             shift and go to state 24
+    LSB             shift and go to state 50
 
-    baseoperator                   shift and go to state 20
 
 state 36
 
-    (16) while_statement -> WHILE LSB compare_expression . RSB LMB statement RMB
-    (20) compare_expression -> compare_expression . compare_operator calculate
-    (22) compare_operator -> . LB
-    (23) compare_operator -> . RB
-    (24) compare_operator -> . LB EQUAL
-    (25) compare_operator -> . RB EQUAL
-    (26) compare_operator -> . EQUAL EQUAL
-    (27) compare_operator -> . NOTEQUAL EQUAL
-
-    RSB             shift and go to state 47
-    LB              shift and go to state 43
-    RB              shift and go to state 44
-    EQUAL           shift and go to state 45
-    NOTEQUAL        shift and go to state 46
-
-    compare_operator               shift and go to state 42
-
-state 37
-
-    (11) variable_declaration -> VAR IDENTIFIER EQUAL . expression SEMI
-    (10) expression -> . calculate
-    (28) calculate -> . calculate baseoperator INT
-    (29) calculate -> . calculate baseoperator FLOAT
-    (30) calculate -> . calculate baseoperator IDENTIFIER
-    (31) calculate -> . INT
-    (32) calculate -> . FLOAT
-    (33) calculate -> . IDENTIFIER
-
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    IDENTIFIER      shift and go to state 14
-
-    expression                     shift and go to state 48
-    calculate                      shift and go to state 10
-
-state 38
-
-    (12) function_declaration -> FUNCTION IDENTIFIER LSB . function_parameter RSB LMB statement RMB
-    (13) function_parameter -> . function_parameter COMMA IDENTIFIER
-    (14) function_parameter -> . IDENTIFIER
-    (15) function_parameter -> . empty
-    (38) empty -> .
-
-    IDENTIFIER      shift and go to state 49
-    RSB             reduce using rule 38 (empty -> .)
-    COMMA           reduce using rule 38 (empty -> .)
-
-    function_parameter             shift and go to state 50
-    empty                          shift and go to state 51
-
-state 39
-
-    (18) if_statement -> if_statement ELSE IF LSB . compare_expression RSB LMB statement RMB
-    (20) compare_expression -> . compare_expression compare_operator calculate
-    (21) compare_expression -> . calculate
-    (28) calculate -> . calculate baseoperator INT
-    (29) calculate -> . calculate baseoperator FLOAT
-    (30) calculate -> . calculate baseoperator IDENTIFIER
-    (31) calculate -> . INT
-    (32) calculate -> . FLOAT
-    (33) calculate -> . IDENTIFIER
-
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    IDENTIFIER      shift and go to state 14
-
-    compare_expression             shift and go to state 52
-    calculate                      shift and go to state 35
-
-state 40
-
-    (19) if_statement -> if_statement ELSE LMB statement . RMB
-
-    RMB             shift and go to state 53
-
-
-state 41
-
-    (17) if_statement -> IF LSB compare_expression RSB . LMB statement RMB
-
-    LMB             shift and go to state 54
-
-
-state 42
-
-    (20) compare_expression -> compare_expression compare_operator . calculate
-    (28) calculate -> . calculate baseoperator INT
-    (29) calculate -> . calculate baseoperator FLOAT
-    (30) calculate -> . calculate baseoperator IDENTIFIER
-    (31) calculate -> . INT
-    (32) calculate -> . FLOAT
-    (33) calculate -> . IDENTIFIER
-
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    IDENTIFIER      shift and go to state 14
-
-    calculate                      shift and go to state 55
-
-state 43
-
-    (22) compare_operator -> LB .
-    (24) compare_operator -> LB . EQUAL
-
-    INT             reduce using rule 22 (compare_operator -> LB .)
-    FLOAT           reduce using rule 22 (compare_operator -> LB .)
-    IDENTIFIER      reduce using rule 22 (compare_operator -> LB .)
-    EQUAL           shift and go to state 56
-
-
-state 44
-
-    (23) compare_operator -> RB .
-    (25) compare_operator -> RB . EQUAL
-
-    INT             reduce using rule 23 (compare_operator -> RB .)
-    FLOAT           reduce using rule 23 (compare_operator -> RB .)
-    IDENTIFIER      reduce using rule 23 (compare_operator -> RB .)
-    EQUAL           shift and go to state 57
-
-
-state 45
-
-    (26) compare_operator -> EQUAL . EQUAL
-
-    EQUAL           shift and go to state 58
-
-
-state 46
-
-    (27) compare_operator -> NOTEQUAL . EQUAL
-
-    EQUAL           shift and go to state 59
-
-
-state 47
-
-    (16) while_statement -> WHILE LSB compare_expression RSB . LMB statement RMB
-
-    LMB             shift and go to state 60
-
-
-state 48
-
-    (11) variable_declaration -> VAR IDENTIFIER EQUAL expression . SEMI
-
-    SEMI            shift and go to state 61
-
-
-state 49
-
-    (14) function_parameter -> IDENTIFIER .
-
-    RSB             reduce using rule 14 (function_parameter -> IDENTIFIER .)
-    COMMA           reduce using rule 14 (function_parameter -> IDENTIFIER .)
-
-
-state 50
-
-    (12) function_declaration -> FUNCTION IDENTIFIER LSB function_parameter . RSB LMB statement RMB
-    (13) function_parameter -> function_parameter . COMMA IDENTIFIER
-
-    RSB             shift and go to state 62
-    COMMA           shift and go to state 63
-
-
-state 51
-
-    (15) function_parameter -> empty .
-
-    RSB             reduce using rule 15 (function_parameter -> empty .)
-    COMMA           reduce using rule 15 (function_parameter -> empty .)
-
-
-state 52
-
-    (18) if_statement -> if_statement ELSE IF LSB compare_expression . RSB LMB statement RMB
-    (20) compare_expression -> compare_expression . compare_operator calculate
-    (22) compare_operator -> . LB
-    (23) compare_operator -> . RB
-    (24) compare_operator -> . LB EQUAL
-    (25) compare_operator -> . RB EQUAL
-    (26) compare_operator -> . EQUAL EQUAL
-    (27) compare_operator -> . NOTEQUAL EQUAL
-
-    RSB             shift and go to state 64
-    LB              shift and go to state 43
-    RB              shift and go to state 44
-    EQUAL           shift and go to state 45
-    NOTEQUAL        shift and go to state 46
-
-    compare_operator               shift and go to state 42
-
-state 53
-
-    (19) if_statement -> if_statement ELSE LMB statement RMB .
-
-    ELSE            reduce using rule 19 (if_statement -> if_statement ELSE LMB statement RMB .)
-    IF              reduce using rule 19 (if_statement -> if_statement ELSE LMB statement RMB .)
-    WHILE           reduce using rule 19 (if_statement -> if_statement ELSE LMB statement RMB .)
-    VAR             reduce using rule 19 (if_statement -> if_statement ELSE LMB statement RMB .)
-    FUNCTION        reduce using rule 19 (if_statement -> if_statement ELSE LMB statement RMB .)
-    INT             reduce using rule 19 (if_statement -> if_statement ELSE LMB statement RMB .)
-    FLOAT           reduce using rule 19 (if_statement -> if_statement ELSE LMB statement RMB .)
-    IDENTIFIER      reduce using rule 19 (if_statement -> if_statement ELSE LMB statement RMB .)
-    $end            reduce using rule 19 (if_statement -> if_statement ELSE LMB statement RMB .)
-    RMB             reduce using rule 19 (if_statement -> if_statement ELSE LMB statement RMB .)
-
-
-state 54
-
-    (17) if_statement -> IF LSB compare_expression RSB LMB . statement RMB
+    (20) if_statement -> if_statement ELSE LMB . statement RMB
     (4) statement -> . expression
     (5) statement -> . if_statement
     (6) statement -> . while_statement
@@ -1001,100 +746,394 @@ state 54
     (8) statement -> . function_declaration
     (9) statement -> . empty
     (10) expression -> . calculate
-    (17) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
-    (18) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
-    (19) if_statement -> . if_statement ELSE LMB statement RMB
-    (16) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
-    (11) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
-    (12) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
-    (38) empty -> .
-    (28) calculate -> . calculate baseoperator INT
-    (29) calculate -> . calculate baseoperator FLOAT
-    (30) calculate -> . calculate baseoperator IDENTIFIER
-    (31) calculate -> . INT
-    (32) calculate -> . FLOAT
-    (33) calculate -> . IDENTIFIER
+    (11) expression -> . compare_expression
+    (18) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
+    (19) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
+    (20) if_statement -> . if_statement ELSE LMB statement RMB
+    (17) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
+    (12) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
+    (13) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
+    (39) empty -> .
+    (29) calculate -> . calculate baseoperator INT
+    (30) calculate -> . calculate baseoperator FLOAT
+    (31) calculate -> . calculate baseoperator IDENTIFIER
+    (32) calculate -> . INT
+    (33) calculate -> . FLOAT
+    (34) calculate -> . IDENTIFIER
+    (21) compare_expression -> . compare_expression compare_operator calculate
+    (22) compare_expression -> . calculate
 
-    IF              shift and go to state 11
-    WHILE           shift and go to state 12
-    VAR             shift and go to state 13
-    FUNCTION        shift and go to state 15
-    RMB             reduce using rule 38 (empty -> .)
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    IDENTIFIER      shift and go to state 14
+    IF              shift and go to state 12
+    WHILE           shift and go to state 13
+    VAR             shift and go to state 14
+    FUNCTION        shift and go to state 16
+    RMB             reduce using rule 39 (empty -> .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    IDENTIFIER      shift and go to state 15
 
-    statement                      shift and go to state 65
-    expression                     shift and go to state 4
     if_statement                   shift and go to state 5
+    statement                      shift and go to state 51
+    expression                     shift and go to state 4
     while_statement                shift and go to state 6
     variable_declaration           shift and go to state 7
     function_declaration           shift and go to state 8
     empty                          shift and go to state 9
     calculate                      shift and go to state 10
+    compare_expression             shift and go to state 11
+
+state 37
+
+    (29) calculate -> calculate baseoperator INT .
+
+    PLUS            reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    MINUS           reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    MUL             reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    DIV             reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    IF              reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    WHILE           reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    VAR             reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    FUNCTION        reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    INT             reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    FLOAT           reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    IDENTIFIER      reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    $end            reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    LB              reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    RB              reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    EQUAL           reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    NOTEQUAL        reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    RSB             reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    RMB             reduce using rule 29 (calculate -> calculate baseoperator INT .)
+    SEMI            reduce using rule 29 (calculate -> calculate baseoperator INT .)
+
+
+state 38
+
+    (30) calculate -> calculate baseoperator FLOAT .
+
+    PLUS            reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    MINUS           reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    MUL             reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    DIV             reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    IF              reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    WHILE           reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    VAR             reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    FUNCTION        reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    INT             reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    FLOAT           reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    IDENTIFIER      reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    $end            reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    LB              reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    RB              reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    EQUAL           reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    NOTEQUAL        reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    RSB             reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    RMB             reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+    SEMI            reduce using rule 30 (calculate -> calculate baseoperator FLOAT .)
+
+
+state 39
+
+    (31) calculate -> calculate baseoperator IDENTIFIER .
+
+    PLUS            reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    MINUS           reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    MUL             reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    DIV             reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    IF              reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    WHILE           reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    VAR             reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    FUNCTION        reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    INT             reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    FLOAT           reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    IDENTIFIER      reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    $end            reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    LB              reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    RB              reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    EQUAL           reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    NOTEQUAL        reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    RSB             reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    RMB             reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+    SEMI            reduce using rule 31 (calculate -> calculate baseoperator IDENTIFIER .)
+
+
+state 40
+
+    (21) compare_expression -> compare_expression compare_operator calculate .
+    (29) calculate -> calculate . baseoperator INT
+    (30) calculate -> calculate . baseoperator FLOAT
+    (31) calculate -> calculate . baseoperator IDENTIFIER
+    (35) baseoperator -> . PLUS
+    (36) baseoperator -> . MINUS
+    (37) baseoperator -> . MUL
+    (38) baseoperator -> . DIV
+
+    LB              reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    RB              reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    EQUAL           reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    NOTEQUAL        reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    IF              reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    WHILE           reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    VAR             reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    FUNCTION        reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    INT             reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    FLOAT           reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    IDENTIFIER      reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    $end            reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    RSB             reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    RMB             reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    SEMI            reduce using rule 21 (compare_expression -> compare_expression compare_operator calculate .)
+    PLUS            shift and go to state 22
+    MINUS           shift and go to state 23
+    MUL             shift and go to state 24
+    DIV             shift and go to state 25
+
+    baseoperator                   shift and go to state 21
+
+state 41
+
+    (25) compare_operator -> LB EQUAL .
+
+    INT             reduce using rule 25 (compare_operator -> LB EQUAL .)
+    FLOAT           reduce using rule 25 (compare_operator -> LB EQUAL .)
+    IDENTIFIER      reduce using rule 25 (compare_operator -> LB EQUAL .)
+
+
+state 42
+
+    (26) compare_operator -> RB EQUAL .
+
+    INT             reduce using rule 26 (compare_operator -> RB EQUAL .)
+    FLOAT           reduce using rule 26 (compare_operator -> RB EQUAL .)
+    IDENTIFIER      reduce using rule 26 (compare_operator -> RB EQUAL .)
+
+
+state 43
+
+    (27) compare_operator -> EQUAL EQUAL .
+
+    INT             reduce using rule 27 (compare_operator -> EQUAL EQUAL .)
+    FLOAT           reduce using rule 27 (compare_operator -> EQUAL EQUAL .)
+    IDENTIFIER      reduce using rule 27 (compare_operator -> EQUAL EQUAL .)
+
+
+state 44
+
+    (28) compare_operator -> NOTEQUAL EQUAL .
+
+    INT             reduce using rule 28 (compare_operator -> NOTEQUAL EQUAL .)
+    FLOAT           reduce using rule 28 (compare_operator -> NOTEQUAL EQUAL .)
+    IDENTIFIER      reduce using rule 28 (compare_operator -> NOTEQUAL EQUAL .)
+
+
+state 45
+
+    (18) if_statement -> IF LSB compare_expression . RSB LMB statement RMB
+    (21) compare_expression -> compare_expression . compare_operator calculate
+    (23) compare_operator -> . LB
+    (24) compare_operator -> . RB
+    (25) compare_operator -> . LB EQUAL
+    (26) compare_operator -> . RB EQUAL
+    (27) compare_operator -> . EQUAL EQUAL
+    (28) compare_operator -> . NOTEQUAL EQUAL
+
+    RSB             shift and go to state 52
+    LB              shift and go to state 27
+    RB              shift and go to state 28
+    EQUAL           shift and go to state 29
+    NOTEQUAL        shift and go to state 30
+
+    compare_operator               shift and go to state 26
+
+state 46
+
+    (22) compare_expression -> calculate .
+    (29) calculate -> calculate . baseoperator INT
+    (30) calculate -> calculate . baseoperator FLOAT
+    (31) calculate -> calculate . baseoperator IDENTIFIER
+    (35) baseoperator -> . PLUS
+    (36) baseoperator -> . MINUS
+    (37) baseoperator -> . MUL
+    (38) baseoperator -> . DIV
+
+    RSB             reduce using rule 22 (compare_expression -> calculate .)
+    LB              reduce using rule 22 (compare_expression -> calculate .)
+    RB              reduce using rule 22 (compare_expression -> calculate .)
+    EQUAL           reduce using rule 22 (compare_expression -> calculate .)
+    NOTEQUAL        reduce using rule 22 (compare_expression -> calculate .)
+    PLUS            shift and go to state 22
+    MINUS           shift and go to state 23
+    MUL             shift and go to state 24
+    DIV             shift and go to state 25
+
+    baseoperator                   shift and go to state 21
+
+state 47
+
+    (17) while_statement -> WHILE LSB compare_expression . RSB LMB statement RMB
+    (21) compare_expression -> compare_expression . compare_operator calculate
+    (23) compare_operator -> . LB
+    (24) compare_operator -> . RB
+    (25) compare_operator -> . LB EQUAL
+    (26) compare_operator -> . RB EQUAL
+    (27) compare_operator -> . EQUAL EQUAL
+    (28) compare_operator -> . NOTEQUAL EQUAL
+
+    RSB             shift and go to state 53
+    LB              shift and go to state 27
+    RB              shift and go to state 28
+    EQUAL           shift and go to state 29
+    NOTEQUAL        shift and go to state 30
+
+    compare_operator               shift and go to state 26
+
+state 48
+
+    (12) variable_declaration -> VAR IDENTIFIER EQUAL . expression SEMI
+    (10) expression -> . calculate
+    (11) expression -> . compare_expression
+    (29) calculate -> . calculate baseoperator INT
+    (30) calculate -> . calculate baseoperator FLOAT
+    (31) calculate -> . calculate baseoperator IDENTIFIER
+    (32) calculate -> . INT
+    (33) calculate -> . FLOAT
+    (34) calculate -> . IDENTIFIER
+    (21) compare_expression -> . compare_expression compare_operator calculate
+    (22) compare_expression -> . calculate
+
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    IDENTIFIER      shift and go to state 15
+
+    expression                     shift and go to state 54
+    calculate                      shift and go to state 10
+    compare_expression             shift and go to state 11
+
+state 49
+
+    (13) function_declaration -> FUNCTION IDENTIFIER LSB . function_parameter RSB LMB statement RMB
+    (14) function_parameter -> . function_parameter COMMA IDENTIFIER
+    (15) function_parameter -> . IDENTIFIER
+    (16) function_parameter -> . empty
+    (39) empty -> .
+
+    IDENTIFIER      shift and go to state 55
+    RSB             reduce using rule 39 (empty -> .)
+    COMMA           reduce using rule 39 (empty -> .)
+
+    function_parameter             shift and go to state 56
+    empty                          shift and go to state 57
+
+state 50
+
+    (19) if_statement -> if_statement ELSE IF LSB . compare_expression RSB LMB statement RMB
+    (21) compare_expression -> . compare_expression compare_operator calculate
+    (22) compare_expression -> . calculate
+    (29) calculate -> . calculate baseoperator INT
+    (30) calculate -> . calculate baseoperator FLOAT
+    (31) calculate -> . calculate baseoperator IDENTIFIER
+    (32) calculate -> . INT
+    (33) calculate -> . FLOAT
+    (34) calculate -> . IDENTIFIER
+
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    IDENTIFIER      shift and go to state 15
+
+    compare_expression             shift and go to state 58
+    calculate                      shift and go to state 46
+
+state 51
+
+    (20) if_statement -> if_statement ELSE LMB statement . RMB
+
+    RMB             shift and go to state 59
+
+
+state 52
+
+    (18) if_statement -> IF LSB compare_expression RSB . LMB statement RMB
+
+    LMB             shift and go to state 60
+
+
+state 53
+
+    (17) while_statement -> WHILE LSB compare_expression RSB . LMB statement RMB
+
+    LMB             shift and go to state 61
+
+
+state 54
+
+    (12) variable_declaration -> VAR IDENTIFIER EQUAL expression . SEMI
+
+    SEMI            shift and go to state 62
+
 
 state 55
 
-    (20) compare_expression -> compare_expression compare_operator calculate .
-    (28) calculate -> calculate . baseoperator INT
-    (29) calculate -> calculate . baseoperator FLOAT
-    (30) calculate -> calculate . baseoperator IDENTIFIER
-    (34) baseoperator -> . PLUS
-    (35) baseoperator -> . MINUS
-    (36) baseoperator -> . MUL
-    (37) baseoperator -> . DIV
+    (15) function_parameter -> IDENTIFIER .
 
-    RSB             reduce using rule 20 (compare_expression -> compare_expression compare_operator calculate .)
-    LB              reduce using rule 20 (compare_expression -> compare_expression compare_operator calculate .)
-    RB              reduce using rule 20 (compare_expression -> compare_expression compare_operator calculate .)
-    EQUAL           reduce using rule 20 (compare_expression -> compare_expression compare_operator calculate .)
-    NOTEQUAL        reduce using rule 20 (compare_expression -> compare_expression compare_operator calculate .)
-    PLUS            shift and go to state 21
-    MINUS           shift and go to state 22
-    MUL             shift and go to state 23
-    DIV             shift and go to state 24
+    RSB             reduce using rule 15 (function_parameter -> IDENTIFIER .)
+    COMMA           reduce using rule 15 (function_parameter -> IDENTIFIER .)
 
-    baseoperator                   shift and go to state 20
 
 state 56
 
-    (24) compare_operator -> LB EQUAL .
+    (13) function_declaration -> FUNCTION IDENTIFIER LSB function_parameter . RSB LMB statement RMB
+    (14) function_parameter -> function_parameter . COMMA IDENTIFIER
 
-    INT             reduce using rule 24 (compare_operator -> LB EQUAL .)
-    FLOAT           reduce using rule 24 (compare_operator -> LB EQUAL .)
-    IDENTIFIER      reduce using rule 24 (compare_operator -> LB EQUAL .)
+    RSB             shift and go to state 63
+    COMMA           shift and go to state 64
 
 
 state 57
 
-    (25) compare_operator -> RB EQUAL .
+    (16) function_parameter -> empty .
 
-    INT             reduce using rule 25 (compare_operator -> RB EQUAL .)
-    FLOAT           reduce using rule 25 (compare_operator -> RB EQUAL .)
-    IDENTIFIER      reduce using rule 25 (compare_operator -> RB EQUAL .)
+    RSB             reduce using rule 16 (function_parameter -> empty .)
+    COMMA           reduce using rule 16 (function_parameter -> empty .)
 
 
 state 58
 
-    (26) compare_operator -> EQUAL EQUAL .
+    (19) if_statement -> if_statement ELSE IF LSB compare_expression . RSB LMB statement RMB
+    (21) compare_expression -> compare_expression . compare_operator calculate
+    (23) compare_operator -> . LB
+    (24) compare_operator -> . RB
+    (25) compare_operator -> . LB EQUAL
+    (26) compare_operator -> . RB EQUAL
+    (27) compare_operator -> . EQUAL EQUAL
+    (28) compare_operator -> . NOTEQUAL EQUAL
 
-    INT             reduce using rule 26 (compare_operator -> EQUAL EQUAL .)
-    FLOAT           reduce using rule 26 (compare_operator -> EQUAL EQUAL .)
-    IDENTIFIER      reduce using rule 26 (compare_operator -> EQUAL EQUAL .)
+    RSB             shift and go to state 65
+    LB              shift and go to state 27
+    RB              shift and go to state 28
+    EQUAL           shift and go to state 29
+    NOTEQUAL        shift and go to state 30
 
+    compare_operator               shift and go to state 26
 
 state 59
 
-    (27) compare_operator -> NOTEQUAL EQUAL .
+    (20) if_statement -> if_statement ELSE LMB statement RMB .
 
-    INT             reduce using rule 27 (compare_operator -> NOTEQUAL EQUAL .)
-    FLOAT           reduce using rule 27 (compare_operator -> NOTEQUAL EQUAL .)
-    IDENTIFIER      reduce using rule 27 (compare_operator -> NOTEQUAL EQUAL .)
+    ELSE            reduce using rule 20 (if_statement -> if_statement ELSE LMB statement RMB .)
+    IF              reduce using rule 20 (if_statement -> if_statement ELSE LMB statement RMB .)
+    WHILE           reduce using rule 20 (if_statement -> if_statement ELSE LMB statement RMB .)
+    VAR             reduce using rule 20 (if_statement -> if_statement ELSE LMB statement RMB .)
+    FUNCTION        reduce using rule 20 (if_statement -> if_statement ELSE LMB statement RMB .)
+    INT             reduce using rule 20 (if_statement -> if_statement ELSE LMB statement RMB .)
+    FLOAT           reduce using rule 20 (if_statement -> if_statement ELSE LMB statement RMB .)
+    IDENTIFIER      reduce using rule 20 (if_statement -> if_statement ELSE LMB statement RMB .)
+    $end            reduce using rule 20 (if_statement -> if_statement ELSE LMB statement RMB .)
+    RMB             reduce using rule 20 (if_statement -> if_statement ELSE LMB statement RMB .)
 
 
 state 60
 
-    (16) while_statement -> WHILE LSB compare_expression RSB LMB . statement RMB
+    (18) if_statement -> IF LSB compare_expression RSB LMB . statement RMB
     (4) statement -> . expression
     (5) statement -> . if_statement
     (6) statement -> . while_statement
@@ -1102,29 +1141,33 @@ state 60
     (8) statement -> . function_declaration
     (9) statement -> . empty
     (10) expression -> . calculate
-    (17) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
-    (18) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
-    (19) if_statement -> . if_statement ELSE LMB statement RMB
-    (16) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
-    (11) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
-    (12) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
-    (38) empty -> .
-    (28) calculate -> . calculate baseoperator INT
-    (29) calculate -> . calculate baseoperator FLOAT
-    (30) calculate -> . calculate baseoperator IDENTIFIER
-    (31) calculate -> . INT
-    (32) calculate -> . FLOAT
-    (33) calculate -> . IDENTIFIER
+    (11) expression -> . compare_expression
+    (18) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
+    (19) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
+    (20) if_statement -> . if_statement ELSE LMB statement RMB
+    (17) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
+    (12) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
+    (13) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
+    (39) empty -> .
+    (29) calculate -> . calculate baseoperator INT
+    (30) calculate -> . calculate baseoperator FLOAT
+    (31) calculate -> . calculate baseoperator IDENTIFIER
+    (32) calculate -> . INT
+    (33) calculate -> . FLOAT
+    (34) calculate -> . IDENTIFIER
+    (21) compare_expression -> . compare_expression compare_operator calculate
+    (22) compare_expression -> . calculate
 
-    IF              shift and go to state 11
-    WHILE           shift and go to state 12
-    VAR             shift and go to state 13
-    FUNCTION        shift and go to state 15
-    RMB             reduce using rule 38 (empty -> .)
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    IDENTIFIER      shift and go to state 14
+    IF              shift and go to state 12
+    WHILE           shift and go to state 13
+    VAR             shift and go to state 14
+    FUNCTION        shift and go to state 16
+    RMB             reduce using rule 39 (empty -> .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    IDENTIFIER      shift and go to state 15
 
+    compare_expression             shift and go to state 11
     statement                      shift and go to state 66
     expression                     shift and go to state 4
     if_statement                   shift and go to state 5
@@ -1136,107 +1179,103 @@ state 60
 
 state 61
 
-    (11) variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .
+    (17) while_statement -> WHILE LSB compare_expression RSB LMB . statement RMB
+    (4) statement -> . expression
+    (5) statement -> . if_statement
+    (6) statement -> . while_statement
+    (7) statement -> . variable_declaration
+    (8) statement -> . function_declaration
+    (9) statement -> . empty
+    (10) expression -> . calculate
+    (11) expression -> . compare_expression
+    (18) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
+    (19) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
+    (20) if_statement -> . if_statement ELSE LMB statement RMB
+    (17) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
+    (12) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
+    (13) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
+    (39) empty -> .
+    (29) calculate -> . calculate baseoperator INT
+    (30) calculate -> . calculate baseoperator FLOAT
+    (31) calculate -> . calculate baseoperator IDENTIFIER
+    (32) calculate -> . INT
+    (33) calculate -> . FLOAT
+    (34) calculate -> . IDENTIFIER
+    (21) compare_expression -> . compare_expression compare_operator calculate
+    (22) compare_expression -> . calculate
 
-    IF              reduce using rule 11 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
-    WHILE           reduce using rule 11 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
-    VAR             reduce using rule 11 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
-    FUNCTION        reduce using rule 11 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
-    INT             reduce using rule 11 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
-    FLOAT           reduce using rule 11 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
-    IDENTIFIER      reduce using rule 11 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
-    $end            reduce using rule 11 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
-    RMB             reduce using rule 11 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
+    IF              shift and go to state 12
+    WHILE           shift and go to state 13
+    VAR             shift and go to state 14
+    FUNCTION        shift and go to state 16
+    RMB             reduce using rule 39 (empty -> .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    IDENTIFIER      shift and go to state 15
 
+    compare_expression             shift and go to state 11
+    statement                      shift and go to state 67
+    expression                     shift and go to state 4
+    if_statement                   shift and go to state 5
+    while_statement                shift and go to state 6
+    variable_declaration           shift and go to state 7
+    function_declaration           shift and go to state 8
+    empty                          shift and go to state 9
+    calculate                      shift and go to state 10
 
 state 62
 
-    (12) function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB . LMB statement RMB
+    (12) variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .
 
-    LMB             shift and go to state 67
+    IF              reduce using rule 12 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
+    WHILE           reduce using rule 12 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
+    VAR             reduce using rule 12 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
+    FUNCTION        reduce using rule 12 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
+    INT             reduce using rule 12 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
+    FLOAT           reduce using rule 12 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
+    IDENTIFIER      reduce using rule 12 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
+    $end            reduce using rule 12 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
+    RMB             reduce using rule 12 (variable_declaration -> VAR IDENTIFIER EQUAL expression SEMI .)
 
 
 state 63
 
-    (13) function_parameter -> function_parameter COMMA . IDENTIFIER
+    (13) function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB . LMB statement RMB
 
-    IDENTIFIER      shift and go to state 68
+    LMB             shift and go to state 68
 
 
 state 64
 
-    (18) if_statement -> if_statement ELSE IF LSB compare_expression RSB . LMB statement RMB
+    (14) function_parameter -> function_parameter COMMA . IDENTIFIER
 
-    LMB             shift and go to state 69
+    IDENTIFIER      shift and go to state 69
 
 
 state 65
 
-    (17) if_statement -> IF LSB compare_expression RSB LMB statement . RMB
+    (19) if_statement -> if_statement ELSE IF LSB compare_expression RSB . LMB statement RMB
 
-    RMB             shift and go to state 70
+    LMB             shift and go to state 70
 
 
 state 66
 
-    (16) while_statement -> WHILE LSB compare_expression RSB LMB statement . RMB
+    (18) if_statement -> IF LSB compare_expression RSB LMB statement . RMB
 
     RMB             shift and go to state 71
 
 
 state 67
 
-    (12) function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB . statement RMB
-    (4) statement -> . expression
-    (5) statement -> . if_statement
-    (6) statement -> . while_statement
-    (7) statement -> . variable_declaration
-    (8) statement -> . function_declaration
-    (9) statement -> . empty
-    (10) expression -> . calculate
-    (17) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
-    (18) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
-    (19) if_statement -> . if_statement ELSE LMB statement RMB
-    (16) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
-    (11) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
-    (12) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
-    (38) empty -> .
-    (28) calculate -> . calculate baseoperator INT
-    (29) calculate -> . calculate baseoperator FLOAT
-    (30) calculate -> . calculate baseoperator IDENTIFIER
-    (31) calculate -> . INT
-    (32) calculate -> . FLOAT
-    (33) calculate -> . IDENTIFIER
+    (17) while_statement -> WHILE LSB compare_expression RSB LMB statement . RMB
 
-    IF              shift and go to state 11
-    WHILE           shift and go to state 12
-    VAR             shift and go to state 13
-    FUNCTION        shift and go to state 15
-    RMB             reduce using rule 38 (empty -> .)
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    IDENTIFIER      shift and go to state 14
+    RMB             shift and go to state 72
 
-    statement                      shift and go to state 72
-    expression                     shift and go to state 4
-    if_statement                   shift and go to state 5
-    while_statement                shift and go to state 6
-    variable_declaration           shift and go to state 7
-    function_declaration           shift and go to state 8
-    empty                          shift and go to state 9
-    calculate                      shift and go to state 10
 
 state 68
 
-    (13) function_parameter -> function_parameter COMMA IDENTIFIER .
-
-    RSB             reduce using rule 13 (function_parameter -> function_parameter COMMA IDENTIFIER .)
-    COMMA           reduce using rule 13 (function_parameter -> function_parameter COMMA IDENTIFIER .)
-
-
-state 69
-
-    (18) if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB . statement RMB
+    (13) function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB . statement RMB
     (4) statement -> . expression
     (5) statement -> . if_statement
     (6) statement -> . while_statement
@@ -1244,31 +1283,89 @@ state 69
     (8) statement -> . function_declaration
     (9) statement -> . empty
     (10) expression -> . calculate
-    (17) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
-    (18) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
-    (19) if_statement -> . if_statement ELSE LMB statement RMB
-    (16) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
-    (11) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
-    (12) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
-    (38) empty -> .
-    (28) calculate -> . calculate baseoperator INT
-    (29) calculate -> . calculate baseoperator FLOAT
-    (30) calculate -> . calculate baseoperator IDENTIFIER
-    (31) calculate -> . INT
-    (32) calculate -> . FLOAT
-    (33) calculate -> . IDENTIFIER
+    (11) expression -> . compare_expression
+    (18) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
+    (19) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
+    (20) if_statement -> . if_statement ELSE LMB statement RMB
+    (17) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
+    (12) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
+    (13) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
+    (39) empty -> .
+    (29) calculate -> . calculate baseoperator INT
+    (30) calculate -> . calculate baseoperator FLOAT
+    (31) calculate -> . calculate baseoperator IDENTIFIER
+    (32) calculate -> . INT
+    (33) calculate -> . FLOAT
+    (34) calculate -> . IDENTIFIER
+    (21) compare_expression -> . compare_expression compare_operator calculate
+    (22) compare_expression -> . calculate
 
-    IF              shift and go to state 11
-    WHILE           shift and go to state 12
-    VAR             shift and go to state 13
-    FUNCTION        shift and go to state 15
-    RMB             reduce using rule 38 (empty -> .)
-    INT             shift and go to state 16
-    FLOAT           shift and go to state 17
-    IDENTIFIER      shift and go to state 14
+    IF              shift and go to state 12
+    WHILE           shift and go to state 13
+    VAR             shift and go to state 14
+    FUNCTION        shift and go to state 16
+    RMB             reduce using rule 39 (empty -> .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    IDENTIFIER      shift and go to state 15
+
+    statement                      shift and go to state 73
+    expression                     shift and go to state 4
+    if_statement                   shift and go to state 5
+    while_statement                shift and go to state 6
+    variable_declaration           shift and go to state 7
+    function_declaration           shift and go to state 8
+    empty                          shift and go to state 9
+    calculate                      shift and go to state 10
+    compare_expression             shift and go to state 11
+
+state 69
+
+    (14) function_parameter -> function_parameter COMMA IDENTIFIER .
+
+    RSB             reduce using rule 14 (function_parameter -> function_parameter COMMA IDENTIFIER .)
+    COMMA           reduce using rule 14 (function_parameter -> function_parameter COMMA IDENTIFIER .)
+
+
+state 70
+
+    (19) if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB . statement RMB
+    (4) statement -> . expression
+    (5) statement -> . if_statement
+    (6) statement -> . while_statement
+    (7) statement -> . variable_declaration
+    (8) statement -> . function_declaration
+    (9) statement -> . empty
+    (10) expression -> . calculate
+    (11) expression -> . compare_expression
+    (18) if_statement -> . IF LSB compare_expression RSB LMB statement RMB
+    (19) if_statement -> . if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
+    (20) if_statement -> . if_statement ELSE LMB statement RMB
+    (17) while_statement -> . WHILE LSB compare_expression RSB LMB statement RMB
+    (12) variable_declaration -> . VAR IDENTIFIER EQUAL expression SEMI
+    (13) function_declaration -> . FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
+    (39) empty -> .
+    (29) calculate -> . calculate baseoperator INT
+    (30) calculate -> . calculate baseoperator FLOAT
+    (31) calculate -> . calculate baseoperator IDENTIFIER
+    (32) calculate -> . INT
+    (33) calculate -> . FLOAT
+    (34) calculate -> . IDENTIFIER
+    (21) compare_expression -> . compare_expression compare_operator calculate
+    (22) compare_expression -> . calculate
+
+    IF              shift and go to state 12
+    WHILE           shift and go to state 13
+    VAR             shift and go to state 14
+    FUNCTION        shift and go to state 16
+    RMB             reduce using rule 39 (empty -> .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    IDENTIFIER      shift and go to state 15
 
     if_statement                   shift and go to state 5
-    statement                      shift and go to state 73
+    compare_expression             shift and go to state 11
+    statement                      shift and go to state 74
     expression                     shift and go to state 4
     while_statement                shift and go to state 6
     variable_declaration           shift and go to state 7
@@ -1276,80 +1373,80 @@ state 69
     empty                          shift and go to state 9
     calculate                      shift and go to state 10
 
-state 70
-
-    (17) if_statement -> IF LSB compare_expression RSB LMB statement RMB .
-
-    ELSE            reduce using rule 17 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
-    IF              reduce using rule 17 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
-    WHILE           reduce using rule 17 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
-    VAR             reduce using rule 17 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
-    FUNCTION        reduce using rule 17 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
-    INT             reduce using rule 17 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
-    FLOAT           reduce using rule 17 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
-    IDENTIFIER      reduce using rule 17 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
-    $end            reduce using rule 17 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
-    RMB             reduce using rule 17 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
-
-
 state 71
 
-    (16) while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .
+    (18) if_statement -> IF LSB compare_expression RSB LMB statement RMB .
 
-    IF              reduce using rule 16 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
-    WHILE           reduce using rule 16 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
-    VAR             reduce using rule 16 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
-    FUNCTION        reduce using rule 16 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
-    INT             reduce using rule 16 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
-    FLOAT           reduce using rule 16 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
-    IDENTIFIER      reduce using rule 16 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
-    $end            reduce using rule 16 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
-    RMB             reduce using rule 16 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
+    ELSE            reduce using rule 18 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
+    IF              reduce using rule 18 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
+    WHILE           reduce using rule 18 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
+    VAR             reduce using rule 18 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
+    FUNCTION        reduce using rule 18 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
+    INT             reduce using rule 18 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
+    FLOAT           reduce using rule 18 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
+    IDENTIFIER      reduce using rule 18 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
+    $end            reduce using rule 18 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
+    RMB             reduce using rule 18 (if_statement -> IF LSB compare_expression RSB LMB statement RMB .)
 
 
 state 72
 
-    (12) function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement . RMB
+    (17) while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .
 
-    RMB             shift and go to state 74
+    IF              reduce using rule 17 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
+    WHILE           reduce using rule 17 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
+    VAR             reduce using rule 17 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
+    FUNCTION        reduce using rule 17 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
+    INT             reduce using rule 17 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
+    FLOAT           reduce using rule 17 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
+    IDENTIFIER      reduce using rule 17 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
+    $end            reduce using rule 17 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
+    RMB             reduce using rule 17 (while_statement -> WHILE LSB compare_expression RSB LMB statement RMB .)
 
 
 state 73
 
-    (18) if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement . RMB
+    (13) function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement . RMB
 
     RMB             shift and go to state 75
 
 
 state 74
 
-    (12) function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .
+    (19) if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement . RMB
 
-    IF              reduce using rule 12 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
-    WHILE           reduce using rule 12 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
-    VAR             reduce using rule 12 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
-    FUNCTION        reduce using rule 12 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
-    INT             reduce using rule 12 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
-    FLOAT           reduce using rule 12 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
-    IDENTIFIER      reduce using rule 12 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
-    $end            reduce using rule 12 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
-    RMB             reduce using rule 12 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
+    RMB             shift and go to state 76
 
 
 state 75
 
-    (18) if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .
+    (13) function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .
 
-    ELSE            reduce using rule 18 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
-    IF              reduce using rule 18 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
-    WHILE           reduce using rule 18 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
-    VAR             reduce using rule 18 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
-    FUNCTION        reduce using rule 18 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
-    INT             reduce using rule 18 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
-    FLOAT           reduce using rule 18 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
-    IDENTIFIER      reduce using rule 18 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
-    $end            reduce using rule 18 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
-    RMB             reduce using rule 18 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
+    IF              reduce using rule 13 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
+    WHILE           reduce using rule 13 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
+    VAR             reduce using rule 13 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
+    FUNCTION        reduce using rule 13 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
+    INT             reduce using rule 13 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
+    FLOAT           reduce using rule 13 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
+    IDENTIFIER      reduce using rule 13 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
+    $end            reduce using rule 13 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
+    RMB             reduce using rule 13 (function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB .)
+
+
+state 76
+
+    (19) if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .
+
+    ELSE            reduce using rule 19 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
+    IF              reduce using rule 19 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
+    WHILE           reduce using rule 19 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
+    VAR             reduce using rule 19 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
+    FUNCTION        reduce using rule 19 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
+    INT             reduce using rule 19 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
+    FLOAT           reduce using rule 19 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
+    IDENTIFIER      reduce using rule 19 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
+    $end            reduce using rule 19 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
+    RMB             reduce using rule 19 (if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB statement RMB .)
 
 WARNING: 
 WARNING: Conflicts:
@@ -1370,3 +1467,5 @@ WARNING: shift/reduce conflict for FLOAT in state 2 resolved as shift
 WARNING: shift/reduce conflict for IDENTIFIER in state 2 resolved as shift
 WARNING: reduce/reduce conflict in state 2 resolved using rule (program -> root)
 WARNING: rejected rule (empty -> <empty>) in state 2
+WARNING: reduce/reduce conflict in state 10 resolved using rule (expression -> calculate)
+WARNING: rejected rule (compare_expression -> calculate) in state 10

@@ -1,8 +1,10 @@
 import sys
 import AST
-
+from llvmlite import ir, binding
 
 data = open('test.bl', 'r', encoding='UTF-8').read()
+
+
 ############################
 #####LEXER
 ############################

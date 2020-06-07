@@ -1097,8 +1097,21 @@ def p_expression(t):
 ################### VARIABLE DECLARATION
 
 def p_variable_declaration(t):
-    '''variable_declaration : VAR IDENTIFIER EQUAL calculate SEMI'''
+    '''variable_declaration : VAR IDENTIFIER EQUAL expression SEMI'''
     pass
+
+################### FUNCTION
+
+def p_function_declaration(t):
+    '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB'''
+    pass
+
+def p_function_parameter(t):
+    '''
+    function_parameter : function_parameter COMMA IDENTIFIER
+        | IDENTIFIER
+        | empty
+    '''
 
 ################### WHILE
 

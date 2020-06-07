@@ -52,6 +52,7 @@ tokens = [
     'LIST',
     'PYTHON',
     'DOT',
+    'NOTEQUAL',
 ] + list(reserved.values())
 
 t_EQUAL = r'='
@@ -71,6 +72,7 @@ t_COMMA = r'\,'
 t_DOT = r'\.'
 t_LBB = r'\['
 t_RBB = r'\]'
+t_NOTEQUAL = r'\!'
 
 t_ignore = ' \t'
 
@@ -1094,7 +1096,10 @@ def p_statement(t):
 ################## EXPRESSION
 
 def p_expression(t):
-    '''expression : calculate'''
+    '''
+    expression : calculate
+        | compare_expression
+    '''
     pass
 
 ################### VARIABLE DECLARATION
@@ -1125,9 +1130,13 @@ def p_while_statement(t):
 ################## IF
 
 def p_if_statement(t):
-    '''if_statement : IF LSB compare_expression RSB LMB statement RMB'''
-    t[0] = AST.If(t[3], t[6])
-    print(t[0])
+    '''
+    if_statement : IF LSB compare_expression RSB LMB statement RMB
+        | if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
+        | if_statement ELSE LMB statement RMB
+    '''
+    pass
+
 
 ################## COMPARE
 
@@ -1144,6 +1153,8 @@ def p_compare_operator(t):
         | RB
         | LB EQUAL
         | RB EQUAL
+        | EQUAL EQUAL
+        | NOTEQUAL EQUAL
     '''
     pass
 

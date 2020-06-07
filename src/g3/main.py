@@ -54,11 +54,7 @@ tokens = [
     'LIST',
     'PYTHON',
     'DOT',
-    'NE',
-    'GT',
-    'LT',
-    'GTE',
-    'LTE',
+    'NOTEQUAL',
 ] + list(reserved.values())
 
 t_EQUAL = r'='
@@ -78,11 +74,7 @@ t_COMMA = r'\,'
 t_DOT = r'\.'
 t_LBB = r'\['
 t_RBB = r'\]'
-t_NE = r'\!='
-t_GT = r'\>'
-t_LT = r'<'
-t_GTE = r'\>='
-t_LTE = r'\<='
+t_NOTEQUAL = r'\!'
 
 t_ignore = ' \t'
 
@@ -1070,12 +1062,12 @@ if_statement : IF LSB compare_expression RSB LMB statement RMB
 compare_expression : compare_expression compare_operator calculate
     | calculate
 
-compare_operator : GT
-    | LT
-    | LTE
-    | GTE
-    | EQUAL
-    | NE
+compare_operator : LB
+    | RB
+    | LB EQUAL
+    | RB EQUAL
+    | EQUAL EQUAL
+    | NOTEQUAL EQUAL
 
 calculate : calculate baseoperator INT
     | calculate baseoperator FLOAT
@@ -1223,12 +1215,12 @@ def p_compare_expression(t):
 
 def p_compare_operator(t):
     '''
-    compare_operator : GT
-        | LT
-        | GTE
-        | LTE
-        | EQUAL
-        | NE
+    compare_operator : LB
+        | RB
+        | LB EQUAL
+        | RB EQUAL
+        | EQUAL EQUAL
+        | NOTEQUAL EQUAL
     '''
     pass
 

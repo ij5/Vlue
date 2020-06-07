@@ -1026,6 +1026,62 @@ for ff in f:
 #     'calculate : LSB calculate RSB'
 #     t[0] = t[2]
 
+"""
+program: root
+
+root : root statement
+    | statement
+
+statement : expression
+    | if_statement
+    | while_statement
+    | variable_declaration
+    | variable_value_change
+    | function_declaration
+    | empty
+    
+expression : calculate
+    | compare_expression
+        
+variable_declaration : VAR IDENTIFIER EQUAL expression SEMI
+
+variable_value_change : IDENTIFIER EQUAL expression SEMI
+
+function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
+
+function_parameter : function_parameter COMMA IDENTIFIER
+    | IDENTIFIER
+    | empty
+
+while_statement : WHILE LSB compare_expression RSB LMB statement RMB
+
+if_statement : IF LSB compare_expression RSB LMB statement RMB
+    | if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
+    | if_statement ELSE LMB statement RMB
+
+compare_expression : compare_expression compare_operator calculate
+    | calculate
+
+compare_operator : LB
+    | RB
+    | LB EQUAL
+    | RB EQUAL
+    | EQUAL EQUAL
+    | NOTEQUAL EQUAL
+
+calculate : calculate baseoperator INT
+    | calculate baseoperator FLOAT
+    | calculate baseoperator IDENTIFIER
+    | INT
+    | FLOAT
+    | IDENTIFIER
+
+baseoperator : PLUS
+    | MINUS
+    | MUL
+    | DIV
+"""
+
 def DecodeEscape(s):
     res = ''
     i = iter(s)
@@ -1090,6 +1146,7 @@ def p_statement(t):
         | if_statement
         | while_statement
         | variable_declaration
+        | variable_value_change
         | function_declaration
         | empty
     '''
@@ -1110,6 +1167,12 @@ def p_variable_declaration(t):
     '''variable_declaration : VAR IDENTIFIER EQUAL expression SEMI'''
     pass
 
+def p_variable_value_change(t):
+    '''
+    variable_value_change : IDENTIFIER EQUAL expression SEMI
+    '''
+    pass
+
 ################### FUNCTION
 
 def p_function_declaration(t):
@@ -1122,6 +1185,7 @@ def p_function_parameter(t):
         | IDENTIFIER
         | empty
     '''
+    pass
 
 ################### WHILE
 

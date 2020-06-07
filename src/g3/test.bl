@@ -11,9 +11,9 @@ var c = 3+4/6*9+a;
 }
 
 if(a<=b){
-var a = b;
+a = b;
 }else if(a!=b){
-var b = a;
+b = a;
 }else{
-var a = a;
+a = a;
 }

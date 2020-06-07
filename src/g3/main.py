@@ -1,4 +1,6 @@
 import sys
+import AST
+
 
 data = open('test.bl', 'r', encoding='UTF-8').read()
 ############################
@@ -169,7 +171,7 @@ precedence = (
 
 ############## LIBRARY
 
-dt = re.compile("use\s+[a-zA-Z0-9_]+")
+dt = re.compile("use\s+[a-zA-Z0-9_]+;")
 libres = dt.findall(data)
 for lib in libres:
     lib = lib[3:].strip()
@@ -1084,6 +1086,7 @@ def p_statement(t):
         | if_statement
         | while_statement
         | variable_declaration
+        | function_declaration
         | empty
     '''
     pass
@@ -1123,7 +1126,8 @@ def p_while_statement(t):
 
 def p_if_statement(t):
     '''if_statement : IF LSB compare_expression RSB LMB statement RMB'''
-    pass
+    t[0] = AST.If(t[3], t[6])
+    print(t[0])
 
 ################## COMPARE
 

@@ -1270,6 +1270,7 @@ def parse(data):
     global debug
     parser = yacc.yacc()
     result = parser.parse(data, debug=0)
+    print(result)
     if(debug==True):
         print()
         print(code)

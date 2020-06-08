@@ -1,5 +1,5 @@
 import sys
-import AST
+import blueast
 from llvmlite import ir, binding
 
 data = open('test.bl', 'r', encoding='UTF-8').read()
@@ -1136,7 +1136,7 @@ def p_root(t):
     root : root statement
         | statement
     '''
-    if len(t)==3:
+    if len(t) == 3:
         t[0] = t[1] + t[2]
     else:
         t[0] = t[1]

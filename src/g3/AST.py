@@ -1,19 +1,19 @@
 import ast
+print(ast)
 
-node = ast.Add()
-node.lineno = 0
-node.col_offset = 0
+a = ast.parse("1+1")
+print(ast.dump(a))
 
-node = ast.BinOp(1, node, 2)
-node.lineno = 0
-node.col_offset = 0
+node = ast.BinOp(left=ast.Num(1), op=ast.Add(), right=ast.Num(1))
+node.lineno = 1
+node.col_offset = -1
 
 node = ast.Expr(node)
-node.lineno = 0
-node.col_offset = 0
+node.lineno = 1
+node.col_offset = -1
 
-node = ast.Module([node])
-code = compile(node, '<string>', 'exec')
-print(ast.dump(node))
+node = ast.Module(body=[node])
+node.lineno = 1
+node.col_offset = -1
 
-#compile(a, '<string>', 'exec')
+node = compile(node, '<string>', 'exec')

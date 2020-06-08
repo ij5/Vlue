@@ -1136,7 +1136,7 @@ def p_root(t):
     root : root statement
         | statement
     '''
-    if len(t)==2:
+    if len(t)==3:
         t[0] = t[1] + t[2]
     else:
         t[0] = t[1]
@@ -1162,7 +1162,7 @@ def p_expression(t):
     expression : calculate
         | compare_expression
     '''
-    pass
+    t[0] = t[1]
 
 ################### VARIABLE DECLARATION
 

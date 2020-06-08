@@ -1127,7 +1127,7 @@ def p_program(t):
     '''
     program : root
     '''
-    t[0] = "Helll World!"
+    t[0] = t[1]
 
 ##################### ROOT
 
@@ -1136,7 +1136,10 @@ def p_root(t):
     root : root statement
         | statement
     '''
-    pass
+    if len(t)==2:
+        t[0] = t[1] + t[2]
+    else:
+        t[0] = t[1]
 
 ################### STATEMENT
 
@@ -1150,7 +1153,7 @@ def p_statement(t):
         | function_declaration
         | empty
     '''
-    pass
+    t[0] = t[1]
 
 ################## EXPRESSION
 
@@ -1244,13 +1247,13 @@ def p_baseOperator(t):
         | MUL
         | DIV
     '''
-    pass
+    t[0] = t[1]
 
 ############ EMPTY
 
 def p_empty(t):
     'empty : '
-    pass
+    t[0] = ""
 
 # 토큰 에러 처리
 def p_error(t):

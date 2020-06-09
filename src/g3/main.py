@@ -1174,8 +1174,7 @@ def p_variable_declaration(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL expression
     '''
-    t[0] = [Assign(targets=[Name(id=t[2], ctx=Store(), lineno=1, col_offset=-1)], value=t[4], lineno=1, col_offset=-1)]
-    Module(body=[Assign(targets=[Name(id='a', ctx=Store())], value=BinOp(left=Num(n=1), op=Add(), right=Num(n=1)))])
+    pass
 
 def p_variable_value_change(t):
     '''

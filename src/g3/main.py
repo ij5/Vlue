@@ -1127,7 +1127,7 @@ def p_program(t):
     '''
     program : root
     '''
-    t[0] = t[1]
+    pass
 
 ##################### ROOT
 
@@ -1136,10 +1136,7 @@ def p_root(t):
     root : root statement
         | statement
     '''
-    if len(t) == 3:
-        t[0] = t[1] + t[2]
-    else:
-        t[0] = t[1]
+    pass
 
 ################### STATEMENT
 
@@ -1153,21 +1150,24 @@ def p_statement(t):
         | function_declaration
         | empty
     '''
-    t[0] = t[1]
+    pass
 
 ################## EXPRESSION
 
 def p_expression(t):
     '''
     expression : calculate
+        | string_calculate
         | compare_expression
     '''
-    t[0] = t[1]
+    pass
 
 ################### VARIABLE DECLARATION
 
 def p_variable_declaration(t):
-    '''variable_declaration : VAR IDENTIFIER EQUAL expression SEMI'''
+    '''
+    variable_declaration : VAR IDENTIFIER EQUAL expression SEMI
+    '''
     pass
 
 def p_variable_value_change(t):
@@ -1231,7 +1231,8 @@ def p_compare_operator(t):
 
 def p_string_calculate(t):
     '''
-    string_calculate : STRING stringoperator STRING
+    string_calculate : string_calculate stringoperator STRING
+        | STRING
     '''
     pass
 

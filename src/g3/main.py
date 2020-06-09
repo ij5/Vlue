@@ -1,5 +1,5 @@
 import sys
-
+from ast import *
 from llvmlite import ir, binding
 
 data = open('test.bl', 'r', encoding='UTF-8').read()
@@ -1180,7 +1180,10 @@ def p_variable_value_change(t):
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB'''
-    pass
+    FunctionDef(name='fn',args=arguments(args=[arg(arg='a', annotation=None), arg(arg='b', annotation=None)],
+vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+body=[Expr(value=BinOp(left=Num(n=1), op=Add(), right=Num(n=1)))], decorator_list=[],
+returns=None)
 
 def p_function_parameter(t):
     '''

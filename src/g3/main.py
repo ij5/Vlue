@@ -1138,9 +1138,11 @@ def p_root(t):
     '''
     temp = []
     if(len(t)==3):
-        temp.append(t[1])
-        temp.append(t[2])
-        t[0] = temp
+        if(isinstance(t[1], list)):
+            t[1].append(t[2])
+            t[0] = t[1]
+        else:
+            t[0] = t[2]
     elif(len(t)==2):
         t[0] = [t[1]]
 
@@ -1166,7 +1168,10 @@ def p_expression(t):
         | string_calculate
         | compare_expression
     '''
-    t[0] = Expr(value=t[1], lineno=1, col_offset=-1)
+    if(t[1]==None):
+        pass
+    else:
+        t[0] = Expr(value=t[1], lineno=1, col_offset=-1)
 
 ################### VARIABLE DECLARATION
 
@@ -1174,7 +1179,8 @@ def p_variable_declaration(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL expression
     '''
-    pass
+    Module(body=[Assign(targets=[Name(id='a', ctx=Store())], value=Num(n=1))])
+    t[0] = [Assign(targets=[Name(id=t[2], ctx=Store(), lineno=1, col_offset=-1)], value=t[4], lineno=1, col_offset=-1)]
 
 def p_variable_value_change(t):
     '''

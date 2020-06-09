@@ -60,9 +60,9 @@ Rule 34    stringoperator -> PLUS
 Rule 35    calculate -> calculate baseoperator INT
 Rule 36    calculate -> calculate baseoperator FLOAT
 Rule 37    calculate -> calculate baseoperator IDENTIFIER
-Rule 38    calculate -> INT
-Rule 39    calculate -> FLOAT
-Rule 40    calculate -> IDENTIFIER
+Rule 38    calculate -> IDENTIFIER
+Rule 39    calculate -> INT
+Rule 40    calculate -> FLOAT
 Rule 41    baseoperator -> PLUS
 Rule 42    baseoperator -> MINUS
 Rule 43    baseoperator -> MUL
@@ -82,14 +82,14 @@ DOT                  :
 ELSE                 : 22 23
 END                  : 
 EQUAL                : 14 15 28 29 30 30 31
-FLOAT                : 36 39
+FLOAT                : 36 40
 FOR                  : 
 FUNCTION             : 16
 GLOBAL               : 
-IDENTIFIER           : 14 15 16 17 18 37 40
+IDENTIFIER           : 14 15 16 17 18 37 38
 IF                   : 21 22
 IN                   : 
-INT                  : 35 38
+INT                  : 35 39
 LB                   : 26 28
 LBB                  : 
 LIST                 : 
@@ -162,9 +162,9 @@ state 0
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
     (32) string_calculate -> . string_calculate stringoperator STRING
     (33) string_calculate -> . STRING
     (24) compare_expression -> . compare_expression compare_operator calculate
@@ -242,9 +242,9 @@ state 2
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
     (32) string_calculate -> . string_calculate stringoperator STRING
     (33) string_calculate -> . STRING
     (24) compare_expression -> . compare_expression compare_operator calculate
@@ -552,29 +552,29 @@ state 16
 state 17
 
     (15) variable_value_change -> IDENTIFIER . EQUAL expression SEMI
-    (40) calculate -> IDENTIFIER .
+    (38) calculate -> IDENTIFIER .
 
   ! shift/reduce conflict for EQUAL resolved as shift
     EQUAL           shift and go to state 39
-    PLUS            reduce using rule 40 (calculate -> IDENTIFIER .)
-    MINUS           reduce using rule 40 (calculate -> IDENTIFIER .)
-    MUL             reduce using rule 40 (calculate -> IDENTIFIER .)
-    DIV             reduce using rule 40 (calculate -> IDENTIFIER .)
-    IF              reduce using rule 40 (calculate -> IDENTIFIER .)
-    WHILE           reduce using rule 40 (calculate -> IDENTIFIER .)
-    VAR             reduce using rule 40 (calculate -> IDENTIFIER .)
-    IDENTIFIER      reduce using rule 40 (calculate -> IDENTIFIER .)
-    FUNCTION        reduce using rule 40 (calculate -> IDENTIFIER .)
-    INT             reduce using rule 40 (calculate -> IDENTIFIER .)
-    FLOAT           reduce using rule 40 (calculate -> IDENTIFIER .)
-    STRING          reduce using rule 40 (calculate -> IDENTIFIER .)
-    $end            reduce using rule 40 (calculate -> IDENTIFIER .)
-    LB              reduce using rule 40 (calculate -> IDENTIFIER .)
-    RB              reduce using rule 40 (calculate -> IDENTIFIER .)
-    NOTEQUAL        reduce using rule 40 (calculate -> IDENTIFIER .)
-    RMB             reduce using rule 40 (calculate -> IDENTIFIER .)
+    PLUS            reduce using rule 38 (calculate -> IDENTIFIER .)
+    MINUS           reduce using rule 38 (calculate -> IDENTIFIER .)
+    MUL             reduce using rule 38 (calculate -> IDENTIFIER .)
+    DIV             reduce using rule 38 (calculate -> IDENTIFIER .)
+    IF              reduce using rule 38 (calculate -> IDENTIFIER .)
+    WHILE           reduce using rule 38 (calculate -> IDENTIFIER .)
+    VAR             reduce using rule 38 (calculate -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 38 (calculate -> IDENTIFIER .)
+    FUNCTION        reduce using rule 38 (calculate -> IDENTIFIER .)
+    INT             reduce using rule 38 (calculate -> IDENTIFIER .)
+    FLOAT           reduce using rule 38 (calculate -> IDENTIFIER .)
+    STRING          reduce using rule 38 (calculate -> IDENTIFIER .)
+    $end            reduce using rule 38 (calculate -> IDENTIFIER .)
+    LB              reduce using rule 38 (calculate -> IDENTIFIER .)
+    RB              reduce using rule 38 (calculate -> IDENTIFIER .)
+    NOTEQUAL        reduce using rule 38 (calculate -> IDENTIFIER .)
+    RMB             reduce using rule 38 (calculate -> IDENTIFIER .)
 
-  ! EQUAL           [ reduce using rule 40 (calculate -> IDENTIFIER .) ]
+  ! EQUAL           [ reduce using rule 38 (calculate -> IDENTIFIER .) ]
 
 
 state 18
@@ -586,54 +586,54 @@ state 18
 
 state 19
 
-    (38) calculate -> INT .
+    (39) calculate -> INT .
 
-    PLUS            reduce using rule 38 (calculate -> INT .)
-    MINUS           reduce using rule 38 (calculate -> INT .)
-    MUL             reduce using rule 38 (calculate -> INT .)
-    DIV             reduce using rule 38 (calculate -> INT .)
-    IF              reduce using rule 38 (calculate -> INT .)
-    WHILE           reduce using rule 38 (calculate -> INT .)
-    VAR             reduce using rule 38 (calculate -> INT .)
-    IDENTIFIER      reduce using rule 38 (calculate -> INT .)
-    FUNCTION        reduce using rule 38 (calculate -> INT .)
-    INT             reduce using rule 38 (calculate -> INT .)
-    FLOAT           reduce using rule 38 (calculate -> INT .)
-    STRING          reduce using rule 38 (calculate -> INT .)
-    $end            reduce using rule 38 (calculate -> INT .)
-    LB              reduce using rule 38 (calculate -> INT .)
-    RB              reduce using rule 38 (calculate -> INT .)
-    EQUAL           reduce using rule 38 (calculate -> INT .)
-    NOTEQUAL        reduce using rule 38 (calculate -> INT .)
-    RSB             reduce using rule 38 (calculate -> INT .)
-    SEMI            reduce using rule 38 (calculate -> INT .)
-    RMB             reduce using rule 38 (calculate -> INT .)
+    PLUS            reduce using rule 39 (calculate -> INT .)
+    MINUS           reduce using rule 39 (calculate -> INT .)
+    MUL             reduce using rule 39 (calculate -> INT .)
+    DIV             reduce using rule 39 (calculate -> INT .)
+    IF              reduce using rule 39 (calculate -> INT .)
+    WHILE           reduce using rule 39 (calculate -> INT .)
+    VAR             reduce using rule 39 (calculate -> INT .)
+    IDENTIFIER      reduce using rule 39 (calculate -> INT .)
+    FUNCTION        reduce using rule 39 (calculate -> INT .)
+    INT             reduce using rule 39 (calculate -> INT .)
+    FLOAT           reduce using rule 39 (calculate -> INT .)
+    STRING          reduce using rule 39 (calculate -> INT .)
+    $end            reduce using rule 39 (calculate -> INT .)
+    LB              reduce using rule 39 (calculate -> INT .)
+    RB              reduce using rule 39 (calculate -> INT .)
+    EQUAL           reduce using rule 39 (calculate -> INT .)
+    NOTEQUAL        reduce using rule 39 (calculate -> INT .)
+    RSB             reduce using rule 39 (calculate -> INT .)
+    SEMI            reduce using rule 39 (calculate -> INT .)
+    RMB             reduce using rule 39 (calculate -> INT .)
 
 
 state 20
 
-    (39) calculate -> FLOAT .
+    (40) calculate -> FLOAT .
 
-    PLUS            reduce using rule 39 (calculate -> FLOAT .)
-    MINUS           reduce using rule 39 (calculate -> FLOAT .)
-    MUL             reduce using rule 39 (calculate -> FLOAT .)
-    DIV             reduce using rule 39 (calculate -> FLOAT .)
-    IF              reduce using rule 39 (calculate -> FLOAT .)
-    WHILE           reduce using rule 39 (calculate -> FLOAT .)
-    VAR             reduce using rule 39 (calculate -> FLOAT .)
-    IDENTIFIER      reduce using rule 39 (calculate -> FLOAT .)
-    FUNCTION        reduce using rule 39 (calculate -> FLOAT .)
-    INT             reduce using rule 39 (calculate -> FLOAT .)
-    FLOAT           reduce using rule 39 (calculate -> FLOAT .)
-    STRING          reduce using rule 39 (calculate -> FLOAT .)
-    $end            reduce using rule 39 (calculate -> FLOAT .)
-    LB              reduce using rule 39 (calculate -> FLOAT .)
-    RB              reduce using rule 39 (calculate -> FLOAT .)
-    EQUAL           reduce using rule 39 (calculate -> FLOAT .)
-    NOTEQUAL        reduce using rule 39 (calculate -> FLOAT .)
-    RSB             reduce using rule 39 (calculate -> FLOAT .)
-    SEMI            reduce using rule 39 (calculate -> FLOAT .)
-    RMB             reduce using rule 39 (calculate -> FLOAT .)
+    PLUS            reduce using rule 40 (calculate -> FLOAT .)
+    MINUS           reduce using rule 40 (calculate -> FLOAT .)
+    MUL             reduce using rule 40 (calculate -> FLOAT .)
+    DIV             reduce using rule 40 (calculate -> FLOAT .)
+    IF              reduce using rule 40 (calculate -> FLOAT .)
+    WHILE           reduce using rule 40 (calculate -> FLOAT .)
+    VAR             reduce using rule 40 (calculate -> FLOAT .)
+    IDENTIFIER      reduce using rule 40 (calculate -> FLOAT .)
+    FUNCTION        reduce using rule 40 (calculate -> FLOAT .)
+    INT             reduce using rule 40 (calculate -> FLOAT .)
+    FLOAT           reduce using rule 40 (calculate -> FLOAT .)
+    STRING          reduce using rule 40 (calculate -> FLOAT .)
+    $end            reduce using rule 40 (calculate -> FLOAT .)
+    LB              reduce using rule 40 (calculate -> FLOAT .)
+    RB              reduce using rule 40 (calculate -> FLOAT .)
+    EQUAL           reduce using rule 40 (calculate -> FLOAT .)
+    NOTEQUAL        reduce using rule 40 (calculate -> FLOAT .)
+    RSB             reduce using rule 40 (calculate -> FLOAT .)
+    SEMI            reduce using rule 40 (calculate -> FLOAT .)
+    RMB             reduce using rule 40 (calculate -> FLOAT .)
 
 
 state 21
@@ -745,13 +745,13 @@ state 31
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
 
+    IDENTIFIER      shift and go to state 48
     INT             shift and go to state 19
     FLOAT           shift and go to state 20
-    IDENTIFIER      shift and go to state 48
 
     calculate                      shift and go to state 47
 
@@ -760,9 +760,9 @@ state 32
     (26) compare_operator -> LB .
     (28) compare_operator -> LB . EQUAL
 
+    IDENTIFIER      reduce using rule 26 (compare_operator -> LB .)
     INT             reduce using rule 26 (compare_operator -> LB .)
     FLOAT           reduce using rule 26 (compare_operator -> LB .)
-    IDENTIFIER      reduce using rule 26 (compare_operator -> LB .)
     EQUAL           shift and go to state 49
 
 
@@ -771,9 +771,9 @@ state 33
     (27) compare_operator -> RB .
     (29) compare_operator -> RB . EQUAL
 
+    IDENTIFIER      reduce using rule 27 (compare_operator -> RB .)
     INT             reduce using rule 27 (compare_operator -> RB .)
     FLOAT           reduce using rule 27 (compare_operator -> RB .)
-    IDENTIFIER      reduce using rule 27 (compare_operator -> RB .)
     EQUAL           shift and go to state 50
 
 
@@ -799,13 +799,13 @@ state 36
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
 
+    IDENTIFIER      shift and go to state 48
     INT             shift and go to state 19
     FLOAT           shift and go to state 20
-    IDENTIFIER      shift and go to state 48
 
     compare_expression             shift and go to state 53
     calculate                      shift and go to state 54
@@ -818,13 +818,13 @@ state 37
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
 
+    IDENTIFIER      shift and go to state 48
     INT             shift and go to state 19
     FLOAT           shift and go to state 20
-    IDENTIFIER      shift and go to state 48
 
     compare_expression             shift and go to state 55
     calculate                      shift and go to state 54
@@ -845,17 +845,17 @@ state 39
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
     (32) string_calculate -> . string_calculate stringoperator STRING
     (33) string_calculate -> . STRING
     (24) compare_expression -> . compare_expression compare_operator calculate
     (25) compare_expression -> . calculate
 
+    IDENTIFIER      shift and go to state 48
     INT             shift and go to state 19
     FLOAT           shift and go to state 20
-    IDENTIFIER      shift and go to state 48
     STRING          shift and go to state 21
 
     expression                     shift and go to state 57
@@ -901,9 +901,9 @@ state 42
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
     (32) string_calculate -> . string_calculate stringoperator STRING
     (33) string_calculate -> . STRING
     (24) compare_expression -> . compare_expression compare_operator calculate
@@ -1063,64 +1063,64 @@ state 47
 
 state 48
 
-    (40) calculate -> IDENTIFIER .
+    (38) calculate -> IDENTIFIER .
 
-    PLUS            reduce using rule 40 (calculate -> IDENTIFIER .)
-    MINUS           reduce using rule 40 (calculate -> IDENTIFIER .)
-    MUL             reduce using rule 40 (calculate -> IDENTIFIER .)
-    DIV             reduce using rule 40 (calculate -> IDENTIFIER .)
-    LB              reduce using rule 40 (calculate -> IDENTIFIER .)
-    RB              reduce using rule 40 (calculate -> IDENTIFIER .)
-    EQUAL           reduce using rule 40 (calculate -> IDENTIFIER .)
-    NOTEQUAL        reduce using rule 40 (calculate -> IDENTIFIER .)
-    IF              reduce using rule 40 (calculate -> IDENTIFIER .)
-    WHILE           reduce using rule 40 (calculate -> IDENTIFIER .)
-    VAR             reduce using rule 40 (calculate -> IDENTIFIER .)
-    IDENTIFIER      reduce using rule 40 (calculate -> IDENTIFIER .)
-    FUNCTION        reduce using rule 40 (calculate -> IDENTIFIER .)
-    INT             reduce using rule 40 (calculate -> IDENTIFIER .)
-    FLOAT           reduce using rule 40 (calculate -> IDENTIFIER .)
-    STRING          reduce using rule 40 (calculate -> IDENTIFIER .)
-    $end            reduce using rule 40 (calculate -> IDENTIFIER .)
-    RSB             reduce using rule 40 (calculate -> IDENTIFIER .)
-    SEMI            reduce using rule 40 (calculate -> IDENTIFIER .)
-    RMB             reduce using rule 40 (calculate -> IDENTIFIER .)
+    PLUS            reduce using rule 38 (calculate -> IDENTIFIER .)
+    MINUS           reduce using rule 38 (calculate -> IDENTIFIER .)
+    MUL             reduce using rule 38 (calculate -> IDENTIFIER .)
+    DIV             reduce using rule 38 (calculate -> IDENTIFIER .)
+    LB              reduce using rule 38 (calculate -> IDENTIFIER .)
+    RB              reduce using rule 38 (calculate -> IDENTIFIER .)
+    EQUAL           reduce using rule 38 (calculate -> IDENTIFIER .)
+    NOTEQUAL        reduce using rule 38 (calculate -> IDENTIFIER .)
+    IF              reduce using rule 38 (calculate -> IDENTIFIER .)
+    WHILE           reduce using rule 38 (calculate -> IDENTIFIER .)
+    VAR             reduce using rule 38 (calculate -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 38 (calculate -> IDENTIFIER .)
+    FUNCTION        reduce using rule 38 (calculate -> IDENTIFIER .)
+    INT             reduce using rule 38 (calculate -> IDENTIFIER .)
+    FLOAT           reduce using rule 38 (calculate -> IDENTIFIER .)
+    STRING          reduce using rule 38 (calculate -> IDENTIFIER .)
+    $end            reduce using rule 38 (calculate -> IDENTIFIER .)
+    RSB             reduce using rule 38 (calculate -> IDENTIFIER .)
+    SEMI            reduce using rule 38 (calculate -> IDENTIFIER .)
+    RMB             reduce using rule 38 (calculate -> IDENTIFIER .)
 
 
 state 49
 
     (28) compare_operator -> LB EQUAL .
 
+    IDENTIFIER      reduce using rule 28 (compare_operator -> LB EQUAL .)
     INT             reduce using rule 28 (compare_operator -> LB EQUAL .)
     FLOAT           reduce using rule 28 (compare_operator -> LB EQUAL .)
-    IDENTIFIER      reduce using rule 28 (compare_operator -> LB EQUAL .)
 
 
 state 50
 
     (29) compare_operator -> RB EQUAL .
 
+    IDENTIFIER      reduce using rule 29 (compare_operator -> RB EQUAL .)
     INT             reduce using rule 29 (compare_operator -> RB EQUAL .)
     FLOAT           reduce using rule 29 (compare_operator -> RB EQUAL .)
-    IDENTIFIER      reduce using rule 29 (compare_operator -> RB EQUAL .)
 
 
 state 51
 
     (30) compare_operator -> EQUAL EQUAL .
 
+    IDENTIFIER      reduce using rule 30 (compare_operator -> EQUAL EQUAL .)
     INT             reduce using rule 30 (compare_operator -> EQUAL EQUAL .)
     FLOAT           reduce using rule 30 (compare_operator -> EQUAL EQUAL .)
-    IDENTIFIER      reduce using rule 30 (compare_operator -> EQUAL EQUAL .)
 
 
 state 52
 
     (31) compare_operator -> NOTEQUAL EQUAL .
 
+    IDENTIFIER      reduce using rule 31 (compare_operator -> NOTEQUAL EQUAL .)
     INT             reduce using rule 31 (compare_operator -> NOTEQUAL EQUAL .)
     FLOAT           reduce using rule 31 (compare_operator -> NOTEQUAL EQUAL .)
-    IDENTIFIER      reduce using rule 31 (compare_operator -> NOTEQUAL EQUAL .)
 
 
 state 53
@@ -1193,17 +1193,17 @@ state 56
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
     (32) string_calculate -> . string_calculate stringoperator STRING
     (33) string_calculate -> . STRING
     (24) compare_expression -> . compare_expression compare_operator calculate
     (25) compare_expression -> . calculate
 
+    IDENTIFIER      shift and go to state 48
     INT             shift and go to state 19
     FLOAT           shift and go to state 20
-    IDENTIFIER      shift and go to state 48
     STRING          shift and go to state 21
 
     expression                     shift and go to state 63
@@ -1241,13 +1241,13 @@ state 59
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
 
+    IDENTIFIER      shift and go to state 48
     INT             shift and go to state 19
     FLOAT           shift and go to state 20
-    IDENTIFIER      shift and go to state 48
 
     compare_expression             shift and go to state 68
     calculate                      shift and go to state 54
@@ -1381,9 +1381,9 @@ state 70
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
     (32) string_calculate -> . string_calculate stringoperator STRING
     (33) string_calculate -> . STRING
     (24) compare_expression -> . compare_expression compare_operator calculate
@@ -1435,9 +1435,9 @@ state 71
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
     (32) string_calculate -> . string_calculate stringoperator STRING
     (33) string_calculate -> . STRING
     (24) compare_expression -> . compare_expression compare_operator calculate
@@ -1540,9 +1540,9 @@ state 78
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
     (32) string_calculate -> . string_calculate stringoperator STRING
     (33) string_calculate -> . STRING
     (24) compare_expression -> . compare_expression compare_operator calculate
@@ -1602,9 +1602,9 @@ state 80
     (35) calculate -> . calculate baseoperator INT
     (36) calculate -> . calculate baseoperator FLOAT
     (37) calculate -> . calculate baseoperator IDENTIFIER
-    (38) calculate -> . INT
-    (39) calculate -> . FLOAT
-    (40) calculate -> . IDENTIFIER
+    (38) calculate -> . IDENTIFIER
+    (39) calculate -> . INT
+    (40) calculate -> . FLOAT
     (32) string_calculate -> . string_calculate stringoperator STRING
     (33) string_calculate -> . STRING
     (24) compare_expression -> . compare_expression compare_operator calculate

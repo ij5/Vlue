@@ -1127,7 +1127,7 @@ def p_program(t):
     '''
     program : root
     '''
-    pass
+    t[0] = Module(body=t[1], lineno=1, col_offset=-1)
 
 ##################### ROOT
 
@@ -1136,7 +1136,13 @@ def p_root(t):
     root : root statement
         | statement
     '''
-    pass
+    temp = []
+    if(len(t)==3):
+        temp.append(t[1])
+        temp.append(t[2])
+        t[0] = temp
+    elif(len(t)==2):
+        t[0] = [t[1]]
 
 ################### STATEMENT
 
@@ -1150,7 +1156,7 @@ def p_statement(t):
         | function_declaration
         | empty
     '''
-    pass
+    t[0] = t[1]
 
 ################## EXPRESSION
 
@@ -1160,7 +1166,7 @@ def p_expression(t):
         | string_calculate
         | compare_expression
     '''
-    pass
+    t[0] = Expr(value=t[1], lineno=1, col_offset=-1)
 
 ################### VARIABLE DECLARATION
 
@@ -1247,14 +1253,24 @@ def p_calculate(t):
     calculate : calculate baseoperator INT
         | calculate baseoperator FLOAT
         | calculate baseoperator IDENTIFIER
-        | INT
-        | FLOAT
         | IDENTIFIER
     '''
-    if(len(t)==4):
-        BinOp(left=Num(n=1), op=Add(), right=Num(n=1))
-    elif(len(t)==2):
-        BinOp(left=Num(n=1), op=Add(), right=Num(n=1))
+    if(t[2]=='+'):
+        t[0] = BinOp(left=t[1], op=Add(), right=Num(n=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
+    elif(t[2]=='-'):
+        t[0] = BinOp(left=t[1], op=Sub(), right=Num(n=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
+    elif(t[2]=='*'):
+        t[0] = BinOp(left=t[1], op=Mult(), right=Num(n=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
+    elif(t[2]=='/'):
+        t[0] = BinOp(left=t[1], op=Div(), right=Num(n=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
+
+def p_calculate_type_int(t):
+    '''calculate : INT'''
+    t[0] = Num(n=t[1], lineno=1, col_offset=-1)
+
+def p_calculate_type_float(t):
+    '''calculate : FLOAT'''
+    t[0] = Num(n=t[1], lineno=1, col_offset=-1)
 
 def p_baseOperator(t):
     '''
@@ -1263,7 +1279,7 @@ def p_baseOperator(t):
         | MUL
         | DIV
     '''
-    pass
+    t[0] = t[1]
 
 ############ EMPTY
 

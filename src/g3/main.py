@@ -1,5 +1,5 @@
 import sys
-import blueast
+
 from llvmlite import ir, binding
 
 data = open('test.bl', 'r', encoding='UTF-8').read()
@@ -1271,7 +1271,7 @@ def error(s):
 lexer = lex.lex()
 def parse(data):
     global debug
-    parser = yacc.yacc()
+    parser = yacc.yacc(start="program")
     result = parser.parse(data, debug=0)
     print(result)
     if(debug==True):

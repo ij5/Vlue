@@ -1253,7 +1253,6 @@ def p_calculate(t):
     calculate : calculate baseoperator INT
         | calculate baseoperator FLOAT
         | calculate baseoperator IDENTIFIER
-        | IDENTIFIER
     '''
     if(t[2]=='+'):
         t[0] = BinOp(left=t[1], op=Add(), right=Num(n=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
@@ -1271,6 +1270,11 @@ def p_calculate_type_int(t):
 def p_calculate_type_float(t):
     '''calculate : FLOAT'''
     t[0] = Num(n=t[1], lineno=1, col_offset=-1)
+
+def p_calculate_type_identifier(t):
+    '''
+    calculate : IDENTIFIER
+    '''
 
 def p_baseOperator(t):
     '''

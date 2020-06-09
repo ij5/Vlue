@@ -1148,11 +1148,11 @@ def p_root(t):
 
 def p_statement(t):
     '''
-    statement : expression
+    statement : expression SEMI
         | if_statement
         | while_statement
-        | variable_declaration
-        | variable_value_change
+        | variable_declaration SEMI
+        | variable_value_change SEMI
         | function_declaration
         | empty
     '''
@@ -1172,13 +1172,14 @@ def p_expression(t):
 
 def p_variable_declaration(t):
     '''
-    variable_declaration : VAR IDENTIFIER EQUAL expression SEMI
+    variable_declaration : VAR IDENTIFIER EQUAL expression
     '''
-    pass
+    t[0] = [Assign(targets=[Name(id=t[2], ctx=Store(), lineno=1, col_offset=-1)], value=t[4], lineno=1, col_offset=-1)]
+    Module(body=[Assign(targets=[Name(id='a', ctx=Store())], value=BinOp(left=Num(n=1), op=Add(), right=Num(n=1)))])
 
 def p_variable_value_change(t):
     '''
-    variable_value_change : IDENTIFIER EQUAL expression SEMI
+    variable_value_change : IDENTIFIER EQUAL expression
     '''
     pass
 
@@ -1255,26 +1256,27 @@ def p_calculate(t):
         | calculate baseoperator IDENTIFIER
     '''
     if(t[2]=='+'):
-        t[0] = BinOp(left=t[1], op=Add(), right=Num(n=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
+        t[0] = BinOp(left=t[1], op=Add(), right=Constant(value=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
     elif(t[2]=='-'):
-        t[0] = BinOp(left=t[1], op=Sub(), right=Num(n=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
+        t[0] = BinOp(left=t[1], op=Sub(), right=Constant(value=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
     elif(t[2]=='*'):
-        t[0] = BinOp(left=t[1], op=Mult(), right=Num(n=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
+        t[0] = BinOp(left=t[1], op=Mult(), right=Constant(value=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
     elif(t[2]=='/'):
-        t[0] = BinOp(left=t[1], op=Div(), right=Num(n=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
+        t[0] = BinOp(left=t[1], op=Div(), right=Constant(value=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
 
 def p_calculate_type_int(t):
     '''calculate : INT'''
-    t[0] = Num(n=t[1], lineno=1, col_offset=-1)
+    t[0] = Constant(value=t[1], lineno=1, col_offset=-1)
 
 def p_calculate_type_float(t):
     '''calculate : FLOAT'''
-    t[0] = Num(n=t[1], lineno=1, col_offset=-1)
+    t[0] = Constant(value=t[1], lineno=1, col_offset=-1)
 
 def p_calculate_type_identifier(t):
     '''
     calculate : IDENTIFIER
     '''
+    t[0] = Name(id=t[1], ctx=Store(), lineno=1, col_offset=-1)
 
 def p_baseOperator(t):
     '''

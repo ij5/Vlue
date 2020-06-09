@@ -1229,6 +1229,17 @@ def p_compare_operator(t):
 
 ################### CALCULATE
 
+def p_string_calculate(t):
+    '''
+    string_calculate : STRING stringoperator STRING
+    '''
+    pass
+
+def p_stringOperator(t):
+    '''
+    stringoperator : PLUS
+    '''
+
 def p_calculate(t):
     '''
     calculate : calculate baseoperator INT

@@ -1150,7 +1150,7 @@ def p_statement(t):
         | function_declaration
         | empty
     '''
-    t[0].append(Expr(value=))
+    pass
 
 ################## EXPRESSION
 
@@ -1180,9 +1180,7 @@ def p_variable_value_change(t):
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB'''
-    FunctionDef(name=t[2],args=arguments(args=t[4],vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
-    body=[], decorator_list=[],
-    returns=None, lineno=t.lineno)
+    pass
 
 def p_function_parameter(t):
     '''
@@ -1190,12 +1188,7 @@ def p_function_parameter(t):
         | IDENTIFIER
         | empty
     '''
-    if(t[1]==""):
-        t[0].append(None)
-    elif(len(t)==4):
-        t[0].append(arg(arg=t[3], annotation=None, lineno=t.lineno))
-    elif(len(t)==2):
-        t[0].append(arg(arg=t[1], annotation=None, lineno=t.lineno))
+    pass
 
 ################### WHILE
 
@@ -1258,7 +1251,10 @@ def p_calculate(t):
         | FLOAT
         | IDENTIFIER
     '''
-    t[0] = BinOp(left=Num(n=1), op=Add(), right=Num(n=1))
+    if(len(t)==4):
+        BinOp(left=Num(n=1), op=Add(), right=Num(n=1))
+    elif(len(t)==2):
+        BinOp(left=Num(n=1), op=Add(), right=Num(n=1))
 
 def p_baseOperator(t):
     '''
@@ -1267,7 +1263,7 @@ def p_baseOperator(t):
         | MUL
         | DIV
     '''
-    t[0] = t[1]
+    pass
 
 ############ EMPTY
 
@@ -1293,6 +1289,8 @@ def parse(data):
     global debug
     parser = yacc.yacc(start="program")
     result = parser.parse(data, debug=0)
+    final = compile(result, '<string>', 'exec')
+    exec(final)
     print(result)
     if(debug==True):
         print()

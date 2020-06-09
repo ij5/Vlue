@@ -1239,6 +1239,7 @@ def p_stringOperator(t):
     '''
     stringoperator : PLUS
     '''
+    pass
 
 def p_calculate(t):
     '''

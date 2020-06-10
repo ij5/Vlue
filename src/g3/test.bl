@@ -1,5 +1,5 @@
 1+2;
 2+2;
-function a (a,b){
-1+2;
+function a (){
+var a = 4;
 }

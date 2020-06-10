@@ -1206,8 +1206,8 @@ def p_variable_value_change(t):
 ################### FUNCTION
 
 def p_function_call(t):
-    '''function_call : IDENTIFIER LSB function_parameter RSB'''
-    Call(func=Name(id=t[1], ctx=Load()), args=[Num(n=1)], keywords=[])
+    '''function_call : IDENTIFIER LSB function_call_parameter RSB'''
+    Call(func=Name(id=t[1], ctx=Load()), args=t[3], keywords=[])
 
 def p_function_call_parameter(t):
     '''
@@ -1216,7 +1216,14 @@ def p_function_call_parameter(t):
         | empty
     '''
     if(len(t)==2):
-        
+        if(t[1]==None):
+            t[0] = [Not()]
+        else:
+            t[0] = [t[1]]
+    elif(len(t)==4):
+        if(isinstance(t[1], list)):
+            argu = t[1].append(t[3])
+            t[0] = argu
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB'''

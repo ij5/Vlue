@@ -1051,6 +1051,10 @@ variable_value_change : IDENTIFIER EQUAL expression SEMI
 
 function_call : IDENTIFIER LSB function_parameter RSB
 
+function_call_parameter : function_call_parameter COMMA calculate
+    | calculate
+    | empty
+
 function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
 
 function_parameter : function_parameter COMMA IDENTIFIER
@@ -1211,6 +1215,8 @@ def p_function_call_parameter(t):
         | calculate
         | empty
     '''
+    if(len(t)==2):
+        
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB'''
@@ -1222,6 +1228,7 @@ def p_function_parameter(t):
         | IDENTIFIER
         | empty
     '''
+    pass
 
 ################### WHILE
 

@@ -1055,17 +1055,17 @@ function_call_parameter : function_call_parameter COMMA calculate
     | calculate
     | empty
 
-function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
+function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB
 
 function_parameter : function_parameter COMMA IDENTIFIER
     | IDENTIFIER
     | empty
 
-while_statement : WHILE LSB compare_expression RSB LMB statement RMB
+while_statement : WHILE LSB compare_expression RSB LMB root RMB
 
-if_statement : IF LSB compare_expression RSB LMB statement RMB
-    | if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
-    | if_statement ELSE LMB statement RMB
+if_statement : IF LSB compare_expression RSB LMB root RMB
+    | if_statement ELSE IF LSB compare_expression RSB LMB root RMB
+    | if_statement ELSE LMB root RMB
 
 compare_expression : compare_expression compare_operator calculate
     | calculate
@@ -1158,8 +1158,7 @@ def p_root(t):
 
 def p_statement(t):
     '''
-    statement : expression SEMI
-        | if_statement
+    statement : if_statement
         | while_statement
         | variable_declaration SEMI
         | variable_value_change SEMI
@@ -1170,6 +1169,10 @@ def p_statement(t):
         t[0] = Not(lineno=1, col_offset=-1)
     else:
         t[0] = t[1]
+
+def p_statement_expression(t):
+    '''statement : expression SEMI'''
+    t[0] = Expr(t[1], lineno=1, col_offset=-1)
 
 ################## EXPRESSION
 
@@ -1234,7 +1237,7 @@ def p_function_call_parameter(t):
         t[0] = argu
 
 def p_function_declaration(t):
-    '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB'''
+    '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
     FunctionDef(name='fn', args=arguments(args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=[Expr(value=BinOp(left=Num(n=1), op=Add(), right=Num(n=1)))], decorator_list=[], returns=None, lineno=1, col_offset=-1)
     t[0] = FunctionDef(
         name=t[2],
@@ -1265,23 +1268,23 @@ def p_function_parameter(t):
         else:
             t[0] = [arg(arg=t[1], annotation=None, lineno=1, col_offset=-1)]
     elif(len(t)==4):
-        if(isinstance(t[1]), list):
-            argu = t[1].append(arg(arg=t[3], annotation=None, lineno=1, col_offset=-1))
-            t[0] = argu
+        t[1].append(arg(arg=t[3], annotation=None, lineno=1, col_offset=-1))
+        argu = t[1]
+        t[0] = argu
 
 ################### WHILE
 
 def p_while_statement(t):
-    '''while_statement : WHILE LSB compare_expression RSB LMB statement RMB'''
+    '''while_statement : WHILE LSB compare_expression RSB LMB root RMB'''
     pass
 
 ################## IF
 
 def p_if_statement(t):
     '''
-    if_statement : IF LSB compare_expression RSB LMB statement RMB
-        | if_statement ELSE IF LSB compare_expression RSB LMB statement RMB
-        | if_statement ELSE LMB statement RMB
+    if_statement : IF LSB compare_expression RSB LMB root RMB
+        | if_statement ELSE IF LSB compare_expression RSB LMB root RMB
+        | if_statement ELSE LMB root RMB
     '''
     pass
 

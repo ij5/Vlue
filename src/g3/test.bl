@@ -1,9 +1,4 @@
-a = 5;
-b = 999*999;
-print(a);
-print(b);
-function a(){
-b = 5;
+function a (a,b){
+1+2;
+var asd = 1+2*3;
 }
-a();
-print(b);

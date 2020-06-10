@@ -1218,7 +1218,7 @@ def p_variable_value_change(t):
 
 def p_function_call(t):
     '''function_call : IDENTIFIER LSB function_call_parameter RSB'''
-    Call(func=Name(id=t[1], ctx=Load(), lineno=1, col_offset=-1),args=t[3],keywords=[])
+    Call(func=Name(id=t[1], ctx=Load(), lineno=1, col_offset=-1),args=t[3],keywords=[], lineno=1, col_offset=-1)
     t[0] = Expr(Call(func=Name(id=t[1], ctx=Load(), lineno=1, col_offset=-1), args=t[3],keywords=[], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
 
 def p_function_call_parameter(t):

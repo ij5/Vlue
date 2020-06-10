@@ -1042,10 +1042,14 @@ statement : expression
     
 expression : calculate
     | compare_expression
+    | string_calculate
+    | function_call
         
 variable_declaration : VAR IDENTIFIER EQUAL expression SEMI
 
 variable_value_change : IDENTIFIER EQUAL expression SEMI
+
+function_call : IDENTIFIER LSB function_parameter RSB
 
 function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB
 
@@ -1158,7 +1162,10 @@ def p_statement(t):
         | function_declaration
         | empty
     '''
-    t[0] = t[1]
+    if(t[1]==None):
+        t[0] = Not(lineno=1, col_offset=-1)
+    else:
+        t[0] = t[1]
 
 ################## EXPRESSION
 
@@ -1167,11 +1174,10 @@ def p_expression(t):
     expression : calculate
         | string_calculate
         | compare_expression
+        | function_call
     '''
-    if(t[1]==None):
-        pass
-    else:
-        t[0] = Expr(value=t[1], lineno=1, col_offset=-1)
+    #t[0] = Expr(value=t[1], lineno=1, col_offset=-1)
+    t[0] = t[1]
 
 ################### VARIABLE DECLARATION
 
@@ -1179,16 +1185,32 @@ def p_variable_declaration(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL expression
     '''
-    Module(body=[Assign(targets=[Name(id='a', ctx=Store())], value=Num(n=1))])
-    t[0] = [Assign(targets=[Name(id=t[2], ctx=Store(), lineno=1, col_offset=-1)], value=t[4], lineno=1, col_offset=-1)]
+    identifier = Name(id=t[2], ctx=Store(), lineno=1, col_offset=-1)
+    assign = Assign(targets=[identifier], value=t[4], lineno=1, col_offset=-1)
+    t[0] = assign
+
+    Assign(targets=[Name(id='a', ctx=Store())], value=Num(n=1))
 
 def p_variable_value_change(t):
     '''
     variable_value_change : IDENTIFIER EQUAL expression
     '''
-    pass
+    identifier = Name(id=t[1], ctx=Store(), lineno=1, col_offset=-1)
+    assign = Assign(targets=[identifier], value=t[3], lineno=1, col_offset=-1)
+    t[0] = assign
 
 ################### FUNCTION
+
+def p_function_call(t):
+    '''function_call : IDENTIFIER LSB function_parameter RSB'''
+    Call(func=Name(id=t[1], ctx=Load()), args=[Num(n=1)], keywords=[])
+
+def p_function_call_parameter(t):
+    '''
+    function_call_parameter : function_call_parameter COMMA calculate
+        | calculate
+        | empty
+    '''
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB'''
@@ -1200,7 +1222,6 @@ def p_function_parameter(t):
         | IDENTIFIER
         | empty
     '''
-    pass
 
 ################### WHILE
 
@@ -1316,6 +1337,7 @@ def parse(data):
     global debug
     parser = yacc.yacc(start="program")
     result = parser.parse(data, debug=0)
+    print(dump(result))
     final = compile(result, '<string>', 'exec')
     exec(final)
     print(result)

@@ -1215,12 +1215,8 @@ def p_variable_value_change(t):
 
 def p_function_call(t):
     '''function_call : IDENTIFIER LSB function_call_parameter RSB'''
-    Call(
-        func=Name(id=t[1], ctx=Load(), lineno=1, col_offset=-1),
-        args=t[3],
-        keywords=[])
-    t[0] = Expr(Call(
-        func=Name(id=t[1], ctx=Load(), lineno=1, col_offset=-1), args=t[3],keywords=[], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
+    Call(func=Name(id=t[1], ctx=Load(), lineno=1, col_offset=-1),args=t[3],keywords=[])
+    t[0] = Expr(Call(func=Name(id=t[1], ctx=Load(), lineno=1, col_offset=-1), args=t[3],keywords=[], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
 
 def p_function_call_parameter(t):
     '''
@@ -1230,13 +1226,12 @@ def p_function_call_parameter(t):
     '''
     if(len(t)==2):
         if(t[1]==None):
-            t[0] = [Not()]
+            t[0] = []
         else:
             t[0] = [t[1]]
     elif(len(t)==4):
-        if(isinstance(t[1], list)):
-            argu = t[1].append(t[3])
-            t[0] = argu
+        argu = t[1].append(t[3])
+        t[0] = argu
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB'''
@@ -1368,7 +1363,7 @@ def p_baseOperator(t):
 
 def p_empty(t):
     'empty : '
-    t[0] = ""
+    t[0] = None
 
 # 토큰 에러 처리
 def p_error(t):

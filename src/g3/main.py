@@ -1189,8 +1189,16 @@ def p_variable_declaration(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL expression
     '''
-    identifier = Name(id=t[2], ctx=Store(), lineno=1, col_offset=-1)
-    assign = Assign(targets=[identifier], value=t[4], lineno=1, col_offset=-1)
+    identifier = Name(
+        id=t[2],
+        ctx=Store(),
+        lineno=1,
+        col_offset=-1)
+    assign = Assign(
+        targets=[identifier],
+        value=t[4],
+        lineno=1,
+        col_offset=-1)
     t[0] = assign
 
     Assign(targets=[Name(id='a', ctx=Store())], value=Num(n=1))
@@ -1207,8 +1215,16 @@ def p_variable_value_change(t):
 
 def p_function_call(t):
     '''function_call : IDENTIFIER LSB function_call_parameter RSB'''
-    Call(func=Name(id=t[1], ctx=Load()), args=t[3], keywords=[])
-    t[0] = Expr(Call(func=Name(id=t[1], ctx=Load(), lineno=1, col_offset=-1), args=t[3], keywords=[], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
+    Call(
+        func=Name(id=t[1], ctx=Load()),
+        args=t[3],
+        keywords=[])
+    t[0] = Expr(Call(
+        func=Name(id=t[1], ctx=Load(), lineno=1, col_offset=-1),
+        args=t[3],
+        keywords=[],
+        lineno=1,
+        col_offset=-1), lineno=1, col_offset=-1)
 
 def p_function_call_parameter(t):
     '''
@@ -1228,7 +1244,23 @@ def p_function_call_parameter(t):
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB statement RMB'''
-    pass
+    FunctionDef(name='fn', args=arguments(args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=[Expr(value=BinOp(left=Num(n=1), op=Add(), right=Num(n=1)))], decorator_list=[], returns=None, lineno=1, col_offset=-1)
+    t[0] = FunctionDef(
+        name=t[2],
+        args=arguments(
+            args=t[4],
+            vararg=None,
+            kwonlyargs=[],
+            kw_defaults=[],
+            kwarg=None,
+            defaults=[],
+            lineno=1,
+            col_offset=-1),
+        body=[t[7]],
+        decorator_list=[],
+        returns=None,
+        lineno=1,
+        col_offset=-1)
 
 def p_function_parameter(t):
     '''
@@ -1236,7 +1268,15 @@ def p_function_parameter(t):
         | IDENTIFIER
         | empty
     '''
-    pass
+    if(len(t)==2):
+        if(t[1]==None):
+            t[0] = []
+        else:
+            t[0] = [arg(arg=t[1], annotation=None, lineno=1, col_offset=-1)]
+    elif(len(t)==4):
+        if(isinstance(t[1]), list):
+            argu = t[1].append(arg(arg=t[3], annotation=None, lineno=1, col_offset=-1))
+            t[0] = argu
 
 ################### WHILE
 

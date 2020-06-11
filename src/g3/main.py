@@ -1,5 +1,6 @@
 import sys
 from ast import *
+import codegen
 from llvmlite import ir, binding
 
 data = open('test.bl', 'r', encoding='UTF-8').read()
@@ -1135,7 +1136,7 @@ def p_program(t):
     '''
     program : root
     '''
-    t[0] = Module(body=t[1], lineno=1, col_offset=-1)
+    pass
 
 ##################### ROOT
 
@@ -1144,15 +1145,7 @@ def p_root(t):
     root : root statement
         | statement
     '''
-    temp = []
-    if(len(t)==3):
-        if(isinstance(t[1], list)):
-            t[1].append(t[2])
-            t[0] = t[1]
-        else:
-            t[0] = t[2]
-    elif(len(t)==2):
-        t[0] = [t[1]]
+    pass
 
 ################### STATEMENT
 
@@ -1165,14 +1158,11 @@ def p_statement(t):
         | function_declaration
         | empty
     '''
-    if(t[1]==None):
-        t[0] = []
-    else:
-        t[0] = t[1]
+    pass
 
 def p_statement_expression(t):
     '''statement : expression SEMI'''
-    t[0] = t[1]
+    pass
 
 ################## EXPRESSION
 
@@ -1182,12 +1172,11 @@ def p_expression(t):
         | compare_expression
         | function_call
     '''
-    #t[0] = Expr(value=t[1], lineno=1, col_offset=-1)
-    t[0] = t[1]
+    pass
 
 def p_expression_calculate(t):
     '''expression : calculate'''
-    t[0] = Expr(value=t[1], lineno=1, col_offset=-1)
+    pass
 
 ################### VARIABLE DECLARATION
 
@@ -1195,34 +1184,19 @@ def p_variable_declaration(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL expression
     '''
-    identifier = Name(
-        id=t[2],
-        ctx=Store(),
-        lineno=1,
-        col_offset=-1)
-    assign = Assign(
-        targets=[identifier],
-        value=t[4],
-        lineno=1,
-        col_offset=-1)
-    t[0] = assign
-
-    Assign(targets=[Name(id='a', ctx=Store())], value=Num(n=1))
+    pass
 
 def p_variable_value_change(t):
     '''
     variable_value_change : IDENTIFIER EQUAL expression
     '''
-    identifier = Name(id=t[1], ctx=Store(), lineno=1, col_offset=-1)
-    assign = Assign(targets=[identifier], value=t[3], lineno=1, col_offset=-1)
-    t[0] = assign
+    pass
 
 ################### FUNCTION
 
 def p_function_call(t):
     '''function_call : IDENTIFIER LSB function_call_parameter RSB'''
-    Call(func=Name(id=t[1], ctx=Load(), lineno=1, col_offset=-1),args=t[3],keywords=[], lineno=1, col_offset=-1)
-    t[0] = Expr(Call(func=Name(id=t[1], ctx=Load(), lineno=1, col_offset=-1), args=t[3],keywords=[], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
+    pass
 
 def p_function_call_parameter(t):
     '''
@@ -1230,34 +1204,11 @@ def p_function_call_parameter(t):
         | calculate
         | empty
     '''
-    if(len(t)==2):
-        if(t[1]==None):
-            t[0] = []
-        else:
-            t[0] = [t[1]]
-    elif(len(t)==4):
-        argu = t[1].append(t[3])
-        t[0] = argu
+    pass
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
-    FunctionDef(name='fn', args=arguments(args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=[Expr(value=BinOp(left=Num(n=1), op=Add(), right=Num(n=1)))], decorator_list=[], returns=None, lineno=1, col_offset=-1)
-    t[0] = FunctionDef(
-        name=t[2],
-        args=arguments(
-            args=t[4],
-            vararg=None,
-            kwonlyargs=[],
-            kw_defaults=[],
-            kwarg=None,
-            defaults=[],
-            lineno=1,
-            col_offset=-1),
-        body=[t[7]],
-        decorator_list=[],
-        returns=None,
-        lineno=1,
-        col_offset=-1)
+    pass
 
 def p_function_parameter(t):
     '''
@@ -1265,15 +1216,7 @@ def p_function_parameter(t):
         | IDENTIFIER
         | empty
     '''
-    if(len(t)==2):
-        if(t[1]==None):
-            t[0] = []
-        else:
-            t[0] = [arg(arg=t[1], annotation=None, lineno=1, col_offset=-1)]
-    elif(len(t)==4):
-        t[1].append(arg(arg=t[3], annotation=None, lineno=1, col_offset=-1))
-        argu = t[1]
-        t[0] = argu
+    pass
 
 ################### WHILE
 
@@ -1333,28 +1276,21 @@ def p_calculate(t):
         | calculate baseoperator FLOAT
         | calculate baseoperator IDENTIFIER
     '''
-    if(t[2]=='+'):
-        t[0] = BinOp(left=t[1], op=Add(), right=Constant(value=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
-    elif(t[2]=='-'):
-        t[0] = BinOp(left=t[1], op=Sub(), right=Constant(value=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
-    elif(t[2]=='*'):
-        t[0] = BinOp(left=t[1], op=Mult(), right=Constant(value=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
-    elif(t[2]=='/'):
-        t[0] = BinOp(left=t[1], op=Div(), right=Constant(value=t[3], lineno=1, col_offset=-1), lineno=1, col_offset=-1)
+    pass
 
 def p_calculate_type_int(t):
     '''calculate : INT'''
-    t[0] = Constant(value=t[1], lineno=1, col_offset=-1)
+    pass
 
 def p_calculate_type_float(t):
     '''calculate : FLOAT'''
-    t[0] = Constant(value=t[1], lineno=1, col_offset=-1)
+    pass
 
 def p_calculate_type_identifier(t):
     '''
     calculate : IDENTIFIER
     '''
-    t[0] = Name(id=t[1], ctx=Load(), lineno=1, col_offset=-1)
+    pass
 
 def p_baseOperator(t):
     '''
@@ -1390,8 +1326,7 @@ def parse(data):
     parser = yacc.yacc(start="program")
     result = parser.parse(data, debug=0)
     print(dump(result))
-    final = compile(result, '<string>', 'exec')
-    exec(final)
+    result = codegen.to_source(result)
     print(result)
     if(debug==True):
         print()

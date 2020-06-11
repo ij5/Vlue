@@ -1,10 +1,8 @@
 from ast import *
+import codegen
 
-class Transformer(NodeTransformer):
-    pass
-a = "hello"
+node = parse("1+1")
+print(dump(node))
 
-node = parse('1.2+3.4')
-Transformer.visit(node)
-dump(node)
-
+tree = Module(body=[Expr(value=BinOp(left=Num(n=1), op=Add(), right=Num(n=1)))])
+print(codegen.to_source(tree))

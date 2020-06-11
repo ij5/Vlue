@@ -1136,7 +1136,7 @@ def p_program(t):
     '''
     program : root
     '''
-    pass
+    t[0] = Module(body=t[1])
 
 ##################### ROOT
 
@@ -1145,7 +1145,11 @@ def p_root(t):
     root : root statement
         | statement
     '''
-    pass
+    if len(t)==3:
+        t[1].append(t[2])
+        t[0] = t[1]
+    elif len(t)==2:
+        t[0] = [t[1]]
 
 ################### STATEMENT
 
@@ -1162,21 +1166,19 @@ def p_statement(t):
 
 def p_statement_expression(t):
     '''statement : expression SEMI'''
-    pass
+    t[0] = t[1]
 
 ################## EXPRESSION
 
 def p_expression(t):
     '''
-    expression : string_calculate
+    expression : calculate
+        | string_calculate
         | compare_expression
         | function_call
     '''
-    pass
+    t[0] = Expr(value=t[1])
 
-def p_expression_calculate(t):
-    '''expression : calculate'''
-    pass
 
 ################### VARIABLE DECLARATION
 
@@ -1276,11 +1278,12 @@ def p_calculate(t):
         | calculate baseoperator FLOAT
         | calculate baseoperator IDENTIFIER
     '''
-    pass
+    if t[2]=='+':
+        t[0] = BinOp(left=t[1], op=Add(), right=Num(t[3]))
 
 def p_calculate_type_int(t):
     '''calculate : INT'''
-    pass
+    t[0] = Num(t[1])
 
 def p_calculate_type_float(t):
     '''calculate : FLOAT'''

@@ -1172,19 +1172,22 @@ def p_statement(t):
 
 def p_statement_expression(t):
     '''statement : expression SEMI'''
-    t[0] = Expr(t[1], lineno=1, col_offset=-1)
+    t[0] = t[1]
 
 ################## EXPRESSION
 
 def p_expression(t):
     '''
-    expression : calculate
-        | string_calculate
+    expression : string_calculate
         | compare_expression
         | function_call
     '''
     #t[0] = Expr(value=t[1], lineno=1, col_offset=-1)
     t[0] = t[1]
+
+def p_expression_calculate(t):
+    '''expression : calculate'''
+    t[0] = Expr(value=t[1], lineno=1, col_offset=-1)
 
 ################### VARIABLE DECLARATION
 

@@ -1166,7 +1166,7 @@ def p_statement(t):
         | empty
     '''
     if(t[1]==None):
-        t[0] = Not(lineno=1, col_offset=-1)
+        t[0] = []
     else:
         t[0] = t[1]
 

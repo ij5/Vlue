@@ -1,6 +1,7 @@
 import sys
 from ast import *
 import codegen
+import decimal
 from llvmlite import ir, binding
 
 data = open('test.bl', 'r', encoding='UTF-8').read()
@@ -1162,11 +1163,11 @@ def p_statement(t):
         | function_declaration
         | empty
     '''
-    pass
-
-def p_statement_expression(t):
-    '''statement : expression SEMI'''
     t[0] = t[1]
+
+def p_statement_calculate(t):
+    '''statement : expression SEMI'''
+    t[0] = Expr(t[1])
 
 ################## EXPRESSION
 
@@ -1177,7 +1178,7 @@ def p_expression(t):
         | compare_expression
         | function_call
     '''
-    t[0] = Expr(value=t[1])
+    t[0] = t[1]
 
 
 ################### VARIABLE DECLARATION
@@ -1186,13 +1187,13 @@ def p_variable_declaration(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL expression
     '''
-    pass
+    t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
 
 def p_variable_value_change(t):
     '''
     variable_value_change : IDENTIFIER EQUAL expression
     '''
-    pass
+    t[0] = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3])
 
 ################### FUNCTION
 
@@ -1276,24 +1277,40 @@ def p_calculate(t):
     '''
     calculate : calculate baseoperator INT
         | calculate baseoperator FLOAT
-        | calculate baseoperator IDENTIFIER
     '''
     if t[2]=='+':
-        t[0] = BinOp(left=t[1], op=Add(), right=Num(t[3]))
+        t[0] = BinOp(left=t[1], op=Add(), right=Num( n=t[3] ))
+    elif t[2]=='-':
+        t[0] = BinOp(left=t[1], op=Sub(), right=Num(n=t[3]))
+    elif t[2]=='*':
+        t[0] = BinOp(left=t[1], op=Mult(), right=Num(n=t[3]))
+    elif t[2]=='/':
+        t[0] = BinOp(left=t[1], op=Div(), right=Num(n=t[3]))
+
+def p_calculate_identifier(t):
+    'calculate : calculate baseoperator IDENTIFIER'''
+    if t[2]=='+':
+        t[0] = BinOp(left=t[1], op=Add(), right=Name(id=t[3], ctx=Store()))
+    elif t[2]=='-':
+        t[0] = BinOp(left=t[1], op=Sub(), right=Name(id=t[3], ctx=Store()))
+    elif t[2]=='*':
+        t[0] = BinOp(left=t[1], op=Mult(), right=Name(id=t[3], ctx=Store()))
+    elif t[2]=='/':
+        t[0] = BinOp(left=t[1], op=Div(), right=Name(id=t[3], ctx=Store()))
 
 def p_calculate_type_int(t):
     '''calculate : INT'''
-    t[0] = Num(t[1])
+    t[0] = Num(n=t[1])
 
 def p_calculate_type_float(t):
     '''calculate : FLOAT'''
-    pass
+    t[0] = Num(n=t[1])
 
 def p_calculate_type_identifier(t):
     '''
     calculate : IDENTIFIER
     '''
-    pass
+    t[0] = Name(id=t[1], ctx=Store())
 
 def p_baseOperator(t):
     '''
@@ -1331,9 +1348,10 @@ def parse(data):
     print(dump(result))
     result = codegen.to_source(result)
     print(result)
+    exec(result)
     if(debug==True):
         print()
-        print(code)
+        print(result)
         print(os.getcwd())
     exec(code)
 

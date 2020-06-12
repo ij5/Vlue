@@ -1256,7 +1256,7 @@ def p_if_statement(t):
     '''
     if_statement : IF LSB expression RSB LMB root RMB
     '''
-    t[0] = If(test=t[3], body=t[6])
+    t[0] = If(test=t[3], body=t[6], orelse=[])
 
 def p_if_statement_elif(t):
     '''
@@ -1265,13 +1265,13 @@ def p_if_statement_elif(t):
     if isinstance(t[1].orelse, list):
         t[1].orelse.append(If(test=t[5], body=t[8]))
         t[0] = t[1]
-    else:
-        t[1].orelse = [If(test=t[5], body=t[8])]
-        t[0] = t[1]
+    # else:
+    #     t[1].orelse = [If(test=t[5], body=t[8])]
+    #     t[0] = t[1]
 
 def p_if_statement_else(t):
     '''if_statement : if_statement ELSE LMB root RMB'''
-    t[1].orelse = t[4]
+    t[1].orelse.append(t[4])
     t[0] = t[1]
 
 

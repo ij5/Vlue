@@ -1,6 +1,6 @@
 import sys
 from ast import *
-import codegen
+from astor import code_gen
 import decimal
 from llvmlite import ir, binding
 
@@ -152,13 +152,15 @@ import re
 import os
 
 code = "buf___ = 0\n"
+variable = {}
 state = []
 f = []
 debug = False
 
 precedence = (
-    ('left', 'PLUS', 'MINUS'),
-    ('left', 'MUL', 'DIV')
+    ( 'left', 'PLUS', 'MINUS' ),
+    ( 'left', 'MUL', 'DIV' ),
+    ( 'nonassoc', 'UMINUS' )
 )
 
 
@@ -1187,19 +1189,26 @@ def p_variable_declaration(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL expression
     '''
-    t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
+    if isinstance(t[4], int):
+        t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
+        global variable
+        variable[t[2]] = t[4]
+    else:
+        t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
 
 def p_variable_value_change(t):
     '''
     variable_value_change : IDENTIFIER EQUAL expression
     '''
     t[0] = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3])
+    global variable
+    variable[t[1]] = t[3]
 
 ################### FUNCTION
 
 def p_function_call(t):
     '''function_call : IDENTIFIER LSB function_call_parameter RSB'''
-    pass
+    t[0] = Call(func=Name(id=t[1], ctx=Load()), args=t[3], keywords=[])
 
 def p_function_call_parameter(t):
     '''
@@ -1207,7 +1216,14 @@ def p_function_call_parameter(t):
         | calculate
         | empty
     '''
-    pass
+    if len(t)==4:
+        t[1].append(t[2])
+        t[0] = t[1]
+    elif len(t)==2:
+        if t[1]==None:
+            t[0] = []
+        else:
+            t[0] = [t[1]]
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
@@ -1273,53 +1289,82 @@ def p_stringOperator(t):
     '''
     pass
 
-def p_calculate(t):
-    '''
-    calculate : calculate baseoperator INT
-        | calculate baseoperator FLOAT
-    '''
-    if t[2]=='+':
-        t[0] = BinOp(left=t[1], op=Add(), right=Num( n=t[3] ))
-    elif t[2]=='-':
-        t[0] = BinOp(left=t[1], op=Sub(), right=Num(n=t[3]))
-    elif t[2]=='*':
-        t[0] = BinOp(left=t[1], op=Mult(), right=Num(n=t[3]))
-    elif t[2]=='/':
-        t[0] = BinOp(left=t[1], op=Div(), right=Num(n=t[3]))
+def p_calculate_binop(t):
+    '''calculate : calculate PLUS calculate
+                  | calculate MINUS calculate
+                  | calculate MUL calculate
+                  | calculate DIV calculate'''
+    if t[2] == '+'  : t[0] = t[1] + t[3]
+    elif t[2] == '-': t[0] = t[1] - t[3]
+    elif t[2] == '*': t[0] = t[1] * t[3]
+    elif t[2] == '/': t[0] = t[1] / t[3]
+
+def p_calculate_uminus(t):
+    'calculate : MINUS calculate %prec UMINUS'
+    t[0] = -t[2]
+
+def p_calculate_group(t):
+    'calculate : LSB calculate RSB'
+    t[0] = t[2]
+
+def p_calculate_number(t):
+    'calculate : INT'
+    t[0] = t[1]
+
 
 def p_calculate_identifier(t):
-    'calculate : calculate baseoperator IDENTIFIER'''
-    if t[2]=='+':
-        t[0] = BinOp(left=t[1], op=Add(), right=Name(id=t[3], ctx=Store()))
-    elif t[2]=='-':
-        t[0] = BinOp(left=t[1], op=Sub(), right=Name(id=t[3], ctx=Store()))
-    elif t[2]=='*':
-        t[0] = BinOp(left=t[1], op=Mult(), right=Name(id=t[3], ctx=Store()))
-    elif t[2]=='/':
-        t[0] = BinOp(left=t[1], op=Div(), right=Name(id=t[3], ctx=Store()))
+    'calculate : IDENTIFIER'
+    global variable
+    t[0] = variable[t[1]]
 
-def p_calculate_type_int(t):
-    '''calculate : INT'''
-    t[0] = Num(n=t[1])
 
-def p_calculate_type_float(t):
-    '''calculate : FLOAT'''
-    t[0] = Num(n=t[1])
-
-def p_calculate_type_identifier(t):
-    '''
-    calculate : IDENTIFIER
-    '''
-    t[0] = Name(id=t[1], ctx=Store())
-
-def p_baseOperator(t):
-    '''
-    baseoperator : PLUS
-        | MINUS
-        | MUL
-        | DIV
-    '''
-    t[0] = t[1]
+# def p_calculate(t):
+#     '''
+#     calculate : calculate baseoperator INT
+#         | calculate baseoperator FLOAT
+#     '''
+#     if t[2]=='+':
+#         t[0] = BinOp(left=t[1], op=Add(), right=Num( n=t[3] ))
+#     elif t[2]=='-':
+#         t[0] = BinOp(left=t[1], op=Sub(), right=Num(n=t[3]))
+#     elif t[2]=='*':
+#         t[0] = BinOp(left=t[1], op=Mult(), right=Num(n=t[3]))
+#     elif t[2]=='/':
+#         t[0] = BinOp(left=t[1], op=Div(), right=Num(n=t[3]))
+#
+# def p_calculate_identifier(t):
+#     'calculate : calculate baseoperator IDENTIFIER'''
+#     if t[2]=='+':
+#         t[0] = BinOp(left=t[1], op=Add(), right=Name(id=t[3], ctx=Store()))
+#     elif t[2]=='-':
+#         t[0] = BinOp(left=t[1], op=Sub(), right=Name(id=t[3], ctx=Store()))
+#     elif t[2]=='*':
+#         t[0] = BinOp(left=t[1], op=Mult(), right=Name(id=t[3], ctx=Store()))
+#     elif t[2]=='/':
+#         t[0] = BinOp(left=t[1], op=Div(), right=Name(id=t[3], ctx=Store()))
+#
+# def p_calculate_type_int(t):
+#     '''calculate : INT'''
+#     t[0] = Num(n=t[1])
+#
+# def p_calculate_type_float(t):
+#     '''calculate : FLOAT'''
+#     t[0] = Num(n=t[1])
+#
+# def p_calculate_type_identifier(t):
+#     '''
+#     calculate : IDENTIFIER
+#     '''
+#     t[0] = Name(id=t[1], ctx=Store())
+#
+# def p_baseOperator(t):
+#     '''
+#     baseoperator : PLUS
+#         | MINUS
+#         | MUL
+#         | DIV
+#     '''
+#     t[0] = t[1]
 
 ############ EMPTY
 
@@ -1346,7 +1391,7 @@ def parse(data):
     parser = yacc.yacc(start="program")
     result = parser.parse(data, debug=0)
     print(dump(result))
-    result = codegen.to_source(result)
+    result = code_gen.to_source(result)
     print(result)
     exec(result)
     if(debug==True):

@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'programleftPLUSMINUSleftMULDIVCATCH CLASS COLON COMMA DEBUG DIV DO DOT ELSE END EQUAL FLOAT FOR FUNCTION GLOBAL IDENTIFIER IF IN INT LB LBB LIST LMB LSB MINUS MUL NOTEQUAL PLUS PYTHON RB RBB REPEAT RMB RSB SEMI STRING TRY USE VAR WHILE\n    program : root\n    \n    root : root statement\n        | statement\n    \n    statement : if_statement\n        | while_statement\n        | variable_declaration SEMI\n        | variable_value_change SEMI\n        | function_declaration\n        | empty\n    statement : expression SEMI\n    expression : calculate\n        | string_calculate\n        | compare_expression\n        | function_call\n    \n    variable_declaration : VAR IDENTIFIER EQUAL expression\n    \n    variable_value_change : IDENTIFIER EQUAL expression\n    function_call : IDENTIFIER LSB function_call_parameter RSB\n    function_call_parameter : function_call_parameter COMMA calculate\n        | calculate\n        | empty\n    function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB\n    function_parameter : function_parameter COMMA IDENTIFIER\n        | IDENTIFIER\n        | empty\n    while_statement : WHILE LSB compare_expression RSB LMB root RMB\n    if_statement : IF LSB compare_expression RSB LMB root RMB\n        | if_statement ELSE IF LSB compare_expression RSB LMB root RMB\n        | if_statement ELSE LMB root RMB\n    \n    compare_expression : compare_expression compare_operator calculate\n        | calculate\n    \n    compare_operator : LB\n        | RB\n        | LB EQUAL\n        | RB EQUAL\n        | EQUAL EQUAL\n        | NOTEQUAL EQUAL\n    \n    string_calculate : string_calculate stringoperator STRING\n        | STRING\n    \n    stringoperator : PLUS\n    \n    calculate : calculate baseoperator INT\n        | calculate baseoperator FLOAT\n    calculate : calculate baseoperator IDENTIFIERcalculate : INTcalculate : FLOAT\n    calculate : IDENTIFIER\n    \n    baseoperator : PLUS\n        | MINUS\n        | MUL\n        | DIV\n    empty : '
+_lr_signature = 'programleftPLUSMINUSleftMULDIVnonassocUMINUSCATCH CLASS COLON COMMA DEBUG DIV DO DOT ELSE END EQUAL FLOAT FOR FUNCTION GLOBAL IDENTIFIER IF IN INT LB LBB LIST LMB LSB MINUS MUL NOTEQUAL PLUS PYTHON RB RBB REPEAT RMB RSB SEMI STRING TRY USE VAR WHILE\n    program : root\n    \n    root : root statement\n        | statement\n    \n    statement : if_statement\n        | while_statement\n        | variable_declaration SEMI\n        | variable_value_change SEMI\n        | function_declaration\n        | empty\n    statement : expression SEMI\n    expression : calculate\n        | string_calculate\n        | compare_expression\n        | function_call\n    \n    variable_declaration : VAR IDENTIFIER EQUAL expression\n    \n    variable_value_change : IDENTIFIER EQUAL expression\n    function_call : IDENTIFIER LSB function_call_parameter RSB\n    function_call_parameter : function_call_parameter COMMA calculate\n        | calculate\n        | empty\n    function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB\n    function_parameter : function_parameter COMMA IDENTIFIER\n        | IDENTIFIER\n        | empty\n    while_statement : WHILE LSB compare_expression RSB LMB root RMB\n    if_statement : IF LSB compare_expression RSB LMB root RMB\n        | if_statement ELSE IF LSB compare_expression RSB LMB root RMB\n        | if_statement ELSE LMB root RMB\n    \n    compare_expression : compare_expression compare_operator calculate\n        | calculate\n    \n    compare_operator : LB\n        | RB\n        | LB EQUAL\n        | RB EQUAL\n        | EQUAL EQUAL\n        | NOTEQUAL EQUAL\n    \n    string_calculate : string_calculate stringoperator STRING\n        | STRING\n    \n    stringoperator : PLUS\n    calculate : calculate PLUS calculate\n                  | calculate MINUS calculate\n                  | calculate MUL calculate\n                  | calculate DIV calculatecalculate : MINUS calculate %prec UMINUScalculate : LSB calculate RSBcalculate : INTempty : '
     
-_lr_action_items = {'IF':([0,2,3,4,5,8,9,23,24,25,26,27,47,69,79,80,81,86,87,88,90,91,92,93,94,95,96,],[11,11,-3,-4,-5,-8,-9,-2,46,-6,-7,-10,11,11,-28,11,11,11,11,11,11,-26,-25,11,11,-21,-27,]),'WHILE':([0,2,3,4,5,8,9,23,25,26,27,47,69,79,80,81,86,87,88,90,91,92,93,94,95,96,],[13,13,-3,-4,-5,-8,-9,-2,-6,-7,-10,13,13,-28,13,13,13,13,13,13,-26,-25,13,13,-21,-27,]),'VAR':([0,2,3,4,5,8,9,23,25,26,27,47,69,79,80,81,86,87,88,90,91,92,93,94,95,96,],[14,14,-3,-4,-5,-8,-9,-2,-6,-7,-10,14,14,-28,14,14,14,14,14,14,-26,-25,14,14,-21,-27,]),'IDENTIFIER':([0,2,3,4,5,8,9,14,16,23,25,26,27,28,29,30,31,34,36,37,39,40,41,42,43,47,52,53,54,55,57,63,68,69,74,79,80,81,84,86,87,88,90,91,92,93,94,95,96,],[15,15,-3,-4,-5,-8,-9,35,38,-2,-6,-7,-10,50,50,-31,-32,50,58,50,66,-46,-47,-48,-49,15,-33,-34,-35,-36,58,75,50,15,50,-28,15,15,89,15,15,15,15,-26,-25,15,15,-21,-27,]),'FUNCTION':([0,2,3,4,5,8,9,23,25,26,27,47,69,79,80,81,86,87,88,90,91,92,93,94,95,96,],[16,16,-3,-4,-5,-8,-9,-2,-6,-7,-10,16,16,-28,16,16,16,16,16,16,-26,-25,16,16,-21,-27,]),'INT':([0,2,3,4,5,8,9,23,25,26,27,28,29,30,31,34,36,37,39,40,41,42,43,47,52,53,54,55,57,68,69,74,79,80,81,86,87,88,90,91,92,93,94,95,96,],[20,20,-3,-4,-5,-8,-9,-2,-6,-7,-10,20,20,-31,-32,20,20,20,64,-46,-47,-48,-49,20,-33,-34,-35,-36,20,20,20,20,-28,20,20,20,20,20,20,-26,-25,20,20,-21,-27,]),'FLOAT':([0,2,3,4,5,8,9,23,25,26,27,28,29,30,31,34,36,37,39,40,41,42,43,47,52,53,54,55,57,68,69,74,79,80,81,86,87,88,90,91,92,93,94,95,96,],[21,21,-3,-4,-5,-8,-9,-2,-6,-7,-10,21,21,-31,-32,21,21,21,65,-46,-47,-48,-49,21,-33,-34,-35,-36,21,21,21,21,-28,21,21,21,21,21,21,-26,-25,21,21,-21,-27,]),'STRING':([0,2,3,4,5,8,9,23,25,26,27,36,44,45,47,57,69,79,80,81,86,87,88,90,91,92,93,94,95,96,],[22,22,-3,-4,-5,-8,-9,-2,-6,-7,-10,22,67,-39,22,22,22,-28,22,22,22,22,22,22,-26,-25,22,22,-21,-27,]),'$end':([0,1,2,3,4,5,8,9,23,25,26,27,79,91,92,95,96,],[-50,0,-1,-3,-4,-5,-8,-9,-2,-6,-7,-10,-28,-26,-25,-21,-27,]),'RMB':([3,4,5,8,9,23,25,26,27,47,69,79,80,81,86,87,88,90,91,92,93,94,95,96,],[-3,-4,-5,-8,-9,-2,-6,-7,-10,-50,79,-28,-50,-50,91,92,-50,-50,-26,-25,95,96,-21,-27,]),'ELSE':([4,79,91,96,],[24,-28,-26,-27,]),'SEMI':([6,7,10,12,15,17,18,19,20,21,22,50,51,58,59,64,65,66,67,72,73,],[25,26,27,-13,-45,-11,-12,-14,-43,-44,-38,-45,-29,-45,-16,-40,-41,-42,-37,-15,-17,]),'LSB':([11,13,15,38,46,58,],[28,34,37,63,68,37,]),'LB':([12,15,17,20,21,48,49,50,51,56,58,64,65,66,78,],[30,-45,-30,-43,-44,30,-30,-45,-29,30,-45,-40,-41,-42,30,]),'RB':([12,15,17,20,21,48,49,50,51,56,58,64,65,66,78,],[31,-45,-30,-43,-44,31,-30,-45,-29,31,-45,-40,-41,-42,31,]),'EQUAL':([12,15,17,20,21,30,31,32,33,35,48,49,50,51,56,58,64,65,66,78,],[32,36,-30,-43,-44,52,53,54,55,57,32,-30,-45,-29,32,-45,-40,-41,-42,32,]),'NOTEQUAL':([12,15,17,20,21,48,49,50,51,56,58,64,65,66,78,],[33,-45,-30,-43,-44,33,-30,-45,-29,33,-45,-40,-41,-42,33,]),'PLUS':([15,17,18,20,21,22,49,50,51,58,61,64,65,66,67,82,],[-45,40,45,-43,-44,-38,40,-45,40,-45,40,-40,-41,-42,-37,40,]),'MINUS':([15,17,20,21,49,50,51,58,61,64,65,66,82,],[-45,41,-43,-44,41,-45,41,-45,41,-40,-41,-42,41,]),'MUL':([15,17,20,21,49,50,51,58,61,64,65,66,82,],[-45,42,-43,-44,42,-45,42,-45,42,-40,-41,-42,42,]),'DIV':([15,17,20,21,49,50,51,58,61,64,65,66,82,],[-45,43,-43,-44,43,-45,43,-45,43,-40,-41,-42,43,]),'RSB':([20,21,37,48,49,50,51,56,60,61,62,63,64,65,66,75,76,77,78,82,89,],[-43,-44,-50,70,-30,-45,-29,71,73,-19,-20,-50,-40,-41,-42,-23,83,-24,85,-18,-22,]),'COMMA':([20,21,37,50,60,61,62,63,64,65,66,75,76,77,82,89,],[-43,-44,-50,-45,74,-19,-20,-50,-40,-41,-42,-23,84,-24,-18,-22,]),'LMB':([24,70,71,83,85,],[47,80,81,88,90,]),}
+_lr_action_items = {'IF':([0,2,3,4,5,8,9,24,25,26,27,28,49,72,82,83,84,89,90,91,93,94,95,96,97,98,99,],[11,11,-3,-4,-5,-8,-9,-2,48,-6,-7,-10,11,11,-28,11,11,11,11,11,11,-26,-25,11,11,-21,-27,]),'WHILE':([0,2,3,4,5,8,9,24,26,27,28,49,72,82,83,84,89,90,91,93,94,95,96,97,98,99,],[14,14,-3,-4,-5,-8,-9,-2,-6,-7,-10,14,14,-28,14,14,14,14,14,14,-26,-25,14,14,-21,-27,]),'VAR':([0,2,3,4,5,8,9,24,26,27,28,49,72,82,83,84,89,90,91,93,94,95,96,97,98,99,],[15,15,-3,-4,-5,-8,-9,-2,-6,-7,-10,15,15,-28,15,15,15,15,15,15,-26,-25,15,15,-21,-27,]),'IDENTIFIER':([0,2,3,4,5,8,9,15,17,24,26,27,28,38,49,59,65,72,82,83,84,87,89,90,91,93,94,95,96,97,98,99,],[16,16,-3,-4,-5,-8,-9,37,40,-2,-6,-7,-10,60,16,60,78,16,-28,16,16,92,16,16,16,16,-26,-25,16,16,-21,-27,]),'FUNCTION':([0,2,3,4,5,8,9,24,26,27,28,49,72,82,83,84,89,90,91,93,94,95,96,97,98,99,],[17,17,-3,-4,-5,-8,-9,-2,-6,-7,-10,17,17,-28,17,17,17,17,17,17,-26,-25,17,17,-21,-27,]),'MINUS':([0,2,3,4,5,8,9,12,18,21,22,24,26,27,28,29,30,31,32,33,36,38,39,41,42,43,44,47,49,51,52,53,54,55,56,57,59,63,66,67,68,69,71,72,77,82,83,84,85,89,90,91,93,94,95,96,97,98,99,],[21,21,-3,-4,-5,-8,-9,21,42,21,-46,-2,-6,-7,-10,21,42,21,-31,-32,21,21,21,21,21,21,21,-44,21,42,-45,42,-33,-34,-35,-36,21,42,-40,-41,-42,-43,21,21,21,-28,21,21,42,21,21,21,21,-26,-25,21,21,-21,-27,]),'LSB':([0,2,3,4,5,8,9,11,12,14,16,21,24,26,27,28,29,31,32,33,36,38,39,40,41,42,43,44,48,49,54,55,56,57,59,60,71,72,77,82,83,84,89,90,91,93,94,95,96,97,98,99,],[12,12,-3,-4,-5,-8,-9,29,12,36,39,12,-2,-6,-7,-10,12,12,-31,-32,12,12,12,65,12,12,12,12,71,12,-33,-34,-35,-36,12,39,12,12,12,-28,12,12,12,12,12,12,-26,-25,12,12,-21,-27,]),'INT':([0,2,3,4,5,8,9,12,21,24,26,27,28,29,31,32,33,36,38,39,41,42,43,44,49,54,55,56,57,59,71,72,77,82,83,84,89,90,91,93,94,95,96,97,98,99,],[22,22,-3,-4,-5,-8,-9,22,22,-2,-6,-7,-10,22,22,-31,-32,22,22,22,22,22,22,22,22,-33,-34,-35,-36,22,22,22,22,-28,22,22,22,22,22,22,-26,-25,22,22,-21,-27,]),'STRING':([0,2,3,4,5,8,9,24,26,27,28,38,45,46,49,59,72,82,83,84,89,90,91,93,94,95,96,97,98,99,],[23,23,-3,-4,-5,-8,-9,-2,-6,-7,-10,23,70,-39,23,23,23,-28,23,23,23,23,23,23,-26,-25,23,23,-21,-27,]),'$end':([0,1,2,3,4,5,8,9,24,26,27,28,82,94,95,98,99,],[-47,0,-1,-3,-4,-5,-8,-9,-2,-6,-7,-10,-28,-26,-25,-21,-27,]),'RMB':([3,4,5,8,9,24,26,27,28,49,72,82,83,84,89,90,91,93,94,95,96,97,98,99,],[-3,-4,-5,-8,-9,-2,-6,-7,-10,-47,82,-28,-47,-47,94,95,-47,-47,-26,-25,98,99,-21,-27,]),'ELSE':([4,82,94,99,],[25,-28,-26,-27,]),'SEMI':([6,7,10,13,18,19,20,22,23,47,52,53,61,66,67,68,69,70,75,76,],[26,27,28,-13,-11,-12,-14,-46,-38,-44,-45,-29,-16,-40,-41,-42,-43,-37,-15,-17,]),'LB':([13,18,22,47,50,51,52,53,58,66,67,68,69,81,],[32,-30,-46,-44,32,-30,-45,-29,32,-40,-41,-42,-43,32,]),'RB':([13,18,22,47,50,51,52,53,58,66,67,68,69,81,],[33,-30,-46,-44,33,-30,-45,-29,33,-40,-41,-42,-43,33,]),'EQUAL':([13,16,18,22,32,33,34,35,37,47,50,51,52,53,58,66,67,68,69,81,],[34,38,-30,-46,54,55,56,57,59,-44,34,-30,-45,-29,34,-40,-41,-42,-43,34,]),'NOTEQUAL':([13,18,22,47,50,51,52,53,58,66,67,68,69,81,],[35,-30,-46,-44,35,-30,-45,-29,35,-40,-41,-42,-43,35,]),'PLUS':([18,19,22,23,30,47,51,52,53,63,66,67,68,69,70,85,],[41,46,-46,-38,41,-44,41,-45,41,41,-40,-41,-42,-43,-37,41,]),'MUL':([18,22,30,47,51,52,53,63,66,67,68,69,85,],[43,-46,43,-44,43,-45,43,43,43,43,-42,-43,43,]),'DIV':([18,22,30,47,51,52,53,63,66,67,68,69,85,],[44,-46,44,-44,44,-45,44,44,44,44,-42,-43,44,]),'RSB':([22,30,39,47,50,51,52,53,58,62,63,64,65,66,67,68,69,78,79,80,81,85,92,],[-46,52,-47,-44,73,-30,-45,-29,74,76,-19,-20,-47,-40,-41,-42,-43,-23,86,-24,88,-18,-22,]),'COMMA':([22,39,47,52,62,63,64,65,66,67,68,69,78,79,80,85,92,],[-46,-47,-44,-45,77,-19,-20,-47,-40,-41,-42,-43,-23,87,-24,-18,-22,]),'LMB':([25,73,74,86,88,],[49,83,84,91,93,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,],[1,]),'root':([0,47,80,81,88,90,],[2,69,86,87,93,94,]),'statement':([0,2,47,69,80,81,86,87,88,90,93,94,],[3,23,3,23,3,3,23,23,3,3,23,23,]),'if_statement':([0,2,47,69,80,81,86,87,88,90,93,94,],[4,4,4,4,4,4,4,4,4,4,4,4,]),'while_statement':([0,2,47,69,80,81,86,87,88,90,93,94,],[5,5,5,5,5,5,5,5,5,5,5,5,]),'variable_declaration':([0,2,47,69,80,81,86,87,88,90,93,94,],[6,6,6,6,6,6,6,6,6,6,6,6,]),'variable_value_change':([0,2,47,69,80,81,86,87,88,90,93,94,],[7,7,7,7,7,7,7,7,7,7,7,7,]),'function_declaration':([0,2,47,69,80,81,86,87,88,90,93,94,],[8,8,8,8,8,8,8,8,8,8,8,8,]),'empty':([0,2,37,47,63,69,80,81,86,87,88,90,93,94,],[9,9,62,9,77,9,9,9,9,9,9,9,9,9,]),'expression':([0,2,36,47,57,69,80,81,86,87,88,90,93,94,],[10,10,59,10,72,10,10,10,10,10,10,10,10,10,]),'compare_expression':([0,2,28,34,36,47,57,68,69,80,81,86,87,88,90,93,94,],[12,12,48,56,12,12,12,78,12,12,12,12,12,12,12,12,12,]),'calculate':([0,2,28,29,34,36,37,47,57,68,69,74,80,81,86,87,88,90,93,94,],[17,17,49,51,49,17,61,17,17,49,17,82,17,17,17,17,17,17,17,17,]),'string_calculate':([0,2,36,47,57,69,80,81,86,87,88,90,93,94,],[18,18,18,18,18,18,18,18,18,18,18,18,18,18,]),'function_call':([0,2,36,47,57,69,80,81,86,87,88,90,93,94,],[19,19,19,19,19,19,19,19,19,19,19,19,19,19,]),'compare_operator':([12,48,56,78,],[29,29,29,29,]),'baseoperator':([17,49,51,61,82,],[39,39,39,39,39,]),'stringoperator':([18,],[44,]),'function_call_parameter':([37,],[60,]),'function_parameter':([63,],[76,]),}
+_lr_goto_items = {'program':([0,],[1,]),'root':([0,49,83,84,91,93,],[2,72,89,90,96,97,]),'statement':([0,2,49,72,83,84,89,90,91,93,96,97,],[3,24,3,24,3,3,24,24,3,3,24,24,]),'if_statement':([0,2,49,72,83,84,89,90,91,93,96,97,],[4,4,4,4,4,4,4,4,4,4,4,4,]),'while_statement':([0,2,49,72,83,84,89,90,91,93,96,97,],[5,5,5,5,5,5,5,5,5,5,5,5,]),'variable_declaration':([0,2,49,72,83,84,89,90,91,93,96,97,],[6,6,6,6,6,6,6,6,6,6,6,6,]),'variable_value_change':([0,2,49,72,83,84,89,90,91,93,96,97,],[7,7,7,7,7,7,7,7,7,7,7,7,]),'function_declaration':([0,2,49,72,83,84,89,90,91,93,96,97,],[8,8,8,8,8,8,8,8,8,8,8,8,]),'empty':([0,2,39,49,65,72,83,84,89,90,91,93,96,97,],[9,9,64,9,80,9,9,9,9,9,9,9,9,9,]),'expression':([0,2,38,49,59,72,83,84,89,90,91,93,96,97,],[10,10,61,10,75,10,10,10,10,10,10,10,10,10,]),'compare_expression':([0,2,29,36,38,49,59,71,72,83,84,89,90,91,93,96,97,],[13,13,50,58,13,13,13,81,13,13,13,13,13,13,13,13,13,]),'calculate':([0,2,12,21,29,31,36,38,39,41,42,43,44,49,59,71,72,77,83,84,89,90,91,93,96,97,],[18,18,30,47,51,53,51,18,63,66,67,68,69,18,18,51,18,85,18,18,18,18,18,18,18,18,]),'string_calculate':([0,2,38,49,59,72,83,84,89,90,91,93,96,97,],[19,19,19,19,19,19,19,19,19,19,19,19,19,19,]),'function_call':([0,2,38,49,59,72,83,84,89,90,91,93,96,97,],[20,20,20,20,20,20,20,20,20,20,20,20,20,20,]),'compare_operator':([13,50,58,81,],[31,31,31,31,]),'stringoperator':([19,],[45,]),'function_call_parameter':([39,],[62,]),'function_parameter':([65,],[79,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,54 +27,51 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> root','program',1,'p_program','main.py',1137),
-  ('root -> root statement','root',2,'p_root','main.py',1145),
-  ('root -> statement','root',1,'p_root','main.py',1146),
-  ('statement -> if_statement','statement',1,'p_statement','main.py',1158),
-  ('statement -> while_statement','statement',1,'p_statement','main.py',1159),
-  ('statement -> variable_declaration SEMI','statement',2,'p_statement','main.py',1160),
-  ('statement -> variable_value_change SEMI','statement',2,'p_statement','main.py',1161),
-  ('statement -> function_declaration','statement',1,'p_statement','main.py',1162),
-  ('statement -> empty','statement',1,'p_statement','main.py',1163),
-  ('statement -> expression SEMI','statement',2,'p_statement_calculate','main.py',1168),
-  ('expression -> calculate','expression',1,'p_expression','main.py',1175),
-  ('expression -> string_calculate','expression',1,'p_expression','main.py',1176),
-  ('expression -> compare_expression','expression',1,'p_expression','main.py',1177),
-  ('expression -> function_call','expression',1,'p_expression','main.py',1178),
-  ('variable_declaration -> VAR IDENTIFIER EQUAL expression','variable_declaration',4,'p_variable_declaration','main.py',1187),
-  ('variable_value_change -> IDENTIFIER EQUAL expression','variable_value_change',3,'p_variable_value_change','main.py',1193),
-  ('function_call -> IDENTIFIER LSB function_call_parameter RSB','function_call',4,'p_function_call','main.py',1200),
-  ('function_call_parameter -> function_call_parameter COMMA calculate','function_call_parameter',3,'p_function_call_parameter','main.py',1205),
-  ('function_call_parameter -> calculate','function_call_parameter',1,'p_function_call_parameter','main.py',1206),
-  ('function_call_parameter -> empty','function_call_parameter',1,'p_function_call_parameter','main.py',1207),
-  ('function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB','function_declaration',8,'p_function_declaration','main.py',1212),
-  ('function_parameter -> function_parameter COMMA IDENTIFIER','function_parameter',3,'p_function_parameter','main.py',1217),
-  ('function_parameter -> IDENTIFIER','function_parameter',1,'p_function_parameter','main.py',1218),
-  ('function_parameter -> empty','function_parameter',1,'p_function_parameter','main.py',1219),
-  ('while_statement -> WHILE LSB compare_expression RSB LMB root RMB','while_statement',7,'p_while_statement','main.py',1226),
-  ('if_statement -> IF LSB compare_expression RSB LMB root RMB','if_statement',7,'p_if_statement','main.py',1233),
-  ('if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB root RMB','if_statement',9,'p_if_statement','main.py',1234),
-  ('if_statement -> if_statement ELSE LMB root RMB','if_statement',5,'p_if_statement','main.py',1235),
-  ('compare_expression -> compare_expression compare_operator calculate','compare_expression',3,'p_compare_expression','main.py',1244),
-  ('compare_expression -> calculate','compare_expression',1,'p_compare_expression','main.py',1245),
-  ('compare_operator -> LB','compare_operator',1,'p_compare_operator','main.py',1251),
-  ('compare_operator -> RB','compare_operator',1,'p_compare_operator','main.py',1252),
-  ('compare_operator -> LB EQUAL','compare_operator',2,'p_compare_operator','main.py',1253),
-  ('compare_operator -> RB EQUAL','compare_operator',2,'p_compare_operator','main.py',1254),
-  ('compare_operator -> EQUAL EQUAL','compare_operator',2,'p_compare_operator','main.py',1255),
-  ('compare_operator -> NOTEQUAL EQUAL','compare_operator',2,'p_compare_operator','main.py',1256),
-  ('string_calculate -> string_calculate stringoperator STRING','string_calculate',3,'p_string_calculate','main.py',1264),
-  ('string_calculate -> STRING','string_calculate',1,'p_string_calculate','main.py',1265),
-  ('stringoperator -> PLUS','stringoperator',1,'p_stringOperator','main.py',1271),
-  ('calculate -> calculate baseoperator INT','calculate',3,'p_calculate','main.py',1277),
-  ('calculate -> calculate baseoperator FLOAT','calculate',3,'p_calculate','main.py',1278),
-  ('calculate -> calculate baseoperator IDENTIFIER','calculate',3,'p_calculate_identifier','main.py',1284),
-  ('calculate -> INT','calculate',1,'p_calculate_type_int','main.py',1289),
-  ('calculate -> FLOAT','calculate',1,'p_calculate_type_float','main.py',1293),
-  ('calculate -> IDENTIFIER','calculate',1,'p_calculate_type_identifier','main.py',1298),
-  ('baseoperator -> PLUS','baseoperator',1,'p_baseOperator','main.py',1304),
-  ('baseoperator -> MINUS','baseoperator',1,'p_baseOperator','main.py',1305),
-  ('baseoperator -> MUL','baseoperator',1,'p_baseOperator','main.py',1306),
-  ('baseoperator -> DIV','baseoperator',1,'p_baseOperator','main.py',1307),
-  ('empty -> <empty>','empty',0,'p_empty','main.py',1314),
+  ('program -> root','program',1,'p_program','main.py',1140),
+  ('root -> root statement','root',2,'p_root','main.py',1148),
+  ('root -> statement','root',1,'p_root','main.py',1149),
+  ('statement -> if_statement','statement',1,'p_statement','main.py',1161),
+  ('statement -> while_statement','statement',1,'p_statement','main.py',1162),
+  ('statement -> variable_declaration SEMI','statement',2,'p_statement','main.py',1163),
+  ('statement -> variable_value_change SEMI','statement',2,'p_statement','main.py',1164),
+  ('statement -> function_declaration','statement',1,'p_statement','main.py',1165),
+  ('statement -> empty','statement',1,'p_statement','main.py',1166),
+  ('statement -> expression SEMI','statement',2,'p_statement_calculate','main.py',1171),
+  ('expression -> calculate','expression',1,'p_expression','main.py',1178),
+  ('expression -> string_calculate','expression',1,'p_expression','main.py',1179),
+  ('expression -> compare_expression','expression',1,'p_expression','main.py',1180),
+  ('expression -> function_call','expression',1,'p_expression','main.py',1181),
+  ('variable_declaration -> VAR IDENTIFIER EQUAL expression','variable_declaration',4,'p_variable_declaration','main.py',1190),
+  ('variable_value_change -> IDENTIFIER EQUAL expression','variable_value_change',3,'p_variable_value_change','main.py',1196),
+  ('function_call -> IDENTIFIER LSB function_call_parameter RSB','function_call',4,'p_function_call','main.py',1203),
+  ('function_call_parameter -> function_call_parameter COMMA calculate','function_call_parameter',3,'p_function_call_parameter','main.py',1208),
+  ('function_call_parameter -> calculate','function_call_parameter',1,'p_function_call_parameter','main.py',1209),
+  ('function_call_parameter -> empty','function_call_parameter',1,'p_function_call_parameter','main.py',1210),
+  ('function_declaration -> FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB','function_declaration',8,'p_function_declaration','main.py',1222),
+  ('function_parameter -> function_parameter COMMA IDENTIFIER','function_parameter',3,'p_function_parameter','main.py',1227),
+  ('function_parameter -> IDENTIFIER','function_parameter',1,'p_function_parameter','main.py',1228),
+  ('function_parameter -> empty','function_parameter',1,'p_function_parameter','main.py',1229),
+  ('while_statement -> WHILE LSB compare_expression RSB LMB root RMB','while_statement',7,'p_while_statement','main.py',1236),
+  ('if_statement -> IF LSB compare_expression RSB LMB root RMB','if_statement',7,'p_if_statement','main.py',1243),
+  ('if_statement -> if_statement ELSE IF LSB compare_expression RSB LMB root RMB','if_statement',9,'p_if_statement','main.py',1244),
+  ('if_statement -> if_statement ELSE LMB root RMB','if_statement',5,'p_if_statement','main.py',1245),
+  ('compare_expression -> compare_expression compare_operator calculate','compare_expression',3,'p_compare_expression','main.py',1254),
+  ('compare_expression -> calculate','compare_expression',1,'p_compare_expression','main.py',1255),
+  ('compare_operator -> LB','compare_operator',1,'p_compare_operator','main.py',1261),
+  ('compare_operator -> RB','compare_operator',1,'p_compare_operator','main.py',1262),
+  ('compare_operator -> LB EQUAL','compare_operator',2,'p_compare_operator','main.py',1263),
+  ('compare_operator -> RB EQUAL','compare_operator',2,'p_compare_operator','main.py',1264),
+  ('compare_operator -> EQUAL EQUAL','compare_operator',2,'p_compare_operator','main.py',1265),
+  ('compare_operator -> NOTEQUAL EQUAL','compare_operator',2,'p_compare_operator','main.py',1266),
+  ('string_calculate -> string_calculate stringoperator STRING','string_calculate',3,'p_string_calculate','main.py',1274),
+  ('string_calculate -> STRING','string_calculate',1,'p_string_calculate','main.py',1275),
+  ('stringoperator -> PLUS','stringoperator',1,'p_stringOperator','main.py',1281),
+  ('calculate -> calculate PLUS calculate','calculate',3,'p_expression_binop','main.py',1286),
+  ('calculate -> calculate MINUS calculate','calculate',3,'p_expression_binop','main.py',1287),
+  ('calculate -> calculate MUL calculate','calculate',3,'p_expression_binop','main.py',1288),
+  ('calculate -> calculate DIV calculate','calculate',3,'p_expression_binop','main.py',1289),
+  ('calculate -> MINUS calculate','calculate',2,'p_expression_uminus','main.py',1296),
+  ('calculate -> LSB calculate RSB','calculate',3,'p_expression_group','main.py',1300),
+  ('calculate -> INT','calculate',1,'p_expression_number','main.py',1304),
+  ('empty -> <empty>','empty',0,'p_empty','main.py',1362),
 ]

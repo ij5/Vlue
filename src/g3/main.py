@@ -1254,11 +1254,25 @@ def p_while_statement(t):
 
 def p_if_statement(t):
     '''
-    if_statement : IF LSB compare_expression RSB LMB root RMB
-        | if_statement ELSE IF LSB compare_expression RSB LMB root RMB
-        | if_statement ELSE LMB root RMB
+    if_statement : IF LSB expression RSB LMB root RMB
     '''
-    pass
+    t[0] = If(test=t[3], body=t[6])
+
+def p_if_statement_elif(t):
+    '''
+    if_statement : if_statement ELSE IF LSB expression RSB LMB root RMB
+    '''
+    if isinstance(t[1].orelse, list):
+        t[1].orelse.append(If(test=t[5], body=t[8]))
+        t[0] = t[1]
+    else:
+        t[1].orelse = [If(test=t[5], body=t[8])]
+        t[0] = t[1]
+
+def p_if_statement_else(t):
+    '''if_statement : if_statement ELSE LMB root RMB'''
+    t[1].orelse = t[4]
+    t[0] = t[1]
 
 
 ################## COMPARE
@@ -1268,7 +1282,8 @@ def p_compare_expression(t):
     compare_expression : compare_expression compare_operator calculate
         | calculate
     '''
-    pass
+    if len(t)==2:
+        t[0] = t[1]
 
 def p_compare_operator(t):
     '''

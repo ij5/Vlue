@@ -1,2 +1,5 @@
 var a = 5;
 print(1*2*a);
+if(a){
+print(1);
+}

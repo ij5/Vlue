@@ -1196,7 +1196,6 @@ def p_variable_declaration(t):
         t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
         global variable
         variable[t[2]] = t[4].n
-        print(variable)
     else:
         t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
 
@@ -1204,15 +1203,19 @@ def p_variable_value_change(t):
     '''
     variable_value_change : IDENTIFIER EQUAL expression
     '''
-    t[0] = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3])
-    global variable
-    variable[t[1]] = t[3]
+    if isinstance(t[3], Num):
+        t[0] = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3])
+        global variable
+        variable[t[1]] = t[3].n
+    else:
+        t[0] = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3])
 
 ################### FUNCTION
 
 def p_function_call(t):
     '''function_call : IDENTIFIER LSB function_call_parameter RSB'''
     t[0] = Call(func=Name(id=t[1], ctx=Load()), args=t[3], keywords=[])
+    Module(body=[Expr(value=Call(func=Name(id='print', ctx=Load()), args=[Num(n=0)], keywords=[]))])
 
 def p_function_call_parameter(t):
     '''
@@ -1227,7 +1230,7 @@ def p_function_call_parameter(t):
         if t[1]==None:
             t[0] = []
         else:
-            t[0] = [t[1]]
+            t[0] = [Num(t[1])]
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''

@@ -1180,7 +1180,10 @@ def p_expression(t):
         | compare_expression
         | function_call
     '''
-    t[0] = t[1]
+    if isinstance(t[1], int):
+        t[0] = Num(n=t[1])
+    else:
+        t[0] = t[1]
 
 
 ################### VARIABLE DECLARATION
@@ -1189,10 +1192,11 @@ def p_variable_declaration(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL expression
     '''
-    if isinstance(t[4], int):
+    if isinstance(t[4], Num):
         t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
         global variable
-        variable[t[2]] = t[4]
+        variable[t[2]] = t[4].n
+        print(variable)
     else:
         t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
 

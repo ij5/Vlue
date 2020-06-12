@@ -1,6 +1,7 @@
 import sys
 from ast import *
 from astor import code_gen
+import codegen
 import decimal
 from llvmlite import ir, binding
 
@@ -1133,6 +1134,9 @@ def DecodeEscape(s):
             res += c
     return res
 
+def flatten(listdata):
+    return listdata[0]
+
 ##################### PROGRAM
 
 def p_program(t):
@@ -1262,16 +1266,15 @@ def p_if_statement_elif(t):
     '''
     if_statement : if_statement ELSE IF LSB expression RSB LMB root RMB
     '''
-    if isinstance(t[1].orelse, list):
-        t[1].orelse.append(If(test=t[5], body=t[8]))
-        t[0] = t[1]
+    t[1].orelse.append(If(test=t[5], body=t[8], orelse=[]))
+    t[0] = t[1]
     # else:
     #     t[1].orelse = [If(test=t[5], body=t[8])]
     #     t[0] = t[1]
 
 def p_if_statement_else(t):
     '''if_statement : if_statement ELSE LMB root RMB'''
-    t[1].orelse.append(t[4])
+    t[1].orelse.append(flatten(t[4]))
     t[0] = t[1]
 
 

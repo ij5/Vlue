@@ -378,10 +378,10 @@ class SourceGenerator(NodeVisitor):
             write_comma()
             self.write(keyword.arg + '=')
             self.visit(keyword.value)
-        if node.starargs is not None:
+        if node.args is not None:
             write_comma()
             self.write('*')
-            self.visit(node.starargs)
+            self.visit(node.args)
         if node.kwargs is not None:
             write_comma()
             self.write('**')

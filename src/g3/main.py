@@ -1281,7 +1281,6 @@ def p_if_statement_else(t):
         t[1].orelse.append(flatten(t[4]))
         t[0] = t[1]
 
-
 ################## COMPARE
 
 def p_compare_expression(t):

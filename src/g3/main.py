@@ -30,6 +30,7 @@ reserved = {
     'debug': 'DEBUG',
     'do': 'DO',
     'end': 'END',
+    'pass': 'PASS',
 }
 
 tokens = [
@@ -1167,6 +1168,7 @@ def p_statement(t):
         | variable_declaration SEMI
         | variable_value_change SEMI
         | function_declaration
+        | PASS SEMI
         | empty
     '''
     t[0] = t[1]

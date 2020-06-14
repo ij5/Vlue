@@ -1,7 +1,7 @@
 from ast import *
 import codegen
 
-node = parse("if(1<2):\
+node = parse("while(1<2):\
 \tprint(1)\
 ")
 print(dump(node))

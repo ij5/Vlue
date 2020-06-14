@@ -1256,9 +1256,6 @@ def p_while_statement(t):
     '''
     while_statement : WHILE LSB expression RSB LMB root RMB
     '''
-    Module(body=[While(test=Compare(left=Num(n=1), ops=[Lt()], comparators=[Num(n=2)]),
-                       body=[Expr(value=Call(func=Name(id='print', ctx=Load()), args=[Num(n=1)], keywords=[]))],
-                       orelse=[])])
     t[0] = While(test=t[3], body=t[6], orelse=[])
 
 ################## IF

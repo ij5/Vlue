@@ -1292,6 +1292,15 @@ def p_compare_expression(t):
     '''
     if len(t)==2:
         t[0] = t[1]
+    elif len(t)==4:
+        if t[2]=='<':
+            t[0] = Compare(left=Num(t[1]), ops=[Lt()], comparators=[Num(t[3])])
+        elif t[2]=='>':
+            t[0] = Compare(left=Num(t[1]), ops=[Gt()], comparators=[Num(t[3])])
+        elif t[2]=='<=':
+            t[0] = Compare(left=Num(t[1]), ops=[LtE()], comparators=[Num(t[3])])
+        elif t[2]=='>=':
+            t[0] = Compare(left=Num(t[1]), ops=[GtE()], comparators=[Num(t[3])])
 
 def p_compare_operator(t):
     '''
@@ -1302,7 +1311,10 @@ def p_compare_operator(t):
         | EQUAL EQUAL
         | NOTEQUAL EQUAL
     '''
-    pass
+    if len(t)==2:
+        t[0] = t[1]
+    else:
+        t[0] = t[1] + t[2]
 
 ################### CALCULATE
 

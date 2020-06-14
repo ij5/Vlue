@@ -1,7 +1,7 @@
 from ast import *
 import codegen
 
-node = parse("if(a):\n\tprint(1)\nelse:\n\tprint(1)\n")
+node = parse("if(a<b):\n\tpass")
 print(dump(node))
 a = [[1]]
 a = a[0]

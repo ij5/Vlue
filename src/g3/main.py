@@ -1240,7 +1240,8 @@ def p_function_call_parameter(t):
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
-    FunctionDef(name=t[2], args=arguments(args=[arguments(args=[t[4]], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=, decorator_list=[], returns=None)
+    t[0] = FunctionDef(name=t[2], args=arguments(args=[arguments(args=t[4], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=t[7], decorator_list=[], returns=None)
+    variable[t[2]] = "parameter"
 
 def p_function_parameter(t):
     '''
@@ -1249,7 +1250,13 @@ def p_function_parameter(t):
         | empty
     '''
     if(len(t)==2):
-        t[0] = arg(arg=t[1], annotation=None)
+        if(t[1]==None):
+            t[0] = []
+        else:
+            t[0] = [arg(arg=t[1], annotation=None)]
+    elif(len(t)==4):
+        t[1].append(arg(arg=t[3], annotation=None))
+        t[0] = t[1]
 
 ################### WHILE
 

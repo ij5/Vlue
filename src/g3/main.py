@@ -1230,18 +1230,23 @@ def p_function_call_parameter(t):
         | empty
     '''
     if len(t)==4:
-        t[1].append(t[2])
+        if isinstance(t[3], str):
+            t[1].append(Name(t[3]))
+        else:
+            t[1].append(Num(t[3]))
         t[0] = t[1]
     elif len(t)==2:
         if t[1]==None:
             t[0] = []
         else:
-            t[0] = [Num(t[1])]
+            if isinstance(t[1], str):
+                t[0] = [Name(t[1])]
+            else:
+                t[0] = [Num(t[1])]
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
     t[0] = FunctionDef(name=t[2], args=arguments(args=[arguments(args=t[4], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=t[7], decorator_list=[], returns=None)
-    variable[t[2]] = "parameter"
 
 def p_function_parameter(t):
     '''
@@ -1249,14 +1254,17 @@ def p_function_parameter(t):
         | IDENTIFIER
         | empty
     '''
+    global variable
     if(len(t)==2):
         if(t[1]==None):
             t[0] = []
         else:
             t[0] = [arg(arg=t[1], annotation=None)]
+            variable[t[1]] = "<parameter>"
     elif(len(t)==4):
         t[1].append(arg(arg=t[3], annotation=None))
         t[0] = t[1]
+        variable[t[3]] = "<parameter>"
 
 ################### WHILE
 
@@ -1367,7 +1375,10 @@ def p_calculate_number(t):
 def p_calculate_identifier(t):
     'calculate : IDENTIFIER'
     global variable
-    t[0] = variable[t[1]]
+    if(variable[t[1]]=="<parameter>"):
+        t[0] = t[1]
+    else:
+        t[0] = variable[t[1]]
 
 
 # def p_calculate(t):
@@ -1445,6 +1456,7 @@ def parse(data):
     print(dump(result))
     result = code_gen.to_source(result)
     print(result)
+    print(variable)
     exec(result)
     if(debug==True):
         print()

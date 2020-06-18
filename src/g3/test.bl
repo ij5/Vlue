@@ -1,4 +1,4 @@
 function prnt(a){
-print(a);
+print(9,0);
 }
 prnt(55555);

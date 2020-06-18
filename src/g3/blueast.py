@@ -1,7 +1,7 @@
 from ast import *
 import codegen
 
-node = parse("def a():\
+node = parse("def a(a):\
 \tprint(1)\
 ")
 print(dump(node))

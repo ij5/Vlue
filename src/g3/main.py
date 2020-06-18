@@ -1240,7 +1240,7 @@ def p_function_call_parameter(t):
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
-    FunctionDef(name=t[2], args=arguments(args=[arguments(args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=[Expr(value=Call(func=Name(id='print', ctx=Load()), args=[Num(n=1)], keywords=[]))], decorator_list=[], returns=None)
+    FunctionDef(name=t[2], args=arguments(args=[arguments(args=[t[4]], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=, decorator_list=[], returns=None)
 
 def p_function_parameter(t):
     '''
@@ -1248,7 +1248,8 @@ def p_function_parameter(t):
         | IDENTIFIER
         | empty
     '''
-
+    if(len(t)==2):
+        t[0] = arg(arg=t[1], annotation=None)
 
 ################### WHILE
 

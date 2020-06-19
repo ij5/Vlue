@@ -4,6 +4,8 @@ from astor import code_gen
 import codegen
 import decimal
 from llvmlite import ir, binding
+import time
+startTime = time.time()
 
 data = open('test.bl', 'r', encoding='UTF-8').read()
 
@@ -1464,12 +1466,19 @@ def parse(data):
     result = parser.parse(data, debug=0)
     print("============== AST TREE ==============")
     print(dump(result))
+    print()
     result = code_gen.to_source(result)
     print("============== PYTHON CODE ==============")
     print(result)
+    print()
     print("============== VARIABLES ==============")
     print(variable)
+    print()
+    print("============== RESULT ==============")
     exec(result)
+    print()
+    print("Task finished in " + str(time.time()-startTime) + "s")
+
 
 parse(data)
 

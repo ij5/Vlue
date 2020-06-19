@@ -1460,7 +1460,7 @@ def parse(data):
     global debug
     parser = yacc.yacc(start="program")
     result = parser.parse(data, debug=0)
-    print("============== AST TREE ==============")
+    print("============== ABSTRACT SYNTAX TREE ==============")
     print(dump(result))
     print()
     result = code_gen.to_source(result)

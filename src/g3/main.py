@@ -1,9 +1,6 @@
 import sys
 from ast import *
 from astor import code_gen
-import codegen
-import decimal
-from llvmlite import ir, binding
 import time
 startTime = time.time()
 

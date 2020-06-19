@@ -26,7 +26,6 @@ reserved = {
     'catch': 'CATCH',
     'global': 'GLOBAL',
     'class': 'CLASS',
-    'debug': 'DEBUG',
     'do': 'DO',
     'end': 'END',
     'pass': 'PASS',

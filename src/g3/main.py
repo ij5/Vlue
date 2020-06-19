@@ -1172,7 +1172,10 @@ def p_statement(t):
         | use SEMI
         | empty
     '''
-    t[0] = t[1]
+    if t[1]=="<use>":
+        pass
+    else:
+        t[0] = t[1]
 
 def p_statement_calculate(t):
     '''statement : expression SEMI'''

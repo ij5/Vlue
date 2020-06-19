@@ -190,7 +190,7 @@ for lib in libres:
     if os.path.isfile(realpath):
         f.append(open(realpath, 'r', encoding='UTF-8').read())
     else:
-        print("라이브러리 없음")
+        print("There are no library named "+lib)
 
 d = dict(locals(), **globals())
 for ff in f:
@@ -1169,6 +1169,7 @@ def p_statement(t):
         | variable_value_change SEMI
         | function_declaration
         | PASS SEMI
+        | use SEMI
         | empty
     '''
     t[0] = t[1]
@@ -1191,6 +1192,11 @@ def p_expression(t):
     else:
         t[0] = t[1]
 
+################### USE STATEMENT
+
+def p_use(t):
+    '''use : USE IDENTIFIER'''
+    t[0] = "<use>"
 
 ################### VARIABLE DECLARATION
 

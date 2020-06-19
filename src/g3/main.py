@@ -1462,17 +1462,14 @@ def parse(data):
     global debug
     parser = yacc.yacc(start="program")
     result = parser.parse(data, debug=0)
+    print("============== AST TREE ==============")
     print(dump(result))
     result = code_gen.to_source(result)
+    print("============== PYTHON CODE ==============")
     print(result)
+    print("============== VARIABLES ==============")
     print(variable)
     exec(result)
-    if(debug==True):
-        print()
-        print(result)
-        print(os.getcwd())
-    exec(code)
-
 
 parse(data)
 

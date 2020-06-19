@@ -1,0 +1,3 @@
+tokens.append("base")
+def t_base(t):
+    r'base'

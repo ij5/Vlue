@@ -54,7 +54,6 @@ tokens = [
     'RBB',
     'COMMA',
     'LIST',
-    'PYTHON',
     'DOT',
     'NOTEQUAL',
 ] + list(reserved.values())

@@ -1,5 +1,2 @@
 use debug;
-function prnt(a,b){
-print(a,b);
-}
-prnt(55555,66666);
+use base;

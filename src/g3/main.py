@@ -75,7 +75,7 @@ t_COMMA = r'\,'
 t_DOT = r'\.'
 t_LBB = r'\['
 t_RBB = r'\]'
-t_NOTEQUAL = r'\!'
+t_NOTEQUAL = r'\!'      #TODO: 조건문
 
 t_ignore = ' \t'
 

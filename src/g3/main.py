@@ -183,7 +183,7 @@ precedence = (
 dt = re.compile("use\s+[a-zA-Z0-9_]+;")
 libres = dt.findall(data)
 for lib in libres:
-    lib = lib[3:].strip()
+    lib = lib[3:-1].strip()
     libfile = lib + ".blib"
     realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib", libfile)
     if os.path.isfile(realpath):

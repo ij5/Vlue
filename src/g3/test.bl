@@ -1,5 +1,5 @@
-use debug;
-use base;
-a = 0;
-base();
-a;
+a = 999*999;
+b = 998*998;
+if(a>b){
+print(a,b);
+}

@@ -1347,13 +1347,13 @@ def p_string_calculate(t):
     string_calculate : string_calculate stringoperator STRING
         | STRING
     '''
-    pass
+    
 
 def p_stringOperator(t):
     '''
     stringoperator : PLUS
     '''
-    pass
+    t[0] = t[1]
 
 def p_calculate_binop(t):
     '''calculate : calculate PLUS calculate

@@ -1,8 +1,7 @@
 from ast import *
 import codegen
 
-node = parse("def a(a):\
-\tprint(1)\
+node = parse("1+1\
 ")
 print(dump(node))
 __ = [[1]]

@@ -1368,10 +1368,10 @@ def p_calculate_binop(t):
                   | calculate MINUS calculate
                   | calculate MUL calculate
                   | calculate DIV calculate'''
-    if t[2] == '+'  : t[0] = t[1] + t[3]
-    elif t[2] == '-': t[0] = t[1] - t[3]
-    elif t[2] == '*': t[0] = t[1] * t[3]
-    elif t[2] == '/': t[0] = t[1] / t[3]
+    if t[2] == '+': t[0] = BinOp(left=t[1], op=Add(), right=t[3])
+    if t[2] == '-': t[0] = BinOp(left=t[1], op=Sub(), right=t[3])
+    if t[2] == '*': t[0] = BinOp(left=t[1], op=Mult(), right=t[3])
+    if t[2] == '/': t[0] = BinOp(left=t[1], op=Div(), right=t[3])
 
 def p_calculate_uminus(t):
     'calculate : MINUS calculate %prec UMINUS'
@@ -1383,7 +1383,7 @@ def p_calculate_group(t):
 
 def p_calculate_number(t):
     'calculate : INT'
-    t[0] = t[1]
+    t[0] = Num(t[1])
 
 
 def p_calculate_identifier(t):

@@ -4,7 +4,8 @@ from astor import code_gen
 import time
 startTime = time.time()
 
-data = open('test.bl', 'r', encoding='UTF-8').read()
+firstfilename = input("Input file name: ")
+data = open(firstfilename, 'r', encoding='UTF-8').read()
 
 
 ############################

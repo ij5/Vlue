@@ -1347,7 +1347,10 @@ def p_string_calculate(t):
     string_calculate : string_calculate stringoperator STRING
         | STRING
     '''
-    
+    if len(t)==2:
+        t[0] = t[1][1:-1]
+    else:
+        t[0] = t[1] + t[3][1:-1]
 
 def p_stringOperator(t):
     '''

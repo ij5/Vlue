@@ -1,8 +1,0 @@
-use colon
-html:
-    head src="https://google.com":
-        title: Hello World
-    body:
-        div class="mainWrapper":
-            Hello World
-            button class="mainButton: Press me!

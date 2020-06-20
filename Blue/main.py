@@ -1,6 +1,6 @@
 import sys
 from ast import *
-from astor import code_gen
+from g3.astor import code_gen
 import time
 startTime = time.time()
 
@@ -12,7 +12,7 @@ data = open(firstfilename, 'r', encoding='UTF-8').read()
 #####LEXER
 ############################
 
-from ply import lex
+from g3.ply import lex
 
 reserved = {
     'if': 'IF',
@@ -147,7 +147,7 @@ def t_error(t):
 #####PARSER
 ###################
 
-from ply import yacc
+from g3.ply import yacc
 import re
 import os
 

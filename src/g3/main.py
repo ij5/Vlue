@@ -1244,7 +1244,7 @@ def p_function_call_parameter(t):
         if isinstance(t[3], str):
             t[1].append(Name(t[3]))
         else:
-            t[1].append(Num(t[3]))
+            t[1].append(t[3])
         t[0] = t[1]
     elif len(t)==2:
         if t[1]==None:
@@ -1253,7 +1253,7 @@ def p_function_call_parameter(t):
             if isinstance(t[1], str):
                 t[0] = [Name(t[1])]
             else:
-                t[0] = [Num(t[1])]
+                t[0] = [t[1]]
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
@@ -1323,13 +1323,13 @@ def p_compare_expression(t):
         t[0] = t[1]
     elif len(t)==4:
         if t[2]=='<':
-            t[0] = Compare(left=Num(t[1]), ops=[Lt()], comparators=[Num(t[3])])
+            t[0] = Compare(left=t[1], ops=[Lt()], comparators=[t[3]])
         elif t[2]=='>':
-            t[0] = Compare(left=Num(t[1]), ops=[Gt()], comparators=[Num(t[3])])
+            t[0] = Compare(left=t[1], ops=[Gt()], comparators=[t[3]])
         elif t[2]=='<=':
-            t[0] = Compare(left=Num(t[1]), ops=[LtE()], comparators=[Num(t[3])])
+            t[0] = Compare(left=t[1], ops=[LtE()], comparators=[t[3]])
         elif t[2]=='>=':
-            t[0] = Compare(left=Num(t[1]), ops=[GtE()], comparators=[Num(t[3])])
+            t[0] = Compare(left=[1], ops=[GtE()], comparators=[t[3]])
 
 def p_compare_operator(t):
     '''

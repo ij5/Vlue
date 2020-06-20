@@ -1,9 +1,12 @@
-var n = 0;
-first = 0;
-second = 1;
-var next;
-var c;
+count = 0;
+n1 = 0;
+n2 = 1;
+nterms = 5;
 
-n = 5;
-
-while(
+while(count < nterms){
+print(n1);
+nth = n1 + n2;
+n1 = n2;
+n2 = nth;
+count = count + 1;
+}

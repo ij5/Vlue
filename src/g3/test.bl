@@ -1,7 +1,7 @@
 count = 0;
 n1 = 0;
 n2 = 1;
-nterms = 5;
+nterms = 9;
 
 while(count < nterms){
 print(n1);

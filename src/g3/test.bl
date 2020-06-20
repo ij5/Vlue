@@ -1,5 +1,9 @@
-var n;
-var first = 0;
-var second = 1;
+var n = 0;
+first = 0;
+second = 1;
 var next;
 var c;
+
+n = 5;
+
+while(

@@ -1,10 +1,12 @@
 import sys
 from ast import *
-from .astor import code_gen
+from astor import code_gen
 import time
-startTime = time.time()
 
 firstfilename = input("Input file name: ")
+
+startTime = time.time()
+
 data = open(firstfilename, 'r', encoding='UTF-8').read()
 
 
@@ -12,7 +14,7 @@ data = open(firstfilename, 'r', encoding='UTF-8').read()
 #####LEXER
 ############################
 
-from Blue.ply import lex
+from ply import lex
 
 reserved = {
     'if': 'IF',
@@ -147,7 +149,7 @@ def t_error(t):
 #####PARSER
 ###################
 
-from blue.ply import yacc
+from ply import yacc
 import re
 import os
 

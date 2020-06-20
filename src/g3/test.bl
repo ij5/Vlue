@@ -1,5 +1,5 @@
-a = 999*999;
-b = 998*998;
-if(a>b){
-print("a");
-}
+var n;
+var first = 0;
+var second = 1;
+var next;
+var c;

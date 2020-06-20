@@ -1203,13 +1203,17 @@ def p_use(t):
 def p_variable_declaration(t):
     '''
     variable_declaration : VAR IDENTIFIER EQUAL expression
+        | VAR IDENTIFIER
     '''
-    if isinstance(t[4], Num):
-        t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
-        global variable
-        variable[t[2]] = t[4].n
+    if len(t)==5:
+        if isinstance(t[4], Num):
+            t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
+            global variable
+            variable[t[2]] = t[4].n
+        else:
+            t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
     else:
-        t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
+        if
 
 def p_variable_value_change(t):
     '''

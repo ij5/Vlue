@@ -1222,8 +1222,6 @@ def p_variable_value_change(t):
     '''
     if isinstance(t[3], Num):
         t[0] = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3])
-        global variable
-        variable[t[1]] = t[3].n
     else:
         t[0] = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3])
 
@@ -1265,17 +1263,14 @@ def p_function_parameter(t):
         | IDENTIFIER
         | empty
     '''
-    global variable
     if(len(t)==2):
         if(t[1]==None):
             t[0] = []
         else:
             t[0] = [arg(arg=t[1], annotation=None)]
-            variable[t[1]] = "<parameter>"
     elif(len(t)==4):
         t[1].append(arg(arg=t[3], annotation=None))
         t[0] = t[1]
-        variable[t[3]] = "<parameter>"
 
 ################### WHILE
 
@@ -1388,11 +1383,7 @@ def p_calculate_number(t):
 
 def p_calculate_identifier(t):
     'calculate : IDENTIFIER'
-    global variable
-    if(variable[t[1]]=="<parameter>"):
-        t[0] = t[1]
-    else:
-        t[0] = variable[t[1]]
+    t[0] = Name(t[1])
 
 
 # def p_calculate(t):

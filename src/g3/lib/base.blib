@@ -1,7 +1,0 @@
-tokens.append("BASE")
-def t_BASE(t):
-    r'base'
-
-def p_statement_base(t):
-    'statement : BASE'
-    t[0] = "<BASE>"

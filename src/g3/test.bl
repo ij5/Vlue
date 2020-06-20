@@ -1,3 +1,5 @@
 use debug;
 use base;
-base
+a = 0;
+base();
+a;

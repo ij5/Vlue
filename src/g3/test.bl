@@ -10,3 +10,13 @@ n1 = n2;
 n2 = nth;
 count = count + 1;
 }
+a = 1;
+a = 2;
+a = 3;
+if(a<10){
+print(1);
+}
+function hello(a){
+print(a);
+}
+hello(9999999);

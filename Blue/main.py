@@ -1135,6 +1135,11 @@ def DecodeEscape(s):
             res += c
     return res
 
+class BaseNode():
+    def __init__(self, VALUE=0, RETURN=0):
+        self.VALUE = VALUE
+        self.RETURN = RETURN
+
 def flatten(listdata):
     return listdata[0]
 

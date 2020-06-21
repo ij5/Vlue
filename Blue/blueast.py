@@ -1,5 +1,11 @@
 from ast import *
 import codegen
+class BaseNode():
+    def __init__(self, RETURN=0):
+        self.RETURN = RETURN
+
+n = BaseNode()
+n.RETURN = "a"
 
 node = parse("print('Hello World!'+'aa')\
 ")

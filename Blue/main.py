@@ -1351,9 +1351,9 @@ def p_string_calculate(t):
         | STRING
     '''
     if len(t)==2:
-        t[0] = t[1][1:-1]
+        t[0] = Str(s=t[1][1:-1])
     else:
-        t[0] = t[1] + t[3][1:-1]
+        t[0] = t[1] + BinOp(left=t[1], op=Add(), right=Str(s=t[3][1:-1]))
 
 def p_stringOperator(t):
     '''

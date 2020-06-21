@@ -1,7 +1,7 @@
 from ast import *
 import codegen
 
-node = parse("1+1\
+node = parse("print('Hello World!'+'aa')\
 ")
 print(dump(node))
 __ = [[1]]

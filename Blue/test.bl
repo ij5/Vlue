@@ -21,3 +21,4 @@ function hello(a){
 print(a);
 }
 hello(9999999);
+a + hello();

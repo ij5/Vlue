@@ -1237,8 +1237,8 @@ def p_function_call(t):
 
 def p_function_call_parameter(t):
     '''
-    function_call_parameter : function_call_parameter COMMA calculate
-        | calculate
+    function_call_parameter : function_call_parameter COMMA expression
+        | expression
         | empty
     '''
     if len(t)==4:
@@ -1353,7 +1353,7 @@ def p_string_calculate(t):
     if len(t)==2:
         t[0] = Str(s=t[1][1:-1])
     else:
-        t[0] = t[1] + BinOp(left=t[1], op=Add(), right=Str(s=t[3][1:-1]))
+        t[0] = BinOp(left=t[1], op=Add(), right=Str(s=t[3][1:-1]))
 
 def p_stringOperator(t):
     '''

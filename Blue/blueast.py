@@ -5,7 +5,8 @@ class BaseNode():
         self.RETURN = RETURN
 
 n = BaseNode()
-n.RETURN = "a"
+n.asd = "a"
+print(n.asd)
 
 node = parse("print('Hello World!'+'aa')\
 ")

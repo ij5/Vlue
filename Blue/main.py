@@ -1149,7 +1149,8 @@ def p_program(t):
     '''
     program : root
     '''
-    t[0] = Module(body=t[1])
+    t[0] = BaseNode()
+    t[0].VALUE = Module(body=t[1])
 
 ##################### ROOT
 

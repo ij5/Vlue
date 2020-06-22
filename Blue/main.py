@@ -1255,20 +1255,21 @@ def p_function_call_parameter(t):
         | expression
         | empty
     '''
+    t[0] = BaseNode()
     if len(t)==4:
-        if isinstance(t[3], str):
-            t[1].append(Name(t[3]))
+        if isinstance(t[3].VALUE, str):
+            t[1].VALUE.append(Name(t[3].VALUE))
         else:
-            t[1].append(t[3])
-        t[0] = t[1]
+            t[1].VALUE.append(t[3].VALUE)
+        t[0].VALUE = t[1].VALUE
     elif len(t)==2:
-        if t[1]==None:
-            t[0] = []
+        if t[1].VALUE==None:
+            t[0].VALUE = []
         else:
             if isinstance(t[1], str):
-                t[0] = [Name(t[1])]
+                t[0].VALUE = [Name(t[1].VALUE)]
             else:
-                t[0] = [t[1]]
+                t[0].VALUE = [t[1].VALUE]
 
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''

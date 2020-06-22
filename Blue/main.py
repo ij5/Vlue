@@ -1391,10 +1391,11 @@ def p_calculate_binop(t):
                   | calculate MINUS calculate
                   | calculate MUL calculate
                   | calculate DIV calculate'''
-    if t[2] == '+': t[0] = BinOp(left=t[1], op=Add(), right=t[3])
-    if t[2] == '-': t[0] = BinOp(left=t[1], op=Sub(), right=t[3])
-    if t[2] == '*': t[0] = BinOp(left=t[1], op=Mult(), right=t[3])
-    if t[2] == '/': t[0] = BinOp(left=t[1], op=Div(), right=t[3])
+    t[0] = BaseNode()
+    if t[2].VALUE == '+': t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=t[3].VALUE)
+    if t[2].VALUE == '-': t[0].VALUE = BinOp(left=t[1].VALUE, op=Sub(), right=t[3].VALUE)
+    if t[2].VALUE == '*': t[0].VALUE = BinOp(left=t[1].VALUE, op=Mult(), right=t[3].VALUE)
+    if t[2].VALUE == '/': t[0].VALUE = BinOp(left=t[1].VALUE, op=Div(), right=t[3].VALUE)
 
 def p_calculate_uminus(t):
     'calculate : MINUS calculate %prec UMINUS'

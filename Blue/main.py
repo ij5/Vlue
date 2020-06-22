@@ -1159,11 +1159,12 @@ def p_root(t):
     root : root statement
         | statement
     '''
+    t[0] = BaseNode()
     if len(t)==3:
-        t[1].append(t[2])
-        t[0] = t[1]
+        t[1].VALUE.append(t[2])
+        t[0].VALUE = t[1].VALUE
     elif len(t)==2:
-        t[0] = [t[1]]
+        t[0].VALUE = [t[1].VALUE]
 
 ################### STATEMENT
 

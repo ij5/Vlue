@@ -1199,6 +1199,7 @@ def p_expression(t):
         | compare_expression
         | function_call
     '''
+    t[0] = BaseNode()
     if isinstance(t[1].VALUE, int):
         t[0].VALUE = Num(n=t[1].VALUE)
     else:

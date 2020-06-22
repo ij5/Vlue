@@ -1209,6 +1209,7 @@ def p_expression(t):
 
 def p_use(t):
     '''use : USE IDENTIFIER'''
+    t[0] = BaseNode()
     t[0].VALUE = "<use>"
 
 ################### VARIABLE DECLARATION

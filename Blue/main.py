@@ -1298,7 +1298,8 @@ def p_while_statement(t):
     '''
     while_statement : WHILE LSB expression RSB LMB root RMB
     '''
-    t[0] = While(test=t[3], body=t[6], orelse=[])
+    t[0] = BaseNode()
+    t[0].VALUE = While(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
 ################## IF
 

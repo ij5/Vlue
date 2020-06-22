@@ -1373,10 +1373,11 @@ def p_string_calculate(t):
     string_calculate : string_calculate stringoperator STRING
         | STRING
     '''
+    t[0] = BaseNode()
     if len(t)==2:
-        t[0] = Str(s=t[1][1:-1])
+        t[0].VALUE = Str(s=t[1].VALUE[1:-1])
     else:
-        t[0] = BinOp(left=t[1], op=Add(), right=Str(s=t[3][1:-1]))
+        t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=Str(s=t[3].VALUE[1:-1]))
 
 def p_stringOperator(t):
     '''

@@ -1307,14 +1307,16 @@ def p_if_statement(t):
     '''
     if_statement : IF LSB expression RSB LMB root RMB
     '''
-    t[0] = If(test=t[3], body=t[6], orelse=[])
+    t[0] = BaseNode()
+    t[0].VALUE = If(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
 def p_if_statement_elif(t):
     '''
     if_statement : if_statement ELSE IF LSB expression RSB LMB root RMB
     '''
-    t[1].orelse.append(If(test=t[5], body=t[8], orelse=[]))
-    t[0] = t[1]
+    t[0] = BaseNode()
+    t[1].VALUE.orelse.append(If(test=t[5].VALUE, body=t[8].VALUE, orelse=[]))
+    t[0].VALUE = t[1].VALUE
     # else:
     #     t[1].orelse = [If(test=t[5], body=t[8])]
     #     t[0] = t[1]

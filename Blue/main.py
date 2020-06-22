@@ -1235,10 +1235,11 @@ def p_variable_value_change(t):
     '''
     variable_value_change : IDENTIFIER EQUAL expression
     '''
+    t[0] = BaseNode()
     if isinstance(t[3], Num):
-        t[0] = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3])
+        t[0] = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
     else:
-        t[0] = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3])
+        t[0] = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
 
 ################### FUNCTION
 

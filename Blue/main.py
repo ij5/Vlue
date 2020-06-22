@@ -1383,7 +1383,8 @@ def p_stringOperator(t):
     '''
     stringoperator : PLUS
     '''
-    t[0] = t[1]
+    t[0] = BaseNode()
+    t[0].VALUE = t[1].VALUE
 
 def p_calculate_binop(t):
     '''calculate : calculate PLUS calculate

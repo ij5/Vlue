@@ -1223,12 +1223,12 @@ def p_variable_declaration(t):
     global variable
     if len(t)==5:
         if isinstance(t[4].VALUE, Num):
-            t[0] = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
+            t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
             variable[t[2].VALUE] = t[4].VALUE.n
         else:
-            t[0] = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
+            t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
     else:
-        t[0] = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=Num(0))
+        t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=Num(0))
         variable[t[2].VALUE] = 0
 
 def p_variable_value_change(t):
@@ -1237,15 +1237,16 @@ def p_variable_value_change(t):
     '''
     t[0] = BaseNode()
     if isinstance(t[3], Num):
-        t[0] = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
+        t[0].VALUE = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
     else:
-        t[0] = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
+        t[0].VALUE = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
 
 ################### FUNCTION
 
 def p_function_call(t):
     '''function_call : IDENTIFIER LSB function_call_parameter RSB'''
-    t[0] = Call(func=Name(id=t[1], ctx=Load()), args=t[3], keywords=[])
+    t[0] = BaseNode()
+    t[0].VALUE = Call(func=Name(id=t[1].VALUE, ctx=Load()), args=t[3].VALUE, keywords=[])
     Module(body=[Expr(value=Call(func=Name(id='print', ctx=Load()), args=[Num(n=0)], keywords=[]))])
 
 def p_function_call_parameter(t):

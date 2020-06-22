@@ -1179,14 +1179,15 @@ def p_statement(t):
         | use SEMI
         | empty
     '''
+    t[0] = BaseNode()
     if t[1]=="<use>":
         pass
     else:
-        t[0] = t[1]
+        t[0].VALUE = t[1].VALUE
 
 def p_statement_calculate(t):
     '''statement : expression SEMI'''
-    t[0] = Expr(t[1])
+    t[0].VALUE = Expr(t[1].VALUE)
 
 ################## EXPRESSION
 
@@ -1197,16 +1198,16 @@ def p_expression(t):
         | compare_expression
         | function_call
     '''
-    if isinstance(t[1], int):
-        t[0] = Num(n=t[1])
+    if isinstance(t[1].VALUE, int):
+        t[0].VALUE = Num(n=t[1].VALUE)
     else:
-        t[0] = t[1]
+        t[0].VALUE = t[1].VALUE
 
 ################### USE STATEMENT
 
 def p_use(t):
     '''use : USE IDENTIFIER'''
-    t[0] = "<use>"
+    t[0].VALUE = "<use>"
 
 ################### VARIABLE DECLARATION
 

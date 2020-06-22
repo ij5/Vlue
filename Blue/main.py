@@ -1338,17 +1338,18 @@ def p_compare_expression(t):
     compare_expression : compare_expression compare_operator calculate
         | calculate
     '''
+    t[0] = BaseNode()
     if len(t)==2:
-        t[0] = t[1]
+        t[0].VALUE = t[1].VALUE
     elif len(t)==4:
-        if t[2]=='<':
-            t[0] = Compare(left=t[1], ops=[Lt()], comparators=[t[3]])
-        elif t[2]=='>':
-            t[0] = Compare(left=t[1], ops=[Gt()], comparators=[t[3]])
-        elif t[2]=='<=':
-            t[0] = Compare(left=t[1], ops=[LtE()], comparators=[t[3]])
-        elif t[2]=='>=':
-            t[0] = Compare(left=[1], ops=[GtE()], comparators=[t[3]])
+        if t[2].VALUE=='<':
+            t[0].VALUE = Compare(left=t[1].VALUE, ops=[Lt()], comparators=[t[3].VALUE])
+        elif t[2].VALUE=='>':
+            t[0].VALUE = Compare(left=t[1].VALUE, ops=[Gt()], comparators=[t[3].VALUE])
+        elif t[2].VALUE=='<=':
+            t[0].VALUE = Compare(left=t[1].VALUE, ops=[LtE()], comparators=[t[3].VALUE])
+        elif t[2].VALUE=='>=':
+            t[0] = Compare(left=t[1].VALUE, ops=[GtE()], comparators=[t[3].VALUE])
 
 def p_compare_operator(t):
     '''

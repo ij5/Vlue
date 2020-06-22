@@ -1323,12 +1323,13 @@ def p_if_statement_elif(t):
 
 def p_if_statement_else(t):
     '''if_statement : if_statement ELSE LMB root RMB'''
+    t[0] = BaseNode()
     try:
-        t[1].orelse[0].orelse.append(flatten(t[4]))
-        t[0] = t[1]
+        t[1].VALUE.orelse[0].orelse.append(flatten(t[4]))
+        t[0].VALUE = t[1].VALUE
     except(IndexError):
-        t[1].orelse.append(flatten(t[4]))
-        t[0] = t[1]
+        t[1].VALUE.orelse.append(flatten(t[4]))
+        t[0].VALUE = t[1].VALUE
 
 ################## COMPARE
 

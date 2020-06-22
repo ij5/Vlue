@@ -1360,10 +1360,11 @@ def p_compare_operator(t):
         | EQUAL EQUAL
         | NOTEQUAL EQUAL
     '''
+    t[0] = BaseNode()
     if len(t)==2:
-        t[0] = t[1]
+        t[0].VALUE = t[1].VALUE
     else:
-        t[0] = t[1] + t[2]
+        t[0].VALUE = t[1].VALUE + t[2].VALUE
 
 ################### CALCULATE
 

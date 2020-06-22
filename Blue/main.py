@@ -1282,14 +1282,15 @@ def p_function_parameter(t):
         | IDENTIFIER
         | empty
     '''
+    t[0] = BaseNode()
     if(len(t)==2):
-        if(t[1]==None):
-            t[0] = []
+        if(t[1].VALUE==None):
+            t[0].VALUE = []
         else:
-            t[0] = [arg(arg=t[1], annotation=None)]
+            t[0].VALUE = [arg(arg=t[1].VALUE, annotation=None)]
     elif(len(t)==4):
-        t[1].append(arg(arg=t[3], annotation=None))
-        t[0] = t[1]
+        t[1].VALUE.append(arg(arg=t[3].VALUE, annotation=None))
+        t[0].VALUE = t[1].VALUE
 
 ################### WHILE
 

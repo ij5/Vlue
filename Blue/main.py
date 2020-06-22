@@ -1399,20 +1399,20 @@ def p_calculate_binop(t):
 
 def p_calculate_uminus(t):
     'calculate : MINUS calculate %prec UMINUS'
-    t[0] = -t[2]
+    t[0].VALUE = -t[2].VALUE
 
 def p_calculate_group(t):
     'calculate : LSB calculate RSB'
-    t[0] = t[2]
+    t[0].VALUE = t[2].VALUE
 
 def p_calculate_number(t):
     'calculate : INT'
-    t[0] = Num(t[1])
+    t[0].VALUE = Num(t[1].VALUE)
 
 
 def p_calculate_identifier(t):
     'calculate : IDENTIFIER'
-    t[0] = Name(t[1])
+    t[0].VALUE = Name(t[1].VALUE)
 
 
 # def p_calculate(t):

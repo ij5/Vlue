@@ -1187,6 +1187,7 @@ def p_statement(t):
 
 def p_statement_calculate(t):
     '''statement : expression SEMI'''
+    t[0] = BaseNode()
     t[0].VALUE = Expr(t[1].VALUE)
 
 ################## EXPRESSION

@@ -1219,16 +1219,17 @@ def p_variable_declaration(t):
     variable_declaration : VAR IDENTIFIER EQUAL expression
         | VAR IDENTIFIER
     '''
+    t[0] = BaseNode()
     global variable
     if len(t)==5:
-        if isinstance(t[4], Num):
-            t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
-            variable[t[2]] = t[4].n
+        if isinstance(t[4].VALUE, Num):
+            t[0] = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
+            variable[t[2].VALUE] = t[4].VALUE.n
         else:
-            t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4])
+            t[0] = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
     else:
-        t[0] = Assign(targets=[Name(id=t[2], ctx=Store())], value=Num(0))
-        variable[t[2]] = 0
+        t[0] = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=Num(0))
+        variable[t[2].VALUE] = 0
 
 def p_variable_value_change(t):
     '''

@@ -1150,7 +1150,7 @@ def p_program(t):
     program : root
     '''
     t[0] = BaseNode()
-    t[0].VALUE = Module(body=t[1])
+    t[0].VALUE = Module(body=t[1].VALUE)
 
 ##################### ROOT
 
@@ -1237,16 +1237,16 @@ def p_variable_value_change(t):
     '''
     t[0] = BaseNode()
     if isinstance(t[3], Num):
-        t[0].VALUE = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
+        t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
     else:
-        t[0].VALUE = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
+        t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
 
 ################### FUNCTION
 
 def p_function_call(t):
     '''function_call : IDENTIFIER LSB function_call_parameter RSB'''
     t[0] = BaseNode()
-    t[0].VALUE = Call(func=Name(id=t[1].VALUE, ctx=Load()), args=t[3].VALUE, keywords=[])
+    t[0].VALUE = Call(func=Name(id=t[1], ctx=Load()), args=t[3].VALUE, keywords=[])
     Module(body=[Expr(value=Call(func=Name(id='print', ctx=Load()), args=[Num(n=0)], keywords=[]))])
 
 def p_function_call_parameter(t):
@@ -1274,7 +1274,7 @@ def p_function_call_parameter(t):
 def p_function_declaration(t):
     '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
     t[0] = BaseNode()
-    t[0].VALUE = FunctionDef(name=t[2].VALUE, args=arguments(args=[arguments(args=t[4].VALUE, vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=t[7].VALUE, decorator_list=[], returns=None)
+    t[0].VALUE = FunctionDef(name=t[2], args=arguments(args=[arguments(args=t[4].VALUE, vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=t[7].VALUE, decorator_list=[], returns=None)
 
 def p_function_parameter(t):
     '''
@@ -1284,12 +1284,12 @@ def p_function_parameter(t):
     '''
     t[0] = BaseNode()
     if(len(t)==2):
-        if(t[1].VALUE==None):
+        if(t[1]==None):
             t[0].VALUE = []
         else:
-            t[0].VALUE = [arg(arg=t[1].VALUE, annotation=None)]
+            t[0].VALUE = [arg(arg=t[1], annotation=None)]
     elif(len(t)==4):
-        t[1].VALUE.append(arg(arg=t[3].VALUE, annotation=None))
+        t[1].VALUE.append(arg(arg=t[3], annotation=None))
         t[0].VALUE = t[1].VALUE
 
 ################### WHILE
@@ -1362,9 +1362,9 @@ def p_compare_operator(t):
     '''
     t[0] = BaseNode()
     if len(t)==2:
-        t[0].VALUE = t[1].VALUE
+        t[0].VALUE = t[1]
     else:
-        t[0].VALUE = t[1].VALUE + t[2].VALUE
+        t[0].VALUE = t[1] + t[2]
 
 ################### CALCULATE
 
@@ -1375,16 +1375,16 @@ def p_string_calculate(t):
     '''
     t[0] = BaseNode()
     if len(t)==2:
-        t[0].VALUE = Str(s=t[1].VALUE[1:-1])
+        t[0].VALUE = Str(s=t[1][1:-1])
     else:
-        t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=Str(s=t[3].VALUE[1:-1]))
+        t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=Str(s=t[3][1:-1]))
 
 def p_stringOperator(t):
     '''
     stringoperator : PLUS
     '''
     t[0] = BaseNode()
-    t[0].VALUE = t[1].VALUE
+    t[0].VALUE = t[1]
 
 def p_calculate_binop(t):
     '''calculate : calculate PLUS calculate
@@ -1392,27 +1392,31 @@ def p_calculate_binop(t):
                   | calculate MUL calculate
                   | calculate DIV calculate'''
     t[0] = BaseNode()
-    if t[2].VALUE == '+': t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=t[3].VALUE)
-    if t[2].VALUE == '-': t[0].VALUE = BinOp(left=t[1].VALUE, op=Sub(), right=t[3].VALUE)
-    if t[2].VALUE == '*': t[0].VALUE = BinOp(left=t[1].VALUE, op=Mult(), right=t[3].VALUE)
-    if t[2].VALUE == '/': t[0].VALUE = BinOp(left=t[1].VALUE, op=Div(), right=t[3].VALUE)
+    if t[2] == '+': t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=t[3].VALUE)
+    if t[2] == '-': t[0].VALUE = BinOp(left=t[1].VALUE, op=Sub(), right=t[3].VALUE)
+    if t[2] == '*': t[0].VALUE = BinOp(left=t[1].VALUE, op=Mult(), right=t[3].VALUE)
+    if t[2] == '/': t[0].VALUE = BinOp(left=t[1].VALUE, op=Div(), right=t[3].VALUE)
 
 def p_calculate_uminus(t):
     'calculate : MINUS calculate %prec UMINUS'
-    t[0].VALUE = -t[2].VALUE
+    t[0] = BaseNode()
+    t[0].VALUE = -t[2]
 
 def p_calculate_group(t):
     'calculate : LSB calculate RSB'
-    t[0].VALUE = t[2].VALUE
+    t[0] = BaseNode()
+    t[0].VALUE = t[2]
 
 def p_calculate_number(t):
     'calculate : INT'
-    t[0].VALUE = Num(t[1].VALUE)
+    t[0] = BaseNode()
+    t[0].VALUE = Num(t[1])
 
 
 def p_calculate_identifier(t):
     'calculate : IDENTIFIER'
-    t[0].VALUE = Name(t[1].VALUE)
+    t[0] = BaseNode()
+    t[0].VALUE = Name(t[1])
 
 
 # def p_calculate(t):
@@ -1467,7 +1471,8 @@ def p_calculate_identifier(t):
 
 def p_empty(t):
     'empty : '
-    t[0] = None
+    t[0] = BaseNode()
+    t[0].VALUE = None
 
 # 토큰 에러 처리
 def p_error(t):
@@ -1488,9 +1493,9 @@ def parse(data):
     parser = yacc.yacc(start="program")
     result = parser.parse(data, debug=0)
     print("============== ABSTRACT SYNTAX TREE ==============")
-    print(dump(result))
+    print(dump(result.VALUE))
     print()
-    result = code_gen.to_source(result)
+    result = code_gen.to_source(result.VALUE)
     print("============== PYTHON CODE ==============")
     print(result)
     print()

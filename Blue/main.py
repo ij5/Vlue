@@ -1371,7 +1371,10 @@ def p_list(t):
     t[0].VALUE = List(elts=[Num(n=1), Num(n=2), Num(n=3)], ctx=Load())
 
 def p_list_params(t):
-    '''list_params : '''
+    '''list_params : list_p COMMA list_p'''
+
+def p_list_p(t):
+    '''list_p : '''
 
 ################### CALCULATE
 

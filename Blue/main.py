@@ -1365,7 +1365,7 @@ def p_compare_operator(t):
 ################### LIST
 
 def p_list(t):
-    '''list : LBB RBB'''
+    '''list : LBB list_params RBB'''
     List(elts=[Num(n=1), Num(n=2), Num(n=3)], ctx=Load())
     t[0] = BaseNode()
     t[0].VALUE = List(elts=[Num(n=1), Num(n=2), Num(n=3)], ctx=Load())

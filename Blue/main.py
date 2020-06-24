@@ -1193,6 +1193,7 @@ def p_expression(t):
         | string_calculate
         | compare_expression
         | function_call
+        | list
     '''
     t[0] = BaseNode()
     if isinstance(t[1].VALUE, int):

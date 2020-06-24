@@ -1376,7 +1376,11 @@ def p_list_params(t):
         | expression
     '''
     t[0] = BaseNode()
-    
+    if len(t)==2:
+        t[0].VALUE = [t[1].VALUE]
+    else:
+        t[1].VALUE.append(t[3].VALUE)
+
 
 
 ################### CALCULATE

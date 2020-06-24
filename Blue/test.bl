@@ -21,6 +21,7 @@ function hello(a){
 print(a);
 }
 hello(9999999);
-print("Hello WOrld!"+"asdasdasd");
+print("Hello WO\"\nrld!"+"asdasdasd");
 
 a = [1,2,3];
+print(a);

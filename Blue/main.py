@@ -1381,6 +1381,7 @@ def p_list_params(t):
     else:
         print(t[1].VALUE)
         t[1].VALUE.append(t[3].VALUE)
+        t[0] = t[1]
 
 
 

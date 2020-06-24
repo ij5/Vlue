@@ -56,7 +56,6 @@ tokens = [
     'LBB',
     'RBB',
     'COMMA',
-    'LIST',
     'DOT',
     'NOTEQUAL',
 ] + list(reserved.values())
@@ -103,10 +102,6 @@ def t_STRING(t):
 
 def t_PYTHON(t):
     r'`[^`]*`'
-    return t
-
-def t_LIST(t):
-    r'\[(((\d\.\d)|(\d)|("(?:\\"|.)*?"|\'(?:\\\'|.)*?\'))+(\,+((\d\.\d)|(\d)|("(?:\\"|.)*?"|\'(?:\\\'|.)*?\'))+)+)*\]'
     return t
 
 def t_IDENTIFIER(t):
@@ -1365,6 +1360,14 @@ def p_compare_operator(t):
         t[0].VALUE = t[1]
     else:
         t[0].VALUE = t[1] + t[2]
+
+################### LIST
+
+def p_list(t):
+    '''list : LBB RBB'''
+    List(elts=[Num(n=1), Num(n=2), Num(n=3)], ctx=Load())
+    t[0] = BaseNode()
+    
 
 ################### CALCULATE
 

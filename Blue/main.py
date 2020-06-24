@@ -1379,6 +1379,7 @@ def p_list_params(t):
     if len(t)==2:
         t[0].VALUE = [t[1].VALUE]
     else:
+        print(t[1].VALUE)
         t[1].VALUE.append(t[3].VALUE)
 
 

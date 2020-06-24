@@ -22,3 +22,5 @@ print(a);
 }
 hello(9999999);
 print("Hello WOrld!"+"asdasdasd");
+
+a = [1,2,3];

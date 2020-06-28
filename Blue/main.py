@@ -1239,16 +1239,16 @@ def p_el_variable_value_change(t):
 
 ################### FUNCTION
 
-def p_function_call(t):
-    '''function_call : IDENTIFIER LSB function_call_parameter RSB'''
+def p_el_function_call(t):
+    '''el_function_call : IDENTIFIER LSB el_function_call_parameter RSB'''
     t[0] = BaseNode()
     t[0].VALUE = Call(func=Name(id=t[1], ctx=Load()), args=t[3].VALUE, keywords=[])
     Module(body=[Expr(value=Call(func=Name(id='print', ctx=Load()), args=[Num(n=0)], keywords=[]))])
 
-def p_function_call_parameter(t):
+def p_el_function_call_parameter(t):
     '''
-    function_call_parameter : function_call_parameter COMMA expression
-        | expression
+    el_function_call_parameter : el_function_call_parameter COMMA el_expression
+        | el_expression
         | empty
     '''
     t[0] = BaseNode()
@@ -1267,14 +1267,14 @@ def p_function_call_parameter(t):
             else:
                 t[0].VALUE = [t[1].VALUE]
 
-def p_function_declaration(t):
-    '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
+def p_el_function_declaration(t):
+    '''el_function_declaration : FUNCTION IDENTIFIER LSB el_function_parameter RSB LMB el_root RMB'''
     t[0] = BaseNode()
     t[0].VALUE = FunctionDef(name=t[2], args=arguments(args=[arguments(args=t[4].VALUE, vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=t[7].VALUE, decorator_list=[], returns=None)
 
-def p_function_parameter(t):
+def p_el_function_parameter(t):
     '''
-    function_parameter : function_parameter COMMA IDENTIFIER
+    el_function_parameter : el_function_parameter COMMA IDENTIFIER
         | IDENTIFIER
         | empty
     '''

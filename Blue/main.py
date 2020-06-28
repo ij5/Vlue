@@ -1180,14 +1180,14 @@ def p_el_statement(t):
     else:
         t[0].VALUE = t[1].VALUE
 
-def p_statement_calculate(t):
-    '''statement : expression SEMI'''
+def p_el_statement_calculate(t):
+    '''el_statement : el_expression SEMI'''
     t[0] = BaseNode()
     t[0].VALUE = Expr(t[1].VALUE)
 
 ################## EXPRESSION
 
-def p_expression(t):
+def p_el_expression(t):
     '''
     expression : calculate
         | string_calculate
@@ -1204,7 +1204,7 @@ def p_expression(t):
 ################### USE STATEMENT
 
 def p_use(t):
-    '''use : USE IDENTIFIER'''
+    '''el_use : USE IDENTIFIER'''
     t[0] = BaseNode()
     t[0].VALUE = "<use>"
 

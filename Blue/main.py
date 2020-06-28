@@ -1329,10 +1329,10 @@ def p_el_if_statement_else(t):
 
 ################## COMPARE
 
-def p_compare_expression(t):
+def p_el_compare_expression(t):
     '''
-    compare_expression : compare_expression compare_operator calculate
-        | calculate
+    el_compare_expression : el_compare_expression el_compare_operator el_calculate
+        | el_calculate
     '''
     t[0] = BaseNode()
     if len(t)==2:
@@ -1347,9 +1347,9 @@ def p_compare_expression(t):
         elif t[2].VALUE=='>=':
             t[0] = Compare(left=t[1].VALUE, ops=[GtE()], comparators=[t[3].VALUE])
 
-def p_compare_operator(t):
+def p_el_compare_operator(t):
     '''
-    compare_operator : LB
+    el_compare_operator : LB
         | RB
         | LB EQUAL
         | RB EQUAL
@@ -1364,16 +1364,16 @@ def p_compare_operator(t):
 
 ################### LIST
 
-def p_list(t):
-    '''list : LBB list_params RBB'''
+def p_el_list(t):
+    '''el_list : LBB el_list_params RBB'''
     List(elts=[Num(n=1), Num(n=2), Num(n=3)], ctx=Load())
     t[0] = BaseNode()
     t[0].VALUE = List(elts=t[2].VALUE, ctx=Load())
 
-def p_list_params(t):
+def p_el_list_params(t):
     '''
-    list_params : list_params COMMA expression
-        | expression
+    el_list_params : el_list_params COMMA el_expression
+        | el_expression
     '''
     t[0] = BaseNode()
     if len(t)==2:
@@ -1387,9 +1387,9 @@ def p_list_params(t):
 
 ################### CALCULATE
 
-def p_string_calculate(t):
+def p_el_string_calculate(t):
     '''
-    string_calculate : string_calculate stringoperator STRING
+    el_string_calculate : el_string_calculate el_stringoperator STRING
         | STRING
     '''
     t[0] = BaseNode()
@@ -1398,42 +1398,42 @@ def p_string_calculate(t):
     else:
         t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=Str(s=t[3][1:-1]))
 
-def p_stringOperator(t):
+def p_el_stringOperator(t):
     '''
-    stringoperator : PLUS
+    el_stringoperator : PLUS
     '''
     t[0] = BaseNode()
     t[0].VALUE = t[1]
 
-def p_calculate_binop(t):
-    '''calculate : calculate PLUS calculate
-                  | calculate MINUS calculate
-                  | calculate MUL calculate
-                  | calculate DIV calculate'''
+def p_el_calculate_binop(t):
+    '''el_calculate : el_calculate PLUS el_calculate
+                  | el_calculate MINUS el_calculate
+                  | el_calculate MUL el_calculate
+                  | el_calculate DIV el_calculate'''
     t[0] = BaseNode()
     if t[2] == '+': t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=t[3].VALUE)
     if t[2] == '-': t[0].VALUE = BinOp(left=t[1].VALUE, op=Sub(), right=t[3].VALUE)
     if t[2] == '*': t[0].VALUE = BinOp(left=t[1].VALUE, op=Mult(), right=t[3].VALUE)
     if t[2] == '/': t[0].VALUE = BinOp(left=t[1].VALUE, op=Div(), right=t[3].VALUE)
 
-def p_calculate_uminus(t):
-    'calculate : MINUS calculate %prec UMINUS'
+def p_el_calculate_uminus(t):
+    'el_calculate : MINUS el_calculate %prec UMINUS'
     t[0] = BaseNode()
     t[0].VALUE = -t[2]
 
-def p_calculate_group(t):
-    'calculate : LSB calculate RSB'
+def p_el_calculate_group(t):
+    'el_calculate : LSB el_calculate RSB'
     t[0] = BaseNode()
     t[0].VALUE = t[2]
 
-def p_calculate_number(t):
-    'calculate : INT'
+def p_el_calculate_number(t):
+    'el_calculate : INT'
     t[0] = BaseNode()
     t[0].VALUE = Num(t[1])
 
 
-def p_calculate_identifier(t):
-    'calculate : IDENTIFIER'
+def p_el_calculate_identifier(t):
+    'el_calculate : IDENTIFIER'
     t[0] = BaseNode()
     t[0].VALUE = Name(t[1])
 

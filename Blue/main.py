@@ -1151,8 +1151,8 @@ def p_el_program(t):
 
 def p_el_root(t):
     '''
-    root : root statement
-        | statement
+    el_root : el_root el_statement
+        | el_statement
     '''
     t[0] = BaseNode()
     if len(t)==3:

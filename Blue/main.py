@@ -1163,15 +1163,15 @@ def p_el_root(t):
 
 ################### STATEMENT
 
-def p_statement(t):
+def p_el_statement(t):
     '''
-    statement : if_statement
-        | while_statement
-        | variable_declaration SEMI
-        | variable_value_change SEMI
-        | function_declaration
-        | PASS SEMI
-        | use SEMI
+    el_statement : el_if_statement
+        | el_while_statement
+        | el_variable_declaration SEMI
+        | el_variable_value_change SEMI
+        | el_function_declaration
+        | el_PASS SEMI
+        | el_use SEMI
         | empty
     '''
     t[0] = BaseNode()

@@ -1140,16 +1140,16 @@ def flatten(listdata):
 
 ##################### PROGRAM
 
-def p_program(t):
+def p_el_program(t):
     '''
-    program : root
+    el_program : el_root
     '''
     t[0] = BaseNode()
     t[0].VALUE = Module(body=t[1].VALUE)
 
 ##################### ROOT
 
-def p_root(t):
+def p_el_root(t):
     '''
     root : root statement
         | statement

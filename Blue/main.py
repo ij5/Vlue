@@ -1189,11 +1189,11 @@ def p_el_statement_calculate(t):
 
 def p_el_expression(t):
     '''
-    expression : calculate
-        | string_calculate
-        | compare_expression
-        | function_call
-        | list
+    el_expression : el_calculate
+        | el_string_calculate
+        | el_compare_expression
+        | el_function_call
+        | el_list
     '''
     t[0] = BaseNode()
     if isinstance(t[1].VALUE, int):
@@ -1203,16 +1203,16 @@ def p_el_expression(t):
 
 ################### USE STATEMENT
 
-def p_use(t):
+def p_el_use(t):
     '''el_use : USE IDENTIFIER'''
     t[0] = BaseNode()
     t[0].VALUE = "<use>"
 
 ################### VARIABLE DECLARATION
 
-def p_variable_declaration(t):
+def p_el_variable_declaration(t):
     '''
-    variable_declaration : VAR IDENTIFIER EQUAL expression
+    el_variable_declaration : VAR IDENTIFIER EQUAL el_expression
         | VAR IDENTIFIER
     '''
     t[0] = BaseNode()

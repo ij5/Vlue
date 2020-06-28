@@ -1227,9 +1227,9 @@ def p_el_variable_declaration(t):
         t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=Num(0))
         variable[t[2].VALUE] = 0
 
-def p_variable_value_change(t):
+def p_el_variable_value_change(t):
     '''
-    variable_value_change : IDENTIFIER EQUAL expression
+    el_variable_value_change : IDENTIFIER EQUAL el_expression
     '''
     t[0] = BaseNode()
     if isinstance(t[3], Num):

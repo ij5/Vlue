@@ -1290,25 +1290,25 @@ def p_el_function_parameter(t):
 
 ################### WHILE
 
-def p_while_statement(t):
+def p_el_while_statement(t):
     '''
-    while_statement : WHILE LSB expression RSB LMB root RMB
+    el_while_statement : WHILE LSB el_expression RSB LMB el_root RMB
     '''
     t[0] = BaseNode()
     t[0].VALUE = While(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
 ################## IF
 
-def p_if_statement(t):
+def p_el_if_statement(t):
     '''
-    if_statement : IF LSB expression RSB LMB root RMB
+    el_if_statement : IF LSB el_expression RSB LMB el_root RMB
     '''
     t[0] = BaseNode()
     t[0].VALUE = If(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
-def p_if_statement_elif(t):
+def p_el_if_statement_elif(t):
     '''
-    if_statement : if_statement ELSE IF LSB expression RSB LMB root RMB
+    el_if_statement : el_if_statement ELSE IF LSB el_expression RSB LMB el_root RMB
     '''
     t[0] = BaseNode()
     t[1].VALUE.orelse.append(If(test=t[5].VALUE, body=t[8].VALUE, orelse=[]))
@@ -1317,8 +1317,8 @@ def p_if_statement_elif(t):
     #     t[1].orelse = [If(test=t[5], body=t[8])]
     #     t[0] = t[1]
 
-def p_if_statement_else(t):
-    '''if_statement : if_statement ELSE LMB root RMB'''
+def p_el_if_statement_else(t):
+    '''el_if_statement : el_if_statement ELSE LMB el_root RMB'''
     t[0] = BaseNode()
     try:
         t[1].VALUE.orelse[0].orelse.append(flatten(t[4]))

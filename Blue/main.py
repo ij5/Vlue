@@ -1170,7 +1170,7 @@ def p_el_statement(t):
         | el_variable_declaration SEMI
         | el_variable_value_change SEMI
         | el_function_declaration
-        | el_PASS SEMI
+        | PASS SEMI
         | el_use SEMI
         | empty
     '''
@@ -1509,7 +1509,7 @@ def error(s):
 lexer = lex.lex()
 def parse(data):
     global debug
-    parser = yacc.yacc(start="program")
+    parser = yacc.yacc(start="el_program")
     result = parser.parse(data, debug=0)
     print("============== ABSTRACT SYNTAX TREE ==============")
     print(dump(result.VALUE))

@@ -7,6 +7,12 @@ firstfilename = input("Input file name: ")
 
 startTime = time.time()
 
+IS_ADVANCED = False
+
+if(firstfilename[-3:]=='bla'):
+    IS_ADVANCED = True
+    print(IS_ADVANCED)
+
 data = open(firstfilename, 'r', encoding='UTF-8').read()
 
 
@@ -79,11 +85,21 @@ t_LBB = r'\['
 t_RBB = r'\]'
 t_NOTEQUAL = r'\!'      #TODO: 조건문
 
-t_ignore = ' \t'
+t_ignore = ' '
+
+def t_TAB(t):
+    r'\t'
+    if(IS_ADVANCED==True):
+        return t
+    else:
+        pass
 
 def t_VAR(t):
     r'var'
-    return t
+    if(IS_ADVANCED==True):
+        pass
+    else:
+        return t
 
 def t_FLOAT(t):
     r'\d+\.\d+'
@@ -1517,7 +1533,10 @@ def error(s):
 lexer = lex.lex()
 def parse(data):
     global debug
-    parser = yacc.yacc(start="el_program")
+    if(IS_ADVANCED==True):
+        parser = yacc.yacc(start="ad_program")
+    else:
+        parser = yacc.yacc(start="el_program")
     result = parser.parse(data, debug=0)
     print("============== ABSTRACT SYNTAX TREE ==============")
     print(dump(result.VALUE))

@@ -120,7 +120,7 @@ class Lexer(object):
     def t_IDENTIFIER(self, t):
         r'[a-zA-Z_]+[a-zA-Z_0-9]*'
         #if 등 정의
-        t.type = ElementaryLexer.reserved.get(t.value, t.type)
+        t.type = Lexer.reserved.get(t.value, t.type)
         return t
 
     def t_NEWLINE(self, t):
@@ -1156,8 +1156,8 @@ def flatten(listdata):
 
 
 class ElementaryParser(object):
-    tokens = ElementaryLexer.tokens
-    reserved = ElementaryLexer.reserved
+    tokens = Lexer.tokens
+    reserved = Lexer.reserved
     precedence = precedence
 
     ##################### PROGRAM
@@ -1474,13 +1474,14 @@ class ElementaryParser(object):
             print("Error on EOF")
 
     def __init__(self):
-        self.lexer = ElementaryLexer()
+        self.lexer = Lexer()
         self.parser = yacc.yacc(module=self)
 
 
 class AdvancedParser(object):
-    def p_el_calculate_identifier(self, t):
-        'el_calculate : IDENTIFIER'
+    def __init__(self):
+        self.lexer = Lexer()
+        self.parser = yacc.yacc(module=self)
 
 
 

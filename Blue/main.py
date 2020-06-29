@@ -22,7 +22,7 @@ data = open(firstfilename, 'r', encoding='UTF-8').read()
 
 from ply import lex
 
-class ElLexer(object):
+class ElementaryLexer(object):
     reserved = {
         'if': 'IF',
         'else': 'ELSE',
@@ -88,52 +88,48 @@ class ElLexer(object):
 
     t_ignore = ' '
 
-    def t_TAB(t):
+    def t_TAB(self, t):
         r'\t'
         if(IS_ADVANCED==True):
             return t
         else:
             pass
 
-    def t_VAR(t):
+    def t_VAR(self, t):
         r'var'
         if(IS_ADVANCED==True):
             pass
         else:
             return t
 
-    def t_FLOAT(t):
+    def t_FLOAT(self, t):
         r'\d+\.\d+'
         t.value = float(t.value)
         return t
 
-    def t_INT(t):
+    def t_INT(self, t):
         r'\d+'
         t.value = int(t.value)
         return t
 
-    def t_STRING(t):
+    def t_STRING(self, t):
         r'("(?:\\"|.)*?"|\'(?:\\\'|.)*?\')'
         t.value = bytes(t.value, "utf-8").decode("unicode_escape")
         return t
 
-    def t_PYTHON(t):
-        r'`[^`]*`'
-        return t
-
-    def t_IDENTIFIER(t):
+    def t_IDENTIFIER(self, t):
         r'[a-zA-Z_]+[a-zA-Z_0-9]*'
         #if 등 정의
-        t.type = self.reserved.get(t.value, t.type)
+        t.type = ElementaryLexer.reserved.get(t.value, t.type)
         return t
 
-    def t_NEWLINE(t):
+    def t_NEWLINE(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
         t.lexer.linepos = 0
         pass
 
-    def t_error(t):
+    def t_error(self, t):
         print("error on token %s" % t.value)
         t.lexer.skip(1)
 
@@ -1158,305 +1154,327 @@ class BaseNode():
 def flatten(listdata):
     return listdata[0]
 
-##################### PROGRAM
+class ElementaryParser(object):
+    tokens = ElementaryLexer.tokens
+    reserved = ElementaryLexer.reserved
+    precedence = precedence
 
-def p_el_program(t):
-    '''
-    el_program : el_root
-    '''
-    t[0] = BaseNode()
-    t[0].VALUE = Module(body=t[1].VALUE)
+    ##################### PROGRAM
 
-##################### ROOT
+    def p_el_program(self, t):
+        '''
+        el_program : el_root
+        '''
+        t[0] = BaseNode()
+        t[0].VALUE = Module(body=t[1].VALUE)
 
-def p_el_root(t):
-    '''
-    el_root : el_root el_statement
-        | el_statement
-    '''
-    t[0] = BaseNode()
-    if len(t)==3:
-        t[1].VALUE.append(t[2].VALUE)
-        t[0].VALUE = t[1].VALUE
-    elif len(t)==2:
-        t[0].VALUE = [t[1].VALUE]
+    ##################### ROOT
 
-################### STATEMENT
+    def p_el_root(self, t):
+        '''
+        el_root : el_root el_statement
+            | el_statement
+        '''
+        t[0] = BaseNode()
+        if len(t)==3:
+            t[1].VALUE.append(t[2].VALUE)
+            t[0].VALUE = t[1].VALUE
+        elif len(t)==2:
+            t[0].VALUE = [t[1].VALUE]
 
-def p_el_statement(t):
-    '''
-    el_statement : el_if_statement
-        | el_while_statement
-        | el_variable_declaration SEMI
-        | el_variable_value_change SEMI
-        | el_function_declaration
-        | PASS SEMI
-        | el_use SEMI
-        | empty
-    '''
-    t[0] = BaseNode()
-    if t[1]=="<use>":
-        pass
-    else:
-        t[0].VALUE = t[1].VALUE
+    ################### STATEMENT
 
-def p_el_statement_calculate(t):
-    '''el_statement : el_expression SEMI'''
-    t[0] = BaseNode()
-    t[0].VALUE = Expr(t[1].VALUE)
-
-################## EXPRESSION
-
-def p_el_expression(t):
-    '''
-    el_expression : el_calculate
-        | el_string_calculate
-        | el_compare_expression
-        | el_function_call
-        | el_list
-    '''
-    t[0] = BaseNode()
-    if isinstance(t[1].VALUE, int):
-        t[0].VALUE = Num(n=t[1].VALUE)
-    else:
-        t[0].VALUE = t[1].VALUE
-
-################### USE STATEMENT
-
-def p_el_use(t):
-    '''el_use : USE IDENTIFIER'''
-    t[0] = BaseNode()
-    t[0].VALUE = "<use>"
-
-################### VARIABLE DECLARATION
-
-def p_el_variable_declaration(t):
-    '''
-    el_variable_declaration : VAR IDENTIFIER EQUAL el_expression
-        | VAR IDENTIFIER
-    '''
-    t[0] = BaseNode()
-    global variable
-    if len(t)==5:
-        if isinstance(t[4].VALUE, Num):
-            t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
-            variable[t[2].VALUE] = t[4].VALUE.n
+    def p_el_statement(self, t):
+        '''
+        el_statement : el_if_statement
+            | el_while_statement
+            | el_variable_declaration SEMI
+            | el_variable_value_change SEMI
+            | el_function_declaration
+            | PASS SEMI
+            | el_use SEMI
+            | empty
+        '''
+        t[0] = BaseNode()
+        if t[1]=="<use>":
+            pass
         else:
-            t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
-    else:
-        t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=Num(0))
-        variable[t[2].VALUE] = 0
+            t[0].VALUE = t[1].VALUE
 
-def p_el_variable_value_change(t):
-    '''
-    el_variable_value_change : IDENTIFIER EQUAL el_expression
-    '''
-    t[0] = BaseNode()
-    if isinstance(t[3], Num):
-        t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
-    else:
-        t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
+    def p_el_statement_calculate(self, t):
+        '''el_statement : el_expression SEMI'''
+        t[0] = BaseNode()
+        t[0].VALUE = Expr(t[1].VALUE)
 
-################### FUNCTION
+    ################## EXPRESSION
 
-def p_el_function_call(t):
-    '''el_function_call : IDENTIFIER LSB el_function_call_parameter RSB'''
-    t[0] = BaseNode()
-    t[0].VALUE = Call(func=Name(id=t[1], ctx=Load()), args=t[3].VALUE, keywords=[])
-    Module(body=[Expr(value=Call(func=Name(id='print', ctx=Load()), args=[Num(n=0)], keywords=[]))])
-
-def p_el_function_call_parameter(t):
-    '''
-    el_function_call_parameter : el_function_call_parameter COMMA el_expression
-        | el_expression
-        | empty
-    '''
-    t[0] = BaseNode()
-    if len(t)==4:
-        if isinstance(t[3].VALUE, str):
-            t[1].VALUE.append(Name(t[3].VALUE))
+    def p_el_expression(self, t):
+        '''
+        el_expression : el_calculate
+            | el_string_calculate
+            | el_compare_expression
+            | el_function_call
+            | el_list
+        '''
+        t[0] = BaseNode()
+        if isinstance(t[1].VALUE, int):
+            t[0].VALUE = Num(n=t[1].VALUE)
         else:
-            t[1].VALUE.append(t[3].VALUE)
-        t[0].VALUE = t[1].VALUE
-    elif len(t)==2:
-        if t[1].VALUE==None:
-            t[0].VALUE = []
-        else:
-            if isinstance(t[1], str):
-                t[0].VALUE = [Name(t[1].VALUE)]
+            t[0].VALUE = t[1].VALUE
+
+    ################### USE STATEMENT
+
+    def p_el_use(self, t):
+        '''el_use : USE IDENTIFIER'''
+        t[0] = BaseNode()
+        t[0].VALUE = "<use>"
+
+    ################### VARIABLE DECLARATION
+
+    def p_el_variable_declaration(self, t):
+        '''
+        el_variable_declaration : VAR IDENTIFIER EQUAL el_expression
+            | VAR IDENTIFIER
+        '''
+        t[0] = BaseNode()
+        global variable
+        if len(t)==5:
+            if isinstance(t[4].VALUE, Num):
+                t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
+                variable[t[2].VALUE] = t[4].VALUE.n
             else:
-                t[0].VALUE = [t[1].VALUE]
-
-def p_el_function_declaration(t):
-    '''el_function_declaration : FUNCTION IDENTIFIER LSB el_function_parameter RSB LMB el_root RMB'''
-    t[0] = BaseNode()
-    t[0].VALUE = FunctionDef(name=t[2], args=arguments(args=[arguments(args=t[4].VALUE, vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=t[7].VALUE, decorator_list=[], returns=None)
-
-def p_el_function_parameter(t):
-    '''
-    el_function_parameter : el_function_parameter COMMA IDENTIFIER
-        | IDENTIFIER
-        | empty
-    '''
-    t[0] = BaseNode()
-    if(len(t)==2):
-        if(t[1]==None):
-            t[0].VALUE = []
+                t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
         else:
-            t[0].VALUE = [arg(arg=t[1], annotation=None)]
-    elif(len(t)==4):
-        t[1].VALUE.append(arg(arg=t[3], annotation=None))
+            t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=Num(0))
+            variable[t[2].VALUE] = 0
+
+    def p_el_variable_value_change(self, t):
+        '''
+        el_variable_value_change : IDENTIFIER EQUAL el_expression
+        '''
+        t[0] = BaseNode()
+        if isinstance(t[3], Num):
+            t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
+        else:
+            t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
+
+    ################### FUNCTION
+
+    def p_el_function_call(self, t):
+        '''el_function_call : IDENTIFIER LSB el_function_call_parameter RSB'''
+        t[0] = BaseNode()
+        t[0].VALUE = Call(func=Name(id=t[1], ctx=Load()), args=t[3].VALUE, keywords=[])
+        Module(body=[Expr(value=Call(func=Name(id='print', ctx=Load()), args=[Num(n=0)], keywords=[]))])
+
+    def p_el_function_call_parameter(self, t):
+        '''
+        el_function_call_parameter : el_function_call_parameter COMMA el_expression
+            | el_expression
+            | empty
+        '''
+        t[0] = BaseNode()
+        if len(t)==4:
+            if isinstance(t[3].VALUE, str):
+                t[1].VALUE.append(Name(t[3].VALUE))
+            else:
+                t[1].VALUE.append(t[3].VALUE)
+            t[0].VALUE = t[1].VALUE
+        elif len(t)==2:
+            if t[1].VALUE==None:
+                t[0].VALUE = []
+            else:
+                if isinstance(t[1], str):
+                    t[0].VALUE = [Name(t[1].VALUE)]
+                else:
+                    t[0].VALUE = [t[1].VALUE]
+
+    def p_el_function_declaration(self, t):
+        '''el_function_declaration : FUNCTION IDENTIFIER LSB el_function_parameter RSB LMB el_root RMB'''
+        t[0] = BaseNode()
+        t[0].VALUE = FunctionDef(name=t[2], args=arguments(args=[arguments(args=t[4].VALUE, vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=t[7].VALUE, decorator_list=[], returns=None)
+
+    def p_el_function_parameter(self, t):
+        '''
+        el_function_parameter : el_function_parameter COMMA IDENTIFIER
+            | IDENTIFIER
+            | empty
+        '''
+        t[0] = BaseNode()
+        if(len(t)==2):
+            if(t[1]==None):
+                t[0].VALUE = []
+            else:
+                t[0].VALUE = [arg(arg=t[1], annotation=None)]
+        elif(len(t)==4):
+            t[1].VALUE.append(arg(arg=t[3], annotation=None))
+            t[0].VALUE = t[1].VALUE
+
+    ################### WHILE
+
+    def p_el_while_statement(self, t):
+        '''
+        el_while_statement : WHILE LSB el_expression RSB LMB el_root RMB
+        '''
+        t[0] = BaseNode()
+        t[0].VALUE = While(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
+
+    ################## IF
+
+    def p_el_if_statement(self, t):
+        '''
+        el_if_statement : IF LSB el_expression RSB LMB el_root RMB
+        '''
+        t[0] = BaseNode()
+        t[0].VALUE = If(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
+
+    def p_el_if_statement_elif(self, t):
+        '''
+        el_if_statement : el_if_statement ELSE IF LSB el_expression RSB LMB el_root RMB
+        '''
+        t[0] = BaseNode()
+        t[1].VALUE.orelse.append(If(test=t[5].VALUE, body=t[8].VALUE, orelse=[]))
         t[0].VALUE = t[1].VALUE
+        # else:
+        #     t[1].orelse = [If(test=t[5], body=t[8])]
+        #     t[0] = t[1]
 
-################### WHILE
+    def p_el_if_statement_else(self, t):
+        '''el_if_statement : el_if_statement ELSE LMB el_root RMB'''
+        t[0] = BaseNode()
+        try:
+            t[1].VALUE.orelse[0].orelse.append(flatten(t[4]))
+            t[0].VALUE = t[1].VALUE
+        except(IndexError):
+            t[1].VALUE.orelse.append(flatten(t[4]))
+            t[0].VALUE = t[1].VALUE
 
-def p_el_while_statement(t):
-    '''
-    el_while_statement : WHILE LSB el_expression RSB LMB el_root RMB
-    '''
-    t[0] = BaseNode()
-    t[0].VALUE = While(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
+    ################## COMPARE
 
-################## IF
+    def p_el_compare_expression(self, t):
+        '''
+        el_compare_expression : el_compare_expression el_compare_operator el_calculate
+            | el_calculate
+        '''
+        t[0] = BaseNode()
+        if len(t)==2:
+            t[0].VALUE = t[1].VALUE
+        elif len(t)==4:
+            if t[2].VALUE=='<':
+                t[0].VALUE = Compare(left=t[1].VALUE, ops=[Lt()], comparators=[t[3].VALUE])
+            elif t[2].VALUE=='>':
+                t[0].VALUE = Compare(left=t[1].VALUE, ops=[Gt()], comparators=[t[3].VALUE])
+            elif t[2].VALUE=='<=':
+                t[0].VALUE = Compare(left=t[1].VALUE, ops=[LtE()], comparators=[t[3].VALUE])
+            elif t[2].VALUE=='>=':
+                t[0] = Compare(left=t[1].VALUE, ops=[GtE()], comparators=[t[3].VALUE])
 
-def p_el_if_statement(t):
-    '''
-    el_if_statement : IF LSB el_expression RSB LMB el_root RMB
-    '''
-    t[0] = BaseNode()
-    t[0].VALUE = If(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
+    def p_el_compare_operator(self, t):
+        '''
+        el_compare_operator : LB
+            | RB
+            | LB EQUAL
+            | RB EQUAL
+            | EQUAL EQUAL
+            | NOTEQUAL EQUAL
+        '''
+        t[0] = BaseNode()
+        if len(t)==2:
+            t[0].VALUE = t[1]
+        else:
+            t[0].VALUE = t[1] + t[2]
 
-def p_el_if_statement_elif(t):
-    '''
-    el_if_statement : el_if_statement ELSE IF LSB el_expression RSB LMB el_root RMB
-    '''
-    t[0] = BaseNode()
-    t[1].VALUE.orelse.append(If(test=t[5].VALUE, body=t[8].VALUE, orelse=[]))
-    t[0].VALUE = t[1].VALUE
-    # else:
-    #     t[1].orelse = [If(test=t[5], body=t[8])]
-    #     t[0] = t[1]
+    ################### LIST
 
-def p_el_if_statement_else(t):
-    '''el_if_statement : el_if_statement ELSE LMB el_root RMB'''
-    t[0] = BaseNode()
-    try:
-        t[1].VALUE.orelse[0].orelse.append(flatten(t[4]))
-        t[0].VALUE = t[1].VALUE
-    except(IndexError):
-        t[1].VALUE.orelse.append(flatten(t[4]))
-        t[0].VALUE = t[1].VALUE
+    def p_el_list(self, t):
+        '''el_list : LBB el_list_params RBB'''
+        List(elts=[Num(n=1), Num(n=2), Num(n=3)], ctx=Load())
+        t[0] = BaseNode()
+        t[0].VALUE = List(elts=t[2].VALUE, ctx=Load())
 
-################## COMPARE
+    def p_el_list_params(self, t):
+        '''
+        el_list_params : el_list_params COMMA el_expression
+            | el_expression
+        '''
+        t[0] = BaseNode()
+        if len(t)==2:
+            t[0].VALUE = [t[1].VALUE]
+        else:
+            print(t[1].VALUE)
+            t[1].VALUE.append(t[3].VALUE)
+            t[0] = t[1]
 
-def p_el_compare_expression(t):
-    '''
-    el_compare_expression : el_compare_expression el_compare_operator el_calculate
-        | el_calculate
-    '''
-    t[0] = BaseNode()
-    if len(t)==2:
-        t[0].VALUE = t[1].VALUE
-    elif len(t)==4:
-        if t[2].VALUE=='<':
-            t[0].VALUE = Compare(left=t[1].VALUE, ops=[Lt()], comparators=[t[3].VALUE])
-        elif t[2].VALUE=='>':
-            t[0].VALUE = Compare(left=t[1].VALUE, ops=[Gt()], comparators=[t[3].VALUE])
-        elif t[2].VALUE=='<=':
-            t[0].VALUE = Compare(left=t[1].VALUE, ops=[LtE()], comparators=[t[3].VALUE])
-        elif t[2].VALUE=='>=':
-            t[0] = Compare(left=t[1].VALUE, ops=[GtE()], comparators=[t[3].VALUE])
 
-def p_el_compare_operator(t):
-    '''
-    el_compare_operator : LB
-        | RB
-        | LB EQUAL
-        | RB EQUAL
-        | EQUAL EQUAL
-        | NOTEQUAL EQUAL
-    '''
-    t[0] = BaseNode()
-    if len(t)==2:
+
+    ################### CALCULATE
+
+    def p_el_string_calculate(self, t):
+        '''
+        el_string_calculate : el_string_calculate el_stringoperator STRING
+            | STRING
+        '''
+        t[0] = BaseNode()
+        if len(t)==2:
+            t[0].VALUE = Str(s=t[1][1:-1])
+        else:
+            t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=Str(s=t[3][1:-1]))
+
+    def p_el_stringOperator(self, t):
+        '''
+        el_stringoperator : PLUS
+        '''
+        t[0] = BaseNode()
         t[0].VALUE = t[1]
-    else:
-        t[0].VALUE = t[1] + t[2]
 
-################### LIST
+    def p_el_calculate_binop(self, t):
+        '''el_calculate : el_calculate PLUS el_calculate
+                      | el_calculate MINUS el_calculate
+                      | el_calculate MUL el_calculate
+                      | el_calculate DIV el_calculate'''
+        t[0] = BaseNode()
+        if t[2] == '+': t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=t[3].VALUE)
+        if t[2] == '-': t[0].VALUE = BinOp(left=t[1].VALUE, op=Sub(), right=t[3].VALUE)
+        if t[2] == '*': t[0].VALUE = BinOp(left=t[1].VALUE, op=Mult(), right=t[3].VALUE)
+        if t[2] == '/': t[0].VALUE = BinOp(left=t[1].VALUE, op=Div(), right=t[3].VALUE)
 
-def p_el_list(t):
-    '''el_list : LBB el_list_params RBB'''
-    List(elts=[Num(n=1), Num(n=2), Num(n=3)], ctx=Load())
-    t[0] = BaseNode()
-    t[0].VALUE = List(elts=t[2].VALUE, ctx=Load())
+    def p_el_calculate_uminus(self, t):
+        'el_calculate : MINUS el_calculate %prec UMINUS'
+        t[0] = BaseNode()
+        t[0].VALUE = -t[2]
 
-def p_el_list_params(t):
-    '''
-    el_list_params : el_list_params COMMA el_expression
-        | el_expression
-    '''
-    t[0] = BaseNode()
-    if len(t)==2:
-        t[0].VALUE = [t[1].VALUE]
-    else:
-        print(t[1].VALUE)
-        t[1].VALUE.append(t[3].VALUE)
-        t[0] = t[1]
+    def p_el_calculate_group(self, t):
+        'el_calculate : LSB el_calculate RSB'
+        t[0] = BaseNode()
+        t[0].VALUE = t[2]
 
-
-
-################### CALCULATE
-
-def p_el_string_calculate(t):
-    '''
-    el_string_calculate : el_string_calculate el_stringoperator STRING
-        | STRING
-    '''
-    t[0] = BaseNode()
-    if len(t)==2:
-        t[0].VALUE = Str(s=t[1][1:-1])
-    else:
-        t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=Str(s=t[3][1:-1]))
-
-def p_el_stringOperator(t):
-    '''
-    el_stringoperator : PLUS
-    '''
-    t[0] = BaseNode()
-    t[0].VALUE = t[1]
-
-def p_el_calculate_binop(t):
-    '''el_calculate : el_calculate PLUS el_calculate
-                  | el_calculate MINUS el_calculate
-                  | el_calculate MUL el_calculate
-                  | el_calculate DIV el_calculate'''
-    t[0] = BaseNode()
-    if t[2] == '+': t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=t[3].VALUE)
-    if t[2] == '-': t[0].VALUE = BinOp(left=t[1].VALUE, op=Sub(), right=t[3].VALUE)
-    if t[2] == '*': t[0].VALUE = BinOp(left=t[1].VALUE, op=Mult(), right=t[3].VALUE)
-    if t[2] == '/': t[0].VALUE = BinOp(left=t[1].VALUE, op=Div(), right=t[3].VALUE)
-
-def p_el_calculate_uminus(t):
-    'el_calculate : MINUS el_calculate %prec UMINUS'
-    t[0] = BaseNode()
-    t[0].VALUE = -t[2]
-
-def p_el_calculate_group(t):
-    'el_calculate : LSB el_calculate RSB'
-    t[0] = BaseNode()
-    t[0].VALUE = t[2]
-
-def p_el_calculate_number(t):
-    'el_calculate : INT'
-    t[0] = BaseNode()
-    t[0].VALUE = Num(t[1])
+    def p_el_calculate_number(self, t):
+        'el_calculate : INT'
+        t[0] = BaseNode()
+        t[0].VALUE = Num(t[1])
 
 
-def p_el_calculate_identifier(t):
-    'el_calculate : IDENTIFIER'
-    t[0] = BaseNode()
-    t[0].VALUE = Name(t[1])
+    def p_el_calculate_identifier(self, t):
+        'el_calculate : IDENTIFIER'
+        t[0] = BaseNode()
+        t[0].VALUE = Name(t[1])
 
+    ############ EMPTY
+
+    def p_empty(self, t):
+        'empty : '
+        t[0] = BaseNode()
+        t[0].VALUE = None
+
+    # 토큰 에러 처리
+    def p_error(self, t):
+        if (t):
+            print("Error on token '" + str(t.value) + "', line " + str(t.lineno))
+        else:
+            print("Error on EOF")
+
+    def __init__(self):
+        self.lexer = ElementaryLexer()
+        self.parser = yacc.yacc(module=self)
 
 # def p_calculate(t):
 #     '''
@@ -1506,19 +1524,6 @@ def p_el_calculate_identifier(t):
 #     '''
 #     t[0] = t[1]
 
-############ EMPTY
-
-def p_empty(t):
-    'empty : '
-    t[0] = BaseNode()
-    t[0].VALUE = None
-
-# 토큰 에러 처리
-def p_error(t):
-    if(t):
-        print("Error on token '"+str(t.value)+"', line " + str(t.lineno))
-    else:
-        print("Error on EOF")
 
 # 에러 처리
 def error(s):
@@ -1526,14 +1531,13 @@ def error(s):
     exit(-1)
 
 
-lexer = lex.lex()
 def parse(data):
     global debug
     if(IS_ADVANCED==True):
         parser = yacc.yacc(start="ad_program")
     else:
-        parser = yacc.yacc(start="el_program")
-    result = parser.parse(data, debug=0)
+        parser = ElementaryParser()
+    result = parser.parser.parse(data, debug=0)
     print("============== ABSTRACT SYNTAX TREE ==============")
     print(dump(result.VALUE))
     print()

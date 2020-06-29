@@ -22,7 +22,7 @@ data = open(firstfilename, 'r', encoding='UTF-8').read()
 
 from ply import lex
 
-class ElementaryLexer(object):
+class Lexer(object):
     reserved = {
         'if': 'IF',
         'else': 'ELSE',

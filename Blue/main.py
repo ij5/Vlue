@@ -22,119 +22,123 @@ data = open(firstfilename, 'r', encoding='UTF-8').read()
 
 from ply import lex
 
-reserved = {
-    'if': 'IF',
-    'else': 'ELSE',
-    'function': 'FUNCTION',
-    'repeat': 'REPEAT',
-    'for': 'FOR',
-    'while': 'WHILE',
-    'in': 'IN',
-    'use': 'USE',
-    'try': 'TRY',
-    'catch': 'CATCH',
-    'global': 'GLOBAL',
-    'class': 'CLASS',
-    'do': 'DO',
-    'end': 'END',
-    'pass': 'PASS',
-}
+class ElLexer(object):
+    reserved = {
+        'if': 'IF',
+        'else': 'ELSE',
+        'function': 'FUNCTION',
+        'repeat': 'REPEAT',
+        'for': 'FOR',
+        'while': 'WHILE',
+        'in': 'IN',
+        'use': 'USE',
+        'try': 'TRY',
+        'catch': 'CATCH',
+        'global': 'GLOBAL',
+        'class': 'CLASS',
+        'do': 'DO',
+        'end': 'END',
+        'pass': 'PASS',
+    }
 
-tokens = [
-    'IDENTIFIER',
-    'VAR',
-    'EQUAL',
-    'INT',
-    'FLOAT',
-    'STRING',
-    'LB',
-    'RB',
-    'COLON',
-    'SEMI',
-    'PLUS',
-    'MINUS',
-    'DIV',
-    'MUL',
-    'RSB',
-    'LSB',
-    'RMB',
-    'LMB',
-    'LBB',
-    'RBB',
-    'COMMA',
-    'DOT',
-    'NOTEQUAL',
-] + list(reserved.values())
+    tokens = [
+        'IDENTIFIER',
+        'VAR',
+        'EQUAL',
+        'INT',
+        'FLOAT',
+        'STRING',
+        'LB',
+        'RB',
+        'COLON',
+        'SEMI',
+        'PLUS',
+        'MINUS',
+        'DIV',
+        'MUL',
+        'RSB',
+        'LSB',
+        'RMB',
+        'LMB',
+        'LBB',
+        'RBB',
+        'COMMA',
+        'DOT',
+        'NOTEQUAL',
+    ] + list(reserved.values())
 
-t_EQUAL = r'='
-t_DIV = r'\/'
-t_MUL = r'\*'
-t_PLUS = r'\+'
-t_MINUS = r'\-'
-t_LSB = r'\('
-t_RSB = r'\)'
-t_LMB = r'\{'
-t_RMB = r'\}'
-t_LB = r'\<'
-t_RB = r'\>'
-t_COLON = r'\:'
-t_SEMI = r'\;'
-t_COMMA = r'\,'
-t_DOT = r'\.'
-t_LBB = r'\['
-t_RBB = r'\]'
-t_NOTEQUAL = r'\!'      #TODO: 조건문
+    t_EQUAL = r'='
+    t_DIV = r'\/'
+    t_MUL = r'\*'
+    t_PLUS = r'\+'
+    t_MINUS = r'\-'
+    t_LSB = r'\('
+    t_RSB = r'\)'
+    t_LMB = r'\{'
+    t_RMB = r'\}'
+    t_LB = r'\<'
+    t_RB = r'\>'
+    t_COLON = r'\:'
+    t_SEMI = r'\;'
+    t_COMMA = r'\,'
+    t_DOT = r'\.'
+    t_LBB = r'\['
+    t_RBB = r'\]'
+    t_NOTEQUAL = r'\!'      #TODO: 조건문
 
-t_ignore = ' '
+    t_ignore = ' '
 
-def t_TAB(t):
-    r'\t'
-    if(IS_ADVANCED==True):
+    def t_TAB(t):
+        r'\t'
+        if(IS_ADVANCED==True):
+            return t
+        else:
+            pass
+
+    def t_VAR(t):
+        r'var'
+        if(IS_ADVANCED==True):
+            pass
+        else:
+            return t
+
+    def t_FLOAT(t):
+        r'\d+\.\d+'
+        t.value = float(t.value)
         return t
-    else:
+
+    def t_INT(t):
+        r'\d+'
+        t.value = int(t.value)
+        return t
+
+    def t_STRING(t):
+        r'("(?:\\"|.)*?"|\'(?:\\\'|.)*?\')'
+        t.value = bytes(t.value, "utf-8").decode("unicode_escape")
+        return t
+
+    def t_PYTHON(t):
+        r'`[^`]*`'
+        return t
+
+    def t_IDENTIFIER(t):
+        r'[a-zA-Z_]+[a-zA-Z_0-9]*'
+        #if 등 정의
+        t.type = self.reserved.get(t.value, t.type)
+        return t
+
+    def t_NEWLINE(t):
+        r'\n+'
+        t.lexer.lineno += len(t.value)
+        t.lexer.linepos = 0
         pass
 
-def t_VAR(t):
-    r'var'
-    if(IS_ADVANCED==True):
-        pass
-    else:
-        return t
+    def t_error(t):
+        print("error on token %s" % t.value)
+        t.lexer.skip(1)
 
-def t_FLOAT(t):
-    r'\d+\.\d+'
-    t.value = float(t.value)
-    return t
-
-def t_INT(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
-
-def t_STRING(t):
-    r'("(?:\\"|.)*?"|\'(?:\\\'|.)*?\')'
-    t.value = bytes(t.value, "utf-8").decode("unicode_escape")
-    return t
-
-def t_PYTHON(t):
-    r'`[^`]*`'
-    return t
-
-def t_IDENTIFIER(t):
-    r'[a-zA-Z_]+[a-zA-Z_0-9]*'
-    #if 등 정의
-    t.type = reserved.get(t.value, t.type)
-    return t
-
-def t_NEWLINE(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
-    t.lexer.linepos = 0
-    pass
-
-def t_error(t):
-    print("error on token %s" % t.value)
-    t.lexer.skip(1)
+    def __init__(self):
+        self.lexer = lex.lex(module=self)
 
 
 
@@ -1501,14 +1505,6 @@ def p_el_calculate_identifier(t):
 #         | DIV
 #     '''
 #     t[0] = t[1]
-
-
-
-############ PROGRAM
-
-def p_ad_program(t):
-    '''ad_program : ad_root'''
-
 
 ############ EMPTY
 

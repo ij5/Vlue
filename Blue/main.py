@@ -1479,6 +1479,7 @@ class ElementaryParser(object):
 
 
 class AdvancedParser(object):
+
     def __init__(self):
         self.lexer = Lexer()
         self.parser = yacc.yacc(module=self)
@@ -1544,7 +1545,7 @@ def error(s):
 def parse(data):
     global debug
     if(IS_ADVANCED==True):
-        parser = yacc.yacc(start="ad_program")
+        parser = AdvancedParser()
     else:
         parser = ElementaryParser()
     result = parser.parser.parse(data, debug=0)

@@ -136,8 +136,6 @@ class ElementaryLexer(object):
     def __init__(self):
         self.lexer = lex.lex(module=self)
 
-
-
 # data = '''
 # if(a<b){
 #     a = b;
@@ -1154,6 +1152,9 @@ class BaseNode():
 def flatten(listdata):
     return listdata[0]
 
+
+
+
 class ElementaryParser(object):
     tokens = ElementaryLexer.tokens
     reserved = ElementaryLexer.reserved
@@ -1475,6 +1476,14 @@ class ElementaryParser(object):
     def __init__(self):
         self.lexer = ElementaryLexer()
         self.parser = yacc.yacc(module=self)
+
+
+class AdvancedParser(object):
+    def p_el_calculate_identifier(self, t):
+        'el_calculate : IDENTIFIER'
+
+
+
 
 # def p_calculate(t):
 #     '''

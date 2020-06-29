@@ -1486,6 +1486,14 @@ def p_el_calculate_identifier(t):
 #     '''
 #     t[0] = t[1]
 
+
+
+############ PROGRAM
+
+def p_ad_program(t):
+    '''ad_program : ad_root'''
+
+
 ############ EMPTY
 
 def p_empty(t):

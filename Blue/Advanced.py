@@ -1,19 +1,6 @@
 import sys
 from ast import *
-from astor import code_gen
-import time
 
-firstfilename = input("Input file name: ")
-
-startTime = time.time()
-
-IS_ADVANCED = False
-
-if (firstfilename[-3:] == 'bla'):
-    IS_ADVANCED = True
-    print(IS_ADVANCED)
-
-data = open(firstfilename, 'r', encoding='UTF-8').read()
 
 ############################
 #####LEXER
@@ -90,17 +77,11 @@ class Lexer(object):
 
     def t_TAB(self, t):
         r'\t'
-        if (IS_ADVANCED == True):
-            return t
-        else:
-            pass
+        return t
 
     def t_VAR(self, t):
         r'var'
-        if (IS_ADVANCED == True):
-            pass
-        else:
-            return t
+        return t
 
     def t_FLOAT(self, t):
         r'\d+\.\d+'
@@ -189,21 +170,6 @@ precedence = (
 
 
 ############## LIBRARY
-
-dt = re.compile("use\s+[a-zA-Z0-9_]+;")
-libres = dt.findall(data)
-for lib in libres:
-    lib = lib[3:-1].strip()
-    libfile = lib + ".blib"
-    realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib", libfile)
-    if os.path.isfile(realpath):
-        f.append(open(realpath, 'r', encoding='UTF-8').read())
-    else:
-        print("There are no library named " + lib)
-
-d = dict(locals(), **globals())
-for ff in f:
-    exec(ff, d, d)
 
 # ################ EXEX
 #
@@ -1162,19 +1128,19 @@ class AdvancedParser(object):
 
     ##################### PROGRAM
 
-    def p_el_program(self, t):
+    def p_program(self, t):
         '''
-        el_program : el_root
+        program : root
         '''
         t[0] = BaseNode()
         t[0].VALUE = Module(body=t[1].VALUE)
 
     ##################### ROOT
 
-    def p_el_root(self, t):
+    def p_root(self, t):
         '''
-        el_root : el_root el_statement
-            | el_statement
+        root : root statement
+            | statement
         '''
         t[0] = BaseNode()
         if len(t) == 3:
@@ -1185,15 +1151,15 @@ class AdvancedParser(object):
 
     ################### STATEMENT
 
-    def p_el_statement(self, t):
+    def p_statement(self, t):
         '''
-        el_statement : el_if_statement
-            | el_while_statement
-            | el_variable_declaration SEMI
-            | el_variable_value_change SEMI
-            | el_function_declaration
+        statement : if_statement
+            | while_statement
+            | variable_declaration SEMI
+            | variable_value_change SEMI
+            | function_declaration
             | PASS SEMI
-            | el_use SEMI
+            | use SEMI
             | empty
         '''
         t[0] = BaseNode()
@@ -1202,20 +1168,20 @@ class AdvancedParser(object):
         else:
             t[0].VALUE = t[1].VALUE
 
-    def p_el_statement_calculate(self, t):
-        '''el_statement : el_expression SEMI'''
+    def p_statement_calculate(self, t):
+        '''statement : expression SEMI'''
         t[0] = BaseNode()
         t[0].VALUE = Expr(t[1].VALUE)
 
     ################## EXPRESSION
 
-    def p_el_expression(self, t):
+    def p_expression(self, t):
         '''
-        el_expression : el_calculate
-            | el_string_calculate
-            | el_compare_expression
-            | el_function_call
-            | el_list
+        expression : calculate
+            | string_calculate
+            | compare_expression
+            | function_call
+            | list
         '''
         t[0] = BaseNode()
         if isinstance(t[1].VALUE, int):
@@ -1225,16 +1191,16 @@ class AdvancedParser(object):
 
     ################### USE STATEMENT
 
-    def p_el_use(self, t):
-        '''el_use : USE IDENTIFIER'''
+    def p_use(self, t):
+        '''use : USE IDENTIFIER'''
         t[0] = BaseNode()
         t[0].VALUE = "<use>"
 
     ################### VARIABLE DECLARATION
 
-    def p_el_variable_declaration(self, t):
+    def p_variable_declaration(self, t):
         '''
-        el_variable_declaration : VAR IDENTIFIER EQUAL el_expression
+        variable_declaration : VAR IDENTIFIER EQUAL expression
             | VAR IDENTIFIER
         '''
         t[0] = BaseNode()
@@ -1249,9 +1215,9 @@ class AdvancedParser(object):
             t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=Num(0))
             variable[t[2].VALUE] = 0
 
-    def p_el_variable_value_change(self, t):
+    def p_variable_value_change(self, t):
         '''
-        el_variable_value_change : IDENTIFIER EQUAL el_expression
+        variable_value_change : IDENTIFIER EQUAL expression
         '''
         t[0] = BaseNode()
         if isinstance(t[3], Num):
@@ -1261,16 +1227,16 @@ class AdvancedParser(object):
 
     ################### FUNCTION
 
-    def p_el_function_call(self, t):
-        '''el_function_call : IDENTIFIER LSB el_function_call_parameter RSB'''
+    def p_function_call(self, t):
+        '''function_call : IDENTIFIER LSB function_call_parameter RSB'''
         t[0] = BaseNode()
         t[0].VALUE = Call(func=Name(id=t[1], ctx=Load()), args=t[3].VALUE, keywords=[])
         Module(body=[Expr(value=Call(func=Name(id='print', ctx=Load()), args=[Num(n=0)], keywords=[]))])
 
-    def p_el_function_call_parameter(self, t):
+    def p_function_call_parameter(self, t):
         '''
-        el_function_call_parameter : el_function_call_parameter COMMA el_expression
-            | el_expression
+        function_call_parameter : function_call_parameter COMMA expression
+            | expression
             | empty
         '''
         t[0] = BaseNode()
@@ -1289,17 +1255,17 @@ class AdvancedParser(object):
                 else:
                     t[0].VALUE = [t[1].VALUE]
 
-    def p_el_function_declaration(self, t):
-        '''el_function_declaration : FUNCTION IDENTIFIER LSB el_function_parameter RSB LMB el_root RMB'''
+    def p_function_declaration(self, t):
+        '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
         t[0] = BaseNode()
         t[0].VALUE = FunctionDef(name=t[2], args=arguments(
             args=[arguments(args=t[4].VALUE, vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])],
             vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=t[7].VALUE, decorator_list=[],
                                  returns=None)
 
-    def p_el_function_parameter(self, t):
+    def p_function_parameter(self, t):
         '''
-        el_function_parameter : el_function_parameter COMMA IDENTIFIER
+        function_parameter : function_parameter COMMA IDENTIFIER
             | IDENTIFIER
             | empty
         '''
@@ -1315,25 +1281,25 @@ class AdvancedParser(object):
 
     ################### WHILE
 
-    def p_el_while_statement(self, t):
+    def p_while_statement(self, t):
         '''
-        el_while_statement : WHILE LSB el_expression RSB LMB el_root RMB
+        while_statement : WHILE LSB expression RSB LMB root RMB
         '''
         t[0] = BaseNode()
         t[0].VALUE = While(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
     ################## IF
 
-    def p_el_if_statement(self, t):
+    def p_if_statement(self, t):
         '''
-        el_if_statement : IF LSB el_expression RSB LMB el_root RMB
+        if_statement : IF LSB expression RSB LMB root RMB
         '''
         t[0] = BaseNode()
         t[0].VALUE = If(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
-    def p_el_if_statement_elif(self, t):
+    def p_if_statement_elif(self, t):
         '''
-        el_if_statement : el_if_statement ELSE IF LSB el_expression RSB LMB el_root RMB
+        if_statement : if_statement ELSE IF LSB expression RSB LMB root RMB
         '''
         t[0] = BaseNode()
         t[1].VALUE.orelse.append(If(test=t[5].VALUE, body=t[8].VALUE, orelse=[]))
@@ -1342,8 +1308,8 @@ class AdvancedParser(object):
         #     t[1].orelse = [If(test=t[5], body=t[8])]
         #     t[0] = t[1]
 
-    def p_el_if_statement_else(self, t):
-        '''el_if_statement : el_if_statement ELSE LMB el_root RMB'''
+    def p_if_statement_else(self, t):
+        '''if_statement : if_statement ELSE LMB root RMB'''
         t[0] = BaseNode()
         try:
             t[1].VALUE.orelse[0].orelse.append(flatten(t[4]))
@@ -1354,10 +1320,10 @@ class AdvancedParser(object):
 
     ################## COMPARE
 
-    def p_el_compare_expression(self, t):
+    def p_compare_expression(self, t):
         '''
-        el_compare_expression : el_compare_expression el_compare_operator el_calculate
-            | el_calculate
+        compare_expression : compare_expression compare_operator calculate
+            | calculate
         '''
         t[0] = BaseNode()
         if len(t) == 2:
@@ -1372,9 +1338,9 @@ class AdvancedParser(object):
             elif t[2].VALUE == '>=':
                 t[0] = Compare(left=t[1].VALUE, ops=[GtE()], comparators=[t[3].VALUE])
 
-    def p_el_compare_operator(self, t):
+    def p_compare_operator(self, t):
         '''
-        el_compare_operator : LB
+        compare_operator : LB
             | RB
             | LB EQUAL
             | RB EQUAL
@@ -1389,30 +1355,29 @@ class AdvancedParser(object):
 
     ################### LIST
 
-    def p_el_list(self, t):
-        '''el_list : LBB el_list_params RBB'''
+    def p_list(self, t):
+        '''list : LBB list_params RBB'''
         List(elts=[Num(n=1), Num(n=2), Num(n=3)], ctx=Load())
         t[0] = BaseNode()
         t[0].VALUE = List(elts=t[2].VALUE, ctx=Load())
 
-    def p_el_list_params(self, t):
+    def p_list_params(self, t):
         '''
-        el_list_params : el_list_params COMMA el_expression
-            | el_expression
+        list_params : list_params COMMA expression
+            | expression
         '''
         t[0] = BaseNode()
         if len(t) == 2:
             t[0].VALUE = [t[1].VALUE]
         else:
-            print(t[1].VALUE)
             t[1].VALUE.append(t[3].VALUE)
             t[0] = t[1]
 
     ################### CALCULATE
 
-    def p_el_string_calculate(self, t):
+    def p_string_calculate(self, t):
         '''
-        el_string_calculate : el_string_calculate el_stringoperator STRING
+        string_calculate : string_calculate stringoperator STRING
             | STRING
         '''
         t[0] = BaseNode()
@@ -1421,41 +1386,41 @@ class AdvancedParser(object):
         else:
             t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=Str(s=t[3][1:-1]))
 
-    def p_el_stringOperator(self, t):
+    def p_stringOperator(self, t):
         '''
-        el_stringoperator : PLUS
+        stringoperator : PLUS
         '''
         t[0] = BaseNode()
         t[0].VALUE = t[1]
 
-    def p_el_calculate_binop(self, t):
-        '''el_calculate : el_calculate PLUS el_calculate
-                      | el_calculate MINUS el_calculate
-                      | el_calculate MUL el_calculate
-                      | el_calculate DIV el_calculate'''
+    def p_calculate_binop(self, t):
+        '''calculate : calculate PLUS calculate
+                      | calculate MINUS calculate
+                      | calculate MUL calculate
+                      | calculate DIV calculate'''
         t[0] = BaseNode()
         if t[2] == '+': t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=t[3].VALUE)
         if t[2] == '-': t[0].VALUE = BinOp(left=t[1].VALUE, op=Sub(), right=t[3].VALUE)
         if t[2] == '*': t[0].VALUE = BinOp(left=t[1].VALUE, op=Mult(), right=t[3].VALUE)
         if t[2] == '/': t[0].VALUE = BinOp(left=t[1].VALUE, op=Div(), right=t[3].VALUE)
 
-    def p_el_calculate_uminus(self, t):
-        'el_calculate : MINUS el_calculate %prec UMINUS'
+    def p_calculate_uminus(self, t):
+        'calculate : MINUS calculate %prec UMINUS'
         t[0] = BaseNode()
         t[0].VALUE = -t[2]
 
-    def p_el_calculate_group(self, t):
-        'el_calculate : LSB el_calculate RSB'
+    def p_calculate_group(self, t):
+        'calculate : LSB calculate RSB'
         t[0] = BaseNode()
         t[0].VALUE = t[2]
 
-    def p_el_calculate_number(self, t):
-        'el_calculate : INT'
+    def p_calculate_number(self, t):
+        'calculate : INT'
         t[0] = BaseNode()
         t[0].VALUE = Num(t[1])
 
-    def p_el_calculate_identifier(self, t):
-        'el_calculate : IDENTIFIER'
+    def p_calculate_identifier(self, t):
+        'calculate : IDENTIFIER'
         t[0] = BaseNode()
         t[0].VALUE = Name(t[1])
 
@@ -1531,27 +1496,5 @@ class AdvancedParser(object):
 def error(s):
     print(s)
     exit(-1)
-
-
-def parse(data):
-    global debug
-    parser = ElementaryParser()
-    result = parser.parser.parse(data, debug=0)
-    print("============== ABSTRACT SYNTAX TREE ==============")
-    print(dump(result.VALUE))
-    print()
-    result = code_gen.to_source(result.VALUE)
-    print("============== PYTHON CODE ==============")
-    print(result)
-    print()
-    print("============== RESULT ==============")
-    exec(result)
-    print()
-    print("Task finished in " + str(time.time() - startTime) + "s")
-
-
-parse(data)
-
-
 
 

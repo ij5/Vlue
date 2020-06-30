@@ -26,6 +26,9 @@ class Lexer(object):
         'do': 'DO',
         'end': 'END',
         'pass': 'PASS',
+        'int': 'T_INT',
+        'float':"T_FLOAT",
+        'string':"T_STRING"
     }
 
     tokens = [
@@ -81,6 +84,17 @@ class Lexer(object):
 
     def t_VAR(self, t):
         r'var'
+        return t
+    def t_T_INT(self, t):
+        r'int'
+        return t
+
+    def t_T_FLOAT(self, t):
+        r'float'
+        return t
+
+    def t_T_STRING(self, t):
+        r'string'
         return t
 
     def t_FLOAT(self, t):
@@ -143,12 +157,6 @@ class Lexer(object):
 from ply import yacc
 import re
 import os
-
-code = "buf___ = 0\n"
-variable = {}
-state = []
-f = []
-debug = False
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),

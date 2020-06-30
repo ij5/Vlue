@@ -1478,14 +1478,6 @@ class ElementaryParser(object):
         self.parser = yacc.yacc(module=self)
 
 
-class AdvancedParser(object):
-
-    def __init__(self):
-        self.lexer = Lexer()
-        self.parser = yacc.yacc(module=self)
-
-
-
 
 # def p_calculate(t):
 #     '''
@@ -1544,10 +1536,7 @@ def error(s):
 
 def parse(data):
     global debug
-    if(IS_ADVANCED==True):
-        parser = AdvancedParser()
-    else:
-        parser = ElementaryParser()
+    parser = ElementaryParser()
     result = parser.parser.parse(data, debug=0)
     print("============== ABSTRACT SYNTAX TREE ==============")
     print(dump(result.VALUE))

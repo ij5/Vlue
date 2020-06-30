@@ -3,19 +3,6 @@ from ast import *
 from astor import code_gen
 import time
 
-firstfilename = input("Input file name: ")
-
-startTime = time.time()
-
-IS_ADVANCED = False
-
-if(firstfilename[-3:]=='bla'):
-    IS_ADVANCED = True
-    print(IS_ADVANCED)
-
-data = open(firstfilename, 'r', encoding='UTF-8').read()
-
-
 ############################
 #####LEXER
 ############################

@@ -1,1 +1,1 @@
-# Blue Programming language: A hybrid programming language for web development.
+# Blue - A hybrid programming language for web development.

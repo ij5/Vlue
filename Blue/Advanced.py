@@ -74,7 +74,7 @@ class Lexer(object):
     t_DOT = r'\.'
     t_LBB = r'\['
     t_RBB = r'\]'
-    t_NOTEQUAL = r'\!'  # TODO: 조건문
+    t_NOTEQUAL = r'\!'
 
     t_ignore = ' '
 
@@ -674,7 +674,7 @@ precedence = (
 #
 # # PARAMETER
 #
-# def p_parameter(t):     #TODO 함수 호출 에러
+# def p_parameter(t):
 #     '''
 #     parameter : parameter COMMA calculate
 #     '''
@@ -792,7 +792,7 @@ precedence = (
 #
 # ############### USE
 #
-# def p_use(t):       #TODO
+# def p_use(t):
 #     '''
 #     use : USE use_params
 #     '''
@@ -812,7 +812,7 @@ precedence = (
 #     #     currentpath = os.path.join(os.getcwd(), codefile)
 #     #     if os.path.isfile(currentpath):
 #     #         print("존재하는 라이브러리입니다.")
-#     #         code = open(currentpath, 'r', encoding='UTF-8').read()    #TODO: 라이브러리
+#     #         code = open(currentpath, 'r', encoding='UTF-8').read()
 #     #
 #     #     else:
 #     #         error("존재하지 않는 라이브러리입니다.")
@@ -905,14 +905,14 @@ precedence = (
 #
 # ########### STRING
 #
-# # def p_string_plus(t):       #TODO 문자열 오류
+# # def p_string_plus(t):
 # #     '''
 # #     string_plus : string_plus PLUS STRING
 # #     '''
 # #     global code
 # #     t[0] = t[1] + t[3]
 # #
-# # def p_string_plus_2(t):     #TODO 문자열 오류 2
+# # def p_string_plus_2(t):
 # #     '''
 # #     string_plus : STRING
 # #     '''
@@ -925,7 +925,7 @@ precedence = (
 #
 # ######### CALCULATE
 #
-# def p_add(t):   #TODO add error
+# def p_add(t):
 #     'calculate : calculate PLUS calculate'
 #     try:
 #         if(t[1].startswith('"')):

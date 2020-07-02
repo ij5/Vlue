@@ -69,7 +69,7 @@ class Lexer(object):
     t_RMB = r'\}'
     t_LB = r'\<'
     t_RB = r'\>'
-    t_COLON = r'\:'
+    t_COLON = r':'
     t_SEMI = r'\;'
     t_COMMA = r'\,'
     t_DOT = r'\.'

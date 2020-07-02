@@ -32,30 +32,31 @@ class Lexer(object):
     }
 
     tokens = [
-                 'IDENTIFIER',
-                 'VAR',
-                 'EQUAL',
-                 'INT',
-                 'FLOAT',
-                 'STRING',
-                 'LB',
-                 'RB',
-                 'COLON',
-                 'SEMI',
-                 'PLUS',
-                 'MINUS',
-                 'DIV',
-                 'MUL',
-                 'RSB',
-                 'LSB',
-                 'RMB',
-                 'LMB',
-                 'LBB',
-                 'RBB',
-                 'COMMA',
-                 'DOT',
-                 'NOTEQUAL',
-             ] + list(reserved.values())
+        'IDENTIFIER',
+        'EQUAL',
+        'INT',
+        'FLOAT',
+        'STRING',
+        'LB',
+        'RB',
+        'COLON',
+        'SEMI',
+        'PLUS',
+        'MINUS',
+        'DIV',
+        'MUL',
+        'RSB',
+        'LSB',
+        'RMB',
+        'LMB',
+        'LBB',
+        'RBB',
+        'COMMA',
+        'DOT',
+        'NOTEQUAL',
+        'TAB',
+        'NEWLINE',
+    ] + list(reserved.values())
 
     t_EQUAL = r'='
     t_DIV = r'\/'
@@ -82,9 +83,6 @@ class Lexer(object):
         r'\t'
         return t
 
-    def t_VAR(self, t):
-        r'var'
-        return t
     def t_T_INT(self, t):
         r'int'
         return t
@@ -122,7 +120,7 @@ class Lexer(object):
         r'\n+'
         t.lexer.lineno += len(t.value)
         t.lexer.linepos = 0
-        pass
+        return t
 
     def t_error(self, t):
         print("error on token %s" % t.value)
@@ -1163,11 +1161,11 @@ class AdvancedParser(object):
         '''
         statement : if_statement
             | while_statement
-            | variable_declaration SEMI
-            | variable_value_change SEMI
+            | variable_declaration
+            | variable_value_change
             | function_declaration
-            | PASS SEMI
-            | use SEMI
+            | PASS NEWLINE
+            | use
             | empty
         '''
         t[0] = BaseNode()

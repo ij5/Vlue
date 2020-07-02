@@ -1159,7 +1159,7 @@ class AdvancedParser(object):
 
     def p_statement(self, t):
         '''
-        statement : if_statement
+        statement : if_statement NEWLINE
             | while_statement
             | variable_declaration
             | variable_value_change
@@ -1175,7 +1175,7 @@ class AdvancedParser(object):
             t[0].VALUE = t[1].VALUE
 
     def p_statement_calculate(self, t):
-        '''statement : expression SEMI'''
+        '''statement : expression NEWLINE'''
         t[0] = BaseNode()
         t[0].VALUE = Expr(t[1].VALUE)
 
@@ -1298,14 +1298,14 @@ class AdvancedParser(object):
 
     def p_if_statement(self, t):
         '''
-        if_statement : IF LSB expression RSB LMB root RMB
+        if_statement : IF LSB expression RSB COLON NEWLINE TAB root NEWLINE
         '''
         t[0] = BaseNode()
         t[0].VALUE = If(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
     def p_if_statement_elif(self, t):
         '''
-        if_statement : if_statement ELSE IF LSB expression RSB LMB root RMB
+        if_statement : if_statement ELSE IF LSB expression RSB COLON TAB root
         '''
         t[0] = BaseNode()
         t[1].VALUE.orelse.append(If(test=t[5].VALUE, body=t[8].VALUE, orelse=[]))
@@ -1315,7 +1315,7 @@ class AdvancedParser(object):
         #     t[0] = t[1]
 
     def p_if_statement_else(self, t):
-        '''if_statement : if_statement ELSE LMB root RMB'''
+        '''if_statement : if_statement ELSE COLON TAB root'''
         t[0] = BaseNode()
         try:
             t[1].VALUE.orelse[0].orelse.append(flatten(t[4]))

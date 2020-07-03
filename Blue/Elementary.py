@@ -1219,6 +1219,7 @@ class ElementaryParser(object):
 
     ################### VARIABLE DECLARATION
 
+
     def p_variable_declaration(self, t):
         '''
         variable_declaration : VAR IDENTIFIER EQUAL expression
@@ -1449,6 +1450,12 @@ class ElementaryParser(object):
         'calculate : IDENTIFIER'
         t[0] = BaseNode()
         t[0].VALUE = Name(t[1])
+
+    def p_calculate_identifier_list(self, t):
+        'calculate : IDENTIFIER list'
+        t[0] = BaseNode()
+        t[0].VALUE =
+        Subscript(value=Name(id=t[1], ctx=Load()), slice=Index(value=Num(n=1)), ctx=Load())
 
     def p_calculate_global_identifier(self, t):
         'calculate : DL IDENTIFIER'

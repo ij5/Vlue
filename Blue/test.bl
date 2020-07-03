@@ -27,5 +27,6 @@ a = [1,2,3];
 print(a);
 1+2;
 ("asd"+("asd"+"asd"));
-
-$ hello;
+a = "Hello World!";
+print(a[1])
+$hello;

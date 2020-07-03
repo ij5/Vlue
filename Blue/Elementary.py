@@ -53,6 +53,7 @@ class Lexer(object):
         'DOT',
         'NOTEQUAL',
         'PYTHON',
+        'DL',
     ] + list(reserved.values())
 
     t_EQUAL = r'='
@@ -73,6 +74,7 @@ class Lexer(object):
     t_LBB = r'\['
     t_RBB = r'\]'
     t_NOTEQUAL = r'\!'
+    t_DL = r'\$'
 
     t_ignore = ' '
 
@@ -1211,6 +1213,10 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         t[0].VALUE = "<use>"
 
+    def p_python(self, t):
+        '''python : PYTHON'''
+
+
     ################### VARIABLE DECLARATION
 
     def p_variable_declaration(self, t):
@@ -1443,6 +1449,12 @@ class ElementaryParser(object):
         'calculate : IDENTIFIER'
         t[0] = BaseNode()
         t[0].VALUE = Name(t[1])
+
+    def p_calculate_global_identifier(self, t):
+        'calculate : DL IDENTIFIER'
+        t[0] = BaseNode()
+        t[0].VALUE = t[1] + t[2]
+        t[0].TYPE = "GLOBAL_IDENTIFIER"
 
     ############ EMPTY
 

@@ -1383,14 +1383,19 @@ class ElementaryParser(object):
 
     def p_string_calculate(self, t):
         '''
-        string_calculate : string_calculate stringoperator STRING
+        string_calculate : string_calculate stringoperator string_calculate
             | STRING
         '''
         t[0] = BaseNode()
         if len(t)==2:
             t[0].VALUE = Str(s=t[1][1:-1])
         else:
-            t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=Str(s=t[3][1:-1]))
+            t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=t[3].VALUE)
+
+    def p_string_calculate_sb(self, t):
+        '''string_calculate : LSB string_calculate RSB'''
+        t[0] = BaseNode()
+        t[0].VALUE = t[2].VALUE
 
     def p_stringOperator(self, t):
         '''

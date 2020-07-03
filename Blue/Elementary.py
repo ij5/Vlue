@@ -1453,7 +1453,7 @@ class ElementaryParser(object):
     def p_calculate_global_identifier(self, t):
         'calculate : DL IDENTIFIER'
         t[0] = BaseNode()
-        t[0].VALUE = t[1] + t[2]
+        t[0].VALUE = Name(t[2])
         t[0].TYPE = "GLOBAL_IDENTIFIER"
 
     ############ EMPTY

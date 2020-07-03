@@ -52,6 +52,7 @@ class Lexer(object):
         'COMMA',
         'DOT',
         'NOTEQUAL',
+        'PYTHON',
     ] + list(reserved.values())
 
     t_EQUAL = r'='
@@ -102,6 +103,10 @@ class Lexer(object):
         r'[a-zA-Z_]+[a-zA-Z_0-9]*'
         #if 등 정의
         t.type = Lexer.reserved.get(t.value, t.type)
+        return t
+
+    def t_PYTHON(self, t):
+        r'`[^`]+`'
         return t
 
     def t_NEWLINE(self, t):

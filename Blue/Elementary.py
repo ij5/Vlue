@@ -122,6 +122,14 @@ class Lexer(object):
     def __init__(self):
         self.lexer = lex.lex(module=self)
 
+    def test(self, data):
+        self.lexer.input(data)
+        while True:
+            tok = self.lexer.token()
+            if not tok:
+                break
+            print(tok)
+
 # data = '''
 # if(a<b){
 #     a = b;

@@ -1395,13 +1395,13 @@ class ElementaryParser(object):
             t[0] = t[1]
 
     def p_variable_list(self, t):
-        '''variable_list : variable_list LBB calculate RBB
+        '''variable_list : variable_list LBB expression RBB
         '''
         t[0] = BaseNode()
-        t[0].VALUE = Subscript(value=t[1], slice=Index(value=t[3].VALUE), ctx=Load())
+        t[0].VALUE = Subscript(value=t[1].VALUE, slice=Index(value=t[3].VALUE), ctx=Load())
 
     def p_variable_list_2(self, t):
-        '''variable_list : IDENTIFIER LBB calculate RBB'''
+        '''variable_list : IDENTIFIER LBB expression RBB'''
         t[0] = BaseNode()
         t[0].VALUE = Subscript(value=Name(id=t[1], ctx=Load()), slice=Index(value=t[3].VALUE, ctx=Load()))
 

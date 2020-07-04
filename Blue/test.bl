@@ -30,5 +30,5 @@ print(a);
 a = "Hello World!";
 [[1,2,3], [1,2,3,4,5]];
 b = 3;
-a[[b]];
+print(a[1]);
 $hello;

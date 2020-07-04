@@ -1242,6 +1242,7 @@ class ElementaryParser(object):
     def p_variable_value_change(self, t):
         '''
         variable_value_change : IDENTIFIER EQUAL expression
+            | variable_list EQUAL expression
         '''
         t[0] = BaseNode()
         if isinstance(t[3], Num):

@@ -1452,10 +1452,10 @@ class ElementaryParser(object):
         t[0].VALUE = Name(t[1])
 
     def p_calculate_identifier_list(self, t):
-        'calculate : IDENTIFIER list'
+        'calculate : IDENTIFIER LBB calculate RBB'
         t[0] = BaseNode()
-        t[0].VALUE =
-        Subscript(value=Name(id=t[1], ctx=Load()), slice=Index(value=Num(n=1)), ctx=Load())
+        t[0].VALUE = Subscript(value=Name(id=t[1], ctx=Load()), slice=Index(t[3].VALUE), ctx=Load())
+
 
     def p_calculate_global_identifier(self, t):
         'calculate : DL IDENTIFIER'

@@ -1392,7 +1392,15 @@ class ElementaryParser(object):
             t[1].VALUE.append(t[3].VALUE)
             t[0] = t[1]
 
+    def p_variable_list(self, t):
+        '''variable_list : variable_list LBB calculate RBB
+        '''
+        t[0] = BaseNode()
+        t[0].VALUE = Subscript(value=t[1], slice=Index(value=t[3].VALUE), ctx=Load())
 
+    def p_variable_list_2(self, t):
+        '''variable_list : IDENTIFIER LBB calculate RBB'''
+        t[0].VALUE = Subscript(value=Name(id=t[1], ctx=Load()), slice=Index(value=t[3].VALUE, ctx=Load()))
 
     ################### CALCULATE
 
@@ -1450,17 +1458,6 @@ class ElementaryParser(object):
         'calculate : IDENTIFIER'
         t[0] = BaseNode()
         t[0].VALUE = Name(t[1])
-
-    def p_calculate_identifier_list_params(self, t):
-        '''calculate : calculate LBB calculate RBB
-        '''
-        t[0] = BaseNode()
-        t[0].VALUE = Subscript(value=t[1], slice=Index(value=t[3].VALUE), ctx=Load())
-
-    def p_calculate_identifier_list_params_2(self, t):
-        '''calculate : IDENTIFIER LBB calculate RBB'''
-        t[0].VALUE = Subscript(value=Name(id=t[1], ctx=Load()), slice=Index(value=t[3].VALUE, ctx=Load()))
-
 
     def p_calculate_global_identifier(self, t):
         'calculate : DL IDENTIFIER'

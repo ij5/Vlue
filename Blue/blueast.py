@@ -8,7 +8,7 @@ n = BaseNode()
 n.asd = "a"
 print(n.asd)
 
-node = parse("a[1]\
+node = parse("a[1][2]\
 ")
 print(dump(node))
 __ = [[1]]

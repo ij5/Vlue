@@ -1247,6 +1247,8 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         if isinstance(t[3], Num):
             t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
+        elif isinstance(t[1], BaseNode):
+            t[0].VALUE = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
         else:
             t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
 

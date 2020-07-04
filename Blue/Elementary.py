@@ -1199,6 +1199,7 @@ class ElementaryParser(object):
             | compare_expression
             | function_call
             | list
+            | variable_list
         '''
         t[0] = BaseNode()
         if isinstance(t[1].VALUE, int):
@@ -1223,6 +1224,7 @@ class ElementaryParser(object):
     def p_variable_declaration(self, t):
         '''
         variable_declaration : VAR IDENTIFIER EQUAL expression
+            | VAR variable_list EQUAL expression
             | VAR IDENTIFIER
         '''
         t[0] = BaseNode()
@@ -1400,6 +1402,7 @@ class ElementaryParser(object):
 
     def p_variable_list_2(self, t):
         '''variable_list : IDENTIFIER LBB calculate RBB'''
+        t[0] = BaseNode()
         t[0].VALUE = Subscript(value=Name(id=t[1], ctx=Load()), slice=Index(value=t[3].VALUE, ctx=Load()))
 
     ################### CALCULATE

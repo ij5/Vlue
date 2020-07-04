@@ -1451,20 +1451,15 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         t[0].VALUE = Name(t[1])
 
-    def p_calculate_identifier_list(self, t):
-        'calculate : IDENTIFIER LBB calculate RBB'
-        t[0] = BaseNode()
-        t[0].VALUE = Subscript(value=Name(id=t[1], ctx=Load()), slice=Index(t[3].VALUE), ctx=Load())
-
     def p_calculate_identifier_list_params(self, t):
-        '''calculate_identifier_list_params : LBB calculate RBB calculate_identifier_list_params
-            | LBB calculate RBB
+        '''calculate : calculate LBB calculate RBB
         '''
         t[0] = BaseNode()
-        Subscript(value=t[4].VALUE, slice=Index(value=t[2].VALUE), ctx=Load())
-        if len(t)==4:
-            t[0].VALUE = Subscript(value=Name(id='a', ctx=Load()), slice=Index(value=Num(n=1)), ctx=Load())
+        t[0].VALUE = Subscript(value=t[1], slice=Index(value=t[3].VALUE), ctx=Load())
 
+    def p_calculate_identifier_list_params_2(self, t):
+        '''calculate : IDENTIFIER LBB calculate RBB'''
+        t[0].VALUE = Subscript(value=Name(id=t[1], ctx=Load()), slice=Index(value=t[3].VALUE, ctx=Load()))
 
 
     def p_calculate_global_identifier(self, t):

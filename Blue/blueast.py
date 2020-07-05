@@ -15,5 +15,7 @@ __ = [[1]]
 __ = __[0]
 print(__)
 
+print("  \thello\t".strip())
+
 tree = Module(body=[Expr(value=BinOp(left=Num(n=1), op=Add(), right=Num(n=1)))])
 print(code_gen.to_source(tree))

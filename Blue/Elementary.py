@@ -1177,13 +1177,15 @@ class ElementaryParser(object):
             | function_declaration
             | PASS SEMI
             | use SEMI
+            | python
             | empty
         '''
         t[0] = BaseNode()
         if t[1]=="<use>":
-            pass
+            t[0].VALUE = Not()
         else:
             t[0].VALUE = t[1].VALUE
+
 
     def p_statement_calculate(self, t):
         '''statement : expression SEMI'''
@@ -1216,6 +1218,15 @@ class ElementaryParser(object):
 
     def p_python(self, t):
         '''python : PYTHON'''
+        gv = {}
+        lv = {}
+        def temp():
+            exec(t[1],gv, lv)
+        #temp()
+        print(gv)
+        print(lv)
+        t[0] = BaseNode()
+        t[0].VALUE = None
 
 
     ################### VARIABLE DECLARATION

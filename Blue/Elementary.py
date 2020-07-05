@@ -1218,7 +1218,6 @@ class ElementaryParser(object):
 
     def p_python(self, t):
         '''python : PYTHON'''
-        
         t[0] = BaseNode()
         t[0].VALUE = None
 

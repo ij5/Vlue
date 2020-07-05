@@ -1218,13 +1218,7 @@ class ElementaryParser(object):
 
     def p_python(self, t):
         '''python : PYTHON'''
-        gv = {}
-        lv = {}
-        def temp():
-            exec(t[1],gv, lv)
-        #temp()
-        print(gv)
-        print(lv)
+        
         t[0] = BaseNode()
         t[0].VALUE = None
 

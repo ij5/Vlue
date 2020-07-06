@@ -1224,8 +1224,6 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         t[0].VALUE = None
 
-        #ex(t[1])
-
 
     ################### VARIABLE DECLARATION
 

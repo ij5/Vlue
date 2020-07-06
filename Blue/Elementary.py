@@ -1135,7 +1135,10 @@ class BaseNode():
 def flatten(listdata):
     return listdata[0]
 
-
+def ex(data):
+    lv = locals()
+    gv = globals()
+    exec(data, gv, lv)
 
 
 class ElementaryParser(object):
@@ -1220,6 +1223,8 @@ class ElementaryParser(object):
         '''python : PYTHON'''
         t[0] = BaseNode()
         t[0].VALUE = None
+
+        #ex(t[1])
 
 
     ################### VARIABLE DECLARATION

@@ -1259,6 +1259,16 @@ class ElementaryParser(object):
         else:
             t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
 
+
+    ################### CLASS
+
+    def p_class_declaration_1(self, t):
+        '''class_declaration : CLASS IDENTIFIER LMB root RMB'''
+        Module(body=[ClassDef(name='a', bases=[], keywords=[],
+                              body=[Assign(targets=[Name(id='a', ctx=Store())], value=Num(n=5))], decorator_list=[])])
+        t[0] = BaseNode()
+        t[0].VALUE = ClassDef(name=t[2], bases=[], keywords=[], body=t[4].VALUE, decorator_list=[])
+
     ################### FUNCTION
 
     def p_function_call(self, t):

@@ -8,8 +8,10 @@ n = BaseNode()
 n.asd = "a"
 print(n.asd)
 
-node = parse("a[1][2]\
-")
+node = parse('''
+class a:
+    a = 5
+''')
 print(dump(node))
 __ = [[1]]
 __ = __[0]

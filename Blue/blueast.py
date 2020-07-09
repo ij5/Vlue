@@ -9,9 +9,8 @@ n.asd = "a"
 print(n.asd)
 
 node = parse('''
-
-b = a()
-b.a
+def a(a,b):
+    pass
 ''')
 print(dump(node))
 __ = [[1]]

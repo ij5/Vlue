@@ -1329,7 +1329,7 @@ class ElementaryParser(object):
         '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
         t[0] = BaseNode()
         t[0].VALUE = FunctionDef(name=t[2], args=arguments(
-            args=[arguments(args=t[4].VALUE, vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])],
+            args=t[4].VALUE,
             vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
             body=t[7].VALUE, decorator_list=[], returns=None)
 
@@ -1341,7 +1341,7 @@ class ElementaryParser(object):
         '''
         t[0] = BaseNode()
         if(len(t)==2):
-            if(t[1]==None):
+            if(t[1].VALUE==None):
                 print("none")
                 t[0].VALUE = []
             else:
@@ -1357,6 +1357,7 @@ class ElementaryParser(object):
         while_statement : WHILE LSB expression RSB LMB root RMB
         '''
         t[0] = BaseNode()
+        
         t[0].VALUE = While(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
     ################## IF

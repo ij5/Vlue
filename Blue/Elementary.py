@@ -1342,7 +1342,6 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         if(len(t)==2):
             if(t[1].VALUE==None):
-                print("none")
                 t[0].VALUE = []
             else:
                 t[0].VALUE = [arg(arg=t[1], annotation=None)]
@@ -1357,7 +1356,7 @@ class ElementaryParser(object):
         while_statement : WHILE LSB expression RSB LMB root RMB
         '''
         t[0] = BaseNode()
-        
+
         t[0].VALUE = While(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
     ################## IF

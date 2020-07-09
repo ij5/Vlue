@@ -10,7 +10,8 @@ print(n.asd)
 
 node = parse('''
 class a(a,b):
-    a = 5
+    pass
+a()
 ''')
 print(dump(node))
 __ = [[1]]

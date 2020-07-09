@@ -1186,6 +1186,7 @@ class ElementaryParser(object):
             | PASS SEMI
             | use SEMI
             | python
+            | class_declaration
             | empty
         '''
         t[0] = BaseNode()
@@ -1272,11 +1273,16 @@ class ElementaryParser(object):
         Module(body=[ClassDef(name='a', bases=[], keywords=[],
                               body=[Assign(targets=[Name(id='a', ctx=Store())], value=Num(n=5))], decorator_list=[])])
         t[0] = BaseNode()
+        if(t[4].VALUE==[None]):
+            t[4].VALUE.append(Pass())
         t[0].VALUE = ClassDef(name=t[2], bases=[], keywords=[], body=t[4].VALUE, decorator_list=[])
 
     def p_class_declaration_2(self, t):
         '''class_declaration : CLASS IDENTIFIER LSB class_decl_parameter RSB LMB root RMB'''
         t[0] = BaseNode()
+        if(t[7].VALUE==[None]):
+            t[7].VALUE.append(Pass())
+        t[0].VALUE = ClassDef(name=t[2], bases=t[4].VALUE, keywords=[], body=t[7].VALUE, decorator_list=[])
 
     def p_class_decl_parameter(self, t):
         '''class_decl_parameter : class_decl_parameter COMMA IDENTIFIER

@@ -1,39 +1,5 @@
-count = 0;
-n1 = 0;
-n2 = 1;
-nterms = 9;
 
-while(count < nterms){
-print(n1);
-nth = n1 + n2;
-n1 = n2;
-n2 = nth;
-count = count + 1;
-}
-a = 1;
-a = 2;
-a = 3 + 4 * 5;
-print(a);
-if(a<10){
-print(1);
-}
-function hello(a){
-print(a);
-}
-hello(9999999);
-print("Hello WO\"\nrld!"+"asdasdasd");
 
-a = [1,2,3];
-print(a);
-1+2;
-("asd"+("asd"+"asd"));
-a = "Hello World!";
-[[1,2,3], [1,2,3,4,5]];
-b = 3;
-a[[1]];
-a[1][2];
-a[2] = b[2];
-`
-hello = 3
-asd = 5
-`
+class a{
+
+}

@@ -9,9 +9,9 @@ n.asd = "a"
 print(n.asd)
 
 node = parse('''
-class a(a,b):
-    pass
-a()
+
+b = a()
+b.a
 ''')
 print(dump(node))
 __ = [[1]]

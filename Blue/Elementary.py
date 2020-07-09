@@ -1328,7 +1328,10 @@ class ElementaryParser(object):
     def p_function_declaration(self, t):
         '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
         t[0] = BaseNode()
-        t[0].VALUE = FunctionDef(name=t[2], args=arguments(args=[arguments(args=t[4].VALUE, vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=t[7].VALUE, decorator_list=[], returns=None)
+        t[0].VALUE = FunctionDef(name=t[2], args=arguments(
+            args=[arguments(args=t[4].VALUE, vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])],
+            vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+            body=t[7].VALUE, decorator_list=[], returns=None)
 
     def p_function_parameter(self, t):
         '''
@@ -1339,6 +1342,7 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         if(len(t)==2):
             if(t[1]==None):
+                print("none")
                 t[0].VALUE = []
             else:
                 t[0].VALUE = [arg(arg=t[1], annotation=None)]

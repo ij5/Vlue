@@ -54,6 +54,7 @@ class Lexer(object):
         'NOTEQUAL',
         'PYTHON',
         'DL',
+        'CLASS',
     ] + list(reserved.values())
 
     t_EQUAL = r'='
@@ -94,6 +95,10 @@ class Lexer(object):
     def t_INT(self, t):
         r'\d+'
         t.value = int(t.value)
+        return t
+
+    def t_CLASS(self, t):
+        r'class'
         return t
 
     def t_STRING(self, t):
@@ -1268,6 +1273,21 @@ class ElementaryParser(object):
                               body=[Assign(targets=[Name(id='a', ctx=Store())], value=Num(n=5))], decorator_list=[])])
         t[0] = BaseNode()
         t[0].VALUE = ClassDef(name=t[2], bases=[], keywords=[], body=t[4].VALUE, decorator_list=[])
+
+    def p_class_declaration_2(self, t):
+        '''class_declaration : CLASS IDENTIFIER LSB class_decl_parameter RSB LMB root RMB'''
+        t[0] = BaseNode()
+
+    def p_class_decl_parameter(self, t):
+        '''class_decl_parameter : class_decl_parameter COMMA IDENTIFIER
+            | IDENTIFIER
+        '''
+        t[0] = BaseNode()
+        if(len(t)==2):
+            t[0].VALUE = [Name(id=t[1], ctx=Load())]
+        else:
+            t[1].VALUE.append(Name(id=t[3], ctx=Load()))
+            t[0].VALUE = t[1].VALUE
 
     ################### FUNCTION
 

@@ -9,7 +9,7 @@ n.asd = "a"
 print(n.asd)
 
 node = parse('''
-class a:
+class a(a,b):
     a = 5
 ''')
 print(dump(node))

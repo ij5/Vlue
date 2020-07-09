@@ -1328,6 +1328,8 @@ class ElementaryParser(object):
     def p_function_declaration(self, t):
         '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
         t[0] = BaseNode()
+        if(t[7].VALUE==[None]):
+            t[7].VALUE.append(Pass())
         t[0].VALUE = FunctionDef(name=t[2], args=arguments(
             args=t[4].VALUE,
             vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
@@ -1356,7 +1358,8 @@ class ElementaryParser(object):
         while_statement : WHILE LSB expression RSB LMB root RMB
         '''
         t[0] = BaseNode()
-
+        if(t[6].VALUE==[None]):
+            t[6].VALUE.append(Pass())
         t[0].VALUE = While(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
     ################## IF
@@ -1366,6 +1369,8 @@ class ElementaryParser(object):
         if_statement : IF LSB expression RSB LMB root RMB
         '''
         t[0] = BaseNode()
+        if(t[6].VALUE==[None]):
+            t[6].VALUE.append(Pass())
         t[0].VALUE = If(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
     def p_if_statement_elif(self, t):
@@ -1373,6 +1378,8 @@ class ElementaryParser(object):
         if_statement : if_statement ELSE IF LSB expression RSB LMB root RMB
         '''
         t[0] = BaseNode()
+        if(t[8].VALUE==[None]):
+            t[8].VALUE.append(Pass())
         t[1].VALUE.orelse.append(If(test=t[5].VALUE, body=t[8].VALUE, orelse=[]))
         t[0].VALUE = t[1].VALUE
         # else:
@@ -1382,6 +1389,8 @@ class ElementaryParser(object):
     def p_if_statement_else(self, t):
         '''if_statement : if_statement ELSE LMB root RMB'''
         t[0] = BaseNode()
+        if(t[4].VALUE==[None]):
+            t[4].VALUE.append(Pass())
         try:
             t[1].VALUE.orelse[0].orelse.append(flatten(t[4]))
             t[0].VALUE = t[1].VALUE

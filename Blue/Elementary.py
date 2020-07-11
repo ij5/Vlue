@@ -54,7 +54,6 @@ class Lexer(object):
         'NOTEQUAL',
         'PYTHON',
         'DL',
-        'CLASS',
     ] + list(reserved.values())
 
     t_EQUAL = r'='
@@ -1141,9 +1140,7 @@ def flatten(listdata):
     return listdata[0]
 
 def ex(data):
-    lv = locals()
-    gv = globals()
-    exec(data, gv, lv)
+    return compile(data, '<string>', 'exec')
 
 
 class ElementaryParser(object):
@@ -1224,6 +1221,14 @@ class ElementaryParser(object):
         '''use : USE IDENTIFIER'''
         t[0] = BaseNode()
         t[0].VALUE = "<use>"
+        lib = t[1]
+        libfile = lib + ".blib"
+        realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib", libfile)
+        if os.path.isfile(realpath):
+            f = open(realpath, 'r', encoding='UTF-8').read()
+        else:
+            print("There are no library named " + lib)
+
 
     def p_python(self, t):
         '''python : PYTHON'''
@@ -1511,7 +1516,8 @@ class ElementaryParser(object):
         t[0].VALUE = t[2]
 
     def p_calculate_number(self, t):
-        'calculate : INT'
+        '''calculate : INT
+            | FLOAT'''
         t[0] = BaseNode()
         t[0].VALUE = Num(t[1])
 

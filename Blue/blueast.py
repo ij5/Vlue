@@ -12,6 +12,8 @@ node = parse('''
 def a(a,b):
     pass
 ''')
+a = compile(node, '<string>', 'exec')
+print(a)
 print(dump(node))
 __ = [[1]]
 __ = __[0]

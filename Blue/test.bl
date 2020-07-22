@@ -44,4 +44,4 @@ class TestClass(BaseClass){
 
 }
 
-`print("hello World!")`
+``

@@ -107,7 +107,6 @@ class Lexer(object):
 
     def t_IDENTIFIER(self, t):
         r'[a-zA-Z_]+[a-zA-Z_0-9]*'
-        #if 등 정의
         t.type = Lexer.reserved.get(t.value, t.type)
         return t
 
@@ -1226,6 +1225,7 @@ class ElementaryParser(object):
         realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib", libfile)
         if os.path.isfile(realpath):
             f = open(realpath, 'r', encoding='UTF-8').read()
+            exec(f)
         else:
             print("There are no library named " + lib)
 
@@ -1234,7 +1234,8 @@ class ElementaryParser(object):
         '''python : PYTHON'''
         t[0] = BaseNode()
         t[0].VALUE = None
-
+        code = str(t[1])
+        exec(code)
 
     ################### VARIABLE DECLARATION
 

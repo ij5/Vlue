@@ -1,6 +1,7 @@
 import sys
 from ast import *
-
+from astor import code_gen
+import time
 
 ############################
 #####LEXER
@@ -26,37 +27,35 @@ class Lexer(object):
         'do': 'DO',
         'end': 'END',
         'pass': 'PASS',
-        'int': 'T_INT',
-        'float':"T_FLOAT",
-        'string':"T_STRING"
     }
 
     tokens = [
-        'IDENTIFIER',
-        'EQUAL',
-        'INT',
-        'FLOAT',
-        'STRING',
-        'LB',
-        'RB',
-        'COLON',
-        'SEMI',
-        'PLUS',
-        'MINUS',
-        'DIV',
-        'MUL',
-        'RSB',
-        'LSB',
-        'RMB',
-        'LMB',
-        'LBB',
-        'RBB',
-        'COMMA',
-        'DOT',
-        'NOTEQUAL',
-        'TAB',
-        'NEWLINE',
-    ] + list(reserved.values())
+                 'IDENTIFIER',
+                 'VAR',
+                 'EQUAL',
+                 'INT',
+                 'FLOAT',
+                 'STRING',
+                 'LB',
+                 'RB',
+                 'COLON',
+                 'SEMI',
+                 'PLUS',
+                 'MINUS',
+                 'DIV',
+                 'MUL',
+                 'RSB',
+                 'LSB',
+                 'RMB',
+                 'LMB',
+                 'LBB',
+                 'RBB',
+                 'COMMA',
+                 'DOT',
+                 'NOTEQUAL',
+                 'PYTHON',
+                 'DL',
+             ] + list(reserved.values())
 
     t_EQUAL = r'='
     t_DIV = r'\/'
@@ -69,13 +68,14 @@ class Lexer(object):
     t_RMB = r'\}'
     t_LB = r'\<'
     t_RB = r'\>'
-    t_COLON = r':'
+    t_COLON = r'\:'
     t_SEMI = r'\;'
     t_COMMA = r'\,'
     t_DOT = r'\.'
     t_LBB = r'\['
     t_RBB = r'\]'
     t_NOTEQUAL = r'\!'
+    t_DL = r'\$'
 
     t_ignore = ' '
 
@@ -83,16 +83,8 @@ class Lexer(object):
         r'\t'
         return t
 
-    def t_T_INT(self, t):
-        r'int'
-        return t
-
-    def t_T_FLOAT(self, t):
-        r'float'
-        return t
-
-    def t_T_STRING(self, t):
-        r'string'
+    def t_VAR(self, t):
+        r'var'
         return t
 
     def t_FLOAT(self, t):
@@ -105,6 +97,10 @@ class Lexer(object):
         t.value = int(t.value)
         return t
 
+    def t_CLASS(self, t):
+        r'class'
+        return t
+
     def t_STRING(self, t):
         r'("(?:\\"|.)*?"|\'(?:\\\'|.)*?\')'
         t.value = bytes(t.value, "utf-8").decode("unicode_escape")
@@ -112,15 +108,18 @@ class Lexer(object):
 
     def t_IDENTIFIER(self, t):
         r'[a-zA-Z_]+[a-zA-Z_0-9]*'
-        # if 등 정의
         t.type = Lexer.reserved.get(t.value, t.type)
+        return t
+
+    def t_PYTHON(self, t):
+        r'`[^`]+`'
         return t
 
     def t_NEWLINE(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
         t.lexer.linepos = 0
-        return t
+        pass
 
     def t_error(self, t):
         print("error on token %s" % t.value)
@@ -128,6 +127,14 @@ class Lexer(object):
 
     def __init__(self):
         self.lexer = lex.lex(module=self)
+
+    def test(self, data):
+        self.lexer.input(data)
+        while True:
+            tok = self.lexer.token()
+            if not tok:
+                break
+            print(tok)
 
 
 # data = '''
@@ -156,6 +163,12 @@ from ply import yacc
 import re
 import os
 
+code = "buf___ = 0\n"
+variable = {}
+state = []
+f = []
+debug = False
+
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'MUL', 'DIV'),
@@ -176,6 +189,7 @@ precedence = (
 
 
 ############## LIBRARY
+
 
 # ################ EXEX
 #
@@ -1127,6 +1141,10 @@ def flatten(listdata):
     return listdata[0]
 
 
+def ex(data):
+    return compile(data, '<string>', 'exec')
+
+
 class AdvancedParser(object):
     tokens = Lexer.tokens
     reserved = Lexer.reserved
@@ -1159,23 +1177,25 @@ class AdvancedParser(object):
 
     def p_statement(self, t):
         '''
-        statement : if_statement NEWLINE
+        statement : if_statement
             | while_statement
-            | variable_declaration
-            | variable_value_change
+            | variable_declaration SEMI
+            | variable_value_change SEMI
             | function_declaration
-            | PASS NEWLINE
-            | use
+            | PASS SEMI
+            | use SEMI
+            | python
+            | class_declaration
             | empty
         '''
         t[0] = BaseNode()
         if t[1] == "<use>":
-            pass
+            t[0].VALUE = Not()
         else:
             t[0].VALUE = t[1].VALUE
 
     def p_statement_calculate(self, t):
-        '''statement : expression NEWLINE'''
+        '''statement : expression SEMI'''
         t[0] = BaseNode()
         t[0].VALUE = Expr(t[1].VALUE)
 
@@ -1188,6 +1208,7 @@ class AdvancedParser(object):
             | compare_expression
             | function_call
             | list
+            | variable_list
         '''
         t[0] = BaseNode()
         if isinstance(t[1].VALUE, int):
@@ -1200,13 +1221,26 @@ class AdvancedParser(object):
     def p_use(self, t):
         '''use : USE IDENTIFIER'''
         t[0] = BaseNode()
-        t[0].VALUE = "<use>"
+        t[0].VALUE = None
+        lib = t[1]
+        libfile = lib + ".blib"
+        realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib", libfile)
+        if os.path.isfile(realpath):
+            f = open(realpath, 'r', encoding='UTF-8').read()
+        else:
+            print("There are no library named " + lib)
+
+    def p_python(self, t):
+        '''python : PYTHON'''
+        t[0] = BaseNode()
+        t[0].VALUE = None
 
     ################### VARIABLE DECLARATION
 
     def p_variable_declaration(self, t):
         '''
         variable_declaration : VAR IDENTIFIER EQUAL expression
+            | VAR variable_list EQUAL expression
             | VAR IDENTIFIER
         '''
         t[0] = BaseNode()
@@ -1224,12 +1258,44 @@ class AdvancedParser(object):
     def p_variable_value_change(self, t):
         '''
         variable_value_change : IDENTIFIER EQUAL expression
+            | variable_list EQUAL expression
         '''
         t[0] = BaseNode()
         if isinstance(t[3], Num):
             t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
+        elif isinstance(t[1], BaseNode):
+            t[0].VALUE = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
         else:
             t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
+
+    ################### CLASS
+
+    def p_class_declaration_1(self, t):
+        '''class_declaration : CLASS IDENTIFIER LMB root RMB'''
+        Module(body=[ClassDef(name='a', bases=[], keywords=[],
+                              body=[Assign(targets=[Name(id='a', ctx=Store())], value=Num(n=5))], decorator_list=[])])
+        t[0] = BaseNode()
+        if (t[4].VALUE == [None]):
+            t[4].VALUE.append(Pass())
+        t[0].VALUE = ClassDef(name=t[2], bases=[], keywords=[], body=t[4].VALUE, decorator_list=[])
+
+    def p_class_declaration_2(self, t):
+        '''class_declaration : CLASS IDENTIFIER LSB class_decl_parameter RSB LMB root RMB'''
+        t[0] = BaseNode()
+        if (t[7].VALUE == [None]):
+            t[7].VALUE.append(Pass())
+        t[0].VALUE = ClassDef(name=t[2], bases=t[4].VALUE, keywords=[], body=t[7].VALUE, decorator_list=[])
+
+    def p_class_decl_parameter(self, t):
+        '''class_decl_parameter : class_decl_parameter COMMA IDENTIFIER
+            | IDENTIFIER
+        '''
+        t[0] = BaseNode()
+        if (len(t) == 2):
+            t[0].VALUE = [Name(id=t[1], ctx=Load())]
+        else:
+            t[1].VALUE.append(Name(id=t[3], ctx=Load()))
+            t[0].VALUE = t[1].VALUE
 
     ################### FUNCTION
 
@@ -1264,10 +1330,12 @@ class AdvancedParser(object):
     def p_function_declaration(self, t):
         '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
         t[0] = BaseNode()
+        if (t[7].VALUE == [None]):
+            t[7].VALUE.append(Pass())
         t[0].VALUE = FunctionDef(name=t[2], args=arguments(
-            args=[arguments(args=t[4].VALUE, vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])],
-            vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]), body=t[7].VALUE, decorator_list=[],
-                                 returns=None)
+            args=t[4].VALUE,
+            vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+                                 body=t[7].VALUE, decorator_list=[], returns=None)
 
     def p_function_parameter(self, t):
         '''
@@ -1277,7 +1345,7 @@ class AdvancedParser(object):
         '''
         t[0] = BaseNode()
         if (len(t) == 2):
-            if (t[1] == None):
+            if (t[1].VALUE == None):
                 t[0].VALUE = []
             else:
                 t[0].VALUE = [arg(arg=t[1], annotation=None)]
@@ -1292,22 +1360,28 @@ class AdvancedParser(object):
         while_statement : WHILE LSB expression RSB LMB root RMB
         '''
         t[0] = BaseNode()
+        if (t[6].VALUE == [None]):
+            t[6].VALUE.append(Pass())
         t[0].VALUE = While(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
     ################## IF
 
     def p_if_statement(self, t):
         '''
-        if_statement : IF LSB expression RSB COLON NEWLINE TAB root NEWLINE
+        if_statement : IF LSB expression RSB LMB root RMB
         '''
         t[0] = BaseNode()
+        if (t[6].VALUE == [None]):
+            t[6].VALUE.append(Pass())
         t[0].VALUE = If(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
 
     def p_if_statement_elif(self, t):
         '''
-        if_statement : if_statement ELSE IF LSB expression RSB COLON TAB root
+        if_statement : if_statement ELSE IF LSB expression RSB LMB root RMB
         '''
         t[0] = BaseNode()
+        if (t[8].VALUE == [None]):
+            t[8].VALUE.append(Pass())
         t[1].VALUE.orelse.append(If(test=t[5].VALUE, body=t[8].VALUE, orelse=[]))
         t[0].VALUE = t[1].VALUE
         # else:
@@ -1315,8 +1389,10 @@ class AdvancedParser(object):
         #     t[0] = t[1]
 
     def p_if_statement_else(self, t):
-        '''if_statement : if_statement ELSE COLON TAB root'''
+        '''if_statement : if_statement ELSE LMB root RMB'''
         t[0] = BaseNode()
+        if (t[4].VALUE == [None]):
+            t[4].VALUE.append(Pass())
         try:
             t[1].VALUE.orelse[0].orelse.append(flatten(t[4]))
             t[0].VALUE = t[1].VALUE
@@ -1379,18 +1455,34 @@ class AdvancedParser(object):
             t[1].VALUE.append(t[3].VALUE)
             t[0] = t[1]
 
+    def p_variable_list(self, t):
+        '''variable_list : variable_list LBB expression RBB
+        '''
+        t[0] = BaseNode()
+        t[0].VALUE = Subscript(value=t[1].VALUE, slice=Index(value=t[3].VALUE), ctx=Load())
+
+    def p_variable_list_2(self, t):
+        '''variable_list : IDENTIFIER LBB expression RBB'''
+        t[0] = BaseNode()
+        t[0].VALUE = Subscript(value=Name(id=t[1], ctx=Load()), slice=Index(value=t[3].VALUE, ctx=Load()))
+
     ################### CALCULATE
 
     def p_string_calculate(self, t):
         '''
-        string_calculate : string_calculate stringoperator STRING
+        string_calculate : string_calculate stringoperator string_calculate
             | STRING
         '''
         t[0] = BaseNode()
         if len(t) == 2:
             t[0].VALUE = Str(s=t[1][1:-1])
         else:
-            t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=Str(s=t[3][1:-1]))
+            t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=t[3].VALUE)
+
+    def p_string_calculate_sb(self, t):
+        '''string_calculate : LSB string_calculate RSB'''
+        t[0] = BaseNode()
+        t[0].VALUE = t[2].VALUE
 
     def p_stringOperator(self, t):
         '''
@@ -1421,7 +1513,8 @@ class AdvancedParser(object):
         t[0].VALUE = t[2]
 
     def p_calculate_number(self, t):
-        'calculate : INT'
+        '''calculate : INT
+            | FLOAT'''
         t[0] = BaseNode()
         t[0].VALUE = Num(t[1])
 
@@ -1429,6 +1522,12 @@ class AdvancedParser(object):
         'calculate : IDENTIFIER'
         t[0] = BaseNode()
         t[0].VALUE = Name(t[1])
+
+    def p_calculate_global_identifier(self, t):
+        'calculate : DL IDENTIFIER'
+        t[0] = BaseNode()
+        t[0].VALUE = Name(t[2])
+        t[0].TYPE = "GLOBAL_IDENTIFIER"
 
     ############ EMPTY
 
@@ -1502,5 +1601,3 @@ class AdvancedParser(object):
 def error(s):
     print(s)
     exit(-1)
-
-

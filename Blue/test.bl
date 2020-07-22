@@ -1,3 +1,5 @@
+use base;
+
 function asd(){
 
 }
@@ -44,4 +46,4 @@ class TestClass(BaseClass){
 
 }
 
-``
+`a = 5`

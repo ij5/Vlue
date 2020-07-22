@@ -1138,9 +1138,17 @@ class BaseNode():
 def flatten(listdata):
     return listdata[0]
 
-def ex(data):
-    return compile(data, '<string>', 'exec')
+def lookup(s, lookups):
+    for pattern, value in lookups:
+        if re.search(pattern, s):
+            return value
+    return None
 
+def get_value(dic):
+    try:
+        return next(iter(dic.values()))
+    except StopIteration:
+        return None
 
 class ElementaryParser(object):
     tokens = Lexer.tokens
@@ -1219,13 +1227,19 @@ class ElementaryParser(object):
     def p_use(self, t):
         '''use : USE IDENTIFIER'''
         t[0] = BaseNode()
-        t[0].VALUE = "<use>"
-        lib = t[1]
-        libfile = lib + ".blib"
+        t[0].VALUE = None
+        lib = t[2]
+        libfile = lib + ".py"
         realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib", libfile)
         if os.path.isfile(realpath):
             f = open(realpath, 'r', encoding='UTF-8').read()
-            exec(f)
+            var = {}
+            exec(f, locals(), var)
+            print(var)
+            key = var.keys()
+            value = var.values()
+            print(key)
+            print(value)
         else:
             print("There are no library named " + lib)
 
@@ -1234,8 +1248,7 @@ class ElementaryParser(object):
         '''python : PYTHON'''
         t[0] = BaseNode()
         t[0].VALUE = None
-        code = str(t[1])
-        exec(code)
+        code = t[1]
 
     ################### VARIABLE DECLARATION
 

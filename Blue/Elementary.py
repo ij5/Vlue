@@ -1236,10 +1236,9 @@ class ElementaryParser(object):
             var = {}
             exec(f, locals(), var)
             print(var)
-            key = var.keys()
-            value = var.values()
-            print(key)
-            print(value)
+            for key in var.keys():
+                if(key.startswith("__")):
+                    t[0].VALUE = None
         else:
             print("There are no library named " + lib)
 

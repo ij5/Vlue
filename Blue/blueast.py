@@ -9,7 +9,8 @@ n.asd = "a"
 print(n.asd)
 
 node = parse('''
-True
+
+b.a
 ''')
 a = compile(node, '<string>', 'exec')
 print(a)

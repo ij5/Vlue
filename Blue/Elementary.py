@@ -1217,6 +1217,7 @@ class ElementaryParser(object):
             | function_call
             | list
             | variable_list
+            | dot
         '''
         t[0] = BaseNode()
         if isinstance(t[1].VALUE, int):
@@ -1289,6 +1290,21 @@ class ElementaryParser(object):
             t[0].VALUE = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
         else:
             t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
+
+
+    ################### DOT
+
+    def p_dot(self, t):
+        'dot : dot DOT dot'     # dot dot dot!!!!! 재밌당
+        t[0] = BaseNode()
+
+    def p_dot_variable(self, t):
+        '''
+        dot : calculate
+        '''
+        if(t[1].TYPE=="IDENTIFIER"):
+            pass
+        else:
 
 
     ################### CLASS
@@ -1546,6 +1562,7 @@ class ElementaryParser(object):
         'calculate : IDENTIFIER'
         t[0] = BaseNode()
         t[0].VALUE = Name(t[1])
+        t[0].TYPE = "IDENTIFIER"
 
     def p_calculate_boolean_false(self, t):
         'calculate : FALSE'

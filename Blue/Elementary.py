@@ -1486,6 +1486,7 @@ class ElementaryParser(object):
         List(elts=[Num(n=1), Num(n=2), Num(n=3)], ctx=Load())
         t[0] = BaseNode()
         t[0].VALUE = List(elts=t[2].VALUE, ctx=Load())
+        t[0].TYPE = "LIST"
 
     def p_list_params(self, t):
         '''
@@ -1499,18 +1500,22 @@ class ElementaryParser(object):
             t[1].VALUE.append(t[3].VALUE)
             t[0] = t[1]
 
+        t[0].TYPE = "LIST_PARAMS"
+
     def p_variable_list(self, t):
         '''variable_list : variable_list LBB expression RBB
         '''
         t[0] = BaseNode()
         t[0].VALUE = Subscript(value=t[1].VALUE, slice=Index(value=t[3].VALUE), ctx=Load())
+        t[0].TYPE = "VARIABLE_LIST"
 
     def p_variable_list_2(self, t):
         '''variable_list : IDENTIFIER LBB expression RBB'''
         t[0] = BaseNode()
         t[0].VALUE = Subscript(value=Name(id=t[1], ctx=Load()), slice=Index(value=t[3].VALUE, ctx=Load()))
+        t[0].TYPE = "VARIABLE_LIST"
 
-    ################### CALCULATE
+        ################### CALCULATE
 
     def p_string_calculate(self, t):
         '''
@@ -1522,11 +1527,13 @@ class ElementaryParser(object):
             t[0].VALUE = Str(s=t[1][1:-1])
         else:
             t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=t[3].VALUE)
+        t[0].TYPE = "STRING"
 
     def p_string_calculate_sb(self, t):
         '''string_calculate : LSB string_calculate RSB'''
         t[0] = BaseNode()
         t[0].VALUE = t[2].VALUE
+        t[0].TYPE = "STRING"
 
     def p_stringOperator(self, t):
         '''

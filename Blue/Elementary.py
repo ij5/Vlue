@@ -1322,6 +1322,7 @@ class ElementaryParser(object):
         if(t[4].VALUE==[None]):
             t[4].VALUE.append(Pass())
         t[0].VALUE = ClassDef(name=t[2], bases=[], keywords=[], body=t[4].VALUE, decorator_list=[])
+        t[0].TYPE = "CLASS_DECLARATION"
 
     def p_class_declaration_2(self, t):
         '''class_declaration : CLASS IDENTIFIER LSB class_decl_parameter RSB LMB root RMB'''
@@ -1329,6 +1330,7 @@ class ElementaryParser(object):
         if(t[7].VALUE==[None]):
             t[7].VALUE.append(Pass())
         t[0].VALUE = ClassDef(name=t[2], bases=t[4].VALUE, keywords=[], body=t[7].VALUE, decorator_list=[])
+        t[0].TYPE = "CLASS_DECLARATION"
 
     def p_class_decl_parameter(self, t):
         '''class_decl_parameter : class_decl_parameter COMMA IDENTIFIER
@@ -1340,14 +1342,16 @@ class ElementaryParser(object):
         else:
             t[1].VALUE.append(Name(id=t[3], ctx=Load()))
             t[0].VALUE = t[1].VALUE
+        t[0].TYPE = "CLASS_DECL_PARAMETER"
 
-    ################### FUNCTION
+        ################### FUNCTION
 
     def p_function_call(self, t):
         '''function_call : IDENTIFIER LSB function_call_parameter RSB'''
         t[0] = BaseNode()
         t[0].VALUE = Call(func=Name(id=t[1], ctx=Load()), args=t[3].VALUE, keywords=[])
         Module(body=[Expr(value=Call(func=Name(id='print', ctx=Load()), args=[Num(n=0)], keywords=[]))])
+        t[0].TYPE = "FUNCTION_CALL"
 
     def p_function_call_parameter(self, t):
         '''
@@ -1370,6 +1374,7 @@ class ElementaryParser(object):
                     t[0].VALUE = [Name(t[1].VALUE)]
                 else:
                     t[0].VALUE = [t[1].VALUE]
+        t[0].TYPE = "FUNCTION_CALL_PARAMETER"
 
     def p_function_declaration(self, t):
         '''function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB'''
@@ -1380,6 +1385,7 @@ class ElementaryParser(object):
             args=t[4].VALUE,
             vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
             body=t[7].VALUE, decorator_list=[], returns=None)
+        t[0].TYPE = "FUNCTION_DECLARATION"
 
     def p_function_parameter(self, t):
         '''
@@ -1396,8 +1402,9 @@ class ElementaryParser(object):
         elif(len(t)==4):
             t[1].VALUE.append(arg(arg=t[3], annotation=None))
             t[0].VALUE = t[1].VALUE
+        t[0].TYPE = "FUNCTION_PARAMETER"
 
-    ################### WHILE
+        ################### WHILE
 
     def p_while_statement(self, t):
         '''
@@ -1407,8 +1414,9 @@ class ElementaryParser(object):
         if(t[6].VALUE==[None]):
             t[6].VALUE.append(Pass())
         t[0].VALUE = While(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
+        t[0].TYPE = "WHILE_STATEMENT"
 
-    ################## IF
+        ################## IF
 
     def p_if_statement(self, t):
         '''
@@ -1418,6 +1426,7 @@ class ElementaryParser(object):
         if(t[6].VALUE==[None]):
             t[6].VALUE.append(Pass())
         t[0].VALUE = If(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
+        t[0].TYPE = "IF_STATEMENT"
 
     def p_if_statement_elif(self, t):
         '''
@@ -1431,6 +1440,7 @@ class ElementaryParser(object):
         # else:
         #     t[1].orelse = [If(test=t[5], body=t[8])]
         #     t[0] = t[1]
+        t[0].TYPE = "IF_STATEMENT"
 
     def p_if_statement_else(self, t):
         '''if_statement : if_statement ELSE LMB root RMB'''
@@ -1443,8 +1453,9 @@ class ElementaryParser(object):
         except(IndexError):
             t[1].VALUE.orelse.append(flatten(t[4]))
             t[0].VALUE = t[1].VALUE
+        t[0].TYPE = "IF_STATEMENT"
 
-    ################## COMPARE
+        ################## COMPARE
 
     def p_compare_expression(self, t):
         '''
@@ -1463,6 +1474,7 @@ class ElementaryParser(object):
                 t[0].VALUE = Compare(left=t[1].VALUE, ops=[LtE()], comparators=[t[3].VALUE])
             elif t[2].VALUE=='>=':
                 t[0] = Compare(left=t[1].VALUE, ops=[GtE()], comparators=[t[3].VALUE])
+        t[0].TYPE = "COMPARE_EXPRESSION"
 
     def p_compare_operator(self, t):
         '''
@@ -1478,8 +1490,9 @@ class ElementaryParser(object):
             t[0].VALUE = t[1]
         else:
             t[0].VALUE = t[1] + t[2]
+        t[0].TYPE = "COMPARE_OPERATOR"
 
-    ################### LIST
+        ################### LIST
 
     def p_list(self, t):
         '''list : LBB list_params RBB'''

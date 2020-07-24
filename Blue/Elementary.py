@@ -1277,6 +1277,7 @@ class ElementaryParser(object):
         else:
             t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=Num(0))
             variable[t[2].VALUE] = 0
+        t[0].TYPE = "VARIABLE_DECLARATION"
 
     def p_variable_value_change(self, t):
         '''
@@ -1290,15 +1291,19 @@ class ElementaryParser(object):
             t[0].VALUE = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
         else:
             t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
+        t[0].TYPE = "VARIABLE_VALUE_CHANGE"
 
 
-    ################### DOT
+        ################### DOT
 
     def p_dot(self, t):
         '''dot : dot DOT dot'''     # dot dot dot!!!!! 재밌당
         t[0] = BaseNode()
         if(t[1].TYPE == "IDENTIFIER" and t[3].TYPE=="IDENTIFIER"):
             t[0].VALUE = Attribute(value=t[1].VALUE, attr='a', ctx=Load())
+        else:
+            pass
+        t[0].TYPE = "DOT"
 
     def p_dot_variable(self, t):
         '''

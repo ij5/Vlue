@@ -1534,6 +1534,7 @@ class ElementaryParser(object):
         '''
         t[0] = BaseNode()
         t[0].VALUE = t[1]
+        t[0].TYPE = " PLUS"
 
     def p_calculate_binop(self, t):
         '''calculate : calculate PLUS calculate
@@ -1545,22 +1546,26 @@ class ElementaryParser(object):
         if t[2] == '-': t[0].VALUE = BinOp(left=t[1].VALUE, op=Sub(), right=t[3].VALUE)
         if t[2] == '*': t[0].VALUE = BinOp(left=t[1].VALUE, op=Mult(), right=t[3].VALUE)
         if t[2] == '/': t[0].VALUE = BinOp(left=t[1].VALUE, op=Div(), right=t[3].VALUE)
+        t[0].TYPE = "BINOP"
 
     def p_calculate_uminus(self, t):
         'calculate : MINUS calculate %prec UMINUS'
         t[0] = BaseNode()
         t[0].VALUE = -t[2]
+        t[0].TYPE = "MINUS"
 
     def p_calculate_group(self, t):
         'calculate : LSB calculate RSB'
         t[0] = BaseNode()
         t[0].VALUE = t[2]
+        t[0].TYPE = "GROUP"
 
     def p_calculate_number(self, t):
         '''calculate : INT
             | FLOAT'''
         t[0] = BaseNode()
         t[0].VALUE = Num(t[1])
+        t[0].TYPE = "NUMBER"
 
 
     def p_calculate_identifier(self, t):
@@ -1573,11 +1578,13 @@ class ElementaryParser(object):
         'calculate : FALSE'
         t[0] = BaseNode()
         t[0].VALUE = NameConstant(value=False)
+        t[0].TYPE = "BOOLEAN_FALSE"
 
     def p_calculate_boolean_true(self, t):
         'calculate : TRUE'
         t[0] = BaseNode()
         t[0].VALUE = NameConstant(value=True)
+        t[0].TYPE = "BOOLEAN_TRUE"
 
     def p_calculate_global_identifier(self, t):
         'calculate : DL IDENTIFIER'
@@ -1591,6 +1598,7 @@ class ElementaryParser(object):
         'empty : '
         t[0] = BaseNode()
         t[0].VALUE = None
+        t[0].TYPE = "EMPTY"
 
     # 토큰 에러 처리
     def p_error(self, t):

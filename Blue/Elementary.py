@@ -1165,8 +1165,9 @@ class ElementaryParser(object):
         '''
         t[0] = BaseNode()
         t[0].VALUE = Module(body=t[1].VALUE)
+        t[0].TYPE = "PROGRAM"
 
-    ##################### ROOT
+        ##################### ROOT
 
     def p_root(self, t):
         '''
@@ -1179,8 +1180,9 @@ class ElementaryParser(object):
             t[0].VALUE = t[1].VALUE
         elif len(t)==2:
             t[0].VALUE = [t[1].VALUE]
+        t[0].TYPE = "ROOT"
 
-    ################### STATEMENT
+        ################### STATEMENT
 
     def p_statement(self, t):
         '''
@@ -1200,14 +1202,16 @@ class ElementaryParser(object):
             t[0].VALUE = Not()
         else:
             t[0].VALUE = t[1].VALUE
+        t[0].TYPE = "STATEMENT"
 
 
     def p_statement_calculate(self, t):
         '''statement : expression SEMI'''
         t[0] = BaseNode()
         t[0].VALUE = Expr(t[1].VALUE)
+        t[0].TYPE = "STATEMENT"
 
-    ################## EXPRESSION
+        ################## EXPRESSION
 
     def p_expression(self, t):
         '''
@@ -1224,8 +1228,9 @@ class ElementaryParser(object):
             t[0].VALUE = Num(n=t[1].VALUE)
         else:
             t[0].VALUE = t[1].VALUE
+        t[0].TYPE = "EXPRESSION"
 
-    ################### USE STATEMENT
+        ################### USE STATEMENT
 
     def p_use(self, t):
         '''use : USE IDENTIFIER'''
@@ -1244,6 +1249,7 @@ class ElementaryParser(object):
                     key = key[2:]
         else:
             print("There are no library named " + lib)
+        t[0].TYPE = "USE"
 
 
     def p_python(self, t):
@@ -1251,8 +1257,9 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         t[0].VALUE = None
         code = t[1]
+        t[0].TYPE = "PYTHON"
 
-    ################### VARIABLE DECLARATION
+        ################### VARIABLE DECLARATION
 
 
     def p_variable_declaration(self, t):

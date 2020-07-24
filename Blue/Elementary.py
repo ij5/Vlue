@@ -1239,6 +1239,7 @@ class ElementaryParser(object):
             for key in var.keys():
                 if(key.startswith("__")):
                     t[0].VALUE = None
+                    print(key)
         else:
             print("There are no library named " + lib)
 

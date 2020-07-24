@@ -1306,10 +1306,13 @@ class ElementaryParser(object):
     def p_dot(self, t):
         '''dot : dot DOT dot'''     # dot dot dot!!!!! 재밌당
         t[0] = BaseNode()
-        if(t[1].TYPE == "IDENTIFIER" and t[3].TYPE=="IDENTIFIER"):
-            t[0].VALUE = Attribute(value=t[1].VALUE, attr='a', ctx=Load())
+        if(t[1].TYPE == "IDENTIFIER"):
+            if(t[3].TYPE=="IDENTIFIER"):
+                t[0].VALUE = Attribute(value=t[1].VALUE, attr='a', ctx=Load())
+            else:
+                raise SyntaxError
         else:
-            pass
+            raise SyntaxError
         t[0].TYPE = "DOT"
 
     def p_dot_variable(self, t):

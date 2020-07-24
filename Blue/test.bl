@@ -28,16 +28,15 @@ print(a);
 hello(9999999);
 print("Hello WO\"\nrld!"+"asdasdasd");
 
-a = [1,2,3];
+a = [1,2,3,'a','b','c'];
 print(a);
 1+2;
 ("asd"+("asd"+"asd"));
-a = "Hello World!";
 [[1,2,3], [1,2,3,4,5]];
 b = 3.45667;
-a[[1]];
-a[1][2];
-a[2] = b[2];
+a[1];
+a[1];
+a[2] = b;
 
 class BaseClass{
 
@@ -48,3 +47,8 @@ var a = 3;
 
 testclass = TestClass();
 testclass;
+
+var test = 2<3;
+print(test);
+
+var boolean = true;

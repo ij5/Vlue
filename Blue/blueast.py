@@ -9,8 +9,7 @@ n.asd = "a"
 print(n.asd)
 
 node = parse('''
-def a(a,b):
-    pass
+True
 ''')
 a = compile(node, '<string>', 'exec')
 print(a)
@@ -23,3 +22,6 @@ print("  \thello\t".strip())
 
 tree = Module(body=[Expr(value=BinOp(left=Num(n=1), op=Add(), right=Num(n=1)))])
 print(code_gen.to_source(tree))
+
+a = 2<3
+print(a)

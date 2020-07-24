@@ -26,6 +26,8 @@ class Lexer(object):
         'do': 'DO',
         'end': 'END',
         'pass': 'PASS',
+        'true': 'TRUE',
+        'false': 'FALSE',
     }
 
     tokens = [
@@ -1544,6 +1546,16 @@ class ElementaryParser(object):
         'calculate : IDENTIFIER'
         t[0] = BaseNode()
         t[0].VALUE = Name(t[1])
+
+    def p_calculate_boolean_false(self, t):
+        'calculate : FALSE'
+        t[0] = BaseNode()
+        t[0].VALUE = NameConstant(value=False)
+
+    def p_calculate_boolean_true(self, t):
+        'calculate : TRUE'
+        t[0] = BaseNode()
+        t[0].VALUE = NameConstant(value=True)
 
     def p_calculate_global_identifier(self, t):
         'calculate : DL IDENTIFIER'

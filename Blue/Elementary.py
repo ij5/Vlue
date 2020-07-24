@@ -1238,8 +1238,7 @@ class ElementaryParser(object):
             print(var)
             for key in var.keys():
                 if(key.startswith("__")):
-                    t[0].VALUE = None
-                    print(key)
+                    key = key[2:]
         else:
             print("There are no library named " + lib)
 
@@ -1263,10 +1262,15 @@ class ElementaryParser(object):
         global variable
         if len(t)==5:
             if isinstance(t[4].VALUE, Num):
-                t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
-                variable[t[2].VALUE] = t[4].VALUE.n
+                if(isinstance(t[2], str)):
+                    t[0].VALUE = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4].VALUE)
+                else:
+                    t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
             else:
-                t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
+                if(isinstance(t[2], str)):
+                    t[0].VALUE = Assign(targets=[Name(id=t[2], ctx=Store())], value=t[4].VALUE)
+                else:
+                    t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
         else:
             t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=Num(0))
             variable[t[2].VALUE] = 0
@@ -1362,10 +1366,10 @@ class ElementaryParser(object):
         '''
         t[0] = BaseNode()
         if(len(t)==2):
-            if(t[1].VALUE==None):
-                t[0].VALUE = []
-            else:
+            if(isinstance(t[1], str)):
                 t[0].VALUE = [arg(arg=t[1], annotation=None)]
+            else:
+                t[0].VALUE = []
         elif(len(t)==4):
             t[1].VALUE.append(arg(arg=t[3], annotation=None))
             t[0].VALUE = t[1].VALUE

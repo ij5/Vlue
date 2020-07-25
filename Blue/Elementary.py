@@ -1296,7 +1296,8 @@ class ElementaryParser(object):
             print(var)
             for key in var.keys():
                 if(key.startswith("__")):
-                    key = key[2:]
+                    k = key[2:]
+                    
         else:
             print("There are no library named " + lib)
         t[0].TYPE = "USE"

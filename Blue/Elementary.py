@@ -1318,11 +1318,15 @@ class ElementaryParser(object):
     def p_dot_variable(self, t):
         '''
         dot : calculate
+            | function_call
         '''
         t[0] = BaseNode()
         if(t[1].TYPE=="IDENTIFIER"):
             t[0].VALUE = t[1].VALUE
             t[0].TYPE = "IDENTIFIER"
+        elif(t[1].TYPE=="FUNCTION_CALL"):
+            t[0].VALUE = t[1].VALUE
+            t[0].TYPE = "FUNCTION_CALL"
         else:
             raise SyntaxError
 

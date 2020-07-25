@@ -15,7 +15,7 @@ IS_ADVANCED = False
 if(filename[-2:]=='bl'):
     IS_ADVANCED = False
 elif(filename[-3:]=='bla'):
-    IS_ADVANCED = False
+    IS_ADVANCED = True
 else:
     print("Invalid file format.")
     exit(-1)

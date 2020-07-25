@@ -1292,14 +1292,17 @@ class ElementaryParser(object):
         if os.path.isfile(realpath):
             f = open(realpath, 'r', encoding='UTF-8').read()
             var = {}
-            exec(f, locals(), var)
+            ast = parse(f, "<string>", "exec")
+            t[0].VALUE = ast
+            #exec(f, locals(), var)
             print(var)
             for key in var.keys():
                 if(key.startswith("__")):
                     k = key[2:]
-                    
+
         else:
             print("There are no library named " + lib)
+            raise ModuleNotFoundError
         t[0].TYPE = "USE"
 
 

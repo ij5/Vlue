@@ -1030,67 +1030,117 @@ precedence = (
 #     t[0] = t[2]
 
 """
-program: root
+program : root
 
 root : root statement
     | statement
 
-statement : expression
-    | if_statement
+statement : if_statement
     | while_statement
-    | variable_declaration
-    | variable_value_change
+    | variable_declaration SEMI
+    | variable_value_change SEMI
     | function_declaration
+    | PASS SEMI
+    | use SEMI
+    | python
+    | class_declaration
     | empty
     
+statement : expression SEMI
+
 expression : calculate
-    | compare_expression
     | string_calculate
+    | compare_expression
     | function_call
-        
-variable_declaration : VAR IDENTIFIER EQUAL expression SEMI
+    | list
+    | variable_list
+    | dot
+    
+use : USE IDENTIFIER
 
-variable_value_change : IDENTIFIER EQUAL expression SEMI
+python : PYTHON
 
-function_call : IDENTIFIER LSB function_parameter RSB
+variable_declaration : VAR IDENTIFIER EQUAL expression
+    | VAR variable_list EQUAL expression
+    | VAR IDENTIFIER
+    
+variable_value_change : IDENTIFIER EQUAL expression
+    | variable_list EQUAL expression
+    
+dot : dot DOT dot
 
-function_call_parameter : function_call_parameter COMMA calculate
-    | calculate
-    | empty
+dot : calculate
+    | function_call
+            
+class_declaration : CLASS IDENTIFIER LMB root RMB
 
-function_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB
+class_declaration : CLASS IDENTIFIER LSB class_decl_parameter RSB LMB root RMB
 
+class_decl_parameter : class_decl_parameter COMMA IDENTIFIER
+            | IDENTIFIER
+
+function_call : IDENTIFIER LSB function_call_parameter RSB
+
+function_call_parameter : function_call_parameter COMMA expression
+    | expression
+    | emptyfunction_declaration : FUNCTION IDENTIFIER LSB function_parameter RSB LMB root RMB
+    
 function_parameter : function_parameter COMMA IDENTIFIER
     | IDENTIFIER
     | empty
+    
+while_statement : WHILE LSB expression RSB LMB root RMB
 
-while_statement : WHILE LSB compare_expression RSB LMB root RMB
+if_statement : IF LSB expression RSB LMB root RMB
 
-if_statement : IF LSB compare_expression RSB LMB root RMB
-    | if_statement ELSE IF LSB compare_expression RSB LMB root RMB
-    | if_statement ELSE LMB root RMB
+if_statement : if_statement ELSE IF LSB expression RSB LMB root RMB
+
+if_statement : if_statement ELSE LMB root RMB
 
 compare_expression : compare_expression compare_operator calculate
     | calculate
-
+    
 compare_operator : LB
     | RB
     | LB EQUAL
     | RB EQUAL
     | EQUAL EQUAL
     | NOTEQUAL EQUAL
+    
+list : LBB list_params RBB 
 
-calculate : calculate baseoperator INT
-    | calculate baseoperator FLOAT
-    | calculate baseoperator IDENTIFIER
-    | INT
-    | FLOAT
-    | IDENTIFIER
+list_params : list_params COMMA expression
+            | expression
+            
+variable_list : variable_list LBB expression RBB
 
-baseoperator : PLUS
-    | MINUS
-    | MUL
-    | DIV
+variable_list : IDENTIFIER LBB expression RBB
+
+string_calculate : string_calculate stringoperator string_calculate
+    | STRING
+    
+string_calculate : LSB string_calculate RSB
+        stringoperator : PLUS
+        
+calculate : calculate PLUS calculate
+      | calculate MINUS calculate
+      | calculate MUL calculate
+      | calculate DIV calculate
+                      
+calculate : MINUS calculate %prec UMINUS
+
+calculate : LSB calculate RSB
+
+calculate : IDENTIFIER
+
+calculate : FALSE
+
+calculate : TRUE
+
+calculate : DL IDENTIFIER
+
+empty : 
+
 """
 
 def DecodeEscape(s):

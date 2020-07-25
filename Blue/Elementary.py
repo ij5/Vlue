@@ -1353,7 +1353,7 @@ class ElementaryParser(object):
 
         ################### DOT
 
-    def p_dot(self, t):
+    def p_dot(self, t):             #TODO DOT
         '''dot : dot DOT dot'''     # dot dot dot!!!!! 재밌당
         t[0] = BaseNode()
         if(t[1].TYPE == "IDENTIFIER"):

@@ -65,7 +65,10 @@ Expression은 N.Expression을 참고하세요.
 while문은 다음과 같이 사용됩니다.
 ```javascript
 var a = 0;
-while
+while(a<100){
+    log(a);
+    a = a + 1;
+}
 ```
 
 ### 4. Function Declaration

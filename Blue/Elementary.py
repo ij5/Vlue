@@ -1277,7 +1277,6 @@ class ElementaryParser(object):
     def p_expression(self, t):
         '''
         expression : calculate
-            | string_calculate
             | compare_expression
             | function_call
             | list
@@ -1681,32 +1680,32 @@ class ElementaryParser(object):
         t[0].TYPE = "VARIABLE_LIST"
 
         ################### CALCULATE
-
-    def p_string_calculate(self, t):
-        '''
-        string_calculate : string_calculate stringoperator string_calculate
-            | STRING
-        '''
-        t[0] = BaseNode()
-        if len(t)==2:
-            t[0].VALUE = Str(s=t[1][1:-1])
-        else:
-            t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=t[3].VALUE)
-        t[0].TYPE = "STRING"
-
-    def p_string_calculate_sb(self, t):
-        '''string_calculate : LSB string_calculate RSB'''
-        t[0] = BaseNode()
-        t[0].VALUE = t[2].VALUE
-        t[0].TYPE = "STRING"
-
-    def p_stringOperator(self, t):
-        '''
-        stringoperator : PLUS
-        '''
-        t[0] = BaseNode()
-        t[0].VALUE = t[1]
-        t[0].TYPE = " PLUS"
+    #
+    # def p_string_calculate(self, t):
+    #     '''
+    #     string_calculate : string_calculate stringoperator string_calculate
+    #         | STRING
+    #     '''
+    #     t[0] = BaseNode()
+    #     if len(t)==2:
+    #         t[0].VALUE = Str(s=t[1][1:-1])
+    #     else:
+    #         t[0].VALUE = BinOp(left=t[1].VALUE, op=Add(), right=t[3].VALUE)
+    #     t[0].TYPE = "STRING"
+    #
+    # def p_string_calculate_sb(self, t):
+    #     '''string_calculate : LSB string_calculate RSB'''
+    #     t[0] = BaseNode()
+    #     t[0].VALUE = t[2].VALUE
+    #     t[0].TYPE = "STRING"
+    #
+    # def p_stringOperator(self, t):
+    #     '''
+    #     stringoperator : PLUS
+    #     '''
+    #     t[0] = BaseNode()
+    #     t[0].VALUE = t[1]
+    #     t[0].TYPE = " PLUS"
 
     def p_calculate_binop(self, t):
         '''calculate : calculate PLUS calculate
@@ -1729,7 +1728,7 @@ class ElementaryParser(object):
     def p_calculate_group(self, t):
         'calculate : LSB calculate RSB'
         t[0] = BaseNode()
-        t[0].VALUE = t[2]
+        t[0].VALUE = t[2].VALUE
         t[0].TYPE = "GROUP"
 
     def p_calculate_number(self, t):
@@ -1746,6 +1745,12 @@ class ElementaryParser(object):
         t[0].VALUE = Name(t[1])
         t[0].TYPE = "IDENTIFIER"
         t[0].RAW = t[1]
+
+    def p_calculate_string(self, t):
+        'calculate : STRING'
+        t[0] = BaseNode()
+        t[0].VALUE = Str(s=t[1][1:-1])
+        t[0].TYPE = "STRING"
 
     def p_calculate_boolean_false(self, t):
         'calculate : FALSE'

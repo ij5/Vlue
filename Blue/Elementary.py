@@ -1719,6 +1719,12 @@ class ElementaryParser(object):
         if t[2] == '/': t[0].VALUE = BinOp(left=t[1].VALUE, op=Div(), right=t[3].VALUE)
         t[0].TYPE = "BINOP"
 
+    def p_calculate_expression(self, t):
+        '''calculate : function_call'''
+        t[0] = BaseNode()
+        t[0].VALUE = t[1].VALUE
+        t[0].TYPE = "CALCULATE"
+
     def p_calculate_uminus(self, t):
         'calculate : MINUS calculate %prec UMINUS'
         t[0] = BaseNode()

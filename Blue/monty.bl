@@ -21,13 +21,15 @@ while(i<100000){
                 break;
             }
         }
+        j = j + 1;
     }
     if(doors[first_choice] == 'car'){
         losses = losses + 1;
     }else{
         wins = wins + 1;
     }
+    i = i + 1;
 }
 print("All choices were switched.");
-print("Wins: "+wins);
-print("Losses"+losses);
+print("Wins: "+str(wins));
+print("Losses: "+str(losses));

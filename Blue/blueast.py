@@ -15,8 +15,7 @@ print(n.asd)
 n.print("Hello World!")
 
 node = parse('''
-
-b.b.a()
+1!=2
 ''')
 a = compile(node, '<string>', 'exec')
 print(a)

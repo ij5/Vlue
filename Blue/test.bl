@@ -64,4 +64,8 @@ fv();
 
 var fv2 = function(){
 
+};
+
+while(1!=1){
+
 }

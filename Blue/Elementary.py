@@ -1305,17 +1305,15 @@ class ElementaryParser(object):
         lib = t[2]
         libfile = lib + ".py"
         realpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib", libfile)
+        syslibfile = lib + ".sys.py"
+        sysrealpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib", syslibfile)
         if os.path.isfile(realpath):
             f = open(realpath, 'r', encoding='UTF-8').read()
-            var = {}
             ast = parse(f, "<string>", "exec")
             t[0].VALUE = ast
-            #exec(f, locals(), var)
-            print(var)
-            for key in var.keys():
-                if(key.startswith("__")):
-                    k = key[2:]
-
+        elif os.path.isfile(sysrealpath):
+            f = open(sysrealpath, 'r', encoding='UTF-8').read()
+            exec()
         else:
             print("There are no library named " + lib)
             raise ModuleNotFoundError
@@ -1604,7 +1602,11 @@ class ElementaryParser(object):
             elif t[2].VALUE=='<=':
                 t[0].VALUE = Compare(left=t[1].VALUE, ops=[LtE()], comparators=[t[3].VALUE])
             elif t[2].VALUE=='>=':
-                t[0] = Compare(left=t[1].VALUE, ops=[GtE()], comparators=[t[3].VALUE])
+                t[0].VALUE = Compare(left=t[1].VALUE, ops=[GtE()], comparators=[t[3].VALUE])
+            elif t[2].VALUE=="==":
+                t[0].VALUE = Compare(left=t[1].VALUE, ops=[Eq()], comparators=[t[3].VALUE])
+            elif t[2].VALUE=="!=":
+                t[0].VALUE = Compare(left=t[1].VALUE, ops=[NotEq()], comparators=[t[3].VALUE])
         t[0].TYPE = "COMPARE_EXPRESSION"
 
     def p_compare_operator(self, t):

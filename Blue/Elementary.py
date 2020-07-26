@@ -28,6 +28,7 @@ class Lexer(object):
         'pass': 'PASS',
         'true': 'TRUE',
         'false': 'FALSE',
+        'namespace': 'NAMESPACE',
     }
 
     tokens = [

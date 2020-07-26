@@ -54,3 +54,14 @@ print(test);
 var boolean = true;
 
 var array = [];
+
+function f(){
+print("Hello");
+}
+
+var fv = f;
+fv();
+
+var fv2 = function(){
+
+}

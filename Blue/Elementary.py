@@ -1249,6 +1249,10 @@ class ElementaryParser(object):
             | python
             | class_declaration
             | namespace SEMI
+            | anon_function
+            | anon_function SEMI
+            | anon_function_vc
+            | anon_function_vc SEMI
             | empty
         '''
         t[0] = BaseNode()
@@ -1449,7 +1453,29 @@ class ElementaryParser(object):
             t[0].VALUE = t[1].VALUE
         t[0].TYPE = "CLASS_DECL_PARAMETER"
 
-        ################### FUNCTION
+    ################### FUNCTION
+
+    def p_anon_function(self, t):
+        '''anon_function : VAR IDENTIFIER EQUAL FUNCTION LSB function_parameter RSB LMB root RMB'''
+        t[0] = BaseNode()
+        if(t[9].VALUE==[None]):
+            t[9].VALUE.append(Pass())
+        t[0].VALUE = FunctionDef(name=t[2], args=arguments(
+            args=t[6].VALUE,
+            vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+            body=t[9].VALUE, decorator_list=[], returns=None)
+        t[0].TYPE = "ANON_FUNCTION"
+
+    def p_anon_function_vc(self, t):
+        '''anon_function_vc : IDENTIFIER EQUAL FUNCTION LSB function_parameter RSB LMB root RMB'''
+        t[0] = BaseNode()
+        if(t[8].VALUE==[None]):
+            t[8].VALUE.append(Pass())
+        t[0].VALUE = FunctionDef(name=t[1], args=arguments(
+            args=t[5].VALUE,
+            vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+            body=t[8].VALUE, decorator_list=[], returns=None)
+        t[0].TYPE = "ANON_FUNCTION_VC"
 
     def p_function_call(self, t):
         '''function_call : IDENTIFIER LSB function_call_parameter RSB'''

@@ -1376,7 +1376,7 @@ class ElementaryParser(object):
         t[0].TYPE = "INSIDE"
 
     def p_inside_attr(self, t):
-        '''inside : calculate'''
+        '''inside : expression'''
         t[0] = BaseNode()
         t[0].VALUE = t[1].VALUE
         print(dump(t[0].VALUE))

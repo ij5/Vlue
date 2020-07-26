@@ -1290,7 +1290,6 @@ class ElementaryParser(object):
         else:
             t[0].VALUE = t[1].VALUE
         t[0].TYPE = "EXPRESSION"
-        print(dump(t[0].VALUE))
 
     ################### NAMESPACE STATEMENT
 
@@ -1417,7 +1416,6 @@ class ElementaryParser(object):
             t[0].VALUE = t[1].VALUE
             t[0].TYPE = "FUNCTION_CALL"
         else:
-            print(t[1].TYPE)
             error("syntax Error on line "+str(t.lineno(1)))
 
 
@@ -1595,10 +1593,10 @@ class ElementaryParser(object):
         if(t[4].VALUE==[None]):
             t[4].VALUE.append(Pass())
         try:
-            t[1].VALUE.orelse[0].orelse.append(flatten(t[4]))
+            t[1].VALUE.orelse[0].orelse.append(flatten(t[4].VALUE))
             t[0].VALUE = t[1].VALUE
         except(IndexError):
-            t[1].VALUE.orelse.append(flatten(t[4]))
+            t[1].VALUE.orelse.append(flatten(t[4].VALUE))
             t[0].VALUE = t[1].VALUE
         t[0].TYPE = "IF_STATEMENT"
 

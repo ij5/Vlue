@@ -1283,7 +1283,7 @@ class ElementaryParser(object):
             t[0].VALUE = Num(n=t[1].VALUE)
         else:
             t[0].VALUE = t[1].VALUE
-        t[0].TYPE = "EXPRESSION"
+        t[0].TYPE = t[1].TYPE
 
     ################### NAMESPACE STATEMENT
 
@@ -1366,49 +1366,65 @@ class ElementaryParser(object):
         t[0].TYPE = "VARIABLE_VALUE_CHANGE"
 
 
-        ################### DOT
+    ################### DOT
 
-    def p_dot(self, t):             #TODO DOT
-        '''
-        dot : dot DOT dot_attr
-            | dot_attr
-        '''
+    def p_inside(self, t):
+        '''inside : inside DOT expression'''
         t[0] = BaseNode()
-        if(len(t)==4):
-            if(t[1].TYPE == "IDENTIFIER"):
-                if(t[3].TYPE=="IDENTIFIER"):
-                    t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
-                elif(t[3].TYPE=="FUNCTION_CALL"):
-                    t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
-                t[0].TYPE = "DOT"
-            elif(t[1].TYPE=="FUNCTION_CALL"):
-                if(t[3].TYPE=="IDENTIFIER"):
-                    t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
-                elif(t[3].TYPE=="FUNCTION_CALL"):
-                    t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
-                t[0].TYPE = "DOT"
-            elif(t[1].TYPE=="DOT"):
-                t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
-                t[0].TYPE = "DOT"
-            else:
-                error("Syntax Error on line "+str(t.lineno(1)))
-        else:
-            t[0].VALUE = t[1].VALUE
-            t[0].TYPE = t[1].TYPE
+        t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
+        print(dump(t[0].VALUE))
+        t[0].TYPE = "INSIDE"
 
-    def p_dot_attr(self, t):
-        '''
-        dot_attr : calculate
-        '''
+    def p_inside_attr(self, t):
+        '''inside : calculate'''
         t[0] = BaseNode()
-        if(t[1].TYPE=="IDENTIFIER"):
-            t[0].VALUE = t[1].VALUE
-            t[0].TYPE = "IDENTIFIER"
-        elif(t[1].TYPE=="FUNCTION_CALL"):
-            t[0].VALUE = t[1].VALUE
-            t[0].TYPE = "FUNCTION_CALL"
-        else:
-            error("syntax Error on line "+str(t.lineno(1)))
+        t[0].VALUE = t[1].VALUE
+        print(dump(t[0].VALUE))
+        t[0].TYPE = t[1].TYPE
+
+
+    #
+    # def p_dot(self, t):             #TODO DOT
+    #     '''
+    #     dot : dot DOT dot_attr
+    #         | dot_attr
+    #     '''
+    #     t[0] = BaseNode()
+    #     if(len(t)==4):
+    #         if(t[1].TYPE == "IDENTIFIER"):
+    #             if(t[3].TYPE=="IDENTIFIER"):
+    #                 t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
+    #             elif(t[3].TYPE=="FUNCTION_CALL"):
+    #                 t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
+    #             t[0].TYPE = "DOT"
+    #         elif(t[1].TYPE=="FUNCTION_CALL"):
+    #             if(t[3].TYPE=="IDENTIFIER"):
+    #                 t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
+    #             elif(t[3].TYPE=="FUNCTION_CALL"):
+    #                 t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
+    #             t[0].TYPE = "DOT"
+    #         elif(t[1].TYPE=="DOT"):
+    #             t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
+    #             t[0].TYPE = "DOT"
+    #         else:
+    #             error("Syntax Error on line "+str(t.lineno(1)))
+    #     else:
+    #         t[0].VALUE = t[1].VALUE
+    #         t[0].TYPE = t[1].TYPE
+    #
+    # def p_dot_attr(self, t):
+    #     '''
+    #     dot_attr : calculate
+    #     '''
+    #     t[0] = BaseNode()
+    #     if(t[1].TYPE=="IDENTIFIER"):
+    #         t[0].VALUE = t[1].VALUE
+    #         t[0].TYPE = "IDENTIFIER"
+    #     elif(t[1].TYPE=="FUNCTION_CALL"):
+    #         t[0].VALUE = t[1].VALUE
+    #         t[0].TYPE = "FUNCTION_CALL"
+    #     else:
+    #         error("syntax Error on line "+str(t.lineno(1)))
 
 
     ################### BREAK
@@ -1781,8 +1797,14 @@ class ElementaryParser(object):
         t[0].VALUE = t[1].VALUE
         t[0].TYPE = t[1].TYPE
 
-    def p_calculate_dot(self, t):
-        '''calculate : dot'''
+    # def p_calculate_dot(self, t):
+    #     '''calculate : dot'''
+    #     t[0] = BaseNode()
+    #     t[0].VALUE = t[1].VALUE
+    #     t[0].TYPE = t[1].TYPE
+
+    def p_calculate_inside(self, t):
+        '''calculate : inside'''
         t[0] = BaseNode()
         t[0].VALUE = t[1].VALUE
         t[0].TYPE = t[1].TYPE

@@ -107,3 +107,8 @@ Expression은 다음과 같이 분류됩니다.
 - 배열
 - 비교식  
 - 클래스 호출
+
+
+Other
+------
+**https://developer.mozilla.org/ko/docs/Web/Javascript 본 문서는 모질라에서 제공하는 자바스크립트 문서를 활용하였습니다.**

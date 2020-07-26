@@ -50,7 +50,7 @@ if(IS_ADVANCED==True):
     print("Task finished in " + str(time.time() - startTime) + "s")
 else:
     parser = ElementaryParser()
-    result = parser.parser.parse(data, debug=0)
+    result = parser.parser.parse(data, debug=0, tracking=True)
     print("============== ABSTRACT SYNTAX TREE ==============")
     print(ast.dump(result.VALUE))
     print()

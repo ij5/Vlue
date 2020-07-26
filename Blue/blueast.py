@@ -16,7 +16,7 @@ n.print("Hello World!")
 
 node = parse('''
 
-b.a
+b.b.a()
 ''')
 a = compile(node, '<string>', 'exec')
 print(a)

@@ -1358,14 +1358,15 @@ class ElementaryParser(object):
         ################### DOT
 
     def p_dot(self, t):             #TODO DOT
-        '''dot : dot DOT dot_attr
+        '''
+        dot : dot DOT dot_attr
             | dot_attr
-        '''     # dot dot dot!!!!! 재밌당
+        '''
         t[0] = BaseNode()
         if(len(t)==4):
             if(t[1].TYPE == "IDENTIFIER"):
                 if(t[3].TYPE=="IDENTIFIER"):
-                    t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
+                    t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].RAW, ctx=Load())
                 if(t[3].TYPE=="FUNCTION_CALL"):
                     t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
                 t[0].TYPE = "DOT"
@@ -1390,6 +1391,7 @@ class ElementaryParser(object):
         if(t[1].TYPE=="IDENTIFIER"):
             t[0].VALUE = t[1].VALUE
             t[0].TYPE = "IDENTIFIER"
+            t[0].RAW = t[1].RAW
         elif(t[1].TYPE=="FUNCTION_CALL"):
             t[0].VALUE = t[1].VALUE
             t[0].TYPE = "FUNCTION_CALL"
@@ -1678,6 +1680,7 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         t[0].VALUE = Name(t[1])
         t[0].TYPE = "IDENTIFIER"
+        t[0].RAW = t[1]
 
     def p_calculate_boolean_false(self, t):
         'calculate : FALSE'

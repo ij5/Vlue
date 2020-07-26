@@ -52,3 +52,5 @@ var test = 2<3;
 print(test);
 
 var boolean = true;
+
+var array = [];

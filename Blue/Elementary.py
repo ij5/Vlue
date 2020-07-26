@@ -1188,6 +1188,8 @@ class BaseNode():
         self.VALUE = VALUE
         self.RETURN = RETURN
 
+namespace = []
+
 def flatten(listdata):
     return listdata[0]
 
@@ -1246,6 +1248,7 @@ class ElementaryParser(object):
             | use SEMI
             | python
             | class_declaration
+            | namespace SEMI
             | empty
         '''
         t[0] = BaseNode()
@@ -1281,7 +1284,15 @@ class ElementaryParser(object):
             t[0].VALUE = t[1].VALUE
         t[0].TYPE = "EXPRESSION"
 
-        ################### USE STATEMENT
+    ################### NAMESPACE STATEMENT
+
+    def p_namespace(self, t):
+        '''namespace : NAMESPACE IDENTIFIER'''
+        t[0] = BaseNode()
+        t[0].VALUE = None
+        global namespace
+
+    ################### USE STATEMENT
 
     def p_use(self, t):
         '''use : USE IDENTIFIER'''
@@ -1599,10 +1610,14 @@ class ElementaryParser(object):
         '''
         list_params : list_params COMMA expression
             | expression
+            | empty
         '''
         t[0] = BaseNode()
         if len(t)==2:
-            t[0].VALUE = [t[1].VALUE]
+            if(t[1]!=None):
+                t[0].VALUE = [t[1].VALUE]
+            else:
+                t[0].VALUE = [t[1].VALUE]
         else:
             t[1].VALUE.append(t[3].VALUE)
             t[0] = t[1]

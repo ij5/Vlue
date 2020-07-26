@@ -46,7 +46,7 @@ var a = 3;
 }
 
 testclass = TestClass();
-testclass.a.b;
+testclass.a.o().b;
 
 var test = 2<3;
 print(test);

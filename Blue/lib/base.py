@@ -1,6 +1,9 @@
-def asd():
-    print('1234')
+def log(data):
+    print(data)
+    return data
 
-__a = asd
+
+
+
 __test = 3+4
 __ppp = 333

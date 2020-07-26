@@ -1362,7 +1362,9 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         if(t[1].TYPE == "IDENTIFIER"):
             if(t[3].TYPE=="IDENTIFIER"):
-                t[0].VALUE = Attribute(value=t[1].VALUE, attr='a', ctx=Load())
+                t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
+            if(t[3].TYPE=="FUNCTION_CALL"):
+                t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
             else:
                 raise SyntaxError
         else:

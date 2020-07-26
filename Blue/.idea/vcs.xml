@@ -2,9 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/CodeExtension/blue" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/YACC/Mendl" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/YACC/PythonCompiler" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/YACC/juice/juicylang" vcs="Git" />
   </component>
 </project>

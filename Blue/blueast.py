@@ -4,9 +4,15 @@ class BaseNode():
     def __init__(self, RETURN=0):
         self.RETURN = RETURN
 
+    def print(self, data):
+        print(data)
+
+
+
 n = BaseNode()
 n.asd = "a"
 print(n.asd)
+n.print("Hello World!")
 
 node = parse('''
 

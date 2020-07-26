@@ -28,6 +28,8 @@ class Lexer(object):
         'false': 'FALSE',
         'namespace': 'NAMESPACE',
         'this': 'THIS',
+        'return': 'RETURN',
+        'break': 'BREAK',
     }
 
     tokens = [
@@ -1252,6 +1254,8 @@ class ElementaryParser(object):
             | anon_function SEMI
             | anon_function_vc
             | anon_function_vc SEMI
+            | return SEMI
+            | break SEMI
             | empty
         '''
         t[0] = BaseNode()
@@ -1286,6 +1290,7 @@ class ElementaryParser(object):
         else:
             t[0].VALUE = t[1].VALUE
         t[0].TYPE = "EXPRESSION"
+        print(dump(t[0].VALUE))
 
     ################### NAMESPACE STATEMENT
 
@@ -1412,8 +1417,25 @@ class ElementaryParser(object):
             t[0].VALUE = t[1].VALUE
             t[0].TYPE = "FUNCTION_CALL"
         else:
-            error("Syntax Error on line "+str(t.lineno(1)))
+            print(t[1].TYPE)
+            error("syntax Error on line "+str(t.lineno(1)))
 
+
+    ################### BREAK
+
+    def p_break(self, t):
+        '''break : BREAK'''
+        t[0] = BaseNode()
+        t[0].VALUE = Break()
+        t[0].TYPE = "BREAK"
+
+    ################### RETURN
+
+    def p_return(self, t):
+        '''return : RETURN expression'''
+        t[0] = BaseNode()
+        t[0].TYPE = "RETURN"
+        t[0].VALUE = Return(value=t[2].VALUE)
 
     ################### CLASS
 
@@ -1580,12 +1602,11 @@ class ElementaryParser(object):
             t[0].VALUE = t[1].VALUE
         t[0].TYPE = "IF_STATEMENT"
 
-        ################## COMPARE
+        ################## COMPARE TODO: OR AND
 
     def p_compare_expression(self, t):
         '''
-        compare_expression : compare_expression compare_operator calculate
-            | calculate
+        compare_expression : expression compare_operator expression
         '''
         t[0] = BaseNode()
         if len(t)==2:

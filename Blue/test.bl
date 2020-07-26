@@ -48,12 +48,13 @@ var a = 3;
 testclass = TestClass();
 testclass.a;
 
+3>4;
 var test = 2<3;
 print(test);
 
 var boolean = true;
 
-var array = [];
+var array = ['a','b','c'];
 
 function f(){
 print("Hello");
@@ -66,6 +67,3 @@ var fv2 = function(){
 
 };
 
-while(1!=1){
-
-}

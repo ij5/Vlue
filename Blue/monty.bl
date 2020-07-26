@@ -1,0 +1,33 @@
+use random;
+
+function populate_doors(){
+    door = ['goat', 'goat', 'goat'];
+    door[random.randint(0,2)] = 'car';
+    return door;
+}
+
+var wins = 0;
+var losses = 0;
+
+i = 0;
+while(i<100000){
+    doors = populate_doors();
+    first_choice = random.randint(0,2);
+    j = 0;
+    while(j<3){
+        if(doors[j] != 'car'){
+            if(j != first_choice){
+                doors[j] = 'out';
+                break;
+            }
+        }
+    }
+    if(doors[first_choice] == 'car'){
+        losses = losses + 1;
+    }else{
+        wins = wins + 1;
+    }
+}
+print("All choices were switched.");
+print("Wins: "+wins);
+print("Losses"+losses);

@@ -15,7 +15,8 @@ print(n.asd)
 n.print("Hello World!")
 
 node = parse('''
-1!=2
+while(True):
+    break
 ''')
 a = compile(node, '<string>', 'exec')
 print(a)

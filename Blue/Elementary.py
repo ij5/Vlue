@@ -23,12 +23,11 @@ class Lexer(object):
         'catch': 'CATCH',
         'global': 'GLOBAL',
         'class': 'CLASS',
-        'do': 'DO',
-        'end': 'END',
         'pass': 'PASS',
         'true': 'TRUE',
         'false': 'FALSE',
         'namespace': 'NAMESPACE',
+        'this': 'THIS',
     }
 
     tokens = [
@@ -1377,7 +1376,6 @@ class ElementaryParser(object):
             | dot_attr
         '''
         t[0] = BaseNode()
-        print(t[1].TYPE)
         if(len(t)==4):
             if(t[1].TYPE == "IDENTIFIER"):
                 if(t[3].TYPE=="IDENTIFIER"):
@@ -1396,7 +1394,6 @@ class ElementaryParser(object):
                 t[0].TYPE = "DOT"
             else:
                 error("Syntax Error on line "+str(t.lineno(1)))
-            print(t[1].TYPE)
         else:
             t[0].VALUE = t[1].VALUE
             t[0].TYPE = t[1].TYPE
@@ -1409,7 +1406,6 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         if(t[1].TYPE=="IDENTIFIER"):
             t[0].VALUE = t[1].VALUE
-            print(t[1].TYPE)
             t[0].TYPE = "IDENTIFIER"
             t[0].RAW = t[1].RAW
         elif(t[1].TYPE=="FUNCTION_CALL"):

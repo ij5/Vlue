@@ -1277,11 +1277,6 @@ class ElementaryParser(object):
     def p_expression(self, t):
         '''
         expression : calculate
-            | compare_expression
-            | function_call
-            | list
-            | variable_list
-            | dot
         '''
         t[0] = BaseNode()
         if isinstance(t[1].VALUE, int):
@@ -1404,13 +1399,11 @@ class ElementaryParser(object):
     def p_dot_attr(self, t):
         '''
         dot_attr : calculate
-            | function_call
         '''
         t[0] = BaseNode()
         if(t[1].TYPE=="IDENTIFIER"):
             t[0].VALUE = t[1].VALUE
             t[0].TYPE = "IDENTIFIER"
-            t[0].RAW = t[1].RAW
         elif(t[1].TYPE=="FUNCTION_CALL"):
             t[0].VALUE = t[1].VALUE
             t[0].TYPE = "FUNCTION_CALL"
@@ -1719,11 +1712,11 @@ class ElementaryParser(object):
         if t[2] == '/': t[0].VALUE = BinOp(left=t[1].VALUE, op=Div(), right=t[3].VALUE)
         t[0].TYPE = "BINOP"
 
-    def p_calculate_expression(self, t):
+    def p_calculate_function_call(self, t):
         '''calculate : function_call'''
         t[0] = BaseNode()
         t[0].VALUE = t[1].VALUE
-        t[0].TYPE = "CALCULATE"
+        t[0].TYPE = t[1].TYPE
 
     def p_calculate_uminus(self, t):
         'calculate : MINUS calculate %prec UMINUS'
@@ -1769,6 +1762,30 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         t[0].VALUE = NameConstant(value=True)
         t[0].TYPE = "BOOLEAN_TRUE"
+
+    def p_calculate_compare_expression(self, t):
+        '''calculate : compare_expression'''
+        t[0] = BaseNode()
+        t[0].VALUE = t[1].VALUE
+        t[0].TYPE = t[1].TYPE
+
+    def p_calculate_list(self, t):
+        '''calculate : list'''
+        t[0] = BaseNode()
+        t[0].VALUE = t[1].VALUE
+        t[0].TYPE = t[1].TYPE
+
+    def p_calculate_variable_list(self, t):
+        '''calculate : variable_list'''
+        t[0] = BaseNode()
+        t[0].VALUE = t[1].VALUE
+        t[0].TYPE = t[1].TYPE
+
+    def p_calculate_dot(self, t):
+        '''calculate : dot'''
+        t[0] = BaseNode()
+        t[0].VALUE = t[1].VALUE
+        t[0].TYPE = t[1].TYPE
 
     def p_calculate_global_identifier(self, t):
         'calculate : DL IDENTIFIER'

@@ -1210,6 +1210,7 @@ class ElementaryParser(object):
     tokens = Lexer.tokens
     reserved = Lexer.reserved
     precedence = precedence
+    debug = False
 
     ##################### PROGRAM
 
@@ -1310,10 +1311,12 @@ class ElementaryParser(object):
             t[0].VALUE = ast
         elif os.path.isfile(sysrealpath):
             f = open(sysrealpath, 'r', encoding='UTF-8').read()
-            exec()
+            exec(f)
         else:
-            print("There are no library named " + lib)
-            raise ModuleNotFoundError
+            if(t[2]=="debug"):
+                self.debug = True
+            else:
+                error("There are no library named " + lib)
         t[0].TYPE = "USE"
 
 

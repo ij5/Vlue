@@ -1,4 +1,6 @@
 use base;
+use debug;
+
 
 function asd(){
 
@@ -47,7 +49,7 @@ var a = 3;
 
 testclass = TestClass();
 
-testclass.b.a();
+testclass.a;
 
 3>4;
 var test = 2<3;

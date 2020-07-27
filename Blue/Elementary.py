@@ -1211,6 +1211,7 @@ class ElementaryParser(object):
     reserved = Lexer.reserved
     precedence = precedence
     debug = False
+    
 
     ##################### PROGRAM
 

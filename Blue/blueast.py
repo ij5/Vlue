@@ -32,3 +32,8 @@ print(code_gen.to_source(tree))
 
 a = 2<3
 print(a)
+
+from ctypes import cdll
+p = cdll.LoadLibrary("p.dll")
+
+print(p.isprime(100))

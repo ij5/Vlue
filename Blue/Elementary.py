@@ -1369,17 +1369,23 @@ class ElementaryParser(object):
     ################### DOT
 
     def p_inside(self, t):
-        '''inside : inside DOT expression'''
+        '''inside : inside DOT inside'''
         t[0] = BaseNode()
         t[0].VALUE = Attribute(value=t[1].VALUE, attr=t[3].VALUE, ctx=Load())
-        print(dump(t[0].VALUE))
         t[0].TYPE = "INSIDE"
 
     def p_inside_attr(self, t):
-        '''inside : expression'''
+        '''
+        inside : IDENTIFIER
+        '''
+        t[0] = BaseNode()
+        t[0].VALUE = Name(id=t[1], ctx=Store())
+        t[0].TYPE = "IDENTIFIER"
+
+    def p_inside_attr_2(self, t):
+        '''inside : function_call'''
         t[0] = BaseNode()
         t[0].VALUE = t[1].VALUE
-        print(dump(t[0].VALUE))
         t[0].TYPE = t[1].TYPE
 
 

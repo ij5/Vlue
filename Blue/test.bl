@@ -47,7 +47,7 @@ var a = 3;
 
 testclass = TestClass();
 
-testclass.a();
+testclass.b.a();
 
 3>4;
 var test = 2<3;

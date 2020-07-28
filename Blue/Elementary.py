@@ -1895,7 +1895,6 @@ class ElementaryParser(object):
 #     t[0] = t[1]
 
 
-# 에러 처리
 def error(s):
     print(s)
     exit(-1)

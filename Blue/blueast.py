@@ -7,6 +7,13 @@ class BaseNode():
     def print(self, data):
         print(data)
 
+    class test:
+        def __init__(self):
+            self.text = "test success"
+
+tst = BaseNode().test()
+
+print(tst.text)
 
 
 n = BaseNode()

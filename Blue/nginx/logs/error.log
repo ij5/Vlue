@@ -1,0 +1,10 @@
+2020/07/28 14:12:17 [emerg] 12216#3096: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2020/07/28 14:12:24 [emerg] 15140#6164: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2020/07/28 14:12:44 [emerg] 5740#6800: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2020/07/28 14:13:45 [emerg] 17008#17016: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2020/07/28 14:13:48 [emerg] 2856#7124: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2020/07/28 14:17:28 [error] 1536#16492: *1 CreateFile() "D:\D\jaehee\Project\pl\Blue\nginx/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost:1111", referrer: "http://localhost:1111/"
+2020/07/28 14:55:03 [emerg] 8092#6344: host not found in "8888s" of the "listen" directive in D:\D\jaehee\Project\pl\Blue\nginx/conf/nginx.conf:36
+2020/07/28 14:55:49 [error] 16564#9452: *1 CreateFile() "D:\D\jaehee\Project\pl\Blue\nginx/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost:8888", referrer: "http://localhost:8888/"
+2020/07/28 14:55:54 [error] 16564#9452: *4 CreateFile() "D:\D\jaehee\Project\pl\Blue\nginx/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "127.0.0.1:8888", referrer: "http://127.0.0.1:8888/"
+2020/07/28 14:56:05 [error] 16564#9452: *7 CreateFile() "D:\D\jaehee\Project\pl\Blue\nginx/html/favicon.ico" failed (2: The system cannot find the file specified), client: 192.168.35.13, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "192.168.35.13:8888", referrer: "http://192.168.35.13:8888/"

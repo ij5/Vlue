@@ -1,7 +1,4 @@
-import sys
 from ast import *
-from astor import code_gen
-import time
 
 ############################
 #####LEXER

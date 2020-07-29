@@ -16,13 +16,14 @@ class Lexer(object):
         'RSB',
         'RMB',
         'COMMA',
-        'OTHER'
+        'OTHER',
+        'EQUAL'
     ]
 
     t_ignore = ' \t'
 
     def t_IDENTIFIER(self, t):
-        r'[a-zA-Z_]+'
+        r'[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣_]+[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣_]*'
         return t
 
     def t_LSB(self, t):
@@ -43,6 +44,9 @@ class Lexer(object):
 
     def t_COMMA(self, t):
         r','
+        return t
+    def t_EQUAL(self, t):
+        r'='
         return t
 
     def t_OTHER(self, t):
@@ -95,20 +99,6 @@ class Lexer(object):
 
 from ply import yacc
 import re
-import os
-
-code = "buf___ = 0\n"
-variable = {}
-state = []
-f = []
-debug = False
-
-precedence = (
-    ('left', 'PLUS', 'MINUS'),
-    ('left', 'MUL', 'DIV'),
-    ('nonassoc', 'UMINUS')
-)
-
 
 def DecodeEscape(s):
     res = ''
@@ -179,7 +169,6 @@ def get_value(dic):
 
 class HTMLParser(object):
     tokens = Lexer.tokens
-    precedence = precedence
     debug = False
 
     ##################### PROGRAM
@@ -193,17 +182,21 @@ class HTMLParser(object):
 
     def p_root(self, t):
         '''
-        root : root expression
+        root : root root
             | expression
             | other
             | empty
         '''
 
     def p_expression(self, t):
-        '''expression : IDENTIFIER lSB parameter RSB LMB root RMB'''
+        '''expression : IDENTIFIER LSB parameter RSB LMB root RMB'''
 
     def p_parameter(self, t):
-        '''parameter : parameter '''
+        '''
+        parameter : parameter COMMA parameter
+            | IDENTIFIER EQUAL IDENTIFIER
+            | empty
+        '''
 
     def p_other(self, t):
         '''
@@ -246,3 +239,6 @@ asdf3
 
 l = Lexer()
 l.test(testcode)
+
+parser = HTMLParser()
+parser.parser.parse(testcode)

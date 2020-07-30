@@ -2,7 +2,7 @@ use base;
 use debug;
 
 
-function asd(){
+fn asd(){
 
 }
 count = 0;
@@ -24,7 +24,7 @@ print(a);
 if(a<10){
 print(1);
 }
-function hello(a){
+fn hello(a){
 print(a);
 }
 hello(9999999);
@@ -59,14 +59,24 @@ var boolean = true;
 
 var array = ['a','b','c'];
 
-function f(){
+fn f(){
 print("Hello");
 }
 
 var fv = f;
 fv();
 
-var fv2 = function(){
+var fv2 = fn(){
 
 };
 
+var a = `
+html(){
+    head(){
+        title(){안녕}
+    }
+    body(){
+        p(id=1234){asdAsd}
+    }
+}
+`;

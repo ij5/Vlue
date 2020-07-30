@@ -161,6 +161,7 @@ class Lexer(object):
 from ply import yacc
 import re
 import os
+import HTML
 
 code = "buf___ = 0\n"
 variable = {}
@@ -1246,7 +1247,6 @@ class ElementaryParser(object):
             | function_declaration
             | PASS SEMI
             | use SEMI
-            | python
             | class_declaration
             | namespace SEMI
             | anon_function
@@ -1326,8 +1326,11 @@ class ElementaryParser(object):
                                                   FormattedValue(value=Name(id='a', ctx=Load()), conversion=-1,
                                                                  format_spec=None)]))], type_ignores=[])
 
-        t[0].VALUE = JoinedStr(values = [])
-        code = t[1]
+        code = t[1][1:-1]
+        htmlParser = HTML.HTMLParser()
+        result = htmlParser.parser.parse(code)
+        t[0].VALUE = Str(s=result)
+        print(result)
         t[0].TYPE = "html"
 
         ################### VARIABLE DECLARATION
@@ -1817,6 +1820,12 @@ class ElementaryParser(object):
 
     def p_calculate_inside(self, t):
         '''calculate : inside'''
+        t[0] = BaseNode()
+        t[0].VALUE = t[1].VALUE
+        t[0].TYPE = t[1].TYPE
+
+    def p_calculate_html(self, t):
+        '''calculate : html'''
         t[0] = BaseNode()
         t[0].VALUE = t[1].VALUE
         t[0].TYPE = t[1].TYPE

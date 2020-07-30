@@ -248,23 +248,3 @@ class HTMLParser(object):
 def error(s):
     print(s)
     exit(-1)
-
-testcode = '''
-html(id= asd){
-    head(){
-        title(){test}
-    }
-    body(){
-        p(id=p, class=p){Hello World!}
-    }
-}
-안녕(){}
-'''
-
-l = Lexer()
-l.test(testcode)
-
-parser = HTMLParser()
-result = parser.parser.parse(testcode)
-
-print(result)

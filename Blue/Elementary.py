@@ -1319,11 +1319,16 @@ class ElementaryParser(object):
 
 
     def p_python(self, t):
-        '''python : PYTHON'''
+        '''html : PYTHON'''
         t[0] = BaseNode()
-        t[0].VALUE = None
+        Module(body=[Assign(targets=[Name(id='a', ctx=Store())], value=Constant(value=3, kind=None), type_comment=None),
+                     Expr(value=JoinedStr(values=[Constant(value='asd', kind=None),
+                                                  FormattedValue(value=Name(id='a', ctx=Load()), conversion=-1,
+                                                                 format_spec=None)]))], type_ignores=[])
+
+        t[0].VALUE = JoinedStr(values = [])
         code = t[1]
-        t[0].TYPE = "PYTHON"
+        t[0].TYPE = "html"
 
         ################### VARIABLE DECLARATION
 

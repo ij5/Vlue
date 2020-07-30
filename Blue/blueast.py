@@ -22,8 +22,11 @@ print(n.asd)
 n.print("Hello World!")
 
 node = parse('''
-$asd
+a = 3
+f'asd{a}'
 ''')
+
+
 a = compile(node, '<string>', 'exec')
 print(a)
 print(dump(node))

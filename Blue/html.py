@@ -49,15 +49,15 @@ class Lexer(object):
         r'='
         return t
 
-    def t_OTHER(self, t):
-        r'.+'
-        return t
-
     def t_NEWLINE(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
         t.lexer.linepos = 0
         pass
+
+    def t_OTHER(self, t):
+        r'[^\{\}]+'
+        return t
 
     def t_error(self, t):
         print("error on token %s" % t.value)
@@ -183,12 +183,14 @@ class HTMLParser(object):
 
     def p_root(self, t):
         '''
-        root : root root
+        root : root expression
+            | root other
+            | root empty
             | expression
             | other
             | empty
         '''
-        if(len(t[1])==3):
+        if(len(t)==3):
             t[0] = t[1] + t[2]
         else:
             t[0] = t[1]
@@ -250,9 +252,15 @@ def error(s):
     exit(-1)
 
 testcode = '''
-html(){
-asdf3
+html(id= asd){
+    head(){
+        title(){test}
+    }
+    body(){
+        p(id=p, class=p){Hello World!}
+    }
 }
+안녕(){}
 '''
 
 l = Lexer()

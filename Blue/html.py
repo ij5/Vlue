@@ -177,6 +177,7 @@ class HTMLParser(object):
         '''
         program : root
         '''
+        t[0] = t[1]
 
         ##################### ROOT
 
@@ -187,10 +188,14 @@ class HTMLParser(object):
             | other
             | empty
         '''
+        if(len(t[1])==3):
+            t[0] = t[1] + t[2]
+        else:
+            t[0] = t[1]
 
     def p_expression(self, t):
         '''expression : IDENTIFIER LSB parameter RSB LMB root RMB'''
-        
+        t[0] = "<" + t[1] + " " + t[3] + ">" + t[6] + "</" + t[1] + ">"
 
     def p_parameter(self, t):
         '''
@@ -253,4 +258,6 @@ l = Lexer()
 l.test(testcode)
 
 parser = HTMLParser()
-parser.parser.parse(testcode)
+result = parser.parser.parse(testcode)
+
+print(result)

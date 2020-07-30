@@ -195,7 +195,10 @@ class HTMLParser(object):
 
     def p_expression(self, t):
         '''expression : IDENTIFIER LSB parameter RSB LMB root RMB'''
-        t[0] = "<" + t[1] + " " + t[3] + ">" + t[6] + "</" + t[1] + ">"
+        if(t[3]==""):
+            t[0] = "<" + t[1] + "" + t[3] + ">" + t[6] + "</" + t[1] + ">"
+        else:
+            t[0] = "<" + t[1] + " " + t[3] + ">" + t[6] + "</" + t[1] + ">"
 
     def p_parameter(self, t):
         '''
@@ -228,9 +231,7 @@ class HTMLParser(object):
 
     def p_empty(self, t):
         'empty : '
-        t[0] = BaseNode()
-        t[0].VALUE = None
-        t[0].TYPE = "EMPTY"
+        t[0] = ""
 
     # 토큰 에러 처리
     def p_error(self, t):

@@ -190,13 +190,21 @@ class HTMLParser(object):
 
     def p_expression(self, t):
         '''expression : IDENTIFIER LSB parameter RSB LMB root RMB'''
+        
 
     def p_parameter(self, t):
         '''
         parameter : parameter COMMA parameter
-            | IDENTIFIER EQUAL IDENTIFIER
             | empty
         '''
+        if(len(t)==2):
+            t[0] = ""
+        else:
+            t[0] = t[1] + " " + t[3]
+
+    def p_parameter_2(self, t):
+        '''parameter : IDENTIFIER EQUAL IDENTIFIER'''
+        t[0] = t[1] + t[2] + '"' + t[3] + '"'
 
     def p_other(self, t):
         '''
@@ -206,6 +214,10 @@ class HTMLParser(object):
             | LSB
             | RSB
         '''
+        if(len(t)==3):
+            t[0] = t[1] + t[2]
+        else:
+            t[0] = t[1]
 
     ############ EMPTY
 

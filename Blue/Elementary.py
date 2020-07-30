@@ -10,7 +10,7 @@ class Lexer(object):
     reserved = {
         'if': 'IF',
         'else': 'ELSE',
-        'function': 'FUNCTION',
+        'fn': 'FUNCTION',
         'repeat': 'REPEAT',
         'for': 'FOR',
         'while': 'WHILE',

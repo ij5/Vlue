@@ -1,0 +1,14 @@
+IDENTIFIER=1
+LSB=2
+RSB=3
+LMB=4
+RMB=5
+COMMA=6
+EQUAL=7
+OTHER=8
+'('=2
+')'=3
+'{'=4
+'}'=5
+','=6
+'='=7

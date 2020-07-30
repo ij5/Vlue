@@ -1,41 +1,25 @@
-result = ""
+from ast import *
 
-class SourceGenerator():
+
+class Node():
     def __init__(self):
         pass
 
-class BaseNode():
-    def __init__(self):
-        pass
+    def identifier(self, identifier):
+        self.identifier = identifier
 
-class Statement(BaseNode):
-    def __init__(self):
-        pass
+class HTML(NodeVisitor):
+    def generic_visit(self, node):
+        print(type(node).__name__)
+        NodeVisitor.generic_visit(self, node)
 
-class Expression(BaseNode):
-    def __init__(self):
-        pass
+    def visit_IDENTIFIER(self, node):
+        print("IDENTIFIER: ", node.identifier)
 
-class VariableDeclaration(Statement):
-    def __init__(self, variable_name, variable_value=0):
-        if(isinstance(variable_value, int)):
-            self.source = 'int {} = {};'.format(variable_name, variable_value)
-        if(isinstance(variable_value, float)):
-            self.source = 'float {} = {};'.format(variable_name, variable_value)
+if __name__=="__main__":
+    node = Node()
+    node.identifier("html")
 
-class FunctionDeclaration(Statement):
-    def __init__(self):
-        pass
+    html = HTML()
+    html.visit(node)
 
-
-
-class FunctionCall(Expression):
-    def __init__(self):
-        pass
-
-
-class If(Statement):
-    def __init__(self):
-        pass
-    def write(self):
-        result.append()

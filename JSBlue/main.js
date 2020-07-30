@@ -1,2 +1,2 @@
-const parser = require('./acorn');
-
+const acorn = require('acorn');
+console.log(acorn.parse('1+1'));

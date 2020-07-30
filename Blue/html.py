@@ -183,9 +183,7 @@ class HTMLParser(object):
 
     def p_root(self, t):
         '''
-        root : root expression
-            | root other
-            | root empty
+        root : root root
             | expression
             | other
             | empty
@@ -225,7 +223,7 @@ class HTMLParser(object):
             | RSB
         '''
         if(len(t)==3):
-            t[0] = t[1] + t[2]
+            t[0] = t[1] +" " + t[2]
         else:
             t[0] = t[1]
 

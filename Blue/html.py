@@ -179,6 +179,20 @@ def get_value(dic):
     except StopIteration:
         return None
 
+from io import StringIO
+import contextlib
+import sys
+from astor import code_gen
+
+@contextlib.contextmanager
+def StdoutIO(stdout = None):
+    old = sys.stdout
+    if stdout is None:
+        stdout = StringIO()
+    sys.stdout = stdout
+    yield stdout
+    sys.stdout = old
+
 
 class HTMLParser(object):
     tokens = Lexer.tokens
@@ -240,10 +254,14 @@ class HTMLParser(object):
         else:
             t[0] = t[1]
 
-    def p_other(self, t):
+    def p_other_2(self, t):
         '''other : BLUE'''
         parser = ElementaryParser()
         result = parser.parser.parse(t[1][2:-2])
+        result = code_gen.to_source(result.VALUE)
+        with StdoutIO() as s:
+            exec(result)
+        t[0] = s.getvalue()
 
     ############ EMPTY
 

@@ -111,6 +111,7 @@ class Lexer(object):
 
 from ply import yacc
 import re
+from Elementary import ElementaryParser
 
 def DecodeEscape(s):
     res = ''
@@ -238,6 +239,11 @@ class HTMLParser(object):
             t[0] = t[1] +" " + t[2]
         else:
             t[0] = t[1]
+
+    def p_other(self, t):
+        '''other : BLUE'''
+        parser = ElementaryParser()
+        result = parser.parser.parse(t[1][2:-2])
 
     ############ EMPTY
 

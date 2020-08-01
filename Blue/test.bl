@@ -76,7 +76,7 @@ html(){
         title(){안녕}
     }
     body(){
-        p(id=1234){asdAsd}
+        p(id="1234 4567 asdfasdf"){asdAsd}
     }
 }
 `;

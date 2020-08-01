@@ -17,7 +17,9 @@ class Lexer(object):
         'RMB',
         'COMMA',
         'OTHER',
-        'EQUAL'
+        'EQUAL',
+        'STRING',
+        'BLUE',
     ]
 
     t_ignore = ' \t'
@@ -45,6 +47,16 @@ class Lexer(object):
     def t_COMMA(self, t):
         r','
         return t
+
+    def t_BLUE(self, t):
+        r'\<\?(?:\\"|.)*?\?\>'
+        return t
+
+    def t_STRING(self, t):
+        r'("(?:\\"|.)*?"|\'(?:\\\'|.)*?\')'
+        t.value = bytes(t.value, "utf-8").decode("unicode_escape")
+        return t
+
     def t_EQUAL(self, t):
         r'='
         return t
@@ -211,8 +223,8 @@ class HTMLParser(object):
             t[0] = t[1] + " " + t[3]
 
     def p_parameter_2(self, t):
-        '''parameter : IDENTIFIER EQUAL IDENTIFIER'''
-        t[0] = t[1] + t[2] + '"' + t[3] + '"'
+        '''parameter : IDENTIFIER EQUAL STRING'''
+        t[0] = t[1] + t[2] + '"' + t[3][1:-1] + '"'
 
     def p_other(self, t):
         '''

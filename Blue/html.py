@@ -111,7 +111,7 @@ class Lexer(object):
 
 from ply import yacc
 import re
-from Elementary import ElementaryParser
+from InsideHTML import ElementaryParser
 
 def DecodeEscape(s):
     res = ''
@@ -185,7 +185,7 @@ import sys
 from astor import code_gen
 
 @contextlib.contextmanager
-def StdoutIO(stdout = None):
+def StdoutIO(stdout=None):
     old = sys.stdout
     if stdout is None:
         stdout = StringIO()

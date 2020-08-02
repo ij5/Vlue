@@ -248,6 +248,7 @@ class HTMLParser(object):
             | IDENTIFIER
             | LSB
             | RSB
+            | STRING
         '''
         if(len(t)==3):
             t[0] = t[1] +" " + t[2]

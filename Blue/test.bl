@@ -77,8 +77,8 @@ html(){
     }
     body(){
         p(id="1234 4567 asdfasdf"){"asdAsd"}
-        h1(id="<?print('Helloo World!');?>"){"Hello WOrlD!"}
+        h1(id="head"){"Hello WOrlD!"}
     }
 }
-<?print("Hello World!");?>
+<?[1,2,3];?>
 `;

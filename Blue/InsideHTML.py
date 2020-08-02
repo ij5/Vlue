@@ -423,8 +423,15 @@ class ElementaryParser(object):
     def p_statement_calculate(self, t):
         '''statement : expression SEMI'''
         t[0] = BaseNode()
-        t[0].VALUE = Expr(t[1].VALUE)
+        #t[0].VALUE = Expr(t[1].VALUE)
         t[0].TYPE = "STATEMENT"
+        t[0].VALUE = Expr(Call(func=Name(id='print', ctx=Load()), args=[t[1].VALUE], keywords=[]))
+
+    def p_statement_calculate_2(self, t):     #TODO: This statement will cause error.
+        '''statement : expression'''
+        t[0] = BaseNode()
+        t[0].TYPE = 'STATEMENT'
+        t[0].VALUE = Expr(Call(func=Name(id='print', ctx=Load()), args=[t[1].VALUE], keywords=[]))
 
         ################## EXPRESSION
 
@@ -941,7 +948,7 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         t[0].VALUE = t[1].VALUE
         t[0].TYPE = t[1].TYPE
-        print(code_gen.to_source(t[1].VALUE))
+
 
     def p_calculate_variable_list(self, t):
         '''calculate : variable_list'''
@@ -960,6 +967,7 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         t[0].VALUE = t[1].VALUE
         t[0].TYPE = t[1].TYPE
+
 
 
     def p_calculate_global_identifier(self, t):

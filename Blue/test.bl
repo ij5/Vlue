@@ -73,12 +73,12 @@ var fv2 = fn(){
 var a = `
 html(){
     head(){
-        title(){안녕}
+        title(){"안녕"}
     }
     body(){
-        p(id="1234 4567 asdfasdf"){asdAsd}
-        h1(id="<?print("Helloo World!");?>"){"Hello WOrlD!"}
+        p(id="1234 4567 asdfasdf"){"asdAsd"}
+        h1(id="<?print('Helloo World!');?>"){"Hello WOrlD!"}
     }
 }
-<?print("Hello World!");"?>
+<?print("Hello World!");?>
 `;

@@ -230,23 +230,56 @@ class HTMLParser(object):
         '''
         root : root root
             | expression
+            | other
+            | empty
         '''
+        if(len(t)==3):
+            t[0] = t[1] + t[2]
+        else:
+            t[0] =t[1]
 
 
     def p_expression(self, t):
         '''expression : IDENTIFIER LSB parameter RSB LMB root RMB'''
+        if(t[3]==""):
+            t[0] = "<" + t[1] + "" + t[3] + ">" + t[6] + "</" + t[1] + ">"
+        else:
+            t[0] = "<" + t[1] + " " + t[3] + ">" + t[6] + "</" + t[1] + ">"
 
     def p_parameter(self, t):
         '''parameter : parameter COMMA parameter'''
+        t[0] = t[1] + " " + t[3]
 
     def p_parameter_2(self, t):
         '''parameter : i_b EQUAL i_b'''
+        t[0] = t[1] + t[2] + t[3]
+
+    def p_parameter_3(self, t):
+        '''parameter : empty'''
+        t[0] = ""
 
     def p_i_b(self, t):
         '''
         i_b : IDENTIFIER
             | BLUE
+            | STRING
         '''
+        t[0] = t[1]
+
+    def p_other(self, t):
+        '''
+        other : STRING
+        '''
+        t[0] = t[1][1:-1]
+
+    def p_other_2(self, t):
+        '''other : BLUE'''
+        parser = ElementaryParser()
+        result = parser.parser.parse(t[1][2:-2])
+        result = code_gen.to_source(result.VALUE)
+        with StdoutIO() as s:
+            exec(result)
+        t[0] = s.getvalue()
 
 
     #
@@ -297,14 +330,7 @@ class HTMLParser(object):
     #     else:
     #         t[0] = t[1]
 
-    def p_other_2(self, t):
-        '''other : BLUE'''
-        parser = ElementaryParser()
-        result = parser.parser.parse(t[1][2:-2])
-        result = code_gen.to_source(result.VALUE)
-        with StdoutIO() as s:
-            exec(result)
-        t[0] = s.getvalue()
+
 
     ############ EMPTY
 
@@ -329,5 +355,4 @@ def error(s):
     exit(-1)
 
 
-lexer = Lexer()
-lexer.test(''' "<??>" ''')
+

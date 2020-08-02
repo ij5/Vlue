@@ -1,4 +1,3 @@
-from ast import *
 
 ############################
 #####LEXER
@@ -24,6 +23,10 @@ class Lexer(object):
 
     t_ignore = ' \t'
 
+    def t_BLUE(self, t):
+        r'\<\?(?:\\"|.)*?\?\>'
+        return t
+
     def t_IDENTIFIER(self, t):
         r'[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣_]+[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣_]*'
         return t
@@ -46,10 +49,6 @@ class Lexer(object):
 
     def t_COMMA(self, t):
         r','
-        return t
-
-    def t_BLUE(self, t):
-        r'\<\?(?:\\"|.)*?\?\>'
         return t
 
     def t_STRING(self, t):
@@ -194,6 +193,25 @@ def StdoutIO(stdout=None):
     sys.stdout = old
 
 
+'''
+program : root
+
+root : root root
+    | expression
+    
+expression : identifier LSB parameter RSB LMB root RMB
+
+parameter : parameter COMMA parameter
+    | identifier EQUAL string
+    
+    
+identifier : identifier identifier
+    | BLUE
+    | IDENTIFIER
+    
+string : STRING
+'''
+
 class HTMLParser(object):
     tokens = Lexer.tokens
     debug = False
@@ -206,54 +224,78 @@ class HTMLParser(object):
         '''
         t[0] = t[1]
 
-        ##################### ROOT
+    ##################### ROOT
 
     def p_root(self, t):
         '''
         root : root root
             | expression
-            | other
-            | empty
         '''
-        if(len(t)==3):
-            t[0] = t[1] + t[2]
-        else:
-            t[0] = t[1]
+
 
     def p_expression(self, t):
         '''expression : IDENTIFIER LSB parameter RSB LMB root RMB'''
-        if(t[3]==""):
-            t[0] = "<" + t[1] + "" + t[3] + ">" + t[6] + "</" + t[1] + ">"
-        else:
-            t[0] = "<" + t[1] + " " + t[3] + ">" + t[6] + "</" + t[1] + ">"
 
     def p_parameter(self, t):
-        '''
-        parameter : parameter COMMA parameter
-            | empty
-        '''
-        if(len(t)==2):
-            t[0] = ""
-        else:
-            t[0] = t[1] + " " + t[3]
+        '''parameter : parameter COMMA parameter'''
 
     def p_parameter_2(self, t):
-        '''parameter : IDENTIFIER EQUAL STRING'''
-        t[0] = t[1] + t[2] + '"' + t[3][1:-1] + '"'
+        '''parameter : i_b EQUAL i_b'''
 
-    def p_other(self, t):
+    def p_i_b(self, t):
         '''
-        other : other other
-            | OTHER
-            | IDENTIFIER
-            | LSB
-            | RSB
-            | STRING
+        i_b : IDENTIFIER
+            | BLUE
         '''
-        if(len(t)==3):
-            t[0] = t[1] +" " + t[2]
-        else:
-            t[0] = t[1]
+
+
+    #
+    # def p_root(self, t):
+    #     '''
+    #     root : root root
+    #         | expression
+    #         | other
+    #         | empty
+    #     '''
+    #     if(len(t)==3):
+    #         t[0] = t[1] + t[2]
+    #     else:
+    #         t[0] = t[1]
+    #
+    # def p_expression(self, t):
+    #     '''expression : IDENTIFIER LSB parameter RSB LMB root RMB'''
+    #     if(t[3]==""):
+    #         t[0] = "<" + t[1] + "" + t[3] + ">" + t[6] + "</" + t[1] + ">"
+    #     else:
+    #         t[0] = "<" + t[1] + " " + t[3] + ">" + t[6] + "</" + t[1] + ">"
+    #
+    # def p_parameter(self, t):
+    #     '''
+    #     parameter : parameter COMMA parameter
+    #         | empty
+    #     '''
+    #     if(len(t)==2):
+    #         t[0] = ""
+    #     else:
+    #         t[0] = t[1] + " " + t[3]
+    #
+    # def p_parameter_2(self, t):
+    #     '''parameter : IDENTIFIER EQUAL STRING'''
+    #     t[0] = t[1] + t[2] + '"' + t[3][1:-1] + '"'
+    #
+    # def p_other(self, t):
+    #     '''
+    #     other : other other
+    #         | OTHER
+    #         | IDENTIFIER
+    #         | LSB
+    #         | RSB
+    #         | STRING
+    #     '''
+    #     if(len(t)==3):
+    #         t[0] = t[1] +" " + t[2]
+    #     else:
+    #         t[0] = t[1]
 
     def p_other_2(self, t):
         '''other : BLUE'''
@@ -285,3 +327,7 @@ class HTMLParser(object):
 def error(s):
     print(s)
     exit(-1)
+
+
+lexer = Lexer()
+lexer.test(''' "<??>" ''')

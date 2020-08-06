@@ -1376,6 +1376,21 @@ class ElementaryParser(object):
         t[0].TYPE = "VARIABLE_VALUE_CHANGE"
 
 
+
+    ################### IMPORT
+
+    def p_import(self, t):
+        '''import : IMPORT IDENTIFIER'''
+        html = HTML.HTMLParser()
+        location = open()
+        html.parser.parse()
+
+    def p_import_parameter(self, t):
+        '''
+        import_params : import_params DOT IDENTIFIER
+                        
+        '''
+
     ################### DOT
 
     def p_inside(self, t):

@@ -27,6 +27,7 @@ class Lexer(object):
         'this': 'THIS',
         'return': 'RETURN',
         'break': 'BREAK',
+        'import': 'IMPORT',
     }
 
     tokens = [

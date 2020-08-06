@@ -1380,16 +1380,26 @@ class ElementaryParser(object):
     ################### IMPORT
 
     def p_import(self, t):
-        '''import : IMPORT IDENTIFIER'''
+        '''import : IMPORT import_params'''
+        t[0] = BaseNode()
         html = HTML.HTMLParser()
-        location = open()
-        html.parser.parse()
+        cwd = os.getcwd()
+        data = open(os.path.join(cwd, t[2].VALUE) + ".ebl", 'r', encoding='UTF-8')
+        result = html.parser.parse(data, debug=0, tracking=True)
+        t[0].VALUE = Str(s=result.VALUE)
+        t[0].TYPE = "IMPORT"
 
     def p_import_parameter(self, t):
         '''
         import_params : import_params DOT IDENTIFIER
-                        
+            | IDENTIFIER
         '''
+        t[0] = BaseNode()
+        if(len(t)==2):
+            t[0].VALUE = t[1]
+        else:
+            t[0].VALUE = os.path.join(t[1], t[3])
+        t[0].TYPE = "IMPORT_PARAMETER"
 
     ################### DOT
 
@@ -1842,6 +1852,12 @@ class ElementaryParser(object):
 
     def p_calculate_html(self, t):
         '''calculate : html'''
+        t[0] = BaseNode()
+        t[0].VALUE = t[1].VALUE
+        t[0].TYPE = t[1].TYPE
+
+    def p_calculate_import(self, t):
+        '''calculate : import'''
         t[0] = BaseNode()
         t[0].VALUE = t[1].VALUE
         t[0].TYPE = t[1].TYPE

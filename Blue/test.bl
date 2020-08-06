@@ -82,3 +82,5 @@ html(){
 }
 <?[1,2,3];?>
 `;
+
+var b = import test;

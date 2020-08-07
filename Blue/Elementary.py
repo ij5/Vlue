@@ -1331,7 +1331,6 @@ class ElementaryParser(object):
         htmlParser = HTML.HTMLParser()
         result = htmlParser.parser.parse(code)
         t[0].VALUE = Str(s=result)
-        print(result)
         t[0].TYPE = "html"
 
         ################### VARIABLE DECLARATION
@@ -1384,9 +1383,9 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         html = HTML.HTMLParser()
         cwd = os.getcwd()
-        data = open(os.path.join(cwd, t[2].VALUE) + ".ebl", 'r', encoding='UTF-8')
+        data = open(os.path.join(cwd, t[2].VALUE) + ".ebl", 'r', encoding='UTF-8').read()
         result = html.parser.parse(data, debug=0, tracking=True)
-        t[0].VALUE = Str(s=result.VALUE)
+        t[0].VALUE = Str(s=result)
         t[0].TYPE = "IMPORT"
 
     def p_import_parameter(self, t):

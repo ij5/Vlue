@@ -261,10 +261,18 @@ class HTMLParser(object):
     def p_i_b(self, t):
         '''
         i_b : IDENTIFIER
-            | BLUE
             | STRING
         '''
         t[0] = t[1]
+
+    def p_i_b_2(self, t):
+        '''i_b : BLUE'''
+        parser = ElementaryParser()
+        result = parser.parser.parse(t[1][2:-2])
+        result = code_gen.to_source(result.VALUE)
+        with StdoutIO() as s:
+            exec(result)
+        t[0] = s.getvalue
 
     def p_other(self, t):
         '''

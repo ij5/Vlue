@@ -1256,6 +1256,7 @@ class ElementaryParser(object):
             | anon_function_vc SEMI
             | return SEMI
             | break SEMI
+            | for_statement
             | empty
         '''
         t[0] = BaseNode()
@@ -1603,6 +1604,9 @@ class ElementaryParser(object):
     def p_for_statement(self, t):
         '''for_statement : FOR LSB IDENTIFIER IN expression RSB LMB root RMB'''
         t[0] = BaseNode()
+        For(target=Name(id=t[3], ctx=Store()), iter=t[5].VALUE, body=t[8].VALUE, orelse=[])
+        t[0].TYPE = "FOR"
+        t[0].VALUE = For(target=Name(id=t[3], ctx=Store()), iter=t[5].VALUE, body=t[8].VALUE, orelse=[])
 
 
     ################### WHILE

@@ -3,12 +3,12 @@ from Elementary import ElementaryParser
 from Advanced import AdvancedParser
 from astor import code_gen
 import ast
-import re
-import os
+import sys
 
 
 
-filename = input("input file name: ")
+filename = sys.argv[1]
+print(filename)
 startTime = time.time()
 data = open(filename, 'r', encoding='UTF-8').read()
 IS_ADVANCED = False

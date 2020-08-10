@@ -84,3 +84,7 @@ html(){
 `;
 
 var b = import test;
+
+for(i in range(3)){
+    print(i);
+}

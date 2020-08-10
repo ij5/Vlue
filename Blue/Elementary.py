@@ -1257,6 +1257,7 @@ class ElementaryParser(object):
             | return SEMI
             | break SEMI
             | for_statement
+            | global SEMI
             | empty
         '''
         t[0] = BaseNode()
@@ -1467,6 +1468,15 @@ class ElementaryParser(object):
     #     else:
     #         error("syntax Error on line "+str(t.lineno(1)))
 
+
+    ################### GLOBAL
+
+    def p_global(self, t):
+        '''global : GLOBAL IDENTIFIER'''
+        Global(names=['a'])
+        t[0] = BaseNode()
+        t[0].TYPE = "GLOBAL"
+        t[0].VALUE = Global(names=[t[2]])
 
     ################### BREAK
 

@@ -22,8 +22,7 @@ print(n.asd)
 n.print("Hello World!")
 
 node = parse('''
-for i in range():
-    a = 0
+global a
 ''')
 
 

@@ -22,8 +22,8 @@ print(n.asd)
 n.print("Hello World!")
 
 node = parse('''
-a = 3
-f'asd{a}asd'
+for i in range():
+    a = 0
 ''')
 
 

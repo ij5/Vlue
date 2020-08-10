@@ -1597,7 +1597,15 @@ class ElementaryParser(object):
             t[0].VALUE = t[1].VALUE
         t[0].TYPE = "FUNCTION_PARAMETER"
 
-        ################### WHILE
+
+    ################### FOR
+
+    def p_for_statement(self, t):
+        '''for_statement : FOR LSB IDENTIFIER IN expression RSB LMB root RMB'''
+        t[0] = BaseNode()
+
+
+    ################### WHILE
 
     def p_while_statement(self, t):
         '''
@@ -1609,7 +1617,7 @@ class ElementaryParser(object):
         t[0].VALUE = While(test=t[3].VALUE, body=t[6].VALUE, orelse=[])
         t[0].TYPE = "WHILE_STATEMENT"
 
-        ################## IF
+    ################## IF
 
     def p_if_statement(self, t):
         '''

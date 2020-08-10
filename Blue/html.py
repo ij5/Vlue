@@ -267,12 +267,13 @@ class HTMLParser(object):
 
     def p_i_b_2(self, t):
         '''i_b : BLUE'''
-        parser = ElementaryParser()
-        result = parser.parser.parse(t[1][2:-2])
-        result = code_gen.to_source(result.VALUE)
-        with StdoutIO() as s:
-            exec(result)
-        t[0] = s.getvalue
+        # parser = ElementaryParser()
+        # result = parser.parser.parse(t[1][2:-2])
+        # result = code_gen.to_source(result.VALUE)
+        # with StdoutIO() as s:
+        #     exec(result)
+        # t[0] = s.getvalue
+        t[0] = '{' + t[1][2:-2] + '}'
 
     def p_other(self, t):
         '''
@@ -282,13 +283,13 @@ class HTMLParser(object):
 
     def p_other_2(self, t):
         '''other : BLUE'''
-        parser = ElementaryParser()
-        result = parser.parser.parse(t[1][2:-2])
-        result = code_gen.to_source(result.VALUE)
-        with StdoutIO() as s:
-            exec(result)
-        t[0] = s.getvalue()
-
+        # parser = ElementaryParser()
+        # result = parser.parser.parse(t[1][2:-2])
+        # result = code_gen.to_source(result.VALUE)
+        # with StdoutIO() as s:
+        #     exec(result)
+        # t[0] = s.getvalue()
+        t[0] = '{' + t[1][2:-2] + '}'
 
     #
     # def p_root(self, t):

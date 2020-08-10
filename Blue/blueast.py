@@ -23,7 +23,7 @@ n.print("Hello World!")
 
 node = parse('''
 a = 3
-f'asd{a}'
+f'asd{a}asd'
 ''')
 
 

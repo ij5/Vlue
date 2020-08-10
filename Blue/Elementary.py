@@ -1326,7 +1326,7 @@ class ElementaryParser(object):
                      Expr(value=JoinedStr(values=[Constant(value='asd', kind=None),
                                                   FormattedValue(value=Name(id='a', ctx=Load()), conversion=-1,
                                                                  format_spec=None)]))], type_ignores=[])
-
+        JoinedStr(values=[Str(s='asd'), FormattedValue(value=Name(id='a', ctx=Load()), conversion=-1, format_spec=None), Str(s='asd')])
         code = t[1][1:-1]
         htmlParser = HTML.HTMLParser()
         result = htmlParser.parser.parse(code)

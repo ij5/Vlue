@@ -1,7 +1,11 @@
 from http import server
+import subprocess
 import os
 
 def start(port=8000):
-    os.system("cd {}".format(os.path.join(os.path.dirname(os.path.abspath(__file__)), "server")))
-    result = os.popen("dir").read()
-    print(result)
+    ex ="cd {}".format(os.path.join(os.path.dirname(os.path.abspath(__file__)), "server"))
+    print(ex)
+    subprocess.Popen(ex).communicate()
+    print(ex)
+    # result = subprocess.Popen("dir").communicate()
+    # print(result)

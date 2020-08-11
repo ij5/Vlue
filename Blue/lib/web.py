@@ -1,9 +1,11 @@
-from http import server
 import subprocess
-import os
 import atexit
+import lib.NGINXConf as conf
 
 def start(port=8000):
+    c = conf.Conf()
+    server = conf.Server()
+    
     subprocess.Popen("nginx", shell=True, cwd="nginx")
 
 def onexit():

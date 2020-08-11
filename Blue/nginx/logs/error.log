@@ -9,3 +9,6 @@
 2020/07/28 14:55:54 [error] 16564#9452: *4 CreateFile() "D:\D\jaehee\Project\pl\Blue\nginx/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "127.0.0.1:8888", referrer: "http://127.0.0.1:8888/"
 2020/07/28 14:56:05 [error] 16564#9452: *7 CreateFile() "D:\D\jaehee\Project\pl\Blue\nginx/html/favicon.ico" failed (2: The system cannot find the file specified), client: 192.168.35.13, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "192.168.35.13:8888", referrer: "http://192.168.35.13:8888/"
 2020/08/11 16:05:48 [notice] 20088#23104: signal process started
+2020/08/11 16:17:18 [notice] 24460#17424: signal process started
+2020/08/11 21:15:58 [notice] 24164#25096: signal process started
+2020/08/11 21:16:28 [notice] 18188#18784: signal process started

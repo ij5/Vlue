@@ -1,12 +1,13 @@
 from http import server
 import subprocess
 import os
-
-def _start(port=8000):
-    subprocess.Popen("nginx", shell=True, cwd="nginx")
+import atexit
 
 def start(port=8000):
-    try:
-        _start(port)
-    except KeyboardInterrupt:
-        subprocess.Popen("nginx -s quit")
+    subprocess.Popen("nginx", shell=True, cwd="nginx")
+
+def onexit():
+    subprocess.Popen("nginx -s quit", shell=True, cwd="nginx")
+    print("turn off nginx service.")
+
+atexit.register(onexit)

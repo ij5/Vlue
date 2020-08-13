@@ -28,7 +28,8 @@ def start(domain="localhost", port=8000):
             conf.Location(
                 '/',
                 conf.Key('include', '/etc/nginx/python_uwsgi.conf'),
-            )
+            ),
+            
         )
 
 def onexit():

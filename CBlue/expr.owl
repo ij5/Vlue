@@ -1,4 +1,86 @@
-#using owl.v4
-variable = 'var' identifier (':' datatype)?
-datatype = 'int'
-  | 'string'
+program = root
+
+root = statement*
+
+statement = if_statement
+  | while_statement
+  | variable_declaration
+  | variable_value_change
+  | function_declaration
+  | 'pass'
+  | use
+  | class_declaration
+  | expression
+  | ''
+
+expression = compare_expression
+  | function_call
+  | list
+  | variable_list
+  | dot
+
+use = 'use' identifier
+
+variable_declaration = 'var' identifier '=' expression
+  | 'var' variable_list '=' expression
+  | 'var' identifier
+
+variable_value_change = identifier '=' expression
+  | variable_list '=' expression
+
+dot = dot '.' dot
+  | calculate
+  | function_call
+
+class_declaration = 'class' identifier '{' root '}'
+  | 'class' identifier '(' class_decl_parameter ')' '{' root '}'
+
+class_decl_parameter = class_decl_parameter ',' identifier
+  | identifier
+
+
+function_call = identifier '(' function_call_parameter ')'
+
+function_call_parameter = function_call_parameter ',' expression
+  | expression
+  | ''
+
+function_declaration = 'function' identifier '(' function_parameter ')' '{' root '}'
+
+function_parameter = function_parameter ',' identifier
+  | identifier
+  | ''
+
+while_statement = 'while' '(' expression ')' '{' root '}'
+
+if_statement = 'if' '(' expression ')' '{' root '}'
+  | if_statement 'else' 'if' '(' expression ')' '{' root '}'
+  | if_statement 'else' '{' root '}'
+
+compare_expression = compare_expression compare_operator expression
+  | expression
+
+compare_operator = '<'
+  | '>'
+  | '<='
+  | '>='
+  | '=='
+  | '!='
+
+list = '[' list_params ']'
+
+list_params = list_params ',' expression
+  | expression
+
+variable_list = variable_list '[' expression ']'
+  | identifier '[' expression ']'
+
+expression = expression '+' expression
+  | expression '-' expression
+  | expression '*' expression
+  | expression '/' expression
+  | '-' expression
+  | '(' expression ')'
+  | identifier
+  | 'false'
+  | 'true'

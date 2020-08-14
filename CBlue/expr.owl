@@ -1,0 +1,4 @@
+#using owl.v4
+variable = 'var' identifier (':' datatype)?
+datatype = 'int'
+  | 'string'

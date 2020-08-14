@@ -2,3 +2,4 @@
 JSBlue/node_modules
 Blue/nginx/logs/nginx.pid
 *.log
+CBlue/owl

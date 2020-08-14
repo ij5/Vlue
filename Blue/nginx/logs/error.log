@@ -20,3 +20,4 @@
 2020/08/11 23:27:55 [error] 1856#19004: CreateFile() "D:\D\jaehee\Project\pl\blue\nginx/logs/nginx.pid" failed (2: The system cannot find the file specified)
 2020/08/12 00:22:18 [alert] 12396#25144: worker process 26252 exited with code C0000142
 2020/08/12 00:22:18 [alert] 12396#25144: could not respawn worker
+2020/08/14 21:01:30 [notice] 10328#25032: signal process started

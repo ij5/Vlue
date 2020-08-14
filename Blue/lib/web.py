@@ -33,7 +33,10 @@ def start(domain="localhost", port=8000):
         )
 
 def onexit():
-    subprocess.Popen("nginx -s quit", shell=True, cwd="nginx")
+    if(platform.system()=="Windows"):
+        subprocess.Popen("nginx -s quit", shell=True, cwd="nginx")
+    elif(platform.system()=="Linux"):
+        subprocess.Popen("nginx -s quit", shell=True)
     print("turn off nginx service.")
 
 atexit.register(onexit)

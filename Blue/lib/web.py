@@ -32,8 +32,12 @@ def start(domain="localhost", port=8000):
             
         )
 
+def start_dev(port=8000):
+    subprocess.Popen()
+
 def onexit():
     if(platform.system()=="Windows"):
+        subprocess.Popen("pkill gunicorn")
         subprocess.Popen("nginx -s quit", shell=True, cwd="nginx")
     elif(platform.system()=="Linux"):
         subprocess.Popen("nginx -s quit", shell=True)

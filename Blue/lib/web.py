@@ -2,6 +2,7 @@ import subprocess
 import atexit
 import lib.NGINXConf as conf
 import platform
+import flask
 
 def start(domain="localhost", port=8000):
     if(platform.system()=='Windows'):
@@ -32,8 +33,9 @@ def start(domain="localhost", port=8000):
             
         )
 
-def start_dev(port=8000):
-    subprocess.Popen()
+def start_dev(port=8000, debug=True):
+    app = flask.Flask(__name__)
+    app.run(debug=debug,)
 
 def onexit():
     if(platform.system()=="Windows"):

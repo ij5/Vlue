@@ -36,6 +36,7 @@ int isCutCharacter(char c){
     case '(':
     case ')':
     case '|':
+    case '\0':
         return true;
     default:
         return false;
@@ -85,9 +86,10 @@ int lexer(char *data){
 
 
             while(isCutCharacter(*data)==false){
-                ++data;
+                data+=1;
             }
             if(*data=='.'){
+                data++;
                 while(isCutCharacter(*data)==false){
                     ++data;
                 }
@@ -115,6 +117,6 @@ int lexer(char *data){
 
 int main(void){
 
-    lexer("");
+    lexer("123 344.33");
     return 0;
 }

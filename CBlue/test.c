@@ -81,6 +81,24 @@ int lexer(char *data){
 
             token[i].type = T_IDENTIFIER;
             token[i].lineno = line;
+        }else if(*data >= '0' || *data <= '9'){
+
+
+            while(isCutCharacter(*data)==false){
+                ++data;
+            }
+            if(*data=='.'){
+                while(isCutCharacter(*data)==false){
+                    ++data;
+                }
+                printf("FLOAT");
+                token[i].type = T_FLOAT;
+            }else{
+                printf("INT");
+                token[i].type = T_INT;
+            }
+
+            token[i].lineno = line;
         }else{
             printf("OTHER\n");
             //printf("%c", *data);
@@ -97,6 +115,6 @@ int lexer(char *data){
 
 int main(void){
 
-    lexer("Hello World!");
+    lexer("");
     return 0;
 }

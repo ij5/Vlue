@@ -44,7 +44,8 @@ int isCutCharacter(char c){
 
 typedef struct _Token
 {
-    int tokentype;
+    int type;
+    int lineno;
 }Token;
 
 enum TokenType{
@@ -53,6 +54,7 @@ enum TokenType{
     T_INT,
     T_FLOAT,
     T_VAR,
+    OTHER,
 };
 
 int lexer(char *data){
@@ -63,14 +65,28 @@ int lexer(char *data){
     while(*data!=0){
         if(*data=='\n'){
             line++;
-            token[i].tokentype = T_NEWLINE;
+
+            printf("NEWLINE");
+
+            token[i].type = T_NEWLINE;
+            token[i].lineno = line;
+            ++data;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
-            while(data!=isCutCharacter(*data)){
+            while(isCutCharacter(*data) == false){
                 ++data;
             }
+            printf("IDENTIFIER\n");
+
+            token[i].type = T_IDENTIFIER;
+            token[i].lineno = line;
+        }else{
+            printf("OTHER\n");
+
+            token[i].type = OTHER;
+            token[i].lineno = line;
+            ++data;
         }
 
-        data++;
         i++;
     }
 }

@@ -47,19 +47,31 @@ typedef struct _Token
     int tokentype;
 }Token;
 
+enum TokenType{
+    T_IDENTIFIER = 1024,
+    T_NEWLINE,
+    T_INT,
+    T_FLOAT,
+    T_VAR,
+};
 
 int lexer(char *data){
 
     Token token[1024];
     
-    
+    int i = 0;
     while(*data!=0){
         if(*data=='\n'){
             line++;
+            token[i].tokentype = T_NEWLINE;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
-
+            while(data!=isCutCharacter(*data)){
+                ++data;
+            }
         }
+
         data++;
+        i++;
     }
 }
 

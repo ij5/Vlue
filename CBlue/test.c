@@ -67,24 +67,27 @@ int lexer(char *data){
             line++;
 
             printf("NEWLINE");
+            //printf("%c", *data);
 
+            data+=1;
             token[i].type = T_NEWLINE;
             token[i].lineno = line;
-            ++data;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
             while(isCutCharacter(*data) == false){
                 ++data;
             }
             printf("IDENTIFIER\n");
+            //printf("%c", *data);
 
             token[i].type = T_IDENTIFIER;
             token[i].lineno = line;
         }else{
             printf("OTHER\n");
+            //printf("%c", *data);
 
+            data+=1;
             token[i].type = OTHER;
             token[i].lineno = line;
-            ++data;
         }
 
         i++;

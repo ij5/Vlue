@@ -47,6 +47,7 @@ typedef struct _Token
 {
     int type;
     int lineno;
+    char *value;
 }Token;
 
 enum TokenType{
@@ -55,12 +56,14 @@ enum TokenType{
     T_INT,
     T_FLOAT,
     T_VAR,
+    T_EQUAL,
     OTHER,
 };
 
 int lexer(char *data){
 
-    Token token[1024];
+    Token token[1024];  //임시
+    char temp[128];     //최대 128의 토큰 길이
     
     int i = 0;
     while(*data!=0){
@@ -71,7 +74,13 @@ int lexer(char *data){
             //printf("%c", *data);
 
             data+=1;
-            token[i].type = T_NEWLINE;
+            i--;
+            token[i].lineno = line;
+        }else if(*data=='v'&&*(data+1)=='a'&&*(data+2)=='r'){
+
+            printf("VAR\n");
+            data+=3;
+            token[i].type = T_VAR;
             token[i].lineno = line;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
             while(isCutCharacter(*data) == false){
@@ -82,7 +91,10 @@ int lexer(char *data){
 
             token[i].type = T_IDENTIFIER;
             token[i].lineno = line;
-        }else if(*data >= '0' || *data <= '9'){
+        }else if(
+            *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
+          ||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'
+        ){
 
 
             while(isCutCharacter(*data)==false){
@@ -91,16 +103,25 @@ int lexer(char *data){
             if(*data=='.'){
                 data++;
                 while(isCutCharacter(*data)==false){
-                    ++data;
+                    data+=1;
                 }
-                printf("FLOAT");
+                printf("FLOAT\n");
                 token[i].type = T_FLOAT;
             }else{
-                printf("INT");
+                printf("INT\n");
+                data++;
                 token[i].type = T_INT;
             }
 
             token[i].lineno = line;
+        }else if(*data=='='){
+            printf("EQUAL\n");
+            data++;
+            token[i].type = T_EQUAL;
+            token[i].lineno = line;
+        }else if(*data==' '||*data=='\t'||*data=='\r'){
+            data++;
+            i--;
         }else{
             printf("OTHER\n");
             //printf("%c", *data);
@@ -117,6 +138,9 @@ int lexer(char *data){
 
 int main(void){
 
-    lexer("123 344.33");
+    lexer("var a = 4\n");
+    char *temp;
+
+
     return 0;
 }

@@ -8,6 +8,25 @@
 
 int line;
 
+typedef struct _Token
+{
+    int type;
+    int lineno;
+    char *value;
+}Token;
+
+enum TokenType{
+    T_IDENTIFIER = 1024,
+    T_NEWLINE,
+    T_INT,
+    T_FLOAT,
+    T_VAR,
+    T_EQUAL,
+    OTHER,
+};
+
+
+
 int isCutCharacter(char c){
     switch (c)
     {
@@ -43,22 +62,9 @@ int isCutCharacter(char c){
     }
 }
 
-typedef struct _Token
-{
-    int type;
-    int lineno;
-    char *value;
-}Token;
-
-enum TokenType{
-    T_IDENTIFIER = 1024,
-    T_NEWLINE,
-    T_INT,
-    T_FLOAT,
-    T_VAR,
-    T_EQUAL,
-    OTHER,
-};
+void clearstr(char *c){
+    printf("%i \n", sizeof(c));
+}
 
 int lexer(char *data){
 
@@ -75,22 +81,28 @@ int lexer(char *data){
 
             data+=1;
             i--;
+            token[i].value = "\n";
             token[i].lineno = line;
         }else if(*data=='v'&&*(data+1)=='a'&&*(data+2)=='r'){
 
             printf("VAR\n");
             data+=3;
             token[i].type = T_VAR;
+            token[i].value = "var";
             token[i].lineno = line;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
-            while(isCutCharacter(*data) == false){
+            for(int j=0;isCutCharacter(*data) == false;j++){
+                temp[j] = *data;
                 ++data;
             }
             printf("IDENTIFIER\n");
+            
             //printf("%c", *data);
 
             token[i].type = T_IDENTIFIER;
             token[i].lineno = line;
+            token[i].value = temp;
+            clearstr(&temp);
         }else if(
             *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
           ||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'
@@ -136,11 +148,14 @@ int lexer(char *data){
 }
 
 
+
+
 int main(void){
 
-    lexer("var a = 4\n");
+    lexer("var abc = 4\n");
     char *temp;
 
 
     return 0;
 }
+

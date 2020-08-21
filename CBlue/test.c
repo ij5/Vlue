@@ -141,6 +141,7 @@ Token *lexer(char *data){
             printf("EQUAL\n");
             data++;
             token[i].type = T_EQUAL;
+            token[i].value = '=';
             token[i].lineno = line;
         }else if(*data==' '||*data=='\t'||*data=='\r'){
             data++;
@@ -149,6 +150,7 @@ Token *lexer(char *data){
             printf("SEMI\n");
             data++;
             token[i].type = T_SEMI;
+            token[i].value = ';';
             token[i].lineno = line;
         }else{
             printf("OTHER\n");
@@ -156,6 +158,7 @@ Token *lexer(char *data){
 
             data+=1;
             token[i].type = OTHER;
+            token[i].value = *data;
             token[i].lineno = line;
         }
 

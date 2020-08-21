@@ -22,6 +22,7 @@ enum TokenType{
     T_FLOAT,
     T_VAR,
     T_EQUAL,
+    T_SEMI,
     OTHER,
 };
 
@@ -133,6 +134,11 @@ Token lexer(char *data){
         }else if(*data==' '||*data=='\t'||*data=='\r'){
             data++;
             i--;
+        }else if(*data==';'){
+            printf("SEMI\n");
+            data++;
+            token[i].type = T_SEMI;
+            token[i].lineno = line;
         }else{
             printf("OTHER\n");
             //printf("%c", *data);

@@ -179,7 +179,7 @@ int main(int argc, char *argv[]){
 
     asm(
         "main:"
-
+        "mov    eax, 0"
     );
     
 

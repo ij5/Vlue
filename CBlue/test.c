@@ -110,17 +110,18 @@ Token *lexer(char *data){
             *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
           ||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'
         ){
-
-
-            while(isCutCharacter(*data)==false){
+            for(int j=0;isCutCharacter(*data)==false;j++){
+                strtemp[j] = *data;
                 data+=1;
             }
+            printf("%i", j);
             if(*data=='.'){
                 data++;
                 while(isCutCharacter(*data)==false){
                     data+=1;
                 }
                 printf("FLOAT\n");
+                token[i].value = floattemp;
                 token[i].type = T_FLOAT;
             }else{
                 printf("INT\n");

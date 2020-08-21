@@ -62,11 +62,14 @@ int isCutCharacter(char c){
     }
 }
 
+
 void clearstr(char *c){
-    printf("%i \n", sizeof(c));
+    for(int i=0;c[i]!='\0';i++){
+        c[i] = 0;
+    }
 }
 
-int lexer(char *data){
+Token lexer(char *data){
 
     Token token[1024];  //임시
     char temp[128];     //최대 128의 토큰 길이
@@ -76,8 +79,7 @@ int lexer(char *data){
         if(*data=='\n'){
             line++;
 
-            printf("NEWLINE");
-            //printf("%c", *data);
+            printf("NEWLINE\n");
 
             data+=1;
             i--;
@@ -96,13 +98,11 @@ int lexer(char *data){
                 ++data;
             }
             printf("IDENTIFIER\n");
-            
-            //printf("%c", *data);
 
             token[i].type = T_IDENTIFIER;
             token[i].lineno = line;
             token[i].value = temp;
-            clearstr(&temp);
+            clearstr(temp);
         }else if(
             *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
           ||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'
@@ -121,7 +121,6 @@ int lexer(char *data){
                 token[i].type = T_FLOAT;
             }else{
                 printf("INT\n");
-                data++;
                 token[i].type = T_INT;
             }
 
@@ -152,9 +151,8 @@ int lexer(char *data){
 
 int main(void){
 
-    lexer("var abc = 4\n");
+    lexer("var abc    =45.6;var cba =  45;\n");
     char *temp;
-
 
     return 0;
 }

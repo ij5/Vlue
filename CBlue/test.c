@@ -73,9 +73,8 @@ void clearstr(char *c){
 Token *lexer(char *data){
     Token *token = malloc(sizeof(Token)*1024);  //임시
 
-    char strtemp[128];     //최대 128의 문자열 토큰 길이
-    int inttemp;
-    float floattemp;
+    char temp[128];     //최대 128의 문자열 토큰 길이
+    int tempcount = 0;
     
     int i = 0;
     while(*data!=0){
@@ -97,35 +96,44 @@ Token *lexer(char *data){
             token[i].lineno = line;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
             for(int j=0;isCutCharacter(*data) == false;j++){
-                strtemp[j] = *data;
+                temp[j] = *data;
                 ++data;
             }
             printf("IDENTIFIER\n");
 
             token[i].type = T_IDENTIFIER;
             token[i].lineno = line;
-            token[i].value = strtemp;
-            clearstr(strtemp);
+            token[i].value = temp;
+            clearstr(temp);
         }else if(
             *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
           ||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'
         ){
             for(int j=0;isCutCharacter(*data)==false;j++){
-                strtemp[j] = *data;
+                temp[j] = *data;
                 data+=1;
+                tempcount = j;
             }
-            printf("%i", j);
+            
             if(*data=='.'){
                 data++;
-                while(isCutCharacter(*data)==false){
+                tempcount++;
+                temp[tempcount] = '.';
+                tempcount++;
+                for(;isCutCharacter(*data)==false;tempcount++){
+                    temp[tempcount] = *data;
                     data+=1;
                 }
+                tempcount = 0;
                 printf("FLOAT\n");
-                token[i].value = floattemp;
+                token[i].value = temp;
                 token[i].type = T_FLOAT;
+                clearstr(temp);
             }else{
                 printf("INT\n");
+                token[i].value = temp;
                 token[i].type = T_INT;
+                clearstr(temp);
             }
 
             token[i].lineno = line;

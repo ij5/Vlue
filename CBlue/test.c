@@ -70,10 +70,12 @@ void clearstr(char *c){
     }
 }
 
-Token lexer(char *data){
+Token *lexer(char *data){
+    Token *token = malloc(sizeof(Token)*1024);  //임시
 
-    Token token[1024];  //임시
-    char temp[128];     //최대 128의 토큰 길이
+    char strtemp[128];     //최대 128의 문자열 토큰 길이
+    int inttemp;
+    float floattemp;
     
     int i = 0;
     while(*data!=0){
@@ -95,15 +97,15 @@ Token lexer(char *data){
             token[i].lineno = line;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
             for(int j=0;isCutCharacter(*data) == false;j++){
-                temp[j] = *data;
+                strtemp[j] = *data;
                 ++data;
             }
             printf("IDENTIFIER\n");
 
             token[i].type = T_IDENTIFIER;
             token[i].lineno = line;
-            token[i].value = temp;
-            clearstr(temp);
+            token[i].value = strtemp;
+            clearstr(strtemp);
         }else if(
             *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
           ||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'
@@ -150,6 +152,7 @@ Token lexer(char *data){
 
         i++;
     }
+    return token;
 }
 
 

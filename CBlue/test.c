@@ -167,13 +167,21 @@ Token *lexer(char *data){
     return token;
 }
 
+char *parser(Token token){
+
+}
 
 
-
-int main(void){
+int main(int argc, char *argv[]){
 
     lexer("var abc    =45.6;var cba =  45;\n");
     char *temp;
+
+    asm(
+        "main:"
+
+    );
+    
 
     return 0;
 }

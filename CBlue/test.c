@@ -72,6 +72,7 @@ void clearstr(char *c){
 
 Token *lexer(char *data){
     Token *token = malloc(sizeof(Token)*1024);  //임시
+    Token *t = malloc(sizeof(Token));
 
     char temp[128];     //최대 128의 문자열 토큰 길이
     int tempcount = 0;
@@ -95,7 +96,13 @@ Token *lexer(char *data){
             token[i].value = "var";
             token[i].lineno = line;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
-            for(int j=0;isCutCharacter(*data) == false;j++){
+            for(
+                int j=0;isCutCharacter(*data) == false&&((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_') ||
+                (
+                *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
+              ||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'
+                )
+            );j++){
                 temp[j] = *data;
                 ++data;
             }
@@ -178,8 +185,8 @@ int main(int argc, char *argv[]){
     char *temp;
 
     asm(
-        "main:"
-        "mov    eax, 0"
+        ""
+        ""
     );
     
 

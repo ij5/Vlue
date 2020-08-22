@@ -196,6 +196,13 @@ Token *lexer(char *data){
 }
 
 
+typedef struct _AST
+{
+    int type;
+    char *data;
+    struct _AST *children;
+}AST;
+
 
 char *parser(Token *token){
     for(int i=0;token[i].num!=0;i++){

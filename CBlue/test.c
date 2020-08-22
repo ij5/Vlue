@@ -72,7 +72,6 @@ void clearstr(char *c){
 
 Token *lexer(char *data){
     Token *token = malloc(sizeof(Token)*1024);  //임시
-    Token *t = malloc(sizeof(Token));
 
     char temp[128];     //최대 128의 문자열 토큰 길이
     int tempcount = 0;
@@ -174,14 +173,16 @@ Token *lexer(char *data){
     return token;
 }
 
-char *parser(Token token){
-
+char *parser(Token *token){
+    //for(int i=0; i<sizeof(*token))
+    printf("%d", sizeof(token));
 }
 
 
 int main(int argc, char *argv[]){
 
-    lexer("var abc    =45.6;var cba =  45;\n");
+    Token *t = lexer("var abc    =45.6;var cba =  45;\n");
+    parser(t);
     char *temp;
 
     asm(

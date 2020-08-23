@@ -3,8 +3,7 @@
 #include <memory.h>
 #include <string.h>
 #include <stdbool.h>
-
-#define int long long
+#include <ctype.h>
 
 int line;
 
@@ -72,19 +71,15 @@ void clearstr(char *c){
     }
 }
 
-
-
-
-
 #define TOKEN_LENGTH 1024
-Token *lexer(char *data){
+Token lexer(char *data){
     Token *token = malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
 
     char temp[128];     //최대 128의 문자열 토큰 길이
+    clearstr(temp);
     int tempcount = 0;
     
-    int i = 0;
-    while(*data!=0){
+    for(int i=0;*data!=0;i++){
         if(*data=='\n'){
             line++;
 
@@ -96,21 +91,6 @@ Token *lexer(char *data){
             token[i].value = "\n";
             token[i].lineno = line;
             token[i].type = T_NEWLINE;
-        }else if(*data=='v'&&*(data+1)=='a'&&*(data+2)=='r'){
-
-            printf("VAR\n");
-            data+=3;
-            token[i].num = i+1;
-            token[i].type = T_VAR;
-            token[i].value = "var";
-            token[i].lineno = line;
-        }else if(*data=='f'&&*(data+1)=='n'){
-            printf("FUNCTION\n");
-            data+=2;
-            token[i].num = i+1;
-            token[i].type = T_FUNCTION;
-            token[i].value = "fn";
-            token[i].lineno = line;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
             for(
                 int j=0;isCutCharacter(*data) == false&&((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_') ||
@@ -122,12 +102,19 @@ Token *lexer(char *data){
                 temp[j] = *data;
                 ++data;
             }
-            printf("IDENTIFIER\n");
+
+            if(strcmp(temp, "var")==0){
+                printf("VAR\n");
+                token[i].type = T_VAR;
+            }else{
+                printf("IDENTIFIER\n");
+                token[i].type = T_IDENTIFIER;
+            }
 
             token[i].num = i+1;
-            token[i].type = T_IDENTIFIER;
             token[i].lineno = line;
-            token[i].value = temp;
+            token[i].value = malloc(sizeof(temp));
+            strcpy(token[i].value, temp);
             clearstr(temp);
         }else if(
             *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
@@ -150,12 +137,14 @@ Token *lexer(char *data){
                 }
                 tempcount = 0;
                 printf("FLOAT\n");
-                token[i].value = temp;
+                token[i].value = malloc(sizeof(temp));
+                strcpy(token[i].value, temp);
                 token[i].type = T_FLOAT;
                 clearstr(temp);
             }else{
                 printf("INT\n");
-                token[i].value = temp;
+                token[i].value = malloc(sizeof(temp));
+                strcpy(token[i].value, temp);
                 token[i].type = T_INT;
                 clearstr(temp);
             }
@@ -167,7 +156,8 @@ Token *lexer(char *data){
             data++;
             token[i].num = i+1;
             token[i].type = T_EQUAL;
-            token[i].value = *data+"\0";
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, "=");
             token[i].lineno = line;
         }else if(*data==' '||*data=='\t'||*data=='\r'){
             data++;
@@ -177,29 +167,28 @@ Token *lexer(char *data){
             data++;
             token[i].num = i+1;
             token[i].type = T_SEMI;
-            token[i].value = *data+"\0";
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, ";");
             token[i].lineno = line;
         }else if(*data==':'){
             printf("COLON");
             data++;
             token[i].num = i+1;
             token[i].type = T_SEMI;
-            token[i].value = *data+"\0";
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, ":");
             token[i].lineno = line;
         }else{
             printf("OTHER\n");
-            //printf("%c", *data);
 
+            printf("Error on token %c\n", *data);
+            
             data+=1;
-            token[i].num = i+1;
-            token[i].type = OTHER;
-            token[i].value = *data+"\0";
-            token[i].lineno = line;
+            i--;
         }
 
-        i++;
     }
-    return token;
+    return *token;
 }
 
 
@@ -207,25 +196,63 @@ typedef struct _AST
 {
     int type;
     char *data;
-    struct _AST *children;
+    struct _AST *child[128];
 }AST;
 
+enum childstate{
+    EXPRESSION = 128,
+    ROOT,
+    STATEMENT,
+    PLUS,
+    MINUS,
+    DIV,
+    MUL,
+};
 
-AST *p_root(){
-    AST *root = p_statement();
+AST *p_root();
+AST *p_statement();
+AST *p_expression();
+AST *p_plus();
+AST *p_minus();
+AST *p_div();
+AST *p_mul();
+AST *parser();
+AST *p_int();
+AST *p_float();
+
+AST *make_node(int type, char *data, AST *n){
+    AST *node = malloc(sizeof(AST));
+    node->child[0] = n;
+    node->type = type;
+    node->data = *data;
 }
 
-static AST *p_statement(){
+
+AST *p_root(Token *token){
+    printf("%s", token[0].value);
+    AST *root = p_statement();
+    make_node(T_FLOAT, token[0].value, root);
+    return root;
+}
+
+
+#define CHILD_SIZE sizeof(statement->child)/sizeof(statement->child[0])
+AST *p_statement(){
     AST *statement = malloc(sizeof(AST));
+    statement->child[0] = p_expression();
     return statement;
 }
 
-AST p_expression(){
-
+AST *p_expression(){
+    AST *expression = malloc(sizeof(AST));
+    expression->child[0] = p_plus();
+    return expression;
 }
 
 AST *p_plus(){
-
+    AST *plus = malloc(sizeof(AST));
+    plus->child[0] = p_int();
+    return plus;
 }
 
 AST *p_minus(){
@@ -244,15 +271,23 @@ AST *p_mul(){
 
 }
 
+AST *p_int(){
+
+}
+
+AST *p_float(){
+    AST *f = malloc(sizeof(AST));
+    
+}
+
 AST *parser(){
 
 }
 
 int main(int argc, char *argv[]){
 
-    Token *t = lexer("var abc    =45.6;var cba =  45;\n");
-    parser(t);
-    p_root();
+    Token t = lexer("var asd =  45.6;\n");
+    p_root(&t);
 
     asm(
         ""

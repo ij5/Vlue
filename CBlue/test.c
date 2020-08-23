@@ -179,6 +179,13 @@ Token *lexer(char *data){
             token[i].type = T_SEMI;
             token[i].value = *data+"\0";
             token[i].lineno = line;
+        }else if(*data==':'){
+            printf("COLON");
+            data++;
+            token[i].num = i+1;
+            token[i].type = T_SEMI;
+            token[i].value = *data+"\0";
+            token[i].lineno = line;
         }else{
             printf("OTHER\n");
             //printf("%c", *data);
@@ -204,28 +211,48 @@ typedef struct _AST
 }AST;
 
 
-char *parser(Token *token){
-    for(int i=0;token[i].num!=0;i++){
-        switch(token[i].type){
-            case T_VAR:
-            case T_EQUAL:
-            case T_FLOAT:
-            case T_INT:
-            case T_FUNCTION:
-            case T_IDENTIFIER:
-            case T_NEWLINE:
-            case T_SEMI:
-            default:
-                printf("UNKNOWN ERROR");
-        }
-    }
+AST *p_root(){
+    AST *root = p_statement();
 }
 
+static AST *p_statement(){
+    AST *statement = malloc(sizeof(AST));
+    return statement;
+}
+
+AST p_expression(){
+
+}
+
+AST *p_plus(){
+
+}
+
+AST *p_minus(){
+
+}
+
+AST *p_uminus(){
+
+}
+
+AST *p_div(){
+
+}
+
+AST *p_mul(){
+
+}
+
+AST *parser(){
+
+}
 
 int main(int argc, char *argv[]){
 
     Token *t = lexer("var abc    =45.6;var cba =  45;\n");
     parser(t);
+    p_root();
 
     asm(
         ""

@@ -223,28 +223,29 @@ AST *make_node(int type, char *data, AST *n){
 
 
 AST *p_root(Token *token){
-    AST *root = p_statement();
-    make_node(T_FLOAT, token[0].value, root);
+    AST *root = p_statement(token[0].value);
+    root->type = ROOT;
+    root->child[0] = root;
     return root;
 }
 
 
 #define CHILD_SIZE sizeof(statement->child)/sizeof(statement->child[0])
-AST *p_statement(){
+AST *p_statement(char *data){
     AST *statement = malloc(sizeof(AST));
-    statement->child[0] = p_expression();
+    statement->child[0] = p_expression(data);
     return statement;
 }
 
-AST *p_expression(){
+AST *p_expression(char *data){
     AST *expression = malloc(sizeof(AST));
-    expression->child[0] = p_plus();
+    expression->child[0] = p_plus(data);
     return expression;
 }
 
-AST *p_plus(){
+AST *p_plus(char *data){
     AST *plus = malloc(sizeof(AST));
-    plus->child[0] = p_int();
+    plus->child[0] = p_float(data);
     return plus;
 }
 
@@ -268,9 +269,10 @@ AST *p_int(){
 
 }
 
-AST *p_float(){
+AST *p_float(char *data){
     AST *f = malloc(sizeof(AST));
-
+    f->child[0] = malloc(sizeof(AST));
+    return f;
 }
 
 AST *parser(){
@@ -279,7 +281,13 @@ AST *parser(){
 
 int main(int argc, char *argv[]){
 
-    Token *t = lexer("var asd =  45.6;\n");
+    Token *t = lexer("zdds asd =  45.6;\n");
+    printf("%s", t[0].value);
+    printf("%s", t[1].value);
+    printf("%s", t[2].value);
+    printf("%d", t[0].num);
+
+
     p_root(t);
 
     asm(

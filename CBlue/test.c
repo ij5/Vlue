@@ -73,8 +73,9 @@ void clearstr(char *c){
 Token *lexer(char *data){
     Token *token = malloc(sizeof(Token));  //임시
     int line = 1;
+    int TEMP_LENGTH = 128;
 
-    char temp[128];     //최대 128의 문자열 토큰 길이
+    char temp[TEMP_LENGTH];     //최대 128의 문자열 토큰 길이
     clearstr(temp);
     int tempcount = 0;
 
@@ -91,7 +92,12 @@ Token *lexer(char *data){
             token[i].lineno = line;
             token[i].type = T_NEWLINE;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
-            for(int j=0;isCutCharacter(*data) == false&&((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_') ||(*data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'));j++){
+            for(int j=0;isCutCharacter(*data) == false&&((*data >= 'a' && *data <= 'z') || 
+                (*data >= 'A' && *data <= 'Z') || 
+                (*data == '_') ||
+                (*data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'||
+                 *data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9')
+                );j++){
                 temp[j] = *data;
                 ++data;
             }
@@ -106,8 +112,8 @@ Token *lexer(char *data){
 
             token[i].num = i+1;
             token[i].lineno = line;
-            token[i].value = malloc(sizeof(temp));
-            strcpy(token[i].value, temp);
+            token[i].value = malloc(TEMP_LENGTH);
+            strcpy(token[i].value, temp);           //FIXME: 문자열 문제
             printf("%s", token[i].value);
             clearstr(temp);
         }else if(

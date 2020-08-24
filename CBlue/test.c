@@ -92,13 +92,7 @@ Token lexer(char *data){
             token[i].lineno = line;
             token[i].type = T_NEWLINE;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
-            for(
-                int j=0;isCutCharacter(*data) == false&&((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_') ||
-                (
-                *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
-              ||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'
-                )
-            );j++){
+            for(int j=0;isCutCharacter(*data) == false&&((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_') ||(*data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'));j++){
                 temp[j] = *data;
                 ++data;
             }
@@ -115,6 +109,7 @@ Token lexer(char *data){
             token[i].lineno = line;
             token[i].value = malloc(sizeof(temp));
             strcpy(token[i].value, temp);
+            //printf("%s", token[i].value);
             clearstr(temp);
         }else if(
             *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
@@ -186,7 +181,8 @@ Token lexer(char *data){
             data+=1;
             i--;
         }
-
+        //printf("value: %s\n", token[i].value);
+        //printf("i: %d\n",i);
     }
     return *token;
 }
@@ -224,7 +220,6 @@ AST *make_node(int type, char *data, AST *n){
     AST *node = malloc(sizeof(AST));
     node->child[0] = n;
     node->type = type;
-    node->data = *data;
 }
 
 

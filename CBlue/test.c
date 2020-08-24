@@ -223,7 +223,6 @@ AST *make_node(int type, char *data, AST *n){
 
 
 AST *p_root(Token *token){
-    printf("%s", token[1].value);
     AST *root = p_statement();
     make_node(T_FLOAT, token[0].value, root);
     return root;

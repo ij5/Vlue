@@ -5,8 +5,6 @@
 #include <stdbool.h>
 #include <ctype.h>
 
-int line;
-
 typedef struct _Token
 {
     int num;
@@ -43,13 +41,13 @@ int isCutCharacter(char c){
     case '{':
     case '}':
     case '=':
-    case '!': 
+    case '!':
     case '+':
     case '-':
     case '*':
     case '/':
     case '%':
-    case '^': 
+    case '^':
     case '?':
     case '.':
     case ':':
@@ -72,13 +70,14 @@ void clearstr(char *c){
 }
 
 #define TOKEN_LENGTH 1024
-Token lexer(char *data){
-    Token *token = malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
+Token *lexer(char *data){
+    Token *token = malloc(sizeof(Token));  //임시
+    int line = 1;
 
     char temp[128];     //최대 128의 문자열 토큰 길이
     clearstr(temp);
     int tempcount = 0;
-    
+
     for(int i=0;*data!=0;i++){
         if(*data=='\n'){
             line++;
@@ -109,7 +108,7 @@ Token lexer(char *data){
             token[i].lineno = line;
             token[i].value = malloc(sizeof(temp));
             strcpy(token[i].value, temp);
-            //printf("%s", token[i].value);
+            printf("%s", token[i].value);
             clearstr(temp);
         }else if(
             *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
@@ -120,7 +119,7 @@ Token lexer(char *data){
                 data+=1;
                 tempcount = j;
             }
-            
+
             if(*data=='.'){
                 data++;
                 tempcount++;
@@ -177,14 +176,14 @@ Token lexer(char *data){
             printf("OTHER\n");
 
             printf("Error on token %c\n", *data);
-            
+
             data+=1;
             i--;
         }
         //printf("value: %s\n", token[i].value);
         //printf("i: %d\n",i);
     }
-    return *token;
+    return token;
 }
 
 
@@ -224,7 +223,7 @@ AST *make_node(int type, char *data, AST *n){
 
 
 AST *p_root(Token *token){
-    printf("%s", token[0].value);
+    printf("%s", token[1].value);
     AST *root = p_statement();
     make_node(T_FLOAT, token[0].value, root);
     return root;
@@ -272,7 +271,7 @@ AST *p_int(){
 
 AST *p_float(){
     AST *f = malloc(sizeof(AST));
-    
+
 }
 
 AST *parser(){
@@ -281,15 +280,14 @@ AST *parser(){
 
 int main(int argc, char *argv[]){
 
-    Token t = lexer("var asd =  45.6;\n");
-    p_root(&t);
+    Token *t = lexer("var asd =  45.6;\n");
+    p_root(t);
 
     asm(
         ""
         ""
     );
-    
+
 
     return 0;
 }
-

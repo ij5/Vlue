@@ -71,7 +71,7 @@ void clearstr(char *c){
 
 #define TOKEN_LENGTH 1024
 Token *lexer(char *data){
-    Token *token = malloc(sizeof(Token));  //임시
+    Token *token = malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
     int line = 1;
     int TEMP_LENGTH = 128;
 
@@ -99,6 +99,7 @@ Token *lexer(char *data){
                  *data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9')
                 );j++){
                 temp[j] = *data;
+                temp[j+1] = '\0';
                 ++data;
             }
 
@@ -122,6 +123,7 @@ Token *lexer(char *data){
         ){
             for(int j=0;isCutCharacter(*data)==false;j++){
                 temp[j] = *data;
+                temp[j+1] = '\0';
                 data+=1;
                 tempcount = j;
             }
@@ -133,6 +135,7 @@ Token *lexer(char *data){
                 tempcount++;
                 for(;isCutCharacter(*data)==false;tempcount++){
                     temp[tempcount] = *data;
+                    temp[tempcount+1] = '\0';
                     data+=1;
                 }
                 tempcount = 0;
@@ -157,7 +160,7 @@ Token *lexer(char *data){
             token[i].num = i+1;
             token[i].type = T_EQUAL;
             token[i].value = malloc(sizeof(*data));
-            strcpy(token[i].value, "=");
+            strcpy(token[i].value, "=\0");
             token[i].lineno = line;
         }else if(*data==' '||*data=='\t'||*data=='\r'){
             data++;
@@ -168,7 +171,7 @@ Token *lexer(char *data){
             token[i].num = i+1;
             token[i].type = T_SEMI;
             token[i].value = malloc(sizeof(*data));
-            strcpy(token[i].value, ";");
+            strcpy(token[i].value, ";\0");
             token[i].lineno = line;
         }else if(*data==':'){
             printf("COLON");
@@ -176,12 +179,12 @@ Token *lexer(char *data){
             token[i].num = i+1;
             token[i].type = T_SEMI;
             token[i].value = malloc(sizeof(*data));
-            strcpy(token[i].value, ":");
+            strcpy(token[i].value, ":\0");
             token[i].lineno = line;
         }else{
             printf("OTHER\n");
 
-            printf("Error on token %c\n", *data);
+            printf("Error on token %c, line %d\n", *data, line);
 
             data+=1;
             i--;

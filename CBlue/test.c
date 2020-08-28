@@ -215,16 +215,36 @@ Token *lexer(char *data){
     ===============
 */
 
+int *stack_init(){
+    int *stack = malloc(sizeof(int)*1024);
+    return stack;
+}
+
 bool running = true;
 
 typedef enum {
-    PUSH,
+    PUSH = 256,
     POP,
     ADD,
     PRINT,
 }Command;
 
-int vm(Token *t){
+void evaluate(int command){
+    int *stack = stack_init();
+    int p = 0;
+    switch (command)
+    {
+    case PUSH:
+        p++;
+        stack[p] = 
+        break;
+    
+    default:
+        break;
+    }
+}
+
+void vm(Token *t){
     
 }
 

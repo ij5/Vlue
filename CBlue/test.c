@@ -5,6 +5,27 @@
 #include <stdbool.h>
 #include <ctype.h>
 
+/*
+    =========
+    UTILITIES
+    =========
+*/
+
+
+void clearstr(char *c){
+    for(int i=0;c[i]!='\0';i++){
+        c[i] = 0;
+    }
+}
+
+
+/*
+    ================
+    LEXICAL ANALYZER
+    ================
+*/
+
+
 typedef struct _Token
 {
     int num;
@@ -62,13 +83,6 @@ int isCutCharacter(char c){
     }
 }
 
-
-void clearstr(char *c){
-    for(int i=0;c[i]!='\0';i++){
-        c[i] = 0;
-    }
-}
-
 #define TOKEN_LENGTH 1024
 Token *lexer(char *data){
     Token *token = malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
@@ -115,7 +129,6 @@ Token *lexer(char *data){
             token[i].lineno = line;
             token[i].value = malloc(TEMP_LENGTH);
             strcpy(token[i].value, temp);           //FIXME: 문자열 문제
-            printf("%s", token[i].value);
             clearstr(temp);
         }else if(
             *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
@@ -174,7 +187,7 @@ Token *lexer(char *data){
             strcpy(token[i].value, ";\0");
             token[i].lineno = line;
         }else if(*data==':'){
-            printf("COLON");
+            printf("COLON\n");
             data++;
             token[i].num = i+1;
             token[i].type = T_SEMI;
@@ -196,6 +209,31 @@ Token *lexer(char *data){
 }
 
 
+/*
+    ===============
+    VIRTUAL MACHINE
+    ===============
+*/
+
+bool running = true;
+
+typedef enum {
+    PUSH,
+    POP,
+    ADD,
+    PRINT,
+}Command;
+
+int vm(Token *t){
+    
+}
+
+/*
+    ====================
+    ABSTRACT SYNTAX TREE
+    ====================
+*/
+
 typedef struct _AST
 {
     int type;
@@ -203,107 +241,20 @@ typedef struct _AST
     struct _AST *child[128];
 }AST;
 
-enum childstate{
-    EXPRESSION = 128,
-    ROOT,
-    STATEMENT,
-    PLUS,
-    MINUS,
-    DIV,
-    MUL,
-};
 
-AST *p_root();
-AST *p_statement();
-AST *p_expression();
-AST *p_plus();
-AST *p_minus();
-AST *p_div();
-AST *p_mul();
-AST *parser();
-AST *p_int();
-AST *p_float();
-
-AST *make_node(int type, char *data, AST *n){
-    AST *node = malloc(sizeof(AST));
-    node->child[0] = n;
-    node->type = type;
-}
-
-
-AST *p_root(Token *token){
-    AST *root = p_statement(token[0].value);
-    root->type = ROOT;
-    root->child[0] = root;
-    return root;
-}
-
-
-#define CHILD_SIZE sizeof(statement->child)/sizeof(statement->child[0])
-AST *p_statement(char *data){
-    AST *statement = malloc(sizeof(AST));
-    statement->child[0] = p_expression(data);
-    return statement;
-}
-
-AST *p_expression(char *data){
-    AST *expression = malloc(sizeof(AST));
-    expression->child[0] = p_plus(data);
-    return expression;
-}
-
-AST *p_plus(char *data){
-    AST *plus = malloc(sizeof(AST));
-    plus->child[0] = p_float(data);
-    return plus;
-}
-
-AST *p_minus(){
-
-}
-
-AST *p_uminus(){
-
-}
-
-AST *p_div(){
-
-}
-
-AST *p_mul(){
-
-}
-
-AST *p_int(){
-
-}
-
-AST *p_float(char *data){
-    AST *f = malloc(sizeof(AST));
-    f->child[0] = malloc(sizeof(AST));
-    return f;
-}
-
-AST *parser(){
-
-}
 
 int main(int argc, char *argv[]){
 
-    Token *t = lexer("zdds asd =  45.6;\n");
-    printf("%s", t[0].value);
-    printf("%s", t[1].value);
-    printf("%s", t[2].value);
-    printf("%d", t[0].num);
+    Token *t = lexer("var asd:int =  45.6;\n");
 
-
-    p_root(t);
+    vm(t);
 
     asm(
         ""
         ""
     );
 
+    
 
     return 0;
 }

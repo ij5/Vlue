@@ -3,4 +3,4 @@ JSBlue/node_modules
 Blue/nginx/logs/nginx.pid
 *.log
 CBlue/owl
-CBlue\test.exe
+CBlue/test.exe

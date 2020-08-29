@@ -216,73 +216,103 @@ Token *lexer(char *data){
     ===============
 */
 
+#define STACK_SIZE 100
 
+typedef struct _VM{
+    int *locals;
+    int *code;
+    int *stack;
+    int pc;
+    int sp;
+    int fp;
+}VM;
 
+VM *initVM(int *code, int pc, int datasize){
+    VM *vm = (VM*)malloc(sizeof(VM));
+    vm->code = code;
+    vm->pc = pc;
+    vm->fp = 0;
+    vm->sp = -1;
+    vm->locals = (int*)malloc(sizeof(int)*datasize);
+    vm->stack = (int*)malloc(sizeof(int)*STACK_SIZE);
 
-typedef enum{
-    OP_CONSTANT,
-    OP_NIL,
-    OP_TRUE,
-    OP_FALSE,
-    OP_POP,
-    OP_GET_LOCAL,
-    OP_SET_LOCAL,
-    OP_GET_GLOBAL,
-    OP_DEFINE_GLOBAL,
-    OP_SET_GLOBAL,
-    OP_GET_UPVALUE,
-    OP_SET_UPVALUE,
-    OP_GET_PROPERTY,
-    OP_SET_PROPERTY,
-    OP_SET_SUPER,
-    OP_EQUAL,
-    OP_GRATER,
-    OP_LESS,
-    OP_ADD,
-    OP_SUB,
-    OP_MUL,
-    OP_DIV,
-    OP_NOT,
-    OP_NEGATE,
-    OP_PRINT,
-    OP_JUMP,
-    OP_JIF,
-    OP_LOOP,
-    OP_CALL,
-    OP_INVOKE,
-    OP_SUPER_INVOKE,
-    OP_CLOSURE,
-    OP_CLOSE_UPVALUE,
-    OP_RETURN,
-    OP_CLASS,
-    OP_INHERIT,
-    OP_METHOD,
-}OPCODE;
-
-typedef struct _Chunk{
-    int count;
-    int capacity;
-    uint8_t *code;
-    int *lines;
-    
-}Chunk;
-
-void initChunk(Chunk *chunk){
-    chunk->count = 0;
-    chunk->capacity = 0;
-    chunk->code = NULL;
+    return vm;
 }
 
-void writeChunk(Chunk *chunk){
-    if(chunk->capacity < chunk->count + 1){
-        int oldCapacity = chunk->capacity;
-        chunk->capacity = GROW_CAPACITY(oldCapacity);
-        chunk->code = GROW_ARRAY(uint8_t, chunk->code, oldCapacity, chunk->capacity);
-    }
-    chunk->code[chunk->count] = byte;
-    chunk->count++;
+void rmVM(VM *vm){
+    free(vm->locals);
+    free(vm->stack);
+    free(vm);
 }
 
+enum {
+    ADD = 128,
+    SUB,
+    MUL,
+    DIV,
+    LT,
+    EQ,
+    JMP,
+    JMPT,
+    JMPF,
+    CONST,
+    LOAD,
+    GLOAD,
+    STORE,
+    GSTORE,
+    PRINT,
+    POP,
+    HALT,
+    CALL,
+    RET,
+};
+
+#define PUSH(vm, v) vm->stack[++vm->sp] = v
+#define POP(vm)     vm->stack[vm->sp--]
+#define NCODE(vm)   vm->code[vm->pc++]
+
+void runVM(VM *vm){
+    do{
+        int opcode = NCODE(vm);
+        int v, addr, offset, a, b, argc, rval;
+
+        switch(opcode){
+            case HALT:
+                return;
+            case CONST:
+                v = NCODE(vm);
+                PUSH(vm, v);
+                break;
+            case ADD:
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a+b);
+                break;
+            case SUB:
+            case MUL:
+            case DIV:
+            case LT:
+            case EQ:
+            case JMP:
+            case JMPT:
+            case JMPF:
+            case LOAD:
+            case GLOAD:
+            case GSTORE:
+            case CALL:
+            case RET:
+            case POP:
+                --vm->sp;
+                break;
+            case PRINT:
+                v = POP(vm);
+                printf("%d\n", v);
+                break;
+            default:
+                break;
+        }
+    }while(1);
+}
 
 /*
     ====================
@@ -298,6 +328,11 @@ typedef struct _AST
 }AST;
 
 
+/*
+    ====================
+    PARSER
+    ====================
+*/
 
 /*
     ====================

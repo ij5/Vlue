@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <stdint.h>
 
 /*
     =========
@@ -215,38 +216,67 @@ Token *lexer(char *data){
     ===============
 */
 
-int *stack_init(){
-    int *stack = malloc(sizeof(int)*1024);
-    return stack;
-}
 
-bool running = true;
 
-typedef enum {
-    PUSH = 256,
-    POP,
-    ADD,
-    PRINT,
-}Command;
 
-void evaluate(int command){
-    int *stack = stack_init();
-    int p = 0;
-    switch (command)
-    {
-    case PUSH:
-        p++;
-        stack[p] = 
-        break;
+typedef enum{
+    OP_CONSTANT,
+    OP_NIL,
+    OP_TRUE,
+    OP_FALSE,
+    OP_POP,
+    OP_GET_LOCAL,
+    OP_SET_LOCAL,
+    OP_GET_GLOBAL,
+    OP_DEFINE_GLOBAL,
+    OP_SET_GLOBAL,
+    OP_GET_UPVALUE,
+    OP_SET_UPVALUE,
+    OP_GET_PROPERTY,
+    OP_SET_PROPERTY,
+    OP_SET_SUPER,
+    OP_EQUAL,
+    OP_GRATER,
+    OP_LESS,
+    OP_ADD,
+    OP_SUB,
+    OP_MUL,
+    OP_DIV,
+    OP_NOT,
+    OP_NEGATE,
+    OP_PRINT,
+    OP_JUMP,
+    OP_JIF,
+    OP_LOOP,
+    OP_CALL,
+    OP_INVOKE,
+    OP_SUPER_INVOKE,
+    OP_CLOSURE,
+    OP_CLOSE_UPVALUE,
+    OP_RETURN,
+    OP_CLASS,
+    OP_INHERIT,
+    OP_METHOD,
+}OPCODE;
+
+typedef struct _Chunk{
+    int count;
+    int capacity;
+    uint8_t *code;
+    int *lines;
     
-    default:
-        break;
-    }
+}Chunk;
+
+void initChunk(Chunk *chunk){
+    chunk->count = 0;
+    chunk->capacity = 0;
+    chunk->code = NULL;
 }
 
-void vm(Token *t){
+void writeChunk(Chunk *chunk){
     
 }
+
 
 /*
     ====================
@@ -263,11 +293,18 @@ typedef struct _AST
 
 
 
+/*
+    ====================
+    MAIN
+    ====================
+*/
+
+
+
 int main(int argc, char *argv[]){
 
     Token *t = lexer("var asd:int =  45.6;\n");
 
-    vm(t);
 
     asm(
         ""

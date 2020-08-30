@@ -294,12 +294,29 @@ void runVM(VM *vm){
                 PUSH(vm, a-b);
                 break;
             case MUL:
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a*b);
+                break;
             case DIV:
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a/b);
+                break;
             case LT:
             case EQ:
             case JMP:
+                vm->pc = NCODE(vm);
+                break;
             case JMPT:
+                addr = NCODE(vm);
+                if(POP(vm)){
+                    
+                    vm->pc = addr;
+                }
+                break;
             case JMPF:
+                break;
             case LOAD:
             case GLOAD:
             case GSTORE:

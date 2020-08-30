@@ -289,6 +289,10 @@ void runVM(VM *vm){
                 PUSH(vm, a+b);
                 break;
             case SUB:
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a-b);
+                break;
             case MUL:
             case DIV:
             case LT:

@@ -86,7 +86,7 @@ int isCutCharacter(char c){
 
 #define TOKEN_LENGTH 1024
 Token *lexer(char *data){
-    Token *token = malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
+    Token *token = (Token *)malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
     int line = 1;
     int TEMP_LENGTH = 128;
 
@@ -310,10 +310,7 @@ void runVM(VM *vm){
                 break;
             case JMPT:
                 addr = NCODE(vm);
-                if(POP(vm)){
-                    
-                    vm->pc = addr;
-                }
+                printf("%d", POP(vm));
                 break;
             case JMPF:
                 break;
@@ -367,6 +364,15 @@ int main(int argc, char *argv[]){
 
     Token *t = lexer("var asd:int =  45.6;\n");
 
+
+    int program[] = {
+        CONST, 0,
+        JMPT, 0
+    };
+
+    VM *vm = initVM(program, 0, 0);
+
+    runVM(vm);
 
     asm(
         ""

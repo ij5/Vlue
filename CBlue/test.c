@@ -226,9 +226,10 @@ typedef struct _VM{
     int pc;
     int sp;
     int fp;
+    int repeat;
 }VM;
 
-VM *initVM(int *code, int pc, int datasize){
+VM *initVM(int *code, int pc, int datasize, int repeat){
     VM *vm = (VM*)malloc(sizeof(VM));
     vm->code = code;
     vm->pc = pc;
@@ -236,6 +237,7 @@ VM *initVM(int *code, int pc, int datasize){
     vm->sp = -1;
     vm->locals = (int*)malloc(sizeof(int)*datasize);
     vm->stack = (int*)malloc(sizeof(int)*STACK_SIZE);
+    vm->repeat = repeat;
 
     return vm;
 }
@@ -273,6 +275,7 @@ enum {
 #define NCODE(vm)   vm->code[vm->pc++]
 
 void runVM(VM *vm){
+    int repeat = 0;
     do{
         int opcode = NCODE(vm);
         int v, addr, offset, a, b, argc, rval;
@@ -304,22 +307,60 @@ void runVM(VM *vm){
                 a = POP(vm);
                 PUSH(vm, a/b);
                 break;
-            case LT:
-            case EQ:
+            // case LT:
+            // case EQ:
             case JMP:
                 vm->pc = NCODE(vm);
                 break;
             case JMPT:
                 addr = NCODE(vm);
-                printf("%d", POP(vm));
+                if(POP(vm)!=0){
+                    vm->pc = addr;
+                }
                 break;
             case JMPF:
+                addr = NCODE(vm);
+                if(POP(vm)==0){
+                    vm->pc = addr;
+                }
                 break;
             case LOAD:
+                offset = NCODE(vm);
+                PUSH(vm, vm->stack[vm->fp+offset]);
+                break;
+            case STORE:
+                v = POP(vm);
+                offset = NCODE(vm);
+                vm->locals[vm->fp+offset] = v;
+                break;
             case GLOAD:
+                addr = POP(vm);
+                v = vm->locals[addr];
+                PUSH(vm, v);
+                break;
             case GSTORE:
+                v = POP(vm);
+                addr = NCODE(vm);
+                vm->locals[addr] = v;
+                break;
             case CALL:
+                addr = NCODE(vm);
+                argc = NCODE(vm);
+                PUSH(vm, argc);
+                PUSH(vm, vm->fp);
+                PUSH(vm, vm->pc);
+                vm->fp = vm->sp;
+                vm->pc = addr;
+                break;
             case RET:
+                rval = POP(vm);
+                vm->sp = vm->fp;
+                vm->pc = POP(vm);
+                vm->fp = POP(vm);
+                argc = POP(vm);
+                vm->sp -= argc;
+                PUSH(vm, rval);
+                break;
             case POP:
                 --vm->sp;
                 break;
@@ -330,7 +371,8 @@ void runVM(VM *vm){
             default:
                 break;
         }
-    }while(1);
+        repeat++;
+    }while(repeat<vm->repeat);
 }
 
 /*
@@ -371,7 +413,7 @@ int main(int argc, char *argv[]){
         JMPT, 0
     };
 
-    VM *vm = initVM(program, 0, 0);
+    VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 2/*repeat*/);
 
     runVM(vm);
 

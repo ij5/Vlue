@@ -223,9 +223,9 @@ typedef struct _VM{
     int *locals;
     int *code;
     int *stack;
-    int pc;
-    int sp;
-    int fp;
+    int pc;         // program counter
+    int sp;         // stack pointer
+    int fp;         // frame pointer
     int repeat;
 }VM;
 
@@ -268,23 +268,24 @@ enum {
     HALT,
     CALL,
     RET,
+    JMP_IF,
 };
 
 #define PUSH(vm, v) vm->stack[++vm->sp] = v
 #define POP(vm)     vm->stack[vm->sp--]
-#define NCODE(vm)   vm->code[vm->pc++]
+#define NEXT(vm)   vm->code[vm->pc++]
 
 void runVM(VM *vm){
     int repeat = 0;
     do{
-        int opcode = NCODE(vm);
+        int opcode = NEXT(vm);
         int v, addr, offset, a, b, argc, rval;
 
         switch(opcode){
             case HALT:
                 return;
             case CONST:
-                v = NCODE(vm);
+                v = NEXT(vm);
                 PUSH(vm, v);
                 break;
             case ADD:
@@ -310,27 +311,27 @@ void runVM(VM *vm){
             // case LT:
             // case EQ:
             case JMP:
-                vm->pc = NCODE(vm);
+                vm->pc = NEXT(vm);
                 break;
             case JMPT:
-                addr = NCODE(vm);
+                addr = NEXT(vm);
                 if(POP(vm)!=0){
                     vm->pc = addr;
                 }
                 break;
             case JMPF:
-                addr = NCODE(vm);
+                addr = NEXT(vm);
                 if(POP(vm)==0){
                     vm->pc = addr;
                 }
                 break;
             case LOAD:
-                offset = NCODE(vm);
+                offset = NEXT(vm);
                 PUSH(vm, vm->stack[vm->fp+offset]);
                 break;
             case STORE:
                 v = POP(vm);
-                offset = NCODE(vm);
+                offset = NEXT(vm);
                 vm->locals[vm->fp+offset] = v;
                 break;
             case GLOAD:
@@ -340,12 +341,12 @@ void runVM(VM *vm){
                 break;
             case GSTORE:
                 v = POP(vm);
-                addr = NCODE(vm);
+                addr = NEXT(vm);
                 vm->locals[addr] = v;
                 break;
             case CALL:
-                addr = NCODE(vm);
-                argc = NCODE(vm);
+                addr = NEXT(vm);
+                argc = NEXT(vm);
                 PUSH(vm, argc);
                 PUSH(vm, vm->fp);
                 PUSH(vm, vm->pc);
@@ -407,13 +408,40 @@ int main(int argc, char *argv[]){
 
     Token *t = lexer("var asd:int =  45.6;\n");
 
-
+    const int fib = 0;
     int program[] = {
+        // int fib(n){
+        //   if(n==0) return 0;
+        LOAD, -3,
         CONST, 0,
-        JMPT, 0
+        EQ,
+        JMPF, 10,
+        CONST, 0,
+        RET,
+        // if(n < 3) return 1;
+        LOAD, -3,
+        CONST, 3,
+        LT,
+        JMPF, 20,
+        CONST, 1,
+        RET,
+        LOAD, -3,
+        CONST, 1, 
+        SUB, 
+        CALL, fib, 1,
+        LOAD, -3,
+        CONST, 2,
+        SUB,
+        CALL, fib, 1,
+        ADD,
+        RET,
+        CONST, 6, 
+        CALL, fib, 1,
+        PRINT, 
+        HALT,
     };
 
-    VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 2/*repeat*/);
+    VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 26/*repeat*/);
 
     runVM(vm);
 

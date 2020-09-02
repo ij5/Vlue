@@ -293,6 +293,12 @@ enum {
 #define CASE_SUB case(SUB)
 #define CASE_MUL case(MUL)
 #define CASE_DIV case(DIV)
+#define CASE_LT case(LT)
+#define CASE_EQ case(EQ)
+#define CASE_JMP case(JMP)
+#define CASE_JMPT case(JMPT)
+#define CASE_JMPF case(JMPF)
+#define CASE_CONST case(CONST)
 
 
 void runVM(VM *vm){

@@ -326,6 +326,18 @@ void runVM(VM *vm){
                 a = POP(vm);
                 PUSH(vm, a-b);
                 break;
+            CASE_DIV:
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a/b);
+                break;
+            CASE_MUL:
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a*b);
+                break;
+            CASE_LOAD:
+                
             default:
                 break;
         }

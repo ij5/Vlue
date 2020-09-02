@@ -1,3 +1,17 @@
+/*
+ __     __  __        __    __  ________ 
+/  |   /  |/  |      /  |  /  |/        |
+$$ |   $$ |$$ |      $$ |  $$ |$$$$$$$$/ 
+$$ |   $$ |$$ |      $$ |  $$ |$$ |__    
+$$  \ /$$/ $$ |      $$ |  $$ |$$    |   
+ $$  /$$/  $$ |      $$ |  $$ |$$$$$/    
+  $$ $$/   $$ |_____ $$ \__$$ |$$ |_____ 
+   $$$/    $$       |$$    $$/ $$       |
+    $/     $$$$$$$$/  $$$$$$/  $$$$$$$$/ 
+*/
+
+
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
@@ -277,103 +291,10 @@ enum {
 
 void runVM(VM *vm){
     int repeat = 0;
-    do{
-        int opcode = NEXT(vm);
-        int v, addr, offset, a, b, argc, rval;
-
-        switch(opcode){
-            case HALT:
-                return;
-            case CONST:
-                v = NEXT(vm);
-                PUSH(vm, v);
-                break;
-            case ADD:
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a+b);
-                break;
-            case SUB:
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a-b);
-                break;
-            case MUL:
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a*b);
-                break;
-            case DIV:
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a/b);
-                break;
-            // case LT:
-            // case EQ:
-            case JMP:
-                vm->pc = NEXT(vm);
-                break;
-            case JMPT:
-                addr = NEXT(vm);
-                if(POP(vm)!=0){
-                    vm->pc = addr;
-                }
-                break;
-            case JMPF:
-                addr = NEXT(vm);
-                if(POP(vm)==0){
-                    vm->pc = addr;
-                }
-                break;
-            case LOAD:
-                offset = NEXT(vm);
-                PUSH(vm, vm->stack[vm->fp+offset]);
-                break;
-            case STORE:
-                v = POP(vm);
-                offset = NEXT(vm);
-                vm->locals[vm->fp+offset] = v;
-                break;
-            case GLOAD:
-                addr = POP(vm);
-                v = vm->locals[addr];
-                PUSH(vm, v);
-                break;
-            case GSTORE:
-                v = POP(vm);
-                addr = NEXT(vm);
-                vm->locals[addr] = v;
-                break;
-            case CALL:
-                addr = NEXT(vm);
-                argc = NEXT(vm);
-                PUSH(vm, argc);
-                PUSH(vm, vm->fp);
-                PUSH(vm, vm->pc);
-                vm->fp = vm->sp;
-                vm->pc = addr;
-                break;
-            case RET:
-                rval = POP(vm);
-                vm->sp = vm->fp;
-                vm->pc = POP(vm);
-                vm->fp = POP(vm);
-                argc = POP(vm);
-                vm->sp -= argc;
-                PUSH(vm, rval);
-                break;
-            case POP:
-                --vm->sp;
-                break;
-            case PRINT:
-                v = POP(vm);
-                printf("%d\n", v);
-                break;
-            default:
-                break;
-        }
+    while(repeat<vm->repeat){
+        
         repeat++;
-    }while(repeat<vm->repeat);
+    }
 }
 
 /*
@@ -444,13 +365,6 @@ int main(int argc, char *argv[]){
     VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 26/*repeat*/);
 
     runVM(vm);
-
-    asm(
-        ""
-        ""
-    );
-
-    
 
     return 0;
 }

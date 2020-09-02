@@ -302,16 +302,33 @@ enum {
 #define CASE_LOAD case(LOAD)
 #define CASE_GLOAD case(GLOAD)
 #define CASE_STORE case(STORE)
-#define CASE_STORE case(GSTORE)
+#define CASE_GSTORE case(GSTORE)
 #define CASE_PRINT case(PRINT)
 #define CASE_POP case(POP)
 #define CASE_HALT case(HALT)
 #define CASE_CALL case(CALL)
+#define CASE_RET case(RET)
+#define CASE_JMP_IF case(JMP_IF)
 
 void runVM(VM *vm){
     int repeat = 0;
     while(repeat<vm->repeat){
-        
+        int opcode = NEXT(vm);
+        int a,b;
+        switch(opcode){
+            CASE_ADD:
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a+b);
+                break;
+            CASE_SUB:
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a-b);
+                break;
+            default:
+                break;
+        }
         repeat++;
     }
 }

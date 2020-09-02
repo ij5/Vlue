@@ -289,6 +289,12 @@ enum {
 #define POP(vm)     vm->stack[vm->sp--]
 #define NEXT(vm)   vm->code[vm->pc++]
 
+#define CASE_ADD case(ADD)
+#define CASE_SUB case(SUB)
+#define CASE_MUL case(MUL)
+#define CASE_DIV case(DIV)
+
+
 void runVM(VM *vm){
     int repeat = 0;
     while(repeat<vm->repeat){

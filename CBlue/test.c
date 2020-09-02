@@ -299,7 +299,14 @@ enum {
 #define CASE_JMPT case(JMPT)
 #define CASE_JMPF case(JMPF)
 #define CASE_CONST case(CONST)
-
+#define CASE_LOAD case(LOAD)
+#define CASE_GLOAD case(GLOAD)
+#define CASE_STORE case(STORE)
+#define CASE_STORE case(GSTORE)
+#define CASE_PRINT case(PRINT)
+#define CASE_POP case(POP)
+#define CASE_HALT case(HALT)
+#define CASE_CALL case(CALL)
 
 void runVM(VM *vm){
     int repeat = 0;

@@ -267,7 +267,8 @@ enum {
     SUB,
     MUL,
     DIV,
-    LT,
+    RB,
+    LB,
     EQ,
     JMP,
     JMPT,
@@ -316,6 +317,11 @@ void runVM(VM *vm){
                 b = POP(vm);
                 a = POP(vm);
                 PUSH(vm, a*b);
+                break;
+            OP(RB):
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a>b);
                 break;
             OP(LOAD):
                 

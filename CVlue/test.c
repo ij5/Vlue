@@ -59,6 +59,8 @@ enum TokenType{
     T_EQUAL,
     T_SEMI,
     T_FUNCTION,
+    T_LSB,
+    T_RSB,
     OTHER,
 };
 
@@ -209,6 +211,14 @@ Token *lexer(char *data){
             token[i].type = T_SEMI;
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, ":\0");
+            token[i].lineno = line;
+        }else if(*data=='('){
+            printf("LSB\n");
+            data++;
+            token[i].num = i+1;
+            token[i].type = T_LSB;
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, "(\0");
             token[i].lineno = line;
         }else{
             printf("OTHER\n");
@@ -405,6 +415,8 @@ int main(int argc, char *argv[]){
     VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 26/*repeat*/);
 
     runVM(vm);
+
+    rmVM(vm);
 
     return 0;
 }

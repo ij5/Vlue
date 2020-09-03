@@ -323,6 +323,11 @@ void runVM(VM *vm){
                 a = POP(vm);
                 PUSH(vm, a>b);
                 break;
+            OP(LB):
+                b = POP(vm);
+                a = POP(vm);
+                PUSh(vm, a<b);
+                break;
             OP(LOAD):
                 
             default:

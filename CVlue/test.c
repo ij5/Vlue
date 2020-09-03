@@ -289,26 +289,7 @@ enum {
 #define POP(vm)     vm->stack[vm->sp--]
 #define NEXT(vm)   vm->code[vm->pc++]
 
-#define CASE_ADD case(ADD)
-#define CASE_SUB case(SUB)
-#define CASE_MUL case(MUL)
-#define CASE_DIV case(DIV)
-#define CASE_LT case(LT)
-#define CASE_EQ case(EQ)
-#define CASE_JMP case(JMP)
-#define CASE_JMPT case(JMPT)
-#define CASE_JMPF case(JMPF)
-#define CASE_CONST case(CONST)
-#define CASE_LOAD case(LOAD)
-#define CASE_GLOAD case(GLOAD)
-#define CASE_STORE case(STORE)
-#define CASE_GSTORE case(GSTORE)
-#define CASE_PRINT case(PRINT)
-#define CASE_POP case(POP)
-#define CASE_HALT case(HALT)
-#define CASE_CALL case(CALL)
-#define CASE_RET case(RET)
-#define CASE_JMP_IF case(JMP_IF)
+#define OP(x) case(x)
 
 void runVM(VM *vm){
     int repeat = 0;
@@ -316,27 +297,27 @@ void runVM(VM *vm){
         int opcode = NEXT(vm);
         int a,b;
         switch(opcode){
-            CASE_ADD:
+            OP(ADD):
                 b = POP(vm);
                 a = POP(vm);
                 PUSH(vm, a+b);
                 break;
-            CASE_SUB:
+            OP(SUB):
                 b = POP(vm);
                 a = POP(vm);
                 PUSH(vm, a-b);
                 break;
-            CASE_DIV:
+            OP(DIV):
                 b = POP(vm);
                 a = POP(vm);
                 PUSH(vm, a/b);
                 break;
-            CASE_MUL:
+            OP(MUL):
                 b = POP(vm);
                 a = POP(vm);
                 PUSH(vm, a*b);
                 break;
-            CASE_LOAD:
+            OP(LOAD):
                 
             default:
                 break;

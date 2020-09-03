@@ -220,6 +220,14 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "(\0");
             token[i].lineno = line;
+        }else if(*data==')'){
+            printf("RSB\n");
+            data++;
+            token[i].num = i+1;
+            token[i].type = T_RSB;
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, ")\0");
+            token[i].lineno = line;
         }else{
             printf("OTHER\n");
 

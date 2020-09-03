@@ -326,7 +326,7 @@ void runVM(VM *vm){
             OP(LB):
                 b = POP(vm);
                 a = POP(vm);
-                PUSh(vm, a<b);
+                PUSH(vm, a<b);
                 break;
             OP(LOAD):
                 
@@ -382,7 +382,7 @@ int main(int argc, char *argv[]){
         // if(n < 3) return 1;
         LOAD, -3,
         CONST, 3,
-        LT,
+        LB,
         JMPF, 20,
         CONST, 1,
         RET,

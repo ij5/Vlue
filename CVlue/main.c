@@ -281,27 +281,26 @@ void rmVM(VM *vm){
 }
 
 enum {
-    ADD = 128,
-    SUB,
-    MUL,
-    DIV,
-    RB,
-    LB,
-    EQ,
-    JMP,
-    JMPT,
-    JMPF,
-    CONST,
-    LOAD,
-    GLOAD,
-    STORE,
-    GSTORE,
-    PRINT,
-    POP,
-    HALT,
-    CALL,
-    RET,
-    JMP_IF,
+    ADD     = 0x80,
+    SUB     = 0x81,
+    MUL     = 0x82,
+    DIV     = 0x83,
+    RB      = 0x84,
+    LB      = 0x85,
+    EQ      = 0x86,
+    JMP     = 0x87,
+    JMPT    = 0x88,
+    JMPF    = 0x89,
+    CONST   = 0x8A,
+    LOAD    = 0x8B,
+    GLOAD   = 0x8C,
+    STORE   = 0x8D,
+    GSTORE  = 0x8E,
+    PRINT   = 0x8F,
+    POP     = 0x90,
+    HALT    = 0x91,
+    CALL    = 0x92,
+    RET     = 0x93,
 };
 
 #define PUSH(vm, v) vm->stack[++vm->sp] = v
@@ -311,48 +310,7 @@ enum {
 #define OP(x) case(x)
 
 void runVM(VM *vm){
-    int repeat = 0;
-    while(repeat<vm->repeat){
-        int opcode = NEXT(vm);
-        int a,b;
-        switch(opcode){
-            OP(ADD):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a+b);
-                break;
-            OP(SUB):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a-b);
-                break;
-            OP(DIV):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a/b);
-                break;
-            OP(MUL):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a*b);
-                break;
-            OP(RB):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a>b);
-                break;
-            OP(LB):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a<b);
-                break;
-            OP(LOAD):
-                
-            default:
-                break;
-        }
-        repeat++;
-    }
+  printf("Hello World!");  
 }
 
 /*
@@ -386,7 +344,7 @@ typedef struct _AST
 int main(int argc, char *argv[]){
 
     Token *t = lexer("var asd:int =  45.6;\n");
-    char c = 0x20;
+
     const int fib = 0;
     int program[] = {
         // int fib(n){
@@ -414,7 +372,7 @@ int main(int argc, char *argv[]){
         CALL, fib, 1,
         ADD,
         RET,
-        CONST, 6, 
+        CONST, 6,
         CALL, fib, 1,
         PRINT, 
         HALT,
@@ -424,7 +382,21 @@ int main(int argc, char *argv[]){
 
     runVM(vm);
 
-    rmVM(vm);
+    free(t);
+
+
+
+    char build[30] = {0};
+    FILE *rbuildp = fopen("BUILD", "r");
+    fgets(build, sizeof(build), rbuildp);
+    int buildi = atoi(build);
+    buildi++;
+    sprintf(build, "%d", buildi);
+    FILE *wbuildp = fopen("BUILD", "w");
+    fputs(build, wbuildp);
+    fclose(rbuildp);
+    fclose(wbuildp);
+    printf("\nBUILD: %d\n", buildi);
 
     return 0;
 }

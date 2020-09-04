@@ -311,47 +311,8 @@ enum {
 #define OP(x) case(x)
 
 void runVM(VM *vm){
-    int repeat = 0;
-    while(repeat<vm->repeat){
-        int opcode = NEXT(vm);
-        int a,b;
-        switch(opcode){
-            OP(ADD):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a+b);
-                break;
-            OP(SUB):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a-b);
-                break;
-            OP(DIV):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a/b);
-                break;
-            OP(MUL):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a*b);
-                break;
-            OP(RB):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a>b);
-                break;
-            OP(LB):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a<b);
-                break;
-            OP(LOAD):
-                
-            default:
-                break;
-        }
-        repeat++;
+    while(1){
+        
     }
 }
 
@@ -386,7 +347,7 @@ typedef struct _AST
 int main(int argc, char *argv[]){
 
     Token *t = lexer("var asd:int =  45.6;\n");
-
+    char c = 0x20;
     const int fib = 0;
     int program[] = {
         // int fib(n){

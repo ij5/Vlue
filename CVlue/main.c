@@ -255,9 +255,9 @@ typedef struct _VM{
     int *locals;
     int *code;
     int *stack;
-    int pc;         // program counter
-    int sp;         // stack pointer
-    int fp;         // frame pointer
+    int ProgramCounter;         // program counter
+    int StackPointer;         // stack pointer
+    int FramePointer;         // frame pointer
     int repeat;
 }VM;
 
@@ -303,9 +303,9 @@ enum {
     RET     = 0x93,
 };
 
-#define PUSH(vm, v) vm->stack[++vm->sp] = v
-#define POP(vm)     vm->stack[vm->sp--]
-#define NEXT(vm)   vm->code[vm->pc++]
+#define PUSH(vm, v) vm->stack[++vm->StackPointer] = v
+#define POP(vm)     vm->stack[vm->StackPointer--]
+#define NEXT(vm)   vm->code[vm->ProgramCounter++]
 
 #define OP(x) case(x)
 

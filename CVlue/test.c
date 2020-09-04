@@ -281,27 +281,26 @@ void rmVM(VM *vm){
 }
 
 enum {
-    ADD = 128,
-    SUB,
-    MUL,
-    DIV,
-    RB,
-    LB,
-    EQ,
-    JMP,
-    JMPT,
-    JMPF,
-    CONST,
-    LOAD,
-    GLOAD,
-    STORE,
-    GSTORE,
-    PRINT,
-    POP,
-    HALT,
-    CALL,
-    RET,
-    JMP_IF,
+    ADD     = 0x80,
+    SUB     = 0x81,
+    MUL     = 0x82,
+    DIV     = 0x83,
+    RB      = 0x84,
+    LB      = 0x85,
+    EQ      = 0x86,
+    JMP     = 0x87,
+    JMPT    = 0x88,
+    JMPF    = 0x89,
+    CONST   = 0x8A,
+    LOAD    = 0x8B,
+    GLOAD   = 0x8C,
+    STORE   = 0x8D,
+    GSTORE  = 0x8E,
+    PRINT   = 0x8F,
+    POP     = 0x90,
+    HALT    = 0x91,
+    CALL    = 0x92,
+    RET     = 0x93,
 };
 
 #define PUSH(vm, v) vm->stack[++vm->sp] = v
@@ -312,7 +311,7 @@ enum {
 
 void runVM(VM *vm){
     while(1){
-        
+
     }
 }
 

@@ -381,6 +381,7 @@ int main(int argc, char *argv[]){
     VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 26/*repeat*/);
 
     runVM(vm);
+    rmVM(vm);
 
     free(t);
 

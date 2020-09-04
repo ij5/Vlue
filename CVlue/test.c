@@ -310,9 +310,7 @@ enum {
 #define OP(x) case(x)
 
 void runVM(VM *vm){
-    while(1){
-
-    }
+  printf("%X", 0x80);  
 }
 
 /*
@@ -374,7 +372,7 @@ int main(int argc, char *argv[]){
         CALL, fib, 1,
         ADD,
         RET,
-        CONST, 6, 
+        CONST, 6,
         CALL, fib, 1,
         PRINT, 
         HALT,
@@ -384,7 +382,7 @@ int main(int argc, char *argv[]){
 
     runVM(vm);
 
-    rmVM(vm);
+
 
     return 0;
 }

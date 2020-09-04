@@ -264,9 +264,9 @@ typedef struct _VM{
 VM *initVM(int *code, int pc, int datasize, int repeat){
     VM *vm = (VM*)malloc(sizeof(VM));
     vm->code = code;
-    vm->pc = pc;
-    vm->fp = 0;
-    vm->sp = -1;
+    vm->ProgramCounter = pc;
+    vm->FramePointer = 0;
+    vm->StackPointer = -1;
     vm->locals = (int*)malloc(sizeof(int)*datasize);
     vm->stack = (int*)malloc(sizeof(int)*STACK_SIZE);
     vm->repeat = repeat;
@@ -305,7 +305,7 @@ enum {
 
 #define PUSH(vm, v) vm->stack[++vm->StackPointer] = v
 #define POP(vm)     vm->stack[vm->StackPointer--]
-#define NEXT(vm)   vm->code[vm->ProgramCounter++]
+#define NEXT(vm)    vm->code[vm->ProgramCounter++]
 
 #define OP(x) case(x)
 

@@ -253,6 +253,14 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "-\0");
             token[i].lineno = line;
+        }else if(*data=="*"){
+            pritnf("MUL\n");
+            data++;
+            token[i].num = i+1;
+            token[i].type = T_MUL;
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, "*\0");
+            token[i].lineno = line;
         }else{
             printf("OTHER\n");
 

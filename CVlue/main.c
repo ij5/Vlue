@@ -347,6 +347,7 @@ int parse_start(Token *token){
 }
 
 int factor(Token *token){
+    printf("%s\n", token[i].value);
     int value;
     
     
@@ -396,6 +397,7 @@ int main(int argc, char *argv[]){
         PRINT, 
         HALT,
     };
+    parse_start(t);
 
     VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 26/*repeat*/);
 

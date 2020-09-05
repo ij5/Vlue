@@ -338,12 +338,18 @@ typedef struct _AST
     ====================
 */
 
-int parse_start(Token token);
-int calculate_1(Token *token);
+int parse_start(Token *token);
+int factor(Token *token);
 
+static int i = 0;
+int parse_start(Token *token){
+    factor(token);
+}
 
-int parse_start(Token token){
-
+int factor(Token *token){
+    int value;
+    
+    
 }
 
 /*

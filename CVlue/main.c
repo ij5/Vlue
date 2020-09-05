@@ -310,7 +310,29 @@ enum {
 #define OP(x) case(x)
 
 void runVM(VM *vm){
-  printf("Hello World!");  
+    while(1){
+        int opcode = NEXT(vm);
+        int a,b;
+        switch(opcode){
+            OP(ADD):
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a+b);
+            OP(SUB):
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a-b);
+            OP(MUL):
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a*b);
+            OP(DIV):
+                b = POP(vm);
+                a = POP(vm);
+                PUSH(vm, a/b);
+            
+        }
+    }
 }
 
 /*

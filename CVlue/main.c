@@ -34,6 +34,11 @@ void clearstr(char *c){
     }
 }
 
+void error(const char *msg){
+    fputs(msg, stderr);
+    exit(1);
+}
+
 
 /*
     ================
@@ -310,29 +315,7 @@ enum {
 #define OP(x) case(x)
 
 void runVM(VM *vm){
-    while(1){
-        int opcode = NEXT(vm);
-        int a,b;
-        switch(opcode){
-            OP(ADD):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a+b);
-            OP(SUB):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a-b);
-            OP(MUL):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a*b);
-            OP(DIV):
-                b = POP(vm);
-                a = POP(vm);
-                PUSH(vm, a/b);
-            
-        }
-    }
+    printf("RunVM\n");
 }
 
 /*
@@ -354,6 +337,14 @@ typedef struct _AST
     PARSER
     ====================
 */
+
+int parse_start(Token token);
+int calculate_1(Token *token);
+
+
+int parse_start(Token token){
+
+}
 
 /*
     ====================
@@ -406,7 +397,6 @@ int main(int argc, char *argv[]){
     rmVM(vm);
 
     free(t);
-
 
 
     char build[30] = {0};

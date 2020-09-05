@@ -66,6 +66,10 @@ enum TokenType{
     T_FUNCTION,
     T_LSB,
     T_RSB,
+    T_ADD,
+    T_SUB,
+    T_MUL,
+    T_DIV,
     OTHER,
 };
 
@@ -233,6 +237,22 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, ")\0");
             token[i].lineno = line;
+        }else if(*data=='+'){
+            printf("ADD\n");
+            data++;
+            token[i].num = i+1;
+            token[i].type = T_ADD;
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, "+\0");
+            token[i].lineno = line;
+        }else if(*data=='-'){
+            printf("SUB\n");
+            data++;
+            token[i].num = i+1;
+            token[i].type = T_SUB;
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, "-\0");
+            token[i].lineno = line;
         }else{
             printf("OTHER\n");
 
@@ -363,7 +383,7 @@ int factor(Token *token){
 
 int main(int argc, char *argv[]){
 
-    Token *t = lexer("var asd:int =  45.6;\n");
+    Token *t = lexer("");
 
     const int fib = 0;
     int program[] = {

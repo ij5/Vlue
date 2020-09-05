@@ -112,6 +112,7 @@ int isCutCharacter(char c){
 
 #define TOKEN_LENGTH 1024
 Token *lexer(char *data){
+    if(data=="") error("It's empty.");
     Token *token = (Token *)malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
     int line = 1;
     int TEMP_LENGTH = 128;
@@ -253,13 +254,21 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "-\0");
             token[i].lineno = line;
-        }else if(*data=="*"){
-            pritnf("MUL\n");
+        }else if(*data=='*'){
+            printf("MUL\n");
             data++;
             token[i].num = i+1;
             token[i].type = T_MUL;
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "*\0");
+            token[i].lineno = line;
+        }else if(*data=='/'){
+            printf("DIV\n");
+            data++;
+            token[i].num = i+1;
+            token[i].type = T_DIV;
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, "/\0");
             token[i].lineno = line;
         }else{
             printf("OTHER\n");
@@ -391,7 +400,7 @@ int factor(Token *token){
 
 int main(int argc, char *argv[]){
 
-    Token *t = lexer("");
+    Token *t = lexer("(1+2)*3/4-5");
 
     const int fib = 0;
     int program[] = {

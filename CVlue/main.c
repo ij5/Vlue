@@ -375,8 +375,16 @@ typedef struct _AST
     ====================
 */
 
+void match(char *expected, Token *token);
 int parse_start(Token *token);
 int factor(Token *token);
+
+void match(char *expected, Token *token){
+    if(token[i].value==expected){
+        token = getchar();
+        return;
+    }
+}
 
 static int i = 0;
 int parse_start(Token *token){
@@ -386,7 +394,11 @@ int parse_start(Token *token){
 int factor(Token *token){
     printf("%s\n", token[i].value);
     int value;
-    
+    if(strcmp(token[i].value, "(")){
+        i++;
+        value = expression();
+
+    }
     
 }
 

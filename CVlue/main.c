@@ -263,12 +263,12 @@ Token *lexer(char *data){
             strcpy(token[i].value, "*\0");
             token[i].lineno = line;
         }else if(*data=='/'){
-            data++;
-            if(*data=='*'){
+            if(*(data+1)=='*'){
+                data+=2;
                 while((*data=='*'&&*(data+1)=='/')||(*data=='\0')){
                     data++;
                 }
-                if(*data!=='\0'){
+                if(*data!='\0'){
                     data++;
                     data++;
                 }

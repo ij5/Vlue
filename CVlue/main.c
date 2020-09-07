@@ -265,7 +265,7 @@ Token *lexer(char *data){
         }else if(*data=='/'){
             if(*(data+1)=='*'){
                 data+=2;
-                while(!(*data=='*'&&*(data+1)=='/')||!(*data=='\0')){
+                while(!(*data=='*'&&*(data+1)=='/')&&(*data!='\0')){
                     data++;
                 }
                 if(*data!='\0'){
@@ -417,7 +417,7 @@ int factor(Token *token){
 
 int main(int argc, char *argv[]){
 
-    Token *t = lexer("(1+2)*3/4-5/**/");
+    Token *t = lexer("(1+2)*3/4-5/*");
 
     const int fib = 0;
     int program[] = {

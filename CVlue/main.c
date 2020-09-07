@@ -268,8 +268,10 @@ Token *lexer(char *data){
                 while((*data=='*'&&*(data+1)=='/')||(*data=='\0')){
                     data++;
                 }
-                data++;
-                data++;
+                if(*data!=='\0'){
+                    data++;
+                    data++;
+                }
                 i--;
                 printf("COMMENT\n");
             }else{

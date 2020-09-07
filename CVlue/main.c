@@ -263,13 +263,24 @@ Token *lexer(char *data){
             strcpy(token[i].value, "*\0");
             token[i].lineno = line;
         }else if(*data=='/'){
-            printf("DIV\n");
             data++;
-            token[i].num = i+1;
-            token[i].type = T_DIV;
-            token[i].value = malloc(sizeof(*data));
-            strcpy(token[i].value, "/\0");
-            token[i].lineno = line;
+            if(*data=='*'){
+                while((*data=='*'&&*(data+1)=='/')||(*data=='\0')){
+                    data++;
+                }
+                data++;
+                data++;
+                i--;
+                printf("COMMENT\n");
+            }else{
+                printf("DIV\n");
+                data++;
+                token[i].num = i+1;
+                token[i].type = T_DIV;
+                token[i].value = malloc(sizeof(*data));
+                strcpy(token[i].value, "/\0");
+                token[i].lineno = line;
+            }
         }else{
             printf("OTHER\n");
 
@@ -379,26 +390,18 @@ void match(char *expected, Token *token);
 int parse_start(Token *token);
 int factor(Token *token);
 
+int i = 0;
+
 void match(char *expected, Token *token){
-    if(token[i].value==expected){
-        token = getchar();
-        return;
-    }
+
 }
 
-static int i = 0;
+
 int parse_start(Token *token){
-    factor(token);
+
 }
 
 int factor(Token *token){
-    printf("%s\n", token[i].value);
-    int value;
-    if(strcmp(token[i].value, "(")){
-        i++;
-        value = expression();
-
-    }
     
 }
 
@@ -412,7 +415,7 @@ int factor(Token *token){
 
 int main(int argc, char *argv[]){
 
-    Token *t = lexer("(1+2)*3/4-5");
+    Token *t = lexer("(1+2)*3/4-5/**/");
 
     const int fib = 0;
     int program[] = {

@@ -461,6 +461,9 @@ int main(int argc, char *argv[]){
     free(t);
 
 
+    /*
+        BUILD
+    */
     char build[30] = {0};
     FILE *rbuildp = fopen("BUILD", "r");
     fgets(build, sizeof(build), rbuildp);
@@ -472,6 +475,10 @@ int main(int argc, char *argv[]){
     fclose(rbuildp);
     fclose(wbuildp);
     printf("\nBUILD: %d\n", buildi);
+    /*
+        END
+    */
+
 
     return 0;
 }

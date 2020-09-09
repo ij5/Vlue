@@ -406,6 +406,11 @@ Node *make_node(int type, Node *op1, Node *op2, int val){
     return node;
 }
 
+enum{
+    N_NUM = 2048,
+
+};
+
 
 Node *factor(Token *token);
 Node *term(Token *token);
@@ -419,7 +424,7 @@ Node *factor(Token *token){
     node->op2 = NULL;
 
     if(token[i].type==T_ADD){
-
+        node->type = N_NUM;
     }
 }
 

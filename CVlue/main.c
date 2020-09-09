@@ -52,6 +52,7 @@ typedef struct _Token
     int num;
     int type;
     int lineno;
+    int position;
     char *value;
 }Token;
 

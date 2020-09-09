@@ -388,22 +388,39 @@ typedef struct _AST
     ====================
 */
 
-void match(char *expected, Token *token);
-int parse_start(Token *token);
-int factor(Token *token);
+struct _Node{
+    int type;
+    int val;
+    struct Node *op1;
+    struct Node *op2;
+}Node;
+
+Node *make_node(int type, Node *op1, Node *op2, int val){
+    Node *node = malloc(sizeof(Node));
+    node->type = type;
+    node->val = val;
+    node->op1 = op1;
+    node->op2 = op2;
+
+    return node;
+}
+
+
+Node *factor(Token *token);
+Node *term(Token *token);
+Node *expr(Token *token);
 
 int i = 0;
 
-void match(char *expected, Token *token){
+Node *factor(Token *token){
+    
+}
+
+Node *term(Token *token){
 
 }
 
-
-int parse_start(Token *token){
-
-}
-
-int factor(Token *token){
+Node *expr(Token *token){
     
 }
 
@@ -417,7 +434,7 @@ int factor(Token *token){
 
 int main(int argc, char *argv[]){
 
-    Token *t = lexer("(1+2)*3/4-5/*");
+    Token *t = lexer("(1+2)*3/4-5/*hello World!*/");
 
     const int fib = 0;
     int program[] = {

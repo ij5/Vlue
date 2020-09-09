@@ -134,6 +134,7 @@ Token *lexer(char *data){
             token[i].value = "\n";
             token[i].lineno = line;
             token[i].type = T_NEWLINE;
+            token[i].position = 0;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
             for(int j=0;isCutCharacter(*data) == false&&((*data >= 'a' && *data <= 'z') || 
                 (*data >= 'A' && *data <= 'Z') || 
@@ -144,6 +145,8 @@ Token *lexer(char *data){
                 temp[j] = *data;
                 temp[j+1] = '\0';
                 ++data;
+
+                token[i].position++;
             }
 
             if(strcmp(temp, "var")==0){
@@ -168,10 +171,13 @@ Token *lexer(char *data){
                 temp[j+1] = '\0';
                 data+=1;
                 tempcount = j;
+
+                token[i].position++;
             }
 
             if(*data=='.'){
                 data++;
+                token[i].position++;
                 tempcount++;
                 temp[tempcount] = '.';
                 tempcount++;
@@ -179,6 +185,7 @@ Token *lexer(char *data){
                     temp[tempcount] = *data;
                     temp[tempcount+1] = '\0';
                     data+=1;
+                    token[i].position++;
                 }
                 tempcount = 0;
                 printf("FLOAT\n");
@@ -204,9 +211,13 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "=\0");
             token[i].lineno = line;
+
+            token[i].position++;
         }else if(*data==' '||*data=='\t'||*data=='\r'){
             data++;
             i--;
+
+            token[i].position++;
         }else if(*data==';'){
             printf("SEMI\n");
             data++;
@@ -215,6 +226,7 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, ";\0");
             token[i].lineno = line;
+            token[i].position++;
         }else if(*data==':'){
             printf("COLON\n");
             data++;
@@ -223,6 +235,7 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, ":\0");
             token[i].lineno = line;
+            token[i].position++;
         }else if(*data=='('){
             printf("LSB\n");
             data++;
@@ -231,6 +244,7 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "(\0");
             token[i].lineno = line;
+            token[i].position++;
         }else if(*data==')'){
             printf("RSB\n");
             data++;
@@ -247,6 +261,7 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "+\0");
             token[i].lineno = line;
+            token[i].position++;
         }else if(*data=='-'){
             printf("SUB\n");
             data++;
@@ -255,6 +270,7 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "-\0");
             token[i].lineno = line;
+            token[i].position++;
         }else if(*data=='*'){
             printf("MUL\n");
             data++;
@@ -263,15 +279,19 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "*\0");
             token[i].lineno = line;
+            token[i].position++;
         }else if(*data=='/'){
             if(*(data+1)=='*'){
                 data+=2;
                 while(!(*data=='*'&&*(data+1)=='/')&&(*data!='\0')){
                     data++;
+                    token[i].position++;
                 }
                 if(*data!='\0'){
                     data++;
+                    token[i].position++;
                     data++;
+                    token[i].position++;
                 }
                 i--;
                 printf("COMMENT\n");
@@ -283,6 +303,7 @@ Token *lexer(char *data){
                 token[i].value = malloc(sizeof(*data));
                 strcpy(token[i].value, "/\0");
                 token[i].lineno = line;
+                token[i].position++;
             }
         }else{
             printf("OTHER\n");
@@ -291,6 +312,7 @@ Token *lexer(char *data){
 
             data+=1;
             i--;
+            token[i].position++;
         }
         //printf("value: %s\n", token[i].value);
         //printf("i: %d\n",i);

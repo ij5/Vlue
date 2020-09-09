@@ -391,8 +391,8 @@ typedef struct _AST
 typedef struct _Node{
     int type;
     int val;
-    struct Node *op1;
-    struct Node *op2;
+    struct _Node *op1;
+    struct _Node *op2;
 }Node;
 
 
@@ -419,7 +419,7 @@ Node *factor(Token *token){
     node->op2 = NULL;
 
     if(token[i].type==T_ADD){
-        
+
     }
 }
 
@@ -475,7 +475,7 @@ int main(int argc, char *argv[]){
         PRINT, 
         HALT,
     };
-    parse_start(t);
+    
 
     VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 26/*repeat*/);
 

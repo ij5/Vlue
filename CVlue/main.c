@@ -341,6 +341,7 @@ typedef struct _VM{
 
 VM *initVM(int *code, int pc, int datasize, int repeat){
     VM *vm = (VM*)malloc(sizeof(VM));
+    memset(vm, '\0', sizeof(VM));
     vm->code = code;
     vm->ProgramCounter = pc;
     vm->FramePointer = 0;

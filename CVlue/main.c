@@ -360,36 +360,47 @@ void rmVM(VM *vm){
 }
 
 enum {
-    ADD     = 0x80,
-    SUB     = 0x81,
-    MUL     = 0x82,
-    DIV     = 0x83,
-    RB      = 0x84,
-    LB      = 0x85,
-    EQ      = 0x86,
-    JMP     = 0x87,
-    JMPT    = 0x88,
-    JMPF    = 0x89,
-    CONST   = 0x8A,
-    LOAD    = 0x8B,
-    GLOAD   = 0x8C,
-    STORE   = 0x8D,
-    GSTORE  = 0x8E,
-    PRINT   = 0x8F,
-    POP     = 0x90,
-    HALT    = 0x91,
-    CALL    = 0x92,
-    RET     = 0x93,
+    OP_ADD     = 0x80,
+    OP_SUB     = 0x81,
+    OP_MUL     = 0x82,
+    OP_DIV     = 0x83,
+    OP_RB      = 0x84,
+    OP_LB      = 0x85,
+    OP_EQ      = 0x86,
+    OP_JMP     = 0x87,
+    OP_JMPT    = 0x88,
+    OP_JMPF    = 0x89,
+    OP_CONST   = 0x8A,
+    OP_LOAD    = 0x8B,
+    OP_GLOAD   = 0x8C,
+    OP_STORE   = 0x8D,
+    OP_GSTORE  = 0x8E,
+    OP_PRINT   = 0x8F,
+    OP_POP     = 0x90,
+    OP_HALT    = 0x91,
+    OP_CALL    = 0x92,
+    OP_RET     = 0x93,
 };
 
-#define PUSH(vm, v) vm->stack[++vm->StackPointer] = v
-#define POP(vm)     vm->stack[vm->StackPointer--]
-#define NEXT(vm)    vm->code[vm->ProgramCounter++]
+void push(VM *vm, int v){
+    vm->stack[++vm->StackPointer] = v;
+}
 
-#define OP(x) case(x)
+int pop(VM *vm){
+    return vm->stack[vm->StackPointer--];
+}
+
+int  next(VM *vm){
+    return vm->code[vm->ProgramCounter++];
+}
+
+#define OP(x) case OP_##x
 
 void runVM(VM *vm){
-    printf("RunVM\n");
+    do{
+        int opcode = next(vm);
+
+    }while(1);
 }
 
 /*
@@ -473,37 +484,7 @@ int main(int argc, char *argv[]){
     Token *t = lexer("(1+2)*3/4-5/*hello World!*/");
 
     const int fib = 0;
-    int program[] = {
-        // int fib(n){
-        //   if(n==0) return 0;
-        LOAD, -3,
-        CONST, 0,
-        EQ,
-        JMPF, 10,
-        CONST, 0,
-        RET,
-        // if(n < 3) return 1;
-        LOAD, -3,
-        CONST, 3,
-        LB,
-        JMPF, 20,
-        CONST, 1,
-        RET,
-        LOAD, -3,
-        CONST, 1, 
-        SUB, 
-        CALL, fib, 1,
-        LOAD, -3,
-        CONST, 2,
-        SUB,
-        CALL, fib, 1,
-        ADD,
-        RET,
-        CONST, 6,
-        CALL, fib, 1,
-        PRINT, 
-        HALT,
-    };
+    int program[] = {};
     
 
     VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 26/*repeat*/);
@@ -531,7 +512,6 @@ int main(int argc, char *argv[]){
     /*
         END
     */
-
 
     return 0;
 }

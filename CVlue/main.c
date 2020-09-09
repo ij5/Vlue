@@ -388,12 +388,13 @@ typedef struct _AST
     ====================
 */
 
-struct _Node{
+typedef struct _Node{
     int type;
     int val;
     struct Node *op1;
     struct Node *op2;
 }Node;
+
 
 Node *make_node(int type, Node *op1, Node *op2, int val){
     Node *node = malloc(sizeof(Node));
@@ -413,7 +414,13 @@ Node *expr(Token *token);
 int i = 0;
 
 Node *factor(Token *token){
-    
+    Node *node = malloc(sizeof(Node));
+    node->op1 = NULL;
+    node->op2 = NULL;
+
+    if(token[i].type==T_ADD){
+        
+    }
 }
 
 Node *term(Token *token){

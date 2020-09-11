@@ -399,7 +399,7 @@ int  next(VM *vm){
 void runVM(VM *vm){
     do{
         int opcode = next(vm);
-
+        break;
     }while(1);
 }
 
@@ -445,6 +445,10 @@ enum{
     N_NUM = 2048,
 
 };
+
+static bool match(Node node, int type){
+    
+}
 
 
 Node *factor(Token *token);

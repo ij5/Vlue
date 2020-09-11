@@ -446,33 +446,17 @@ enum{
 
 };
 
+void initParser(Node *node){
+    
+}
+
 static bool match(Node node, int type){
-    
-}
-
-
-Node *factor(Token *token);
-Node *term(Token *token);
-Node *expr(Token *token);
-
-int i = 0;
-
-Node *factor(Token *token){
-    Node *node = malloc(sizeof(Node));
-    node->op1 = NULL;
-    node->op2 = NULL;
-
-    if(token[i].type==T_ADD){
-        node->type = N_NUM;
-    }
-}
-
-Node *term(Token *token){
 
 }
 
-Node *expr(Token *token){
-    
+void parse(){
+    Node node;
+
 }
 
 /*

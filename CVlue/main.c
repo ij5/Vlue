@@ -457,6 +457,7 @@ static bool match(Node node, int type){
 void parse(){
     Node node;
 
+    initParser(&node);
 }
 
 /*

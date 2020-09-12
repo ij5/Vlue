@@ -471,8 +471,7 @@ void parse(){
 int main(int argc, char *argv[]){
 
     Token *t = lexer("(1+2)*3/4-5/*hello World!*/");
-
-    const int fib = 0;
+    
     int program[] = {};
     
 

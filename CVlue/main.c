@@ -425,39 +425,51 @@ typedef struct _AST
 
 typedef struct _Node{
     int type;
-    int val;
     struct _Node *op1;
     struct _Node *op2;
 }Node;
 
 
-Node *make_node(int type, Node *op1, Node *op2, int val){
-    Node *node = malloc(sizeof(Node));
-    node->type = type;
-    node->val = val;
-    node->op1 = op1;
-    node->op2 = op2;
-
-    return node;
-}
-
 enum{
     N_NUM = 2048,
+    N_ROOT,
+    N_FACTOR,
+    N_TERM,
 
 };
 
-void initParser(Node *node){
-    
+void match(Token *token, int t);
+void parse(Token *token);
+void program(Token *token, Node *node);
+void expression(Token *token, Node *node);
+void factor(Token *token, Node *node);
+
+int i = 0;
+
+void match(Token *token, int t){
+    if(token[i].type!=t){
+        printf("Expected token: %s\n", token[i].value);
+        exit(-1);
+    }    
+    i++;
 }
 
-static bool match(Node node, int type){
-
-}
-
-void parse(){
+void parse(Token *token){
     Node node;
 
-    initParser(&node);
+    program(token, &node);
+}
+
+void program(Token *token, Node *node){
+    expression(token, node);
+}
+
+void expression(Token *token, Node *node){
+    factor(token, node);
+}
+
+void factor(Token *token, Node *node){
+    
 }
 
 /*
@@ -474,6 +486,7 @@ int main(int argc, char *argv[]){
     
     int program[] = {};
     
+    parse(t);
 
     VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 26/*repeat*/);
 

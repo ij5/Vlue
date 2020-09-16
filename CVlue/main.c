@@ -443,6 +443,9 @@ void parse(Token *token);
 void program(Token *token, Node *node);
 void expression(Token *token, Node *node);
 void factor(Token *token, Node *node);
+void term(Token *token, Node *node);
+void factor_tail(Token *token, Node *node);
+void term_tail(Token *token, Node *node);
 
 int i = 0;
 
@@ -465,11 +468,19 @@ void program(Token *token, Node *node){
 }
 
 void expression(Token *token, Node *node){
-    factor(token, node);
+    term(token, node);
 }
 
 void factor(Token *token, Node *node){
     
+}
+
+void term(Token *token, Node *node){
+    
+}
+
+void term_tail(Token *token, Node *node){
+
 }
 
 /*

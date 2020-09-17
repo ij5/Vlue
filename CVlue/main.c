@@ -438,18 +438,18 @@ enum{
 
 };
 
-void match(Token *token, int t);
-void parse(Token *token);
-void program(Token *token, Node *node);
-void expression(Token *token, Node *node);
-void factor(Token *token, Node *node);
-void term(Token *token, Node *node);
-void factor_tail(Token *token, Node *node);
-void term_tail(Token *token, Node *node);
+int match(Token *token, int t);
+int parse(Token *token);
+int program(Token *token, Node *node);
+int expression(Token *token, Node *node);
+int factor(Token *token, Node *node);
+int term(Token *token, Node *node);
+int factor_tail(Token *token, Node *node);
+int term_tail(Token *token, Node *node);
 
 int i = 0;
 
-void match(Token *token, int t){
+int match(Token *token, int t){
     if(token[i].type!=t){
         printf("Expected token: %s\n", token[i].value);
         exit(-1);
@@ -457,29 +457,34 @@ void match(Token *token, int t){
     i++;
 }
 
-void parse(Token *token){
+int parse(Token *token){
     Node node;
 
     program(token, &node);
 }
 
-void program(Token *token, Node *node){
+int program(Token *token, Node *node){
     expression(token, node);
 }
 
-void expression(Token *token, Node *node){
+int expression(Token *token, Node *node){
     term(token, node);
 }
 
-void factor(Token *token, Node *node){
+int factor(Token *token, Node *node){
+    int value = 0;
+    if(token[i].type==T_LSB){
+        match(token, T_LSB);
+        value = expression(token, node);
+        match(token, T_RSB);
+    }
+}
+
+int term(Token *token, Node *node){
     
 }
 
-void term(Token *token, Node *node){
-    
-}
-
-void term_tail(Token *token, Node *node){
+int term_tail(Token *token, Node *node){
 
 }
 

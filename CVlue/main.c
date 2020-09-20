@@ -377,12 +377,12 @@ enum {
     OP_GSTORE  = 0x8E,
     OP_PRINT   = 0x8F,
     OP_POP     = 0x90,
-    OP_HALT    = 0x91,
+    OP_EXIT    = 0x91,
     OP_CALL    = 0x92,
     OP_RET     = 0x93,
 };
 
-void push(VM *vm, int v){
+void emit(VM *vm, int v){
     vm->stack[++vm->StackPointer] = v;
 }
 
@@ -390,17 +390,19 @@ int pop(VM *vm){
     return vm->stack[vm->StackPointer--];
 }
 
-int  next(VM *vm){
+int next(VM *vm){
     return vm->code[vm->ProgramCounter++];
 }
 
-#define OP(x) case OP_##x
+#define OP(x) if(opcode==OP_##x)
 
 void runVM(VM *vm){
-    do{
-        int opcode = next(vm);
-        break;
-    }while(1);
+    
+    
+    int opcode = next(vm);
+    OP(POP){
+
+    }
 }
 
 /*
@@ -423,6 +425,8 @@ typedef struct _AST
     ====================
 */
 
+
+
 typedef struct _Node{
     int type;
     struct _Node *op1;
@@ -439,13 +443,12 @@ enum{
 };
 
 int match(Token *token, int t);
-int parse(Token *token);
-int program(Token *token, Node *node);
-int expression(Token *token, Node *node);
-int factor(Token *token, Node *node);
-int term(Token *token, Node *node);
-int factor_tail(Token *token, Node *node);
-int term_tail(Token *token, Node *node);
+Node *parse(Token *token, VM *vm);
+Node *program(Token *token, Node *node, VM *vm);
+Node *expression(Token *token, Node *node, VM *vm);
+Node *statement(Token *token, Node *node, VM *vm);
+Node *factor(Token *token, Node *node, VM *vm);
+Node *term(Token *token, Node *node, VM *vm);
 
 int i = 0;
 
@@ -457,36 +460,57 @@ int match(Token *token, int t){
     i++;
 }
 
-int parse(Token *token){
+Node *parse(Token *token, VM *vm){
     Node node;
 
-    program(token, &node);
+    return program(token, &node, vm);
 }
 
-int program(Token *token, Node *node){
-    expression(token, node);
+Node *program(Token *token, Node *node, VM *vm){
+    return statement(token, node, vm);
 }
 
-int expression(Token *token, Node *node){
-    term(token, node);
+Node *statement(Token *token, Node *node, VM *vm){
+    return expression(token, node, vm);
 }
 
-int factor(Token *token, Node *node){
-    int value = 0;
-    if(token[i].type==T_LSB){
-        match(token, T_LSB);
-        value = expression(token, node);
-        match(token, T_RSB);
+Node *expression(Token *token, Node *node, VM *vm){
+    node = factor(token, node, vm);
+    node = term(token, node, vm);
+}
+
+Node *term(Token *token, Node *node, VM *vm){
+    if(token[i].type==T_INT){
+        i++;
+        if(token[i].type==T_ADD){
+
+        }else if(token[i].type==T_SUB){
+
+        }else if(token[i].type==T_LSB){
+
+        }else{
+            return node;
+        }
+    }else{
+        return node;
     }
 }
 
-int term(Token *token, Node *node){
-    
+Node *factor(Token *token, Node *node, VM *vm){
+    if(token[i].type==T_INT){
+        i++;
+        if(token[i].type==T_SUB){
+            
+        }else if(token[i].type==T_ADD){
+
+        }
+    }else{
+        return node;
+    }
 }
 
-int term_tail(Token *token, Node *node){
 
-}
+
 
 /*
     ====================
@@ -498,18 +522,18 @@ int term_tail(Token *token, Node *node){
 
 int main(int argc, char *argv[]){
 
-    Token *t = lexer("(1+2)*3/4-5/*hello World!*/");
+    Token *token = lexer("(1+2)*3/4-5/*hello World!*/+6;");
     
     int program[] = {};
-    
-    parse(t);
 
     VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 26/*repeat*/);
+
+    parse(token, vm);
 
     runVM(vm);
     rmVM(vm);
 
-    free(t);
+    free(token);
 
 
     /*

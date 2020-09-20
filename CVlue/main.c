@@ -20,6 +20,7 @@ $$  \ /$$/ $$ |      $$ |  $$ |$$    |
 #include <stdbool.h>
 #include <ctype.h>
 #include <stdint.h>
+#include <math.h>
 
 /*
     =========
@@ -445,95 +446,44 @@ enum{
 
 int match(Token *token, int t);
 Node *parse(Token *token, VM *vm);
-Node *program(Token *token, Node *node, VM *vm);
-Node *expression(Token *token, Node *node, VM *vm);
-Node *statement(Token *token, Node *node, VM *vm);
-Node *factor(Token *token, Node *node, VM *vm);
-Node *term(Token *token, Node *node, VM *vm);
-Node *group(Token *token, Node *node, VM *vm);
+Node *program(Token *token, VM *vm);
+Node *expression(Token *token, VM *vm);
+Node *statement(Token *token, VM *vm);
+Node *factor(Token *token, VM *vm);
+Node *term(Token *token, VM *vm);
+Node *group(Token *token, VM *vm);
 
 int i = 0;
 
-int match(Token *token, int t){
-    if(token[i].type!=t){
-        printf("Expected token: %s\n", token[i].value);
-        exit(-1);
-    }    
-    i++;
-}
-
 Node *parse(Token *token, VM *vm){
-    Node node;
-
-    return program(token, &node, vm);
+    Node *node = malloc(sizeof(Node));
+    node->left = statement(token, vm);
+    node->right = NULL;
 }
 
-Node *program(Token *token, Node *node, VM *vm){
-    return statement(token, node, vm);
+Node *statement(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+    node->left = expression(token, vm);
+    node->right = NULL;
 }
 
-Node *statement(Token *token, Node *node, VM *vm){
-    return expression(token, node, vm);
+Node *expression(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+    node->left = factor(token, vm);
+    node->right = NULL;
 }
 
-Node *expression(Token *token, Node *node, VM *vm){
-    node = factor(token, node, vm);
-    node = term(token, node, vm);
+Node *factor(Token *token, VM *vm){     // 1 + 1
+    Node *node = malloc(sizeof(Node));
+    node->left = term(token, vm);
+    node->right = NULL;
 }
 
-Node *term(Token *token, Node *node, VM *vm){
-    if(token[i].type==T_INT){
-        i++;
-        if(token[i].type==T_ADD){
-            i++;
-            if(token[i].type==T_INT){
-
-            }else{
-                error(token[i].lineno, "Syntax error");
-            }
-        }else if(token[i].type==T_SUB){
-
-        }else if(token[i].type==T_LSB){
-
-        }else{
-            return node;
-        }
-    }else{
-        return node;
-    }
+Node *term(Token *token, VM *vm){   // 1 * 1
+    Node *node = malloc(sizeof(Node));
+    node->left = NULL;
+    node->right = NULL;
 }
-
-Node *factor(Token *token, Node *node, VM *vm){
-    if(token[i].type==T_INT){
-        i++;
-        if(token[i].type==T_SUB){
-            i++;
-            if(token[i].type==T_INT){
-
-            }else{
-                error(token[i].lineno, "Syntax error");
-            }
-        }else if(token[i].type==T_ADD){
-
-        }
-    }
-
-    return node;
-}
-
-
-Node *group(Token *token, Node *node, VM *vm){
-    if(token[i].type==T_LSB){
-        expression(token, node, vm);
-        i++;
-        if(token[i].type==T_RSB){
-            node->type = N_GROUP;
-        }
-    }
-    
-    return node;
-}
-
 
 
 /*

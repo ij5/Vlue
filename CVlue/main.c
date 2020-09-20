@@ -34,8 +34,9 @@ void clearstr(char *c){
     }
 }
 
-void error(const char *msg){
-    fputs(msg, stderr);
+void error(int line, const char *errorType){
+    //fputs(msg, stderr);
+    printf("Error on line %d: %s", line, errorType);
     exit(1);
 }
 
@@ -113,7 +114,7 @@ int isCutCharacter(char c){
 
 #define TOKEN_LENGTH 1024
 Token *lexer(char *data){
-    if(data=="") error("It's empty.");
+    if(data=="") error(-1, "It's empty.");
     Token *token = (Token *)malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
     int line = 1;
     int TEMP_LENGTH = 128;
@@ -429,16 +430,16 @@ typedef struct _AST
 
 typedef struct _Node{
     int type;
-    struct _Node *op1;
-    struct _Node *op2;
+    struct _Node *left;
+    struct _Node *right;
 }Node;
-
 
 enum{
     N_NUM = 2048,
     N_ROOT,
     N_FACTOR,
     N_TERM,
+    N_GROUP,
 
 };
 
@@ -449,6 +450,7 @@ Node *expression(Token *token, Node *node, VM *vm);
 Node *statement(Token *token, Node *node, VM *vm);
 Node *factor(Token *token, Node *node, VM *vm);
 Node *term(Token *token, Node *node, VM *vm);
+Node *group(Token *token, Node *node, VM *vm);
 
 int i = 0;
 
@@ -483,7 +485,12 @@ Node *term(Token *token, Node *node, VM *vm){
     if(token[i].type==T_INT){
         i++;
         if(token[i].type==T_ADD){
+            i++;
+            if(token[i].type==T_INT){
 
+            }else{
+                error(token[i].lineno, "Syntax error");
+            }
         }else if(token[i].type==T_SUB){
 
         }else if(token[i].type==T_LSB){
@@ -500,15 +507,32 @@ Node *factor(Token *token, Node *node, VM *vm){
     if(token[i].type==T_INT){
         i++;
         if(token[i].type==T_SUB){
-            
+            i++;
+            if(token[i].type==T_INT){
+
+            }else{
+                error(token[i].lineno, "Syntax error");
+            }
         }else if(token[i].type==T_ADD){
 
         }
-    }else{
-        return node;
     }
+
+    return node;
 }
 
+
+Node *group(Token *token, Node *node, VM *vm){
+    if(token[i].type==T_LSB){
+        expression(token, node, vm);
+        i++;
+        if(token[i].type==T_RSB){
+            node->type = N_GROUP;
+        }
+    }
+    
+    return node;
+}
 
 
 
@@ -522,7 +546,7 @@ Node *factor(Token *token, Node *node, VM *vm){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("(1+2)*3/4-5/*hello World!*/+6;");
+    Token *token = lexer("(1+s)*3/4-5/*hello World!*/+6;");
     
     int program[] = {};
 

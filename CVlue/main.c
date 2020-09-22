@@ -73,6 +73,7 @@ enum TokenType{
     T_SUB,
     T_MUL,
     T_DIV,
+    T_END,
     OTHER,
 };
 
@@ -119,6 +120,7 @@ Token *lexer(char *data){
     Token *token = (Token *)malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
     int line = 1;
     int TEMP_LENGTH = 128;
+    int position = 1;
 
     char temp[TEMP_LENGTH];     //최대 128의 문자열 토큰 길이
     clearstr(temp);
@@ -136,7 +138,8 @@ Token *lexer(char *data){
             token[i].value = "\n";
             token[i].lineno = line;
             token[i].type = T_NEWLINE;
-            token[i].position = 0;
+            position = 1;
+            token[i].position = position;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
             for(int j=0;isCutCharacter(*data) == false&&((*data >= 'a' && *data <= 'z') || 
                 (*data >= 'A' && *data <= 'Z') || 
@@ -148,7 +151,8 @@ Token *lexer(char *data){
                 temp[j+1] = '\0';
                 ++data;
 
-                token[i].position++;
+                position++;
+                token[i].position = position;
             }
 
             if(strcmp(temp, "var")==0){
@@ -174,12 +178,14 @@ Token *lexer(char *data){
                 data+=1;
                 tempcount = j;
 
-                token[i].position++;
+                position++;
+                token[i].position = position;
             }
 
             if(*data=='.'){
                 data++;
-                token[i].position++;
+                position++;
+                token[i].position = position;
                 tempcount++;
                 temp[tempcount] = '.';
                 tempcount++;
@@ -187,7 +193,8 @@ Token *lexer(char *data){
                     temp[tempcount] = *data;
                     temp[tempcount+1] = '\0';
                     data+=1;
-                    token[i].position++;
+                position++;
+                token[i].position = position;
                 }
                 tempcount = 0;
                 printf("FLOAT\n");
@@ -214,12 +221,14 @@ Token *lexer(char *data){
             strcpy(token[i].value, "=\0");
             token[i].lineno = line;
 
-            token[i].position++;
+            position++;
+            token[i].position = position;
         }else if(*data==' '||*data=='\t'||*data=='\r'){
             data++;
             i--;
 
-            token[i].position++;
+            position++;
+            token[i].position = position;
         }else if(*data==';'){
             printf("SEMI\n");
             data++;
@@ -228,7 +237,8 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, ";\0");
             token[i].lineno = line;
-            token[i].position++;
+            position++;
+            token[i].position = position;
         }else if(*data==':'){
             printf("COLON\n");
             data++;
@@ -237,7 +247,8 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, ":\0");
             token[i].lineno = line;
-            token[i].position++;
+            position++;
+            token[i].position = position;
         }else if(*data=='('){
             printf("LSB\n");
             data++;
@@ -246,7 +257,8 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "(\0");
             token[i].lineno = line;
-            token[i].position++;
+            position++;
+            token[i].position = position;
         }else if(*data==')'){
             printf("RSB\n");
             data++;
@@ -255,6 +267,8 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, ")\0");
             token[i].lineno = line;
+            position++;
+            token[i].position = position;
         }else if(*data=='+'){
             printf("ADD\n");
             data++;
@@ -263,7 +277,8 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "+\0");
             token[i].lineno = line;
-            token[i].position++;
+            position++;
+            token[i].position = position;
         }else if(*data=='-'){
             printf("SUB\n");
             data++;
@@ -272,7 +287,8 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "-\0");
             token[i].lineno = line;
-            token[i].position++;
+            position++;
+            token[i].position = position;
         }else if(*data=='*'){
             printf("MUL\n");
             data++;
@@ -281,19 +297,23 @@ Token *lexer(char *data){
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, "*\0");
             token[i].lineno = line;
-            token[i].position++;
+            position++;
+            token[i].position = position;
         }else if(*data=='/'){
             if(*(data+1)=='*'){
                 data+=2;
                 while(!(*data=='*'&&*(data+1)=='/')&&(*data!='\0')){
                     data++;
-                    token[i].position++;
+                    position++;
+                    token[i].position = position;
                 }
                 if(*data!='\0'){
                     data++;
-                    token[i].position++;
+                    position++;
+                    token[i].position = position;
                     data++;
-                    token[i].position++;
+                    position++;
+                    token[i].position = position;
                 }
                 i--;
                 printf("COMMENT\n");
@@ -305,7 +325,8 @@ Token *lexer(char *data){
                 token[i].value = malloc(sizeof(*data));
                 strcpy(token[i].value, "/\0");
                 token[i].lineno = line;
-                token[i].position++;
+                position++;
+                token[i].position = position;
             }
         }else{
             printf("OTHER\n");
@@ -314,11 +335,19 @@ Token *lexer(char *data){
 
             data+=1;
             i--;
-            token[i].position++;
+            position++;
+            token[i].position = position;
         }
         //printf("value: %s\n", token[i].value);
         //printf("i: %d\n",i);
     }
+    i++;
+    token[i].num = NULL;
+    token[i].type = T_END;
+    token[i].value = NULL;
+    token[i].lineno = line;
+    position++;
+    token[i].position = position;
     return token;
 }
 
@@ -438,9 +467,16 @@ typedef struct _Node{
 enum{
     N_NUM = 2048,
     N_ROOT,
+    N_INT,
+    N_IDENTIFIER,
     N_FACTOR,
     N_TERM,
     N_GROUP,
+    N_EXPRESSION,
+    N_EXPR2,
+    N_EXPR3,
+    N_EXPR1,
+    N_PLUS,
 
 };
 
@@ -464,6 +500,67 @@ Node *parse(Token *token, VM *vm){
 Node *expr3(Token *token, VM *vm);
 Node *expr2(Token *token, VM *vm);
 Node *expr1_prime(Token *token, VM *vm);
+
+
+Node *expression(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+
+}
+
+Node *expr3(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+    if(token[i].type==T_IDENTIFIER){
+        node->left = NULL;
+        node->right = NULL;
+        node->type = N_IDENTIFIER;
+    }else{
+        error(token[i].lineno, "Syntax error: Not an identifier.\n");
+    }
+    return node;
+}
+
+Node *expr2(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+    if(token[i].type==T_IDENTIFIER){
+        if(token[i+1].type==T_LSB){
+            node->left = expression(token, vm);
+            node->right = NULL;
+            node->type = N_EXPR2;
+        }else{
+            free(node);
+            node = expr3(token, vm);
+        }
+    }else{
+        error(token[i].lineno, "Syntax error: Not an identifier.");
+    }
+    return node;
+}
+
+Node *expr3(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+    if(token[i].type==T_ADD){
+        i++;
+        node->left = expr2(token, vm);
+        node->right = expr1_prime(token, vm);
+        node->type = N_PLUS;
+    }else if(token[i].type==)
+}
+
+
+void print_node(Node *node){
+    if(node->type==N_EXPRESSION){
+        print_node(node->left);
+        if(node->right != NULL){
+            print_node(node->right);
+        }
+    }else if(node->type==N_GROUP){
+        printf(" Group ");
+        print_node(node->left);
+        if(node->right!=NULL){
+            print_node(node->right);
+        }
+    }
+}
 
 /*
     ====================

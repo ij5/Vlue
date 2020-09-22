@@ -126,6 +126,9 @@ Token *lexer(char *data){
     clearstr(temp);
     int tempcount = 0;
 
+    int endi = 0;
+
+
     for(int i=0;*data!=0;i++){
         if(*data=='\n'){
             line++;
@@ -340,14 +343,15 @@ Token *lexer(char *data){
         }
         //printf("value: %s\n", token[i].value);
         //printf("i: %d\n",i);
+        endi = i;
     }
-    i++;
-    token[i].num = NULL;
-    token[i].type = T_END;
-    token[i].value = NULL;
-    token[i].lineno = line;
+    endi++;
+    token[endi].num = -1;
+    token[endi].type = T_END;
+    token[endi].value = "";
+    token[endi].lineno = line;
     position++;
-    token[i].position = position;
+    token[endi].position = position;
     return token;
 }
 
@@ -477,29 +481,29 @@ enum{
     N_EXPR3,
     N_EXPR1,
     N_PLUS,
-
+    N_PARSE,
 };
 
-int match(Token *token, int t);
 Node *parse(Token *token, VM *vm);
-Node *program(Token *token, VM *vm);
+// Node *program(Token *token, VM *vm);
 Node *expression(Token *token, VM *vm);
-Node *statement(Token *token, VM *vm);
-Node *factor(Token *token, VM *vm);
-Node *term(Token *token, VM *vm);
-Node *group(Token *token, VM *vm);
+// Node *statement(Token *token, VM *vm);
+// Node *factor(Token *token, VM *vm);
+// Node *term(Token *token, VM *vm);
+// Node *group(Token *token, VM *vm);
+Node *expr3(Token *token, VM *vm);
+Node *expr2(Token *token, VM *vm);
+Node *expr1_prime(Token *token, VM *vm);
+
 
 int i = 0;
 
 Node *parse(Token *token, VM *vm){
     Node *node = malloc(sizeof(Node));
-    node->left = statement(token, vm);
-    node->right = NULL;
+    node->left = expr2(token, vm);
+    node->right = expr1_prime(token, vm);
+    node->type = N_PARSE;
 }
-
-Node *expr3(Token *token, VM *vm);
-Node *expr2(Token *token, VM *vm);
-Node *expr1_prime(Token *token, VM *vm);
 
 
 Node *expression(Token *token, VM *vm){
@@ -523,7 +527,7 @@ Node *expr2(Token *token, VM *vm){
     Node *node = malloc(sizeof(Node));
     if(token[i].type==T_IDENTIFIER){
         if(token[i+1].type==T_LSB){
-            node->left = expression(token, vm);
+            node->left = parse(token, vm);
             node->right = NULL;
             node->type = N_EXPR2;
         }else{
@@ -536,14 +540,14 @@ Node *expr2(Token *token, VM *vm){
     return node;
 }
 
-Node *expr3(Token *token, VM *vm){
+Node *expr1_prime(Token *token, VM *vm){
     Node *node = malloc(sizeof(Node));
     if(token[i].type==T_ADD){
         i++;
         node->left = expr2(token, vm);
         node->right = expr1_prime(token, vm);
         node->type = N_PLUS;
-    }else if(token[i].type==)
+    }
 }
 
 

@@ -461,30 +461,9 @@ Node *parse(Token *token, VM *vm){
     node->right = NULL;
 }
 
-Node *statement(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
-    node->left = expression(token, vm);
-    node->right = NULL;
-}
-
-Node *expression(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
-    node->left = factor(token, vm);
-    node->right = NULL;
-}
-
-Node *factor(Token *token, VM *vm){     // 1 + 1
-    Node *node = malloc(sizeof(Node));
-    node->left = term(token, vm);
-    node->right = NULL;
-}
-
-Node *term(Token *token, VM *vm){   // 1 * 1
-    Node *node = malloc(sizeof(Node));
-    node->left = NULL;
-    node->right = NULL;
-}
-
+Node *expr3(Token *token, VM *vm);
+Node *expr2(Token *token, VM *vm);
+Node *expr1_prime(Token *token, VM *vm);
 
 /*
     ====================

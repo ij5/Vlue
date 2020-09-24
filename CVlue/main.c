@@ -35,9 +35,9 @@ void clearstr(char *c){
     }
 }
 
-void error(int line, const char *errorType){
+void error(int line, int position, const char *errorType){
     //fputs(msg, stderr);
-    printf("Error on line %d: %s", line, errorType);
+    printf("Error on line %d, position %d: %s", line, position, errorType);
     exit(1);
 }
 
@@ -116,7 +116,7 @@ int isCutCharacter(char c){
 
 #define TOKEN_LENGTH 1024
 Token *lexer(char *data){
-    if(data=="") error(-1, "It's empty.");
+    if(data=="") error(-1, -1, "It's empty.");
     Token *token = (Token *)malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
     int line = 1;
     int TEMP_LENGTH = 128;
@@ -352,6 +352,7 @@ Token *lexer(char *data){
     token[endi].lineno = line;
     position++;
     token[endi].position = position;
+    printf("END\n");
     return token;
 }
 
@@ -518,7 +519,7 @@ Node *expr3(Token *token, VM *vm){
         node->right = NULL;
         node->type = N_IDENTIFIER;
     }else{
-        error(token[i].lineno, "Syntax error: Not an identifier.\n");
+        error(token[i].lineno, token[i].position, "Syntax error: not an identifier.\n");
     }
     return node;
 }
@@ -535,7 +536,7 @@ Node *expr2(Token *token, VM *vm){
             node = expr3(token, vm);
         }
     }else{
-        error(token[i].lineno, "Syntax error: Not an identifier.");
+        error(token[i].lineno, token[i].position, "Syntax error: Not an identifier.");
     }
     return node;
 }
@@ -547,7 +548,14 @@ Node *expr1_prime(Token *token, VM *vm){
         node->left = expr2(token, vm);
         node->right = expr1_prime(token, vm);
         node->type = N_PLUS;
+    }else if(token[i].type==T_RSB || token[i].type==T_END){
+        i++;
+        free(node);
+        node = NULL;
+    }else{
+        error(token[i].lineno, token[i].position, "Syntax error(1): Not a plus nor end of expression.\n");
     }
+    return node;
 }
 
 
@@ -576,7 +584,7 @@ void print_node(Node *node){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("(1+s)*3/4-5/*hello World!*/+6;");
+    Token *token = lexer("%%f");
     
     int program[] = {};
 

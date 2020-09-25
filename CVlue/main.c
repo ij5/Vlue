@@ -485,24 +485,20 @@ enum{
     N_PARSE,
 };
 
-Node *parse(Token *token, VM *vm);
-// Node *program(Token *token, VM *vm);
-Node *expression(Token *token, VM *vm);
-// Node *statement(Token *token, VM *vm);
-// Node *factor(Token *token, VM *vm);
-// Node *term(Token *token, VM *vm);
-// Node *group(Token *token, VM *vm);
-int accept(Token *token, int t);
-int expect(Token *token, int t);
-Node *factor(Token *token, VM *vm);
-Node *condition(Token *token, VM *vm);
-Node *statement(Token *token, VM *vm);
 
+int match(Token *token, int t);
+Node *parse(Token *token, VM *vm);
+Node *_expression(Token *token, VM *vm);
+Node *_add(Token *token, VM *vm);
+Node *_sub(Token *token, VM *vm);
+Node *_mul(Token *token, VM *vm);
+Node *_div(Token *token, VM *vm);
+Node *_int(Token *token, VM *vm);
 
 int i = 0;
 
 
-int accept(Token *token, int t){
+int match(Token *token, int t){
     if(token[i].type==t){
         i++;
         return true;
@@ -510,45 +506,36 @@ int accept(Token *token, int t){
     return false;
 }
 
-int expect(Token *token, int t){
-    if(accept(token, t)){
-        return 1;
-    }
-    error(token[i].lineno, token[i].position, "Expect: unexpected token.");
-    return 0;
+Node *_expression(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+    
 }
 
-Node *factor(Token *token, VM *vm){
-    if(accept(token, T_INT)){
-        ;
-    }else if(accept(token, T_LSB)){
-        expression(token, vm);
-        expect(token, T_RSB);
-    }else{
-        error(token[i].lineno, token[i].position, "Factor: Syntax Error.");
-        i++;
+Node *_add(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+}
+
+Node *_sub(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+}
+
+Node *_mul(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+}
+
+Node *_div(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+}
+
+Node *_int(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+    if(token[i].type==T_INT){
+        node->left = NULL;
+        node->right = NULL;
+        node->type = N_INT;
     }
 }
 
-
-Node *term(Token *token, VM *vm){
-    factor(token, vm);
-    while(token[i].type==T_MUL || token[i].type==T_DIV){
-        i++;
-        factor(token, vm);
-    }
-}
-
-Node *expression(Token *token, VM *vm){
-    if(token[i].type==T_ADD || token[i].type==T_SUB){
-        i++;
-    }
-    term(token, vm);
-    while(token[i].type==T_ADD || token[i].type==T_SUB){
-        i++;
-        term(token, vm);
-    }
-}
 
 
 
@@ -586,7 +573,7 @@ void print_node(Node *node){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("%%f");
+    Token *token = lexer("1+1");
     
     int program[] = {};
 

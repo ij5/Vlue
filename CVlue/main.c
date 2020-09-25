@@ -488,6 +488,7 @@ enum{
 
 int match(Token *token, int t);
 Node *parse(Token *token, VM *vm);
+Node *_statement(Token *token, VM *vm);
 Node *_expression(Token *token, VM *vm);
 Node *_add(Token *token, VM *vm);
 Node *_sub(Token *token, VM *vm);
@@ -504,6 +505,11 @@ int match(Token *token, int t){
         return true;
     }
     return false;
+}
+
+Node *_statement(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
+    
 }
 
 Node *_expression(Token *token, VM *vm){

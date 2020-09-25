@@ -492,71 +492,73 @@ Node *expression(Token *token, VM *vm);
 // Node *factor(Token *token, VM *vm);
 // Node *term(Token *token, VM *vm);
 // Node *group(Token *token, VM *vm);
-Node *expr3(Token *token, VM *vm);
-Node *expr2(Token *token, VM *vm);
-Node *expr1_prime(Token *token, VM *vm);
+int accept(Token *token, int t);
+int expect(Token *token, int t);
+Node *factor(Token *token, VM *vm);
+Node *condition(Token *token, VM *vm);
+Node *statement(Token *token, VM *vm);
 
 
 int i = 0;
 
+
+int accept(Token *token, int t){
+    if(token[i].type==t){
+        i++;
+        return true;
+    }
+    return false;
+}
+
+int expect(Token *token, int t){
+    if(accept(token, t)){
+        return 1;
+    }
+    error(token[i].lineno, token[i].position, "Expect: unexpected token.");
+    return 0;
+}
+
+Node *factor(Token *token, VM *vm){
+    if(accept(token, T_INT)){
+        ;
+    }else if(accept(token, T_LSB)){
+        expression(token, vm);
+        expect(token, T_RSB);
+    }else{
+        error(token[i].lineno, token[i].position, "Factor: Syntax Error.");
+        i++;
+    }
+}
+
+
+Node *term(Token *token, VM *vm){
+    factor(token, vm);
+    while(token[i].type==T_MUL || token[i].type==T_DIV){
+        i++;
+        factor(token, vm);
+    }
+}
+
+Node *expression(Token *token, VM *vm){
+    if(token[i].type==T_ADD || token[i].type==T_SUB){
+        i++;
+    }
+    term(token, vm);
+    while(token[i].type==T_ADD || token[i].type==T_SUB){
+        i++;
+        term(token, vm);
+    }
+}
+
+
+
 Node *parse(Token *token, VM *vm){
     Node *node = malloc(sizeof(Node));
-    node->left = expr2(token, vm);
-    node->right = expr1_prime(token, vm);
+
     node->type = N_PARSE;
 }
 
 
-Node *expression(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
-
-}
-
-Node *expr3(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
-    if(token[i].type==T_IDENTIFIER){
-        node->left = NULL;
-        node->right = NULL;
-        node->type = N_IDENTIFIER;
-    }else{
-        error(token[i].lineno, token[i].position, "Syntax error: not an identifier.\n");
-    }
-    return node;
-}
-
-Node *expr2(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
-    if(token[i].type==T_IDENTIFIER){
-        if(token[i+1].type==T_LSB){
-            node->left = parse(token, vm);
-            node->right = NULL;
-            node->type = N_EXPR2;
-        }else{
-            free(node);
-            node = expr3(token, vm);
-        }
-    }else{
-        error(token[i].lineno, token[i].position, "Syntax error: Not an identifier.");
-    }
-    return node;
-}
-
-Node *expr1_prime(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
-    if(token[i].type==T_ADD){
-        i++;
-        node->left = expr2(token, vm);
-        node->right = expr1_prime(token, vm);
-        node->type = N_PLUS;
-    }else if(token[i].type==T_RSB || token[i].type==T_END){
-        i++;
-        free(node);
-        node = NULL;
-    }else{
-        error(token[i].lineno, token[i].position, "Syntax error(1): Not a plus nor end of expression.\n");
-    }
-    return node;
-}
 
 
 void print_node(Node *node){

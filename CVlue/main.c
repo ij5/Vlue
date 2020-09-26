@@ -488,14 +488,14 @@ enum{
 
 
 int match(Token *token, int t);
-Node *parse(Token *token, VM *vm);
-Node *_statement(Token *token, VM *vm);
-Node *_expression(Token *token, VM *vm);
-Node *_add(Token *token, VM *vm);
-Node *_sub(Token *token, VM *vm);
-Node *_mul(Token *token, VM *vm);
-Node *_div(Token *token, VM *vm);
-Node *_int(Token *token, VM *vm);
+int parse(Token *token, VM *vm);
+int _statement(Token *token, VM *vm);
+int _expression(Token *token, VM *vm);
+int _add(Token *token, VM *vm);
+int _sub(Token *token, VM *vm);
+int _mul(Token *token, VM *vm);
+int _div(Token *token, VM *vm);
+int _int(Token *token, VM *vm);
 
 int i = 0;
 
@@ -508,53 +508,43 @@ int match(Token *token, int t){
     return false;
 }
 
-Node *_statement(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
-    node->left = _expression(token, vm);
-    node->right = NULL;
-    node->type = N_STATEMENT;
-    return node;
-}
-
-Node *_expression(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
+int parse(Token *token, VM *vm){
     
 }
 
-Node *_add(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
+int _statement(Token *token, VM *vm){
+    
 }
 
-Node *_sub(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
+int _expression(Token *token, VM *vm){
+
 }
 
-Node *_mul(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
+int _add(Token *token, VM *vm){
+
 }
 
-Node *_div(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
+int _sub(Token *token, VM *vm){
+
 }
 
-Node *_int(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
-    if(token[i].type==T_INT){
-        node->left = NULL;
-        node->right = NULL;
-        node->type = N_INT;
+int _mul(Token *token, VM *vm){
+
+}
+
+int _div(Token *token, VM *vm){
+    if(match(token, T_DIV)){
+        return i;
     }
+    return -1;
 }
 
-
-
-
-Node *parse(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
-
-    node->type = N_PARSE;
+int _int(Token *token, VM *vm){
+    if(token[i].type==T_INT){
+        return i;
+    }
+    return -1;
 }
-
 
 
 

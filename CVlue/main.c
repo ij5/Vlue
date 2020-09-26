@@ -483,6 +483,7 @@ enum{
     N_EXPR1,
     N_PLUS,
     N_PARSE,
+    N_STATEMENT,
 };
 
 
@@ -509,7 +510,10 @@ int match(Token *token, int t){
 
 Node *_statement(Token *token, VM *vm){
     Node *node = malloc(sizeof(Node));
-    
+    node->left = _expression(token, vm);
+    node->right = NULL;
+    node->type = N_STATEMENT;
+    return node;
 }
 
 Node *_expression(Token *token, VM *vm){

@@ -488,14 +488,15 @@ enum{
 
 
 int match(Token *token, int t);
-int parse(Token *token, VM *vm);
-int _statement(Token *token, VM *vm);
-int _expression(Token *token, VM *vm);
-int _add(Token *token, VM *vm);
-int _sub(Token *token, VM *vm);
-int _mul(Token *token, VM *vm);
-int _div(Token *token, VM *vm);
-int _int(Token *token, VM *vm);
+Node *parse(Token *token, VM *vm);
+Node *_statement(Token *token, VM *vm);
+Node *_expression(Token *token, VM *vm);
+Node *_add(Token *token, VM *vm);
+Node *_sub(Token *token, VM *vm);
+Node *_mul(Token *token, VM *vm);
+Node *_div(Token *token, VM *vm);
+Node *_int(Token *token, VM *vm);
+
 
 int i = 0;
 
@@ -508,56 +509,57 @@ int match(Token *token, int t){
     return false;
 }
 
-int parse(Token *token, VM *vm){
+Node *parse(Token *token, VM *vm){
+    for(int j=0;j<10;j++){
+        _div(token, vm);
+    }
+}
+
+Node *_statement(Token *token, VM *vm){
     
 }
 
-int _statement(Token *token, VM *vm){
+Node *expression(Token *token, VM *vm){
+
+}
+
+Node *_add(Token *token, VM *vm){
     
 }
 
-int _expression(Token *token, VM *vm){
+Node *_sub(Token *token, VM *vm){
 
 }
 
-int _add(Token *token, VM *vm){
-    if(match(token, T_ADD)){
-        if(_div(token, vm)!=-1){
-            
-        }else if(_mul(token, vm) != -1){
+Node *_mul(Token *token, VM *vm){
 
-        }
-        return i;
-    }
-    return -1;
 }
 
-int _sub(Token *token, VM *vm){
-    if(match(token, T_SUB)){
-        return i;
-    }
-    return -1;
-}
-
-int _mul(Token *token, VM *vm){
-    if(match(token, T_MUL)){
-        return i;
-    }
-    return -1;
-}
-
-int _div(Token *token, VM *vm){
+Node *_div(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
     if(match(token, T_DIV)){
-        return i;
+        i--;
+        node->left = _int(token, vm);
+        i++;
+        node->right = _int(token, vm);
+        if(node->left!=NULL && node->right!=NULL){
+            return node;
+        }else{
+            error(token[i].lineno, token[i].position, "left and right at div character is not integer.");
+        }
     }
-    return -1;
 }
 
-int _int(Token *token, VM *vm){
+Node *_int(Token *token, VM *vm){
+    Node *node = malloc(sizeof(Node));
     if(match(token, T_INT)){
-        return i;
+        node->left = NULL;
+        node->right = NULL;
+        node->type = T_INT;
+        return node;
+    }else{
+        return NULL;
     }
-    return -1;
 }
 
 

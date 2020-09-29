@@ -538,6 +538,7 @@ Node *_mul(Token *token, VM *vm){
 Node *_div(Token *token, VM *vm){
     Node *node = malloc(sizeof(Node));
     if(match(token, T_DIV)){
+        printf("pass1");
         i--;
         node->left = _int(token, vm);
         i++;
@@ -545,8 +546,11 @@ Node *_div(Token *token, VM *vm){
         if(node->left!=NULL && node->right!=NULL){
             return node;
         }else{
+            free(node);
             error(token[i].lineno, token[i].position, "left and right at div character is not integer.");
         }
+    }else{
+        return NULL;
     }
 }
 
@@ -589,7 +593,7 @@ void print_node(Node *node){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("1+1;");
+    Token *token = lexer("1/1;");
     
     int program[] = {};
 

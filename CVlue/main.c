@@ -550,6 +550,7 @@ Node *_div(Token *token, VM *vm){
             error(token[i].lineno, token[i].position, "left and right at div character is not integer.");
         }
     }else{
+        free(node);
         return NULL;
     }
 }

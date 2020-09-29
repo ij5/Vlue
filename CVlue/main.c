@@ -540,7 +540,7 @@ int _div(Token *token, VM *vm){
 }
 
 int _int(Token *token, VM *vm){
-    if(token[i].type==T_INT){
+    if(match(token, T_INT)){
         return i;
     }
     return -1;
@@ -573,7 +573,7 @@ void print_node(Node *node){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("1+1");
+    Token *token = lexer("1+1;");
     
     int program[] = {};
 

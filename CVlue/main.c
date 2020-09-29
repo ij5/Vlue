@@ -521,15 +521,29 @@ int _expression(Token *token, VM *vm){
 }
 
 int _add(Token *token, VM *vm){
+    if(match(token, T_ADD)){
+        if(_div(token, vm)!=-1){
+            
+        }else if(_mul(token, vm) != -1){
 
+        }
+        return i;
+    }
+    return -1;
 }
 
 int _sub(Token *token, VM *vm){
-
+    if(match(token, T_SUB)){
+        return i;
+    }
+    return -1;
 }
 
 int _mul(Token *token, VM *vm){
-
+    if(match(token, T_MUL)){
+        return i;
+    }
+    return -1;
 }
 
 int _div(Token *token, VM *vm){

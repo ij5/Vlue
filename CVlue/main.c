@@ -505,8 +505,10 @@ int match(Token *token, int t){
     if(token[i].type==t){
         i++;
         return true;
+    }else{
+        i++;
+        return false;
     }
-    return false;
 }
 
 Node *parse(Token *token, VM *vm){

@@ -120,7 +120,7 @@ Token *lexer(char *data){
     Token *token = (Token *)malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
     int line = 1;
     int TEMP_LENGTH = 128;
-    int position = 1;
+    int position = 0;
 
     char temp[TEMP_LENGTH];     //최대 128의 문자열 토큰 길이
     clearstr(temp);
@@ -175,14 +175,21 @@ Token *lexer(char *data){
             *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
           ||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'
         ){
-            for(int j=0;isCutCharacter(*data)==false;j++){
-                temp[j] = *data;
-                temp[j+1] = '\0';
-                data+=1;
-                tempcount = j;
+            for(int j=0;isCutCharacter(*data)==false;j++){      /*TODO: isCutCharacter error.*/
+                if(
+                  *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
+                ||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'
+                ){
+                    temp[j] = *data;
+                    temp[j+1] = '\0';
+                    data+=1;
+                    tempcount = j;
 
-                position++;
-                token[i].position = position;
+                    position++;
+                    token[i].position = position;
+                }else{
+                    error(line, position, "Unexpected character.\n");
+                }
             }
 
             if(*data=='.'){
@@ -196,8 +203,8 @@ Token *lexer(char *data){
                     temp[tempcount] = *data;
                     temp[tempcount+1] = '\0';
                     data+=1;
-                position++;
-                token[i].position = position;
+                    position++;
+                    token[i].position = position;
                 }
                 tempcount = 0;
                 printf("FLOAT\n");
@@ -334,15 +341,15 @@ Token *lexer(char *data){
         }else{
             printf("OTHER\n");
 
-            printf("Error on token %c, line %d\n", *data, line);
+            printf("Unexpected token %c, line %d\n", *data, line);
 
             data+=1;
             i--;
             position++;
             token[i].position = position;
         }
-        //printf("value: %s\n", token[i].value);
-        //printf("i: %d\n",i);
+        // printf("value: %s\n", token[i].value);
+        // printf("i: %d\n",i);
         endi = i;
     }
     endi++;
@@ -539,17 +546,18 @@ Node *_mul(Token *token, VM *vm){
 
 Node *_div(Token *token, VM *vm){
     Node *node = malloc(sizeof(Node));
-    if(match(token, T_DIV)){
+    if(token[i].type==T_DIV){
         printf("pass1");
         i--;
         node->left = _int(token, vm);
+        i++;
         i++;
         node->right = _int(token, vm);
         if(node->left!=NULL && node->right!=NULL){
             return node;
         }else{
             free(node);
-            error(token[i].lineno, token[i].position, "left and right at div character is not integer.");
+            error(token[i].lineno, token[i].position, "DIV 문자의 오른쪽과 왼쪽이 숫자이지 않습니다.");
         }
     }else{
         free(node);
@@ -573,16 +581,22 @@ Node *_int(Token *token, VM *vm){
 
 void print_node(Node *node){
     if(node->type==N_EXPRESSION){
-        print_node(node->left);
+        if(node->left != NULL){
+            print_node(node->left);
+        }
         if(node->right != NULL){
             print_node(node->right);
         }
     }else if(node->type==N_GROUP){
         printf(" Group ");
-        print_node(node->left);
+        if(node->left != NULL){
+            print_node(node->left);
+        }
         if(node->right!=NULL){
             print_node(node->right);
         }
+    }else if(node->type==N_INT){
+        printf(" Int ");
     }
 }
 
@@ -596,7 +610,7 @@ void print_node(Node *node){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("1/1;");
+    Token *token = lexer("1/s;");
     
     int program[] = {};
 
@@ -608,7 +622,6 @@ int main(int argc, char *argv[]){
     rmVM(vm);
 
     free(token);
-
 
     /*
         BUILD

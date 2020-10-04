@@ -567,7 +567,8 @@ Node *_div(Token *token, VM *vm){
 
 Node *_int(Token *token, VM *vm){
     Node *node = malloc(sizeof(Node));
-    if(match(token, T_INT)){
+    if(token[i].type==T_INT){
+        i++;
         node->left = NULL;
         node->right = NULL;
         node->type = T_INT;

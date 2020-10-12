@@ -403,26 +403,26 @@ void rmVM(VM *vm){
 }
 
 enum {
-    OP_ADD     = 0x80,
-    OP_SUB     = 0x81,
-    OP_MUL     = 0x82,
-    OP_DIV     = 0x83,
-    OP_RB      = 0x84,
-    OP_LB      = 0x85,
-    OP_EQ      = 0x86,
-    OP_JMP     = 0x87,
-    OP_JMPT    = 0x88,
-    OP_JMPF    = 0x89,
-    OP_CONST   = 0x8A,
-    OP_LOAD    = 0x8B,
-    OP_GLOAD   = 0x8C,
-    OP_STORE   = 0x8D,
-    OP_GSTORE  = 0x8E,
-    OP_PRINT   = 0x8F,
-    OP_POP     = 0x90,
-    OP_EXIT    = 0x91,
-    OP_CALL    = 0x92,
-    OP_RET     = 0x93,
+    OP_ADD = 4096,
+    OP_SUB   ,
+    OP_MUL   ,
+    OP_DIV   ,
+    OP_RB    ,
+    OP_LB    ,
+    OP_EQ    ,
+    OP_JMP   ,
+    OP_JMPT  ,
+    OP_JMPF  ,
+    OP_CONST ,
+    OP_LOAD  ,
+    OP_GLOAD ,
+    OP_STORE ,
+    OP_GSTORE,
+    OP_PRINT ,
+    OP_POP   ,
+    OP_EXIT  ,
+    OP_CALL  ,
+    OP_RET   ,
 };
 
 void emit(VM *vm, int v){
@@ -529,6 +529,12 @@ Node *_statement(Token *token, VM *vm){
 }
 
 Node *_expression(Token *token, VM *vm){
+
+    Node *node = malloc(sizeof(Node));
+    
+    if(token[i].type==T_INT){
+        
+    }
 
 }
 

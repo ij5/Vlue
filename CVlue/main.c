@@ -533,7 +533,7 @@ Node *_expression(Token *token, VM *vm){
     Node *node = malloc(sizeof(Node));
     
     if(token[i].type==T_INT){
-        node->left
+        node->left;
     }else if(token[i].type==T_LSB){
 
     }

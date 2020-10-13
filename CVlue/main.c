@@ -518,10 +518,20 @@ Node *_expression(Token *token, VM *vm){
     Node *node = malloc(sizeof(Node));
     
     if(token[i].type==T_INT){
-
-    }else if(token[i].type==T_LSB){
+        i++;
         node->left = NULL;
         node->right = _expression(token, vm);
+        node->type = N_NUM;
+    }else if(token[i].type==T_LSB){
+        printf("PASS\n");
+        i++;
+        node->left = NULL;
+        node->right = _expression(token, vm);
+        node->type = N_GROUP;
+    }else if(token[i].type==T_END){
+        printf("Successfully generated abstract syntax tree.");
+    }else{
+        error(token[i].lineno, token[i].position, "Invalid Syntax.");
     }
 
 }
@@ -560,7 +570,7 @@ void print_node(Node *node){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("1/s;");
+    Token *token = lexer("133(99");
     
     int program[] = {};
 

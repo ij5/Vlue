@@ -508,86 +508,24 @@ Node *_int(Token *token, VM *vm);
 int i = 0;
 
 
-int match(Token *token, int t){
-    if(token[i].type==t){
-        i++;
-        return true;
-    }else{
-        i++;
-        return false;
-    }
-}
-
 Node *parse(Token *token, VM *vm){
-    for(int j=0;j<10;j++){
-        _div(token, vm);
-    }
+    _expression(token, vm);
 }
 
-Node *_statement(Token *token, VM *vm){
-    
-}
 
 Node *_expression(Token *token, VM *vm){
 
     Node *node = malloc(sizeof(Node));
     
     if(token[i].type==T_INT){
-        node->left;
+
     }else if(token[i].type==T_LSB){
-
-    }
-
-}
-
-Node *_add(Token *token, VM *vm){
-    
-}
-
-Node *_sub(Token *token, VM *vm){
-
-}
-
-Node *_mul(Token *token, VM *vm){
-
-}
-
-Node *_div(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
-    if(token[i].type==T_DIV){
-        if(token[i-1].type==T_INT && token[i+1].type==T_INT){
-            i--;
-            node->left = _int(token, vm);
-            i++;
-            node->right = _int(token, vm);
-
-        }else{
-            error(token[i].lineno, token[i].position, "DIV 식별자 좌우에 숫자가 없습니다.");
-        }
-    }else{
-        free(node);
-        return NULL;
-    }
-}
-
-Node *_const(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
-    if(token[i].type==T_INT){
-
-        i++;
-    }
-}
-
-Node *_lsb(Token *token, VM *vm){
-    Node *node = malloc(sizeof(Node));
-    if(token[i].type==T_LSB){
         node->left = NULL;
-        node->right = _const(token, vm);
-        if(node->right == NULL){
-            
-        }
+        node->right = _expression(token, vm);
     }
+
 }
+
 
 
 

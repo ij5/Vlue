@@ -511,7 +511,13 @@ int i = 0;
 Node *parse(Token *token, VM *vm){
     _expression(token, vm);
 }
-
+/*
+      |
+_____________
+_____   _____ 
+_   _   _   _
+1 * 2 + 3 / 4
+*/
 
 Node *_expression(Token *token, VM *vm){
 
@@ -522,16 +528,33 @@ Node *_expression(Token *token, VM *vm){
         node->left = NULL;
         node->right = _expression(token, vm);
         node->type = N_NUM;
+        return node;
+    }else if(token[i].type==T_MUL){
+        i++;
+        return node;
+    }else if(token[i].type==T_ADD){
+        i++;
+        return node;
+    }else if(token[i].type==T_SUB){
+        i++;
+        return node;
+    }else if(token[i].type==T_DIV){
+        i++;
+        return node;
     }else if(token[i].type==T_LSB){
         printf("PASS\n");
         i++;
         node->left = NULL;
         node->right = _expression(token, vm);
         node->type = N_GROUP;
+        return node;
     }else if(token[i].type==T_END){
         printf("Successfully generated abstract syntax tree.");
+        // walk(node);
     }else{
+        free(node);
         error(token[i].lineno, token[i].position, "Invalid Syntax.");
+        return NULL;
     }
 
 }

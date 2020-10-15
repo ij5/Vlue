@@ -561,6 +561,7 @@ Node *_expression(Token *token, VM *vm, int tokenLength){
         if(depth==1){
             while(i <= tokenLength){
                 _expression(token, vm, tokenLength);
+                
             }
         }
     }else if(token[i].type==T_DIV){

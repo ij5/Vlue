@@ -468,6 +468,14 @@ typedef struct _AST
     ====================
 */
 
+int checkTokenLength(Token *token){
+    int tokenLength = 0;
+    for(token[tokenLength].type != 0){
+        tokenLength++;
+    }
+    return tokenLength;
+}
+
 
 
 typedef struct _Node{
@@ -510,7 +518,8 @@ int i = 0;
 
 
 Node *parse(Token *token, VM *vm){
-    _expression(token, vm);
+    int tokenLength = checkTokenLength(token);
+    _expression(token, vm, tokenLength);
 }
 /*
       |
@@ -532,7 +541,7 @@ depth 5: parse root
 
 int depth = 0;
 
-Node *_expression(Token *token, VM *vm){
+Node *_expression(Token *token, VM *vm, int tokenLength){
 
     Node *node = malloc(sizeof(Node));
     
@@ -549,8 +558,9 @@ Node *_expression(Token *token, VM *vm){
         i++;
         return node;
     }else if(token[i].type==T_SUB){
-        i++;
-        return node;
+        if(depth==1){
+
+        }
     }else if(token[i].type==T_DIV){
         i++;
         return node;

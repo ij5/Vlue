@@ -470,7 +470,7 @@ typedef struct _AST
 
 int checkTokenLength(Token *token){
     int tokenLength = 0;
-    for(token[tokenLength].type != 0){
+    while(token[tokenLength].type != 0){
         tokenLength++;
     }
     return tokenLength;
@@ -506,7 +506,7 @@ enum{
 int match(Token *token, int t);
 Node *parse(Token *token, VM *vm);
 Node *_statement(Token *token, VM *vm);
-Node *_expression(Token *token, VM *vm);
+Node *_expression(Token *token, VM *vm, int tokenLength);
 Node *_add(Token *token, VM *vm);
 Node *_sub(Token *token, VM *vm);
 Node *_mul(Token *token, VM *vm);
@@ -539,7 +539,7 @@ depth 4: parse statements
 depth 5: parse root
 */
 
-int depth = 0;
+int depth = 1;
 
 Node *_expression(Token *token, VM *vm, int tokenLength){
 
@@ -548,7 +548,7 @@ Node *_expression(Token *token, VM *vm, int tokenLength){
     if(token[i].type==T_INT){
         i++;
         node->left = NULL;
-        node->right = _expression(token, vm);
+        node->right = _expression(token, vm, tokenLength);
         node->type = N_NUM;
         return node;
     }else if(token[i].type==T_MUL){
@@ -559,7 +559,9 @@ Node *_expression(Token *token, VM *vm, int tokenLength){
         return node;
     }else if(token[i].type==T_SUB){
         if(depth==1){
-
+            while(i <= tokenLength){
+                _expression(token, vm, tokenLength);
+            }
         }
     }else if(token[i].type==T_DIV){
         i++;
@@ -568,7 +570,7 @@ Node *_expression(Token *token, VM *vm, int tokenLength){
         printf("PASS\n");
         i++;
         node->left = NULL;
-        node->right = _expression(token, vm);
+        node->right = _expression(token, vm, tokenLength);
         node->type = N_GROUP;
         return node;
     }else if(token[i].type==T_END){

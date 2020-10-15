@@ -519,6 +519,18 @@ _   _   _   _
 1 * 2 + 3 / 4
 */
 
+/*
+We can parse by depth.
+I call it "depth parsing".
+depth 1: parse MUL, DIV
+depth 2: parse ADD, SUB
+depth 3: parse groups
+depth 4: parse statements
+depth 5: parse root
+*/
+
+int depth = 0;
+
 Node *_expression(Token *token, VM *vm){
 
     Node *node = malloc(sizeof(Node));

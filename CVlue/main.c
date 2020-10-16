@@ -543,7 +543,7 @@ int depth = 1;
 
 Node *_expression(Token *token, VM *vm, int tokenLength){
 
-    Node *node = malloc(sizeof(Node));
+    Node *node = malloc(sizeof(Node) * 1024);       //임시
     
     if(token[i].type==T_INT){
         i++;
@@ -552,18 +552,18 @@ Node *_expression(Token *token, VM *vm, int tokenLength){
         node->type = N_NUM;
         return node;
     }else if(token[i].type==T_MUL){
-        i++;
-        return node;
+        if(depth==1){
+            while(i <= tokenLength){
+                i++;
+                _expression(token, vm, tokenLength);
+
+            }
+        }
     }else if(token[i].type==T_ADD){
         i++;
         return node;
     }else if(token[i].type==T_SUB){
-        if(depth==1){
-            while(i <= tokenLength){
-                _expression(token, vm, tokenLength);
-                
-            }
-        }
+
     }else if(token[i].type==T_DIV){
         i++;
         return node;

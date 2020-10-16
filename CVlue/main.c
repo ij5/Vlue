@@ -482,6 +482,7 @@ typedef struct _Node{
     int type;
     struct _Node *left;
     struct _Node *right;
+    
     int currentDepth;
 }Node;
 

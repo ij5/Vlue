@@ -485,6 +485,16 @@ typedef struct _Node{
     int currentDepth;
 }Node;
 
+
+Node *create_node(int type, Node *left, Node *right){
+    Node *node = malloc(sizeof(Node));
+    node->type = type;
+    node->left = left;
+    node->right = right;
+
+    return node;
+}
+
 enum{
     N_NUM = 2048,
     N_ROOT,
@@ -500,27 +510,13 @@ enum{
     N_PLUS,
     N_PARSE,
     N_STATEMENT,
+    N_DECLARATION,
 };
-
-
-int match(Token *token, int t);
-Node *parse(Token *token, VM *vm);
-Node *_statement(Token *token, VM *vm);
-Node *_expression(Token *token, VM *vm, int tokenLength);
-Node *_add(Token *token, VM *vm);
-Node *_sub(Token *token, VM *vm);
-Node *_mul(Token *token, VM *vm);
-Node *_div(Token *token, VM *vm);
-Node *_int(Token *token, VM *vm);
 
 
 int i = 0;
 
 
-Node *parse(Token *token, VM *vm){
-    int tokenLength = checkTokenLength(token);
-    _expression(token);
-}
 /*
       |
 _____________
@@ -538,6 +534,17 @@ depth 3: parse groups
 depth 4: parse statements
 depth 5: parse root
 */
+
+
+bool pass(Token *token, int type);
+bool pass_forward(Token *token, int type1, int type2);
+void expect(Token *token, int type);
+Node *factor(Token *token);
+Node *term(Token *token);
+Node *expression(Token *token);
+Node *root(Token *token);
+Node *parse(Token *token);
+
 
 int depth = 1;
 
@@ -560,13 +567,80 @@ bool pass_forward(Token *token, int type1, int type2){
     }
 }
 
+void expect(Token *token, int type){
+    if(!pass(token, type)){
+        error(token[i].lineno, token[i].position, "Syntax error.");
+    }
+}
+
 Node *factor(Token *token){
     Node *node = malloc(sizeof(Node));
     
     node->left = NULL;
     node->right = NULL;
 
+    if(pass(token, T_IDENTIFIER)){
+        node->type = N_IDENTIFIER;
+    }else if(pass(token, T_INT)){
+        node->type = N_INT;
+    }else if(pass(token, T_LSB)){
+        free(node);
+        node = expression(token);
+        pass(token, T_RSB);
+    }else{
+        error(token[i].lineno, token[i].position, "Unexpected factor.");
+    }
 
+    return node;
+}
+
+Node *term(Token *token){
+    Node *node;
+    node = factor(token);
+
+    while(pass(token, T_MUL) || pass(token, T_DIV)){
+        node = create_node(token[i].type, node, factor(token));
+    }
+
+    return node;
+}
+
+Node *expression(Token *token){
+    Node *node = NULL;
+
+    if(pass_forward(token, T_IDENTIFIER, T_EQUAL)){
+        node = malloc(sizeof(Node));
+        node->type = N_DECLARATION;
+        node->left = create_node(N_DECLARATION, 0, 0);
+        node->right = expression(token);
+    }else{
+        node = term(token);
+
+        while(pass(token, T_ADD) || pass(token, T_SUB)){
+            node = create_node(token[i].type, node, term(token));
+        }
+    }
+
+    return node;
+}
+
+Node *root(Token *token){
+    Node *node = malloc(sizeof(Node));
+    node->left = expression(token);
+    node->right = NULL;
+
+    expect(token, T_SEMI);
+
+    if(token[i].type != T_END){
+        node->right = root(token);
+    }
+
+    return node;
+}
+
+
+Node *parse(Token *token){
+    return root(token);
 }
 
 
@@ -602,13 +676,13 @@ void print_node(Node *node){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("133(99");
+    Token *token = lexer("1+1*2/3;");
     
     int program[] = {};
 
     VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 26/*repeat*/);
 
-    parse(token, vm);
+    parse(token);
 
     runVM(vm);
     rmVM(vm);

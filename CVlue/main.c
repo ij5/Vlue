@@ -519,7 +519,7 @@ int i = 0;
 
 Node *parse(Token *token, VM *vm){
     int tokenLength = checkTokenLength(token);
-    _expression(token, vm, tokenLength);
+    _expression(token);
 }
 /*
       |
@@ -541,50 +541,33 @@ depth 5: parse root
 
 int depth = 1;
 
-Node *_expression(Token *token, VM *vm, int tokenLength){
-
-    Node *node = malloc(sizeof(Node) * 1024);       //임시
-    
-    if(token[i].type==T_INT){
+bool pass(Token *token, int type){
+    if(token[i].type==type){
         i++;
-        node->left = NULL;
-        node->right = _expression(token, vm, tokenLength);
-        node->type = N_NUM;
-        return node;
-    }else if(token[i].type==T_MUL){
-        if(depth==1){
-            while(i <= tokenLength){
-                i++;
-                _expression(token, vm, tokenLength);
-
-            }
-        }
-    }else if(token[i].type==T_ADD){
-        i++;
-        return node;
-    }else if(token[i].type==T_SUB){
-
-    }else if(token[i].type==T_DIV){
-        i++;
-        return node;
-    }else if(token[i].type==T_LSB){
-        printf("PASS\n");
-        i++;
-        node->left = NULL;
-        node->right = _expression(token, vm, tokenLength);
-        node->type = N_GROUP;
-        return node;
-    }else if(token[i].type==T_END){
-        printf("Successfully generated abstract syntax tree.");
-        // walk(node);
+        return true;
     }else{
-        free(node);
-        error(token[i].lineno, token[i].position, "Invalid Syntax.");
-        return NULL;
+        return false;
     }
-
 }
 
+bool pass_forward(Token *token, int type1, int type2){
+    if(token[i].type==type1 && token[i+1].type==type2){
+        pass(token, type1);
+        pass(token, type2);
+        return true;
+    }else{
+        return false;
+    }
+}
+
+Node *factor(Token *token){
+    Node *node = malloc(sizeof(Node));
+    
+    node->left = NULL;
+    node->right = NULL;
+
+
+}
 
 
 

@@ -1,0 +1,7 @@
+root : expression ';' root
+;
+
+expression : identifier '=' expression | term ('+' | '-') term
+;
+
+term = factor 

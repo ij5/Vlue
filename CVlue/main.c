@@ -574,33 +574,20 @@ void expect(Token *token, int type){
     }
 }
 
-Node *factor(Token *token){
-    Node *node = malloc(sizeof(Node));
-    
-    node->left = NULL;
-    node->right = NULL;
 
-    if(pass(token, T_IDENTIFIER)){
-        node->type = N_IDENTIFIER;
-    }else if(pass(token, T_INT)){
-        node->type = N_INT;
-    }else if(pass(token, T_LSB)){
-        free(node);
-        node = expression(token);
-        pass(token, T_RSB);
-    }else{
-        error(token[i].lineno, token[i].position, "Unexpected factor.");
-    }
-
-    return node;
+Node *parse(Token *token){
+    return root(token);
 }
 
-Node *term(Token *token){
-    Node *node;
-    node = factor(token);
+Node *root(Token *token){
+    Node *node = malloc(sizeof(Node));
+    node->left = expression(token);
+    node->right = NULL;
 
-    while(pass(token, T_MUL) || pass(token, T_DIV)){
-        node = create_node(token[i].type, node, factor(token));
+    expect(token, T_SEMI);
+
+    if(token[i].type != T_END){
+        node->right = root(token);
     }
 
     return node;
@@ -625,26 +612,37 @@ Node *expression(Token *token){
     return node;
 }
 
-Node *root(Token *token){
-    Node *node = malloc(sizeof(Node));
-    node->left = expression(token);
-    node->right = NULL;
+Node *term(Token *token){
+    Node *node;
+    node = factor(token);
 
-    expect(token, T_SEMI);
-
-    if(token[i].type != T_END){
-        node->right = root(token);
+    while(pass(token, T_MUL) || pass(token, T_DIV)){
+        node = create_node(token[i].type, node, factor(token));
     }
 
     return node;
 }
 
+Node *factor(Token *token){
+    Node *node = malloc(sizeof(Node));
+    
+    node->left = NULL;
+    node->right = NULL;
 
-Node *parse(Token *token){
-    return root(token);
+    if(pass(token, T_IDENTIFIER)){
+        node->type = N_IDENTIFIER;
+    }else if(pass(token, T_INT)){
+        node->type = N_INT;
+    }else if(pass(token, T_LSB)){
+        free(node);
+        node = expression(token);
+        pass(token, T_RSB);
+    }else{
+        error(token[i].lineno, token[i].position, "Unexpected factor.");
+    }
+
+    return node;
 }
-
-
 
 void print_node(Node *node){
     if(node->type==N_EXPRESSION){

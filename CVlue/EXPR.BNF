@@ -4,4 +4,8 @@ root : expression ';' root
 expression : identifier '=' expression | term ('+' | '-') term
 ;
 
-term = factor 
+term = factor ("*" | "/") factor
+;
+
+factor : identifier | number | "(" expression ")" 
+;

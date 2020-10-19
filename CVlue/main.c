@@ -483,7 +483,7 @@ typedef struct _Node{
     struct _Node *left;
     struct _Node *right;
     
-    int currentDepth;
+    char *value;
 }Node;
 
 
@@ -540,6 +540,7 @@ depth 5: parse root
 bool pass(Token *token, int type);
 bool pass_forward(Token *token, int type1, int type2);
 void expect(Token *token, int type);
+Node *group(Token *token);
 Node *factor(Token *token);
 Node *term(Token *token);
 Node *expression(Token *token);
@@ -580,42 +581,46 @@ Node *parse(Token *token){
 }
 
 Node *root(Token *token){
+    return expression(token);
+}
+
+
+Node *expression(Token *token){
     Node *node = malloc(sizeof(Node));
-    node->left = expression(token);
+    node->left = term(token);
     node->right = NULL;
 
     expect(token, T_SEMI);
 
     if(token[i].type != T_END){
-        node->right = root(token);
-    }
-
-    return node;
-}
-
-
-Node *expression(Token *token){
-    Node *node = NULL;
-
-    if(pass_forward(token, T_IDENTIFIER, T_EQUAL)){
-        node = malloc(sizeof(Node));
-        node->type = N_DECLARATION;
-        node->left = create_node(N_DECLARATION, 0, 0);
         node->right = expression(token);
-    }else{
-        node = term(token);
-
-        while(pass(token, T_ADD) || pass(token, T_SUB)){
-            node = create_node(token[i].type, node, term(token));
-        }
     }
 
     return node;
 }
 
 Node *term(Token *token){
+    Node *node = NULL;
+
+    if(pass_forward(token, T_IDENTIFIER, T_EQUAL)){
+        node = malloc(sizeof(Node));
+        node->type = N_DECLARATION;
+        node->left = create_node(N_DECLARATION, 0, 0);
+        node->right = term(token);
+    }else{
+        node = factor(token);
+
+        while(pass(token, T_ADD) || pass(token, T_SUB)){
+            node = create_node(token[i].type, node, factor(token));
+        }
+    }
+
+    return node;
+}
+
+Node *factor(Token *token){
     Node *node;
-    node = factor(token);
+    node = group(token);
 
     while(pass(token, T_MUL) || pass(token, T_DIV)){
         node = create_node(token[i].type, node, factor(token));
@@ -624,9 +629,9 @@ Node *term(Token *token){
     return node;
 }
 
-Node *factor(Token *token){
+Node *group(Token *token){
     Node *node = malloc(sizeof(Node));
-    
+
     node->left = NULL;
     node->right = NULL;
 
@@ -639,9 +644,9 @@ Node *factor(Token *token){
         node = expression(token);
         pass(token, T_RSB);
     }else{
-        error(token[i].lineno, token[i].position, "Unexpected factor.");
+        error(token[i].lineno, token[i].position, "Unexpected group.");
     }
-
+    
     return node;
 }
 

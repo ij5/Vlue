@@ -4,10 +4,13 @@ root : expression ';' root
 expression : identifier '=' expression | term ('+' | '-') term
 ;
 
+declaration : "var" identifier "=" expression
+;
+
 term : factor ("*" | "/") factor
 ;
 
-factor : group
+factor : group ("*" | "/") group
 ;
 
 group : "(" expression ")" | identifier | number

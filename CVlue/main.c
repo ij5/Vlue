@@ -623,7 +623,7 @@ Node *factor(Token *token){
     node = group(token);
 
     while(pass(token, T_MUL) || pass(token, T_DIV)){
-        node = create_node(token[i].type, node, factor(token));
+        node = create_node(token[i].type, node, group(token));
     }
 
     return node;

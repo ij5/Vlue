@@ -540,13 +540,13 @@ depth 5: parse root
 bool pass(Token *token, int type);
 bool pass_forward(Token *token, int type1, int type2);
 void expect(Token *token, int type);
-Node *group(Token *token);
-Node *factor(Token *token);
-Node *term(Token *token);
-Node *expression(Token *token);
-Node *root(Token *token);
 Node *parse(Token *token);
-
+Node *root(Token *token);
+Node *expression(Token *token);
+Node *declaration(Token *token);
+Node *term(Token *token);
+Node *factor(Token *token);
+Node *group(Token *token);
 
 int depth = 1;
 
@@ -594,6 +594,26 @@ Node *expression(Token *token){
 
     if(token[i].type != T_END){
         node->right = expression(token);
+    }
+
+    return node;
+}
+
+Node *declaration(Token *token){
+    Node *node = NULL;
+
+    if(pass_forward(token, T_VAR, T_IDENTIFIER)){
+        if(pass(token, T_EQUAL)){
+            node = malloc(sizeof(Node));
+            node->type = N_DECLARATION;
+            node->left = create_node(N_DECLARATION, 0, 0);
+            node->right = expression(token);
+        }else{
+            node = malloc(sizeof(Node));
+            node->type = N_DECLARATION;
+            node->left = create_node(N_DECLARATION, 0, 0);
+            node->right = NULL;
+        }
     }
 
     return node;

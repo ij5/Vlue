@@ -115,6 +115,7 @@ int isCutCharacter(char c){
 }
 
 int TOKEN_LENGTH = 1024;
+int tokenLength = 0;
 Token *lexer(char *data){
     if(data=="") error(-1, -1, "It's empty.");
     Token *token = (Token *)malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
@@ -143,6 +144,7 @@ Token *lexer(char *data){
             token[i].type = T_NEWLINE;
             position = 1;
             token[i].position = position;
+            tokenLength++;
         }else if((*data >= 'a' && *data <= 'z') || (*data >= 'A' && *data <= 'Z') || (*data == '_')){
             for(int j=0;isCutCharacter(*data) == false&&((*data >= 'a' && *data <= 'z') || 
                 (*data >= 'A' && *data <= 'Z') || 
@@ -171,6 +173,7 @@ Token *lexer(char *data){
             token[i].value = malloc(TEMP_LENGTH);
             strcpy(token[i].value, temp);           //FIXME: 문자열 문제
             clearstr(temp);
+            tokenLength++;
         }else if(
             *data == '0'||*data == '1'||*data == '2'||*data == '3'||*data == '4'
           ||*data == '5'||*data == '6'||*data == '7'||*data == '8'||*data == '9'
@@ -222,6 +225,7 @@ Token *lexer(char *data){
 
             token[i].num = i+1;
             token[i].lineno = line;
+            tokenLength++;
         }else if(*data=='='){
             printf("EQUAL\n");
             data++;
@@ -233,6 +237,7 @@ Token *lexer(char *data){
 
             position++;
             token[i].position = position;
+            tokenLength++;
         }else if(*data==' '||*data=='\t'||*data=='\r'){
             data++;
             i--;
@@ -249,6 +254,7 @@ Token *lexer(char *data){
             token[i].lineno = line;
             position++;
             token[i].position = position;
+            tokenLength++;
         }else if(*data==':'){
             printf("COLON\n");
             data++;
@@ -259,6 +265,7 @@ Token *lexer(char *data){
             token[i].lineno = line;
             position++;
             token[i].position = position;
+            tokenLength++;
         }else if(*data=='('){
             printf("LSB\n");
             data++;
@@ -269,6 +276,7 @@ Token *lexer(char *data){
             token[i].lineno = line;
             position++;
             token[i].position = position;
+            tokenLength++;
         }else if(*data==')'){
             printf("RSB\n");
             data++;
@@ -279,6 +287,7 @@ Token *lexer(char *data){
             token[i].lineno = line;
             position++;
             token[i].position = position;
+            tokenLength++;
         }else if(*data=='+'){
             printf("ADD\n");
             data++;
@@ -289,6 +298,7 @@ Token *lexer(char *data){
             token[i].lineno = line;
             position++;
             token[i].position = position;
+            tokenLength++;
         }else if(*data=='-'){
             printf("SUB\n");
             data++;
@@ -299,6 +309,7 @@ Token *lexer(char *data){
             token[i].lineno = line;
             position++;
             token[i].position = position;
+            tokenLength++;
         }else if(*data=='*'){
             printf("MUL\n");
             data++;
@@ -309,6 +320,7 @@ Token *lexer(char *data){
             token[i].lineno = line;
             position++;
             token[i].position = position;
+            tokenLength++;
         }else if(*data=='/'){
             if(*(data+1)=='*'){
                 data+=2;
@@ -338,6 +350,7 @@ Token *lexer(char *data){
                 position++;
                 token[i].position = position;
             }
+            tokenLength++;
         }else{
             printf("OTHER\n");
 
@@ -359,6 +372,7 @@ Token *lexer(char *data){
     token[endi].lineno = line;
     position++;
     token[endi].position = position;
+    tokenLength++;
     printf("END\n");
     return token;
 }
@@ -533,7 +547,7 @@ depth 5: parse root
 
 Token *t;
 
-int checkTokenLength();
+
 bool pass(int type);
 bool pass_forward(int type1, int type2);
 void expect(int type, char *msg);
@@ -551,13 +565,6 @@ int depth = 1;
 
 
 
-int checkTokenLength(){
-    int tokenLength = 0;
-    while(t[tokenLength].type != 0){
-        tokenLength++;
-    }
-    return tokenLength;
-}
 
 bool pass(int type){
     if(t[i].type==type){
@@ -596,140 +603,143 @@ Node *root(){
 
 
 
-int current = 0;
+// int current = 0;
 
-Node *walk(){
+// Node *walk(){
 
-    Token *token = &t[current];
+//     Token *token = &t[current];
 
-    if(token->type == T_INT){
-        current++;
-        Node *node = malloc(sizeof(Node));
-        node->type = N_INT;
-        return node;
-    }
-    if(token->type == T_ADD){
-        current++;
-        Node *node = malloc(sizeof(Node));
-        node->type = N_TERM;
-        node->value = malloc(sizeof(TOKEN_LENGTH));
-        strcpy(node->value, token->value);
-        return node;
-    }
-    if(token->type == T_SUB){
-        current++;
-        Node *node = malloc(sizeof(Node));
-        node->type = N_TERM;
-        node->value = malloc(sizeof(TOKEN_LENGTH));
-        strcpy(node->value, token->value);
-        return node;
-    }
+//     if(token->type == T_INT){
+//         current++;
+//         Node *node = malloc(sizeof(Node));
+//         node->type = N_INT;
+//         return node;
+//     }
+//     if(token->type == T_ADD){
+//         current++;
+//         Node *node = malloc(sizeof(Node));
+//         node->type = N_TERM;
+//         node->value = malloc(sizeof(TOKEN_LENGTH));
+//         strcpy(node->value, token->value);
+//         return node;
+//     }
+//     if(token->type == T_SUB){
+//         current++;
+//         Node *node = malloc(sizeof(Node));
+//         node->type = N_TERM;
+//         node->value = malloc(sizeof(TOKEN_LENGTH));
+//         strcpy(node->value, token->value);
+//         return node;
+//     }
+//     if(token->type == T_END){
+//         current++;
+//         return NULL;
+//     }
     
-}
-
-Node *expression(){
-    Node *node = malloc(sizeof(Node));
-    int tokenLength = checkTokenLength();
-    while(current < tokenLength){
-        node->child[current] = walk();
-    }
-}
+// }
 
 // Node *expression(){
 //     Node *node = malloc(sizeof(Node));
-//     node->left = term(t);
-//     if(node->left == NULL){
-//         node->left = declaration(t);
+//     while(current < tokenLength){
+//         node->child[current] = walk();
 //     }
-
-//     node->right = NULL;
-
-//     expect(T_SEMI, "No semicolon!");
-
-//     if(t[i].type != T_END){
-//         node->right = expression();
-//     }
-
-//     return node;
 // }
 
-// Node *declaration(){
-//     Node *node = NULL;
+Node *expression(){
+    Node *node = malloc(sizeof(Node));
+    node->left = term(t);
+    if(node->left == NULL){
+        node->left = declaration(t);
+    }
 
-//     if(pass_forward(T_VAR, T_IDENTIFIER)){
-//         if(pass(T_EQUAL)){
-//             node = malloc(sizeof(Node));
-//             node->type = N_DECLARATION;
-//             node->left = create_node(N_DECLARATION, 0, 0);
-//             node->right = expression();
+    node->right = NULL;
 
-//             return node;
-//         }else{
-//             node = malloc(sizeof(Node));
-//             node->type = N_DECLARATION;
-//             node->left = create_node(N_DECLARATION, 0, 0);
-//             node->right = NULL;
+    expect(T_SEMI, "No semicolon!");
 
-//             return node;
-//         }
-//     }
+    if(t[i].type != T_END){
+        node->right = expression();
+    }
 
-//     return NULL;
-// }
+    return node;
+}
 
-// Node *term(){
-//     Node *node = NULL;
+Node *declaration(){
+    Node *node = NULL;
 
-//     if(pass_forward(T_IDENTIFIER, T_EQUAL)){
-//         node = malloc(sizeof(Node));
-//         node->type = N_DECLARATION;
-//         node->left = create_node(N_DECLARATION, 0, 0);
-//         node->right = term();
-//     }else{
-//         node = factor();
+    if(pass_forward(T_VAR, T_IDENTIFIER)){
+        if(pass(T_EQUAL)){
+            node = malloc(sizeof(Node));
+            node->type = N_DECLARATION;
+            node->left = create_node(N_DECLARATION, 0, 0);
+            node->right = expression();
 
-//         while(pass(T_ADD) || pass(T_SUB)){
-//             node = create_node(t[i].type, node, factor());
-//         }
-//     }
+            return node;
+        }else{
+            node = malloc(sizeof(Node));
+            node->type = N_DECLARATION;
+            node->left = create_node(N_DECLARATION, 0, 0);
+            node->right = NULL;
 
-//     return node;
-// }
+            return node;
+        }
+    }
 
-// Node *factor(){
-//     Node *node;
-//     node = group();
+    return NULL;
+}
 
-//     while(pass(T_MUL) || pass(T_DIV)){
-//         node = create_node(t[i].type, node, group());
-//         return node;
-//     }
+Node *term(){
+    Node *node = NULL;
 
-//     return node;
-// }
+    if(pass_forward(T_IDENTIFIER, T_EQUAL)){
+        node = malloc(sizeof(Node));
+        node->type = N_DECLARATION;
+        node->left = create_node(N_DECLARATION, 0, 0);
+        node->right = term();
+    }else{
+        node = factor();
 
-// Node *group(){
-//     Node *node = malloc(sizeof(Node));
+        while(pass(T_ADD) || pass(T_SUB)){
+            node = create_node(t[i].type, node, factor());
+        }
+    }
 
-//     node->left = NULL;
-//     node->right = NULL;
+    return node;
+}
 
-//     if(pass(T_IDENTIFIER)){
-//         node->type = N_IDENTIFIER;
-//     }else if(pass(T_INT)){
-//         node->type = N_INT;
-//     }else if(pass(T_LSB)){
-//         free(node);
-//         node = expression();
-//         pass(T_RSB);
-//     }else{
-//         free(node);
-//         error(t[i].lineno, t[i].position, "Unexpected group.");
-//     }
+Node *factor(){
+    Node *node;
+    node = group();
 
-//     return node;
+    while(pass(T_MUL) || pass(T_DIV)){
+        node = create_node(t[i].type, node, group());
+        return node;
+    }
 
-// }
+    return node;
+}
+
+Node *group(){
+    Node *node = malloc(sizeof(Node));
+
+    node->left = NULL;
+    node->right = NULL;
+
+    if(pass(T_IDENTIFIER)){
+        node->type = N_IDENTIFIER;
+    }else if(pass(T_INT)){
+        node->type = N_INT;
+    }else if(pass(T_LSB)){
+        free(node);
+        node = expression();
+        pass(T_RSB);
+    }else{
+        free(node);
+        error(t[i].lineno, t[i].position, "Unexpected group.");
+    }
+
+    return node;
+
+}
 
 void print_node(Node *node){
     if(node->type==N_EXPRESSION){

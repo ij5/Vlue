@@ -1,13 +1,13 @@
-root : expression ';' root
-;
 
-expression : identifier '=' expression | term ('+' | '-') term
+expression : term ';' 
+    | term ';' expression
 ;
 
 declaration : "var" identifier "=" expression
 ;
 
-term : factor ("*" | "/") factor
+term : identifier "=" term
+    | factor ("+" | "-") factor
 ;
 
 factor : group ("*" | "/") group

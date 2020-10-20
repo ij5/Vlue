@@ -591,7 +591,7 @@ Node *expression(Token *token){
     if(node->left == NULL){
         node->left = declaration(token);
     }
-    
+
     node->right = NULL;
 
     expect(token, T_SEMI);
@@ -652,6 +652,7 @@ Node *factor(Token *token){
 
     while(pass(token, T_MUL) || pass(token, T_DIV)){
         node = create_node(token[i].type, node, group(token));
+        return node;
     }
 
     return node;
@@ -665,17 +666,23 @@ Node *group(Token *token){
 
     if(pass(token, T_IDENTIFIER)){
         node->type = N_IDENTIFIER;
+        
+        return node;
     }else if(pass(token, T_INT)){
         node->type = N_INT;
+
+        return node;
     }else if(pass(token, T_LSB)){
         free(node);
         node = expression(token);
         pass(token, T_RSB);
+
+        return node;
     }else{
+        free(node);
         error(token[i].lineno, token[i].position, "Unexpected group.");
     }
-    
-    return node;
+
 }
 
 void print_node(Node *node){

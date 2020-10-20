@@ -588,6 +588,10 @@ Node *root(Token *token){
 Node *expression(Token *token){
     Node *node = malloc(sizeof(Node));
     node->left = term(token);
+    if(node->left == NULL){
+        node->left = declaration(token);
+    }
+    
     node->right = NULL;
 
     expect(token, T_SEMI);
@@ -608,15 +612,19 @@ Node *declaration(Token *token){
             node->type = N_DECLARATION;
             node->left = create_node(N_DECLARATION, 0, 0);
             node->right = expression(token);
+
+            return node;
         }else{
             node = malloc(sizeof(Node));
             node->type = N_DECLARATION;
             node->left = create_node(N_DECLARATION, 0, 0);
             node->right = NULL;
+
+            return node;
         }
     }
 
-    return node;
+    return NULL;
 }
 
 Node *term(Token *token){

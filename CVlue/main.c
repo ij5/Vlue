@@ -539,6 +539,7 @@ Node *root();
 // Node *factor();
 // Node *group();
 
+void expression();
 
 Node *expr3();
 Node *expr2();
@@ -585,7 +586,7 @@ Node *parse(Token *token){
 }
 
 Node *root(){
-   expr3();
+   expression();
 }
 
 
@@ -663,9 +664,11 @@ void expression(){
     while(pass(T_ADD) || pass(T_SUB)){
         term();
     }
+
+    if(t[i].type!=T_END){
+        expression();
+    }
 }
-
-
 
 
 /*
@@ -678,7 +681,7 @@ void expression(){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("asd");
+    Token *token = lexer("1+1+2");
     
     int program[] = {};
 

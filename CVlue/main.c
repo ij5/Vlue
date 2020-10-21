@@ -553,11 +553,11 @@ bool pass_forward(int type1, int type2);
 void expect(int type, char *msg);
 Node *parse();
 Node *root();
-Node *expression();
-Node *declaration();
-Node *term();
-Node *factor();
-Node *group();
+// Node *expression();
+// Node *declaration();
+// Node *term();
+// Node *factor();
+// Node *group();
 
 Node *walk();
 
@@ -598,9 +598,13 @@ Node *parse(Token *token){
 }
 
 Node *root(){
-    return expression();
+   expression();
 }
 
+
+void expression(){
+
+}
 
 
 // int current = 0;
@@ -645,101 +649,101 @@ Node *root(){
 //     }
 // }
 
-Node *expression(){
-    Node *node = malloc(sizeof(Node));
-    node->left = term(t);
-    if(node->left == NULL){
-        node->left = declaration(t);
-    }
+// Node *expression(){
+//     Node *node = malloc(sizeof(Node));
+//     node->left = term(t);
+//     if(node->left == NULL){
+//         node->left = declaration(t);
+//     }
 
-    node->right = NULL;
+//     node->right = NULL;
 
-    expect(T_SEMI, "No semicolon!");
+//     expect(T_SEMI, "No semicolon!");
 
-    if(t[i].type != T_END){
-        node->right = expression();
-    }
+//     if(t[i].type != T_END){
+//         node->right = expression();
+//     }
 
-    return node;
-}
+//     return node;
+// }
 
-Node *declaration(){
-    Node *node = NULL;
+// Node *declaration(){
+//     Node *node = NULL;
 
-    if(pass_forward(T_VAR, T_IDENTIFIER)){
-        if(pass(T_EQUAL)){
-            node = malloc(sizeof(Node));
-            node->type = N_DECLARATION;
-            node->left = create_node(N_DECLARATION, 0, 0);
-            node->right = expression();
+//     if(pass_forward(T_VAR, T_IDENTIFIER)){
+//         if(pass(T_EQUAL)){
+//             node = malloc(sizeof(Node));
+//             node->type = N_DECLARATION;
+//             node->left = create_node(N_DECLARATION, 0, 0);
+//             node->right = expression();
 
-            return node;
-        }else{
-            node = malloc(sizeof(Node));
-            node->type = N_DECLARATION;
-            node->left = create_node(N_DECLARATION, 0, 0);
-            node->right = NULL;
+//             return node;
+//         }else{
+//             node = malloc(sizeof(Node));
+//             node->type = N_DECLARATION;
+//             node->left = create_node(N_DECLARATION, 0, 0);
+//             node->right = NULL;
 
-            return node;
-        }
-    }
+//             return node;
+//         }
+//     }
 
-    return NULL;
-}
+//     return NULL;
+// }
 
-Node *term(){
-    Node *node = NULL;
+// Node *term(){
+//     Node *node = NULL;
 
-    if(pass_forward(T_IDENTIFIER, T_EQUAL)){
-        node = malloc(sizeof(Node));
-        node->type = N_DECLARATION;
-        node->left = create_node(N_DECLARATION, 0, 0);
-        node->right = term();
-    }else{
-        node = factor();
+//     if(pass_forward(T_IDENTIFIER, T_EQUAL)){
+//         node = malloc(sizeof(Node));
+//         node->type = N_DECLARATION;
+//         node->left = create_node(N_DECLARATION, 0, 0);
+//         node->right = term();
+//     }else{
+//         node = factor();
 
-        while(pass(T_ADD) || pass(T_SUB)){
-            node = create_node(t[i].type, node, factor());
-        }
-    }
+//         while(pass(T_ADD) || pass(T_SUB)){
+//             node = create_node(t[i].type, node, factor());
+//         }
+//     }
 
-    return node;
-}
+//     return node;
+// }
 
-Node *factor(){
-    Node *node;
-    node = group();
+// Node *factor(){
+//     Node *node;
+//     node = group();
 
-    while(pass(T_MUL) || pass(T_DIV)){
-        node = create_node(t[i].type, node, group());
-        return node;
-    }
+//     while(pass(T_MUL) || pass(T_DIV)){
+//         node = create_node(t[i].type, node, group());
+//         return node;
+//     }
 
-    return node;
-}
+//     return node;
+// }
 
-Node *group(){
-    Node *node = malloc(sizeof(Node));
+// Node *group(){
+//     Node *node = malloc(sizeof(Node));
 
-    node->left = NULL;
-    node->right = NULL;
+//     node->left = NULL;
+//     node->right = NULL;
 
-    if(pass(T_IDENTIFIER)){
-        node->type = N_IDENTIFIER;
-    }else if(pass(T_INT)){
-        node->type = N_INT;
-    }else if(pass(T_LSB)){
-        free(node);
-        node = expression();
-        pass(T_RSB);
-    }else{
-        free(node);
-        error(t[i].lineno, t[i].position, "Unexpected group.");
-    }
+//     if(pass(T_IDENTIFIER)){
+//         node->type = N_IDENTIFIER;
+//     }else if(pass(T_INT)){
+//         node->type = N_INT;
+//     }else if(pass(T_LSB)){
+//         free(node);
+//         node = expression();
+//         pass(T_RSB);
+//     }else{
+//         free(node);
+//         error(t[i].lineno, t[i].position, "Unexpected group.");
+//     }
 
-    return node;
+//     return node;
 
-}
+// }
 
 void print_node(Node *node){
     if(node->type==N_EXPRESSION){

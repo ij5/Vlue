@@ -6,8 +6,8 @@ expression : term ';'
 declaration : "var" identifier "=" expression
 ;
 
-term : identifier "=" term
-    | factor ("+" | "-") factor
+term : factor
+    | term ("+" | "-") factor
 ;
 
 factor : group ("*" | "/") group

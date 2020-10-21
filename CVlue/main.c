@@ -525,26 +525,6 @@ enum{
 
 int i = 0;
 
-
-/*
-      |
-_____________
-_____   _____ 
-_   _   _   _
-1 * 2 + 3 / 4
-*/
-
-/*
-We can parse by depth.
-I call it "depth parsing".
-depth 1: parse MUL, DIV
-depth 2: parse ADD, SUB
-depth 3: parse groups
-depth 4: parse statements
-depth 5: parse root
-*/
-
-
 Token *t;
 
 
@@ -558,6 +538,12 @@ Node *root();
 // Node *term();
 // Node *factor();
 // Node *group();
+
+
+bool expression();
+bool term();
+bool factor();
+
 
 Node *walk();
 
@@ -602,8 +588,34 @@ Node *root(){
 }
 
 
-void expression(){
+bool expression(){
+    term();
+}
 
+bool term(){
+    if(factor()){
+        i++;
+    }else
+    {
+        return false;
+    }
+
+    while(pass(T_ADD) || T_SUB)){
+        if(factor()){
+            i++;
+        }
+    }
+    
+}
+
+bool factor(){
+    if(t[i].type!=T_MUL || t[i].type!=T_DIV){
+        return false;
+    }
+
+    while(pass(T_MUL) || pass(T_DIV){
+        
+    }
 }
 
 
@@ -648,6 +660,8 @@ void expression(){
 //         node->child[current] = walk();
 //     }
 // }
+
+// =====================================================
 
 // Node *expression(){
 //     Node *node = malloc(sizeof(Node));

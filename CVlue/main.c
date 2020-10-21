@@ -533,16 +533,17 @@ bool pass_forward(int type1, int type2);
 void expect(int type, char *msg);
 Node *parse();
 Node *root();
-// Node *expression();
-// Node *declaration();
-// Node *term();
-// Node *factor();
-// Node *group();
+Node *expression();
+Node *declaration();
+Node *term();
+Node *factor();
+Node *group();
 
 
-bool expression();
-bool term();
-bool factor();
+Node *expr3();
+Node *expr2();
+Node *expr1();
+Node *expr1_prime();
 
 
 Node *walk();
@@ -584,38 +585,7 @@ Node *parse(Token *token){
 }
 
 Node *root(){
-   expression();
-}
-
-
-bool expression(){
-    term();
-}
-
-bool term(){
-    if(factor()){
-        i++;
-    }else
-    {
-        return false;
-    }
-
-    while(pass(T_ADD) || T_SUB)){
-        if(factor()){
-            i++;
-        }
-    }
-    
-}
-
-bool factor(){
-    if(t[i].type!=T_MUL || t[i].type!=T_DIV){
-        return false;
-    }
-
-    while(pass(T_MUL) || pass(T_DIV){
-        
-    }
+   expr3();
 }
 
 
@@ -663,101 +633,34 @@ bool factor(){
 
 // =====================================================
 
-// Node *expression(){
-//     Node *node = malloc(sizeof(Node));
-//     node->left = term(t);
-//     if(node->left == NULL){
-//         node->left = declaration(t);
-//     }
 
-//     node->right = NULL;
 
-//     expect(T_SEMI, "No semicolon!");
+Node *expr3(){
+    Node *node = malloc(sizeof(Node));
 
-//     if(t[i].type != T_END){
-//         node->right = expression();
-//     }
+    if(pass(T_IDENTIFIER)){
+        node->left = NULL;
+        node->right = NULL;
+        node->type = N_IDENTIFIER;
+        node->value = malloc(sizeof(tokenLength));
+        strcpy(node->value, t[i].value);
+    }else{
+        error(t[i].lineno, t[i].position, "Not an identifier.");
+    }
+}
 
-//     return node;
-// }
 
-// Node *declaration(){
-//     Node *node = NULL;
+Node *expr2(){
+    Node *node = malloc(sizeof(Node));
 
-//     if(pass_forward(T_VAR, T_IDENTIFIER)){
-//         if(pass(T_EQUAL)){
-//             node = malloc(sizeof(Node));
-//             node->type = N_DECLARATION;
-//             node->left = create_node(N_DECLARATION, 0, 0);
-//             node->right = expression();
+    if(pass(T_LSB)){
+        node->left = root();
+        node->right = NULL;
+        node->type = N_EXPR2;
 
-//             return node;
-//         }else{
-//             node = malloc(sizeof(Node));
-//             node->type = N_DECLARATION;
-//             node->left = create_node(N_DECLARATION, 0, 0);
-//             node->right = NULL;
+    }
+}
 
-//             return node;
-//         }
-//     }
-
-//     return NULL;
-// }
-
-// Node *term(){
-//     Node *node = NULL;
-
-//     if(pass_forward(T_IDENTIFIER, T_EQUAL)){
-//         node = malloc(sizeof(Node));
-//         node->type = N_DECLARATION;
-//         node->left = create_node(N_DECLARATION, 0, 0);
-//         node->right = term();
-//     }else{
-//         node = factor();
-
-//         while(pass(T_ADD) || pass(T_SUB)){
-//             node = create_node(t[i].type, node, factor());
-//         }
-//     }
-
-//     return node;
-// }
-
-// Node *factor(){
-//     Node *node;
-//     node = group();
-
-//     while(pass(T_MUL) || pass(T_DIV)){
-//         node = create_node(t[i].type, node, group());
-//         return node;
-//     }
-
-//     return node;
-// }
-
-// Node *group(){
-//     Node *node = malloc(sizeof(Node));
-
-//     node->left = NULL;
-//     node->right = NULL;
-
-//     if(pass(T_IDENTIFIER)){
-//         node->type = N_IDENTIFIER;
-//     }else if(pass(T_INT)){
-//         node->type = N_INT;
-//     }else if(pass(T_LSB)){
-//         free(node);
-//         node = expression();
-//         pass(T_RSB);
-//     }else{
-//         free(node);
-//         error(t[i].lineno, t[i].position, "Unexpected group.");
-//     }
-
-//     return node;
-
-// }
 
 void print_node(Node *node){
     if(node->type==N_EXPRESSION){
@@ -790,7 +693,7 @@ void print_node(Node *node){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("1+1");
+    Token *token = lexer("asd");
     
     int program[] = {};
 

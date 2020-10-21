@@ -533,11 +533,11 @@ bool pass_forward(int type1, int type2);
 void expect(int type, char *msg);
 Node *parse();
 Node *root();
-Node *expression();
-Node *declaration();
-Node *term();
-Node *factor();
-Node *group();
+// Node *expression();
+// Node *declaration();
+// Node *term();
+// Node *factor();
+// Node *group();
 
 
 Node *expr3();
@@ -634,54 +634,39 @@ Node *root(){
 // =====================================================
 
 
-
-Node *expr3(){
-    Node *node = malloc(sizeof(Node));
-
+void factor(){
     if(pass(T_IDENTIFIER)){
-        node->left = NULL;
-        node->right = NULL;
-        node->type = N_IDENTIFIER;
-        node->value = malloc(sizeof(tokenLength));
-        strcpy(node->value, t[i].value);
+        ;
+    }else if(pass(T_INT)){
+        ;
+    }else if(pass(T_LSB)){
+        expression();
+        expect(T_RSB, "Factor: Unexpected token.");
     }else{
-        error(t[i].lineno, t[i].position, "Not an identifier.");
+        error(t[i].lineno, t[i].position, "Factor: Unexpected token.");
+        i++;
+    }
+}
+
+void term(){
+    factor();
+    while(pass(T_MUL) || pass(T_DIV)){
+        factor();
+    }
+}
+
+void expression(){
+    pass(T_ADD);
+    pass(T_SUB);
+
+    term();
+    while(pass(T_ADD) || pass(T_SUB)){
+        term();
     }
 }
 
 
-Node *expr2(){
-    Node *node = malloc(sizeof(Node));
 
-    if(pass(T_LSB)){
-        node->left = root();
-        node->right = NULL;
-        node->type = N_EXPR2;
-
-    }
-}
-
-
-void print_node(Node *node){
-    if(node->type==N_EXPRESSION){
-        if(node->left != NULL){
-            print_node(node->left);
-        }
-        if(node->right != NULL){
-            print_node(node->right);
-        }
-    }else if(node->type==N_GROUP){
-        printf(" Group ");
-        if(node->left != NULL){
-            print_node(node->left);
-        }
-        if(node->right!=NULL){
-            print_node(node->right);
-        }
-    }else if(node->type==N_INT){
-        printf(" Int ");
-    }
-}
 
 /*
     ====================

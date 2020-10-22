@@ -541,16 +541,8 @@ Node *root();
 
 void expression();
 
-Node *expr3();
-Node *expr2();
-Node *expr1();
-Node *expr1_prime();
-
 
 Node *walk();
-
-int depth = 1;
-
 
 
 
@@ -648,6 +640,8 @@ void factor(){
         i++;
     }
 }
+
+
 
 void term(){
     factor();

@@ -1,3 +1,6 @@
+statement : expression
+    | statement expression
+;
 
 expression : term ';' 
     | term ';' expression

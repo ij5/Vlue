@@ -627,12 +627,17 @@ void parse(Token *token){
 }
 
 void root(){
-   expression();
+   statement();
 }
 
 
 void statement(){
-    expression();
+    if(pass(T_VAR)){
+        declaration();
+        expect(T_SEMI, "No semicolon.");
+    }else{
+        expression();
+    }
 }
 
 void expression(){
@@ -653,8 +658,14 @@ void expression(){
 }
 
 void declaration(){
-    if(pass(T_VAR)){
-
+    if(pass(T_IDENTIFIER)){
+        if(pass(T_EQUAL)){
+            expression();
+        }else{
+            error(t[i].lineno, t[i].position, "Error on declaration.");
+        }
+    }else{
+        error(t[i].lineno, t[i].position, "Identifier will be next to var.");
     }
 }
 
@@ -662,6 +673,8 @@ void declaration(){
 void compare(){
     expression();
     if(pass(T_LBB)){
+
+    }else if(pass(T_RBB)){
 
     }
 }
@@ -676,17 +689,16 @@ void term(){
 
 
 void factor(){
-    if(pass(T_IDENTIFIER)){
-        ;
-    }else if(pass(T_INT)){
+    if(pass(T_INT)){
         ;
     }else if(pass(T_LSB)){
         expression();
         expect(T_RSB, "Factor: Unexpected token.");
-    }else{
-        error(t[i].lineno, t[i].position, "Factor: Unexpected token.");
-        i++;
     }
+    // else{
+    //     error(t[i].lineno, t[i].position, "Factor: Unexpected token.");
+    //     i++;
+    // }
 }
 
 
@@ -700,7 +712,7 @@ void factor(){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("var a = 1+1*2-3");
+    Token *token = lexer("var a = 1+1*2-3;");
     
     int program[] = {0};
 

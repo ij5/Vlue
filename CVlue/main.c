@@ -48,7 +48,6 @@ void error(int line, int position, const char *errorType){
     ================
 */
 
-
 typedef struct _Token
 {
     int num;
@@ -124,7 +123,7 @@ Token *lexer(char *data){
     int position = 0;
 
     char temp[TEMP_LENGTH];     //최대 128의 문자열 토큰 길이
-    clearstr(temp);
+    memset(temp, 0, sizeof(temp));
     int tempcount = 0;
 
     int endi = 0;
@@ -680,7 +679,7 @@ int main(int argc, char *argv[]){
 
     Token *token = lexer("1+1+2");
     
-    int program[] = {};
+    int program[] = {0};
 
     VM *vm = initVM(program, 0/*program count*/, 0/*LOCAL*/, 26/*repeat*/);
 

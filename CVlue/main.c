@@ -72,6 +72,10 @@ enum TokenType{
     T_SUB,
     T_MUL,
     T_DIV,
+    T_LBB,
+    T_RBB,
+    T_LMB,
+    T_RMB,
     T_END,
     OTHER,
 };
@@ -350,6 +354,28 @@ Token *lexer(char *data){
                 token[i].position = position;
             }
             tokenLength++;
+        }else if(*data=='<'){
+            printf("LBB");
+            data++;
+            token[i].num = i+1;
+            token[i].type = T_MUL;
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, "<\0");
+            token[i].lineno = line;
+            position++;
+            token[i].position = position;
+            tokenLength++;
+        }else if(*data=='>'){
+            printf("RBB");
+            data++;
+            token[i].num = i+1;
+            token[i].type = T_MUL;
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, ">\0");
+            token[i].lineno = line;
+            position++;
+            token[i].position = position;
+            tokenLength++;
         }else{
             printf("OTHER\n");
 
@@ -532,16 +558,14 @@ bool pass_forward(int type1, int type2);
 void expect(int type, char *msg);
 void parse();
 void root();
-// Node *expression();
-// Node *declaration();
-// Node *term();
-// Node *factor();
-// Node *group();
 
+void statement();
 void expression();
+void compare();
+void declaration();
+void term();
+void factor();
 
-
-Node *walk();
 
 
 
@@ -554,15 +578,15 @@ bool pass(int type){
     }
 }
 
-bool pass_forward(int type1, int type2){
-    if(t[i].type==type1 && t[i+1].type==type2){
-        pass(type1);
-        pass(type2);
-        return true;
-    }else{
-        return false;
-    }
-}
+// bool pass_forward(int type1, int type2){
+//     if(t[i].type==type1 && t[i+1].type==type2){
+//         pass(type1);
+//         pass(type2);
+//         return true;
+//     }else{
+//         return false;
+//     }
+// }
 
 void expect(int type, char *msg){
     if(!pass(type)){
@@ -581,72 +605,8 @@ void root(){
 }
 
 
-// int current = 0;
-
-// Node *walk(){
-
-//     Token *token = &t[current];
-
-//     if(token->type == T_INT){
-//         current++;
-//         Node *node = malloc(sizeof(Node));
-//         node->type = N_INT;
-//         return node;
-//     }
-//     if(token->type == T_ADD){
-//         current++;
-//         Node *node = malloc(sizeof(Node));
-//         node->type = N_TERM;
-//         node->value = malloc(sizeof(TOKEN_LENGTH));
-//         strcpy(node->value, token->value);
-//         return node;
-//     }
-//     if(token->type == T_SUB){
-//         current++;
-//         Node *node = malloc(sizeof(Node));
-//         node->type = N_TERM;
-//         node->value = malloc(sizeof(TOKEN_LENGTH));
-//         strcpy(node->value, token->value);
-//         return node;
-//     }
-//     if(token->type == T_END){
-//         current++;
-//         return NULL;
-//     }
-    
-// }
-
-// Node *expression(){
-//     Node *node = malloc(sizeof(Node));
-//     while(current < tokenLength){
-//         node->child[current] = walk();
-//     }
-// }
-
-// =====================================================
-
-
-void factor(){
-    if(pass(T_IDENTIFIER)){
-        ;
-    }else if(pass(T_INT)){
-        ;
-    }else if(pass(T_LSB)){
-        expression();
-        expect(T_RSB, "Factor: Unexpected token.");
-    }else{
-        error(t[i].lineno, t[i].position, "Factor: Unexpected token.");
-        i++;
-    }
-}
-
-
-
-void term(){
-    factor();
-    while(pass(T_MUL) || pass(T_DIV)){
-        factor();
-    }
+void statement(){
+    expression();
 }
 
 void expression(){
@@ -666,6 +626,43 @@ void expression(){
     }
 }
 
+void declaration(){
+    if(pass(T_VAR)){
+
+    }
+}
+
+
+void compare(){
+    expression();
+    if(pass(T_LBB)){
+
+    }
+}
+
+
+void term(){
+    factor();
+    while(pass(T_MUL) || pass(T_DIV)){
+        factor();
+    }
+}
+
+
+void factor(){
+    if(pass(T_IDENTIFIER)){
+        ;
+    }else if(pass(T_INT)){
+        ;
+    }else if(pass(T_LSB)){
+        expression();
+        expect(T_RSB, "Factor: Unexpected token.");
+    }else{
+        error(t[i].lineno, t[i].position, "Factor: Unexpected token.");
+        i++;
+    }
+}
+
 
 /*
     ====================
@@ -677,7 +674,7 @@ void expression(){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("1+1+2");
+    Token *token = lexer("1+1*2-3");
     
     int program[] = {0};
 

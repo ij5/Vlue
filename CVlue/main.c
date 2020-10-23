@@ -700,7 +700,7 @@ void factor(){
 
 int main(int argc, char *argv[]){
 
-    Token *token = lexer("1+1*2-3");
+    Token *token = lexer("var a = 1+1*2-3");
     
     int program[] = {0};
 

@@ -355,7 +355,7 @@ Token *lexer(char *data){
             }
             tokenLength++;
         }else if(*data=='<'){
-            printf("LBB");
+            printf("LBB\n");
             data++;
             token[i].num = i+1;
             token[i].type = T_MUL;
@@ -366,12 +366,34 @@ Token *lexer(char *data){
             token[i].position = position;
             tokenLength++;
         }else if(*data=='>'){
-            printf("RBB");
+            printf("RBB\n");
             data++;
             token[i].num = i+1;
             token[i].type = T_MUL;
             token[i].value = malloc(sizeof(*data));
             strcpy(token[i].value, ">\0");
+            token[i].lineno = line;
+            position++;
+            token[i].position = position;
+            tokenLength++;
+        }else if(*data=='{'){
+            printf("LMB\n");
+            data++;
+            token[i].num = i+1;
+            token[i].type = T_MUL;
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, "{\0");
+            token[i].lineno = line;
+            position++;
+            token[i].position = position;
+            tokenLength++;
+        }else if(*data=='}'){
+            printf("RMB");
+            data++;
+            token[i].num = i+1;
+            token[i].type = T_MUL;
+            token[i].value = malloc(sizeof(*data));
+            strcpy(token[i].value, "}\0");
             token[i].lineno = line;
             position++;
             token[i].position = position;

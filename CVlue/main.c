@@ -651,8 +651,11 @@ void term(){
 }
 
 void expression(){
-    pass(T_ADD);
-    pass(T_SUB);
+    if(pass(T_ADD)){
+        ;
+    }else if(pass(T_SUB)){
+        ;
+    }
 
     term();
     while(pass(T_ADD) || pass(T_SUB)){

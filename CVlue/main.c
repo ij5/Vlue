@@ -116,7 +116,7 @@ int isCutCharacter(char c){
 int TOKEN_LENGTH = 1024;
 int tokenLength = 0;
 Token *lexer(char *data){
-    if(data=="") error(-1, -1, "It's empty.");
+    if(data[0]=='\0') error(-1, -1, "It's empty.");
     Token *token = (Token *)malloc(sizeof(Token)*TOKEN_LENGTH);  //임시
     int line = 1;
     int TEMP_LENGTH = 128;
@@ -530,8 +530,8 @@ Token *t;
 bool pass(int type);
 bool pass_forward(int type1, int type2);
 void expect(int type, char *msg);
-Node *parse();
-Node *root();
+void parse();
+void root();
 // Node *expression();
 // Node *declaration();
 // Node *term();
@@ -571,12 +571,12 @@ void expect(int type, char *msg){
 }
 
 
-Node *parse(Token *token){
+void parse(Token *token){
     t = token;
-    return root();
+    root();
 }
 
-Node *root(){
+void root(){
    expression();
 }
 

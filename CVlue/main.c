@@ -48,7 +48,6 @@ void error(int line, int position, const char *errorType){
     ================
 */
 
-
 typedef struct _Token
 {
     int num;

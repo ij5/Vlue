@@ -76,6 +76,7 @@ enum TokenType{
     T_RBB,
     T_LMB,
     T_RMB,
+    T_IF,
     T_END,
     OTHER,
 };
@@ -166,6 +167,9 @@ Token *lexer(char *data){
             if(strcmp(temp, "var")==0){
                 printf("VAR\n");
                 token[i].type = T_VAR;
+            }else if(strcmp(temp, "if")==0){
+                printf("IF\n");
+                token[i].type = T_IF;
             }else{
                 printf("IDENTIFIER\n");
                 token[i].type = T_IDENTIFIER;

@@ -49,8 +49,19 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    INTEGER = 258,
-    VARIABLE = 259
+    T_INT = 258,
+    T_IDENTIFIER = 259,
+    T_ADD = 260,
+    T_SUB = 261,
+    T_MUL = 262,
+    T_DIV = 263,
+    T_LSB = 264,
+    T_RSB = 265,
+    T_EQUAL = 266,
+    T_VAR = 267,
+    T_NEWLINE = 268,
+    T_EXIT = 269,
+    T_UMINUS = 270
   };
 #endif
 

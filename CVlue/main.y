@@ -1,48 +1,66 @@
-%token INTEGER VARIABLE
-%left '+' '-'
-%left '*' '/'
-
 %{
-  void yyerror(char *);
-  int yylex(void);
-  int sym[26];
+void yyerror(char *);
+int yylex(void);
+
+#include "node.h"
+
+int lineno = 0;
+
 %}
+
+%token T_INT T_IDENTIFIER 
+%token T_ADD T_SUB T_MUL T_DIV
+%token T_LSB T_RSB
+%token T_EQUAL T_VAR
+%token T_NEWLINE
+%token T_EXIT
+
+%left T_ADD T_SUB
+%left T_MUL T_DIV
+%nonassoc T_UMINUS
+
 
 %%
 
-program:
-    program statement '\n'
+program: 
+    program statement
     |
     ;
 
- /* 변수를 만났을 경우                                */
- /* 변수명의 토큰값을 이용해서 심볼릭 테이블을 만든다 */ 
- /* 만약 변수명이 'a'라면 토큰값은 0이 리턴되고       */
- /* sym[0] 에 연산결과가 들어가게 된다.               */   
-statement:
-    expr                  { printf("계산결과 %d\n", $1); }
-    | VARIABLE '=' expr   { sym[$1] = $3; }
+statement: 
+    expression NEWLINE    { 
+        lineno++;
+        printf("%d\n", $1); 
+    }
+    | declaration
+    | T_EXIT { exit(0); }
     ;
 
-expr:
-    INTEGER
-    | VARIABLE            { $$ = sym[$1]; }
-    | expr '+' expr       { $$ = $1 + $3; }
-    | expr '-' expr       { $$ = $1 - $3; }
-    | expr '*' expr       { $$ = $1 * $3; }
-    | expr '/' expr       { $$ = $1 / $3; }
-    | '(' expr ')'        { $$ = $2; }
+declaration: 
+    T_VAR T_IDENTIFIER T_EQUAL expression   
+
+expression: 
+    T_INT     { $$ = $1; }
+    | T_IDENTIFIER            { $$ = $1; }
+    | expression T_ADD expression       { $$ = $1 + $3; }
+    | expression T_SUB expression       { $$ = $1 - $3; }
+    | expression T_MUL expression       { $$ = $1 * $3; }
+    | expression T_DIV expression       { $$ = $1 / $3; }
+    | T_SUB expression %prec T_UMINUS     { $$ = -$2; }
+    | T_LSB expression T_RSB        { $$ = $2; }
     ;
 
 %%
 void yyerror(char *s)
 {
-  printf("%s\n", s);
-  return 0;
+    printf("%s\n", s);
 }
 
 int main(void)
 {
-  yyparse();
-  return 0;
+// #ifdef YYDEBUG
+//     yydebug = 1;
+// #endif
+    yyparse();
+    return 0;
 }

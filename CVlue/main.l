@@ -1,34 +1,71 @@
 
 %{
-#include <stdlib.h>
+// #include <stdlib.h>
+// #include <stdio.h>
 void yyerror(char *);
 #include "main.tab.h"
 %}
 
 %%
- /* 변수명을 위한 VARIABLE 토큰을 되돌려 준다 */
- /* 변수명은 a-z 까지 사용될 수 있다.         */ 
- /* 리턴된 값은 cal.y에서 sym테이블을 만들기 위해서 사용된다. */ 
-[a-z]   {
-          yylval = *yytext - 'a';
-          return VARIABLE;
-        }
+
+
+"exit" {
+  return T_EXIT;
+}
+
+"var" {
+  strcpy(yylval, yytext);
+  return T_VAR;
+}
+
+[a-zA-Z][a-zA-Z0-9_]* {
+  strcpy(yylval, yytext);
+  return T_IDENTIFIER;
+}
  
- /* 숫자를 만났을 때 */
 [0-9]+  {
-          yylval = atoi(yytext);
-          return INTEGER;
-        }
- /* 연산자를 만났을 때 */
-[-+()=/*\n] {return *yytext;}
+  yylval = atoi(yytext);
+  return T_INT;
+}
 
-[ \t]   ;     /* 무시한다 */
+\+ {
+  return T_ADD;
+}
 
-.       yyerror("invalid character");
+\- {
+  return T_SUB;
+}
+
+\* {
+  return T_MUL;
+}
+
+\/ {
+  return T_DIV;
+}
+
+\( {
+  return T_LSB;
+}
+
+\) {
+  return T_RSB;
+}
+
+\n {
+  return T_NEWLINE;
+}
+
+\= {
+  return T_EQUAL;
+}
+
+[ \t\r]   ;
+
+.       yyerror("Invalid character.");
 %%
 
 int yywrap(void)
 {
   return 1;
 }
-	

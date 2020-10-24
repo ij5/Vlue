@@ -51,17 +51,22 @@ extern int yydebug;
   {
     T_INT = 258,
     T_IDENTIFIER = 259,
-    T_ADD = 260,
-    T_SUB = 261,
-    T_MUL = 262,
-    T_DIV = 263,
-    T_LSB = 264,
-    T_RSB = 265,
-    T_EQUAL = 266,
-    T_VAR = 267,
-    T_NEWLINE = 268,
-    T_EXIT = 269,
-    T_UMINUS = 270
+    T_FLOAT = 260,
+    T_ADD = 261,
+    T_SUB = 262,
+    T_MUL = 263,
+    T_DIV = 264,
+    T_LSB = 265,
+    T_RSB = 266,
+    T_LMB = 267,
+    T_RMB = 268,
+    T_EQUAL = 269,
+    T_VAR = 270,
+    T_FUNCTION = 271,
+    T_NEWLINE = 272,
+    T_EXIT = 273,
+    T_COMMA = 274,
+    T_UMINUS = 275
   };
 #endif
 

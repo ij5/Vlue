@@ -1,24 +1,37 @@
 %{
 void yyerror(char *);
 int yylex(void);
-
-#include "node.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int lineno = 0;
 
 %}
 
-%token T_INT T_IDENTIFIER 
+%union{
+    long ip;
+    float fp;
+    char *string;
+}
+
+%token T_INT T_IDENTIFIER T_FLOAT 
 %token T_ADD T_SUB T_MUL T_DIV
-%token T_LSB T_RSB
-%token T_EQUAL T_VAR
+%token T_LSB T_RSB T_LMB T_RMB
+%token T_EQUAL T_VAR T_FUNCTION
 %token T_NEWLINE
 %token T_EXIT
+%token T_COMMA
 
 %left T_ADD T_SUB
 %left T_MUL T_DIV
 %nonassoc T_UMINUS
 
+%type<ip> expression T_INT
+%type<fp> expression T_FLOAT
+%type<string> expression T_IDENTIFIER
+
+%start program
 
 %%
 
@@ -28,16 +41,26 @@ program:
     ;
 
 statement: 
-    expression NEWLINE    { 
+    expression T_NEWLINE    { 
         lineno++;
         printf("%d\n", $1); 
     }
     | declaration
-    | T_EXIT { exit(0); }
+    | T_EXIT { yyerror("Program exited."); }
     ;
 
 declaration: 
-    T_VAR T_IDENTIFIER T_EQUAL expression   
+    T_VAR T_IDENTIFIER T_EQUAL expression
+    ;
+
+function_declaration:
+    T_FUNCTION T_IDENTIFIER T_LSB params T_RSB T_LMB statement T_RMB
+;
+
+params: 
+    expression
+    | params T_COMMA params
+;
 
 expression: 
     T_INT     { $$ = $1; }

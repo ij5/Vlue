@@ -1,7 +1,6 @@
 
 %{
-// #include <stdlib.h>
-// #include <stdio.h>
+
 void yyerror(char *);
 #include "main.tab.h"
 %}
@@ -14,17 +13,25 @@ void yyerror(char *);
 }
 
 "var" {
-  strcpy(yylval, yytext);
   return T_VAR;
 }
 
+"function" {
+  return T_FUNCTION;
+}
+
 [a-zA-Z][a-zA-Z0-9_]* {
-  strcpy(yylval, yytext);
+  yylval.string = strdup(yytext);
   return T_IDENTIFIER;
+}
+
+[0-9]+\.[0-9]+ {
+  yylval.fp = atof(yytext);
+  return T_FLOAT;
 }
  
 [0-9]+  {
-  yylval = atoi(yytext);
+  yylval.ip = atoi(yytext);
   return T_INT;
 }
 
@@ -50,6 +57,18 @@ void yyerror(char *);
 
 \) {
   return T_RSB;
+}
+
+\{ {
+  return T_LMB;
+}
+
+\} {
+  return T_RMB;
+}
+
+\, {
+  return T_COMMA;
 }
 
 \n {

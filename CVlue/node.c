@@ -5,15 +5,27 @@
 
 #define TOKEN_LENGTH 1024
 
-Node create_node(int type, char *value, int lineno){
-    Node *node = malloc(sizeof(Node));
+Node_op *create_node_op(int type, int op, Node_const *left, Node_const *right, int lineno){
+    Node_op *node = malloc(sizeof(Node_op));
     node->type = type;
-    node->value = malloc(sizeof(TOKEN_LENGTH));
+    node->op = op;
+    node->lineno = lineno;
+    node->left = left;
+    node->right = right;
+}
+
+Node_const *create_node_const(int type, char *value, int lineno){
+    Node_const *node = malloc(sizeof(Node_const));
+    node->type = type;
+    node->value = malloc(sizeof(char) * TOKEN_LENGTH);
     strcpy(node->value, value);
     node->lineno = lineno;
 }
 
-void free_node(Node *node){
-    free(node->value);
-    free(node);
+Node_identifier *create_node_identifier(int type, char *value, int lineno){
+    Node_identifier *node = malloc(sizeof(Node_identifier));
+    node->type = type;
+    node->value = malloc(sizeof(char) * TOKEN_LENGTH);
+    strcpy(node->value, value);
+    node->lineno = lineno;
 }

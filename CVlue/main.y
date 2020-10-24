@@ -27,9 +27,9 @@ int lineno = 0;
 %left T_MUL T_DIV
 %nonassoc T_UMINUS
 
-%type<ip> expression T_INT
+%type<ip> T_INT
 %type<fp> expression T_FLOAT
-%type<string> expression T_IDENTIFIER
+%type<string> T_IDENTIFIER
 
 %start program
 
@@ -46,6 +46,7 @@ statement:
         printf("%d\n", $1); 
     }
     | declaration
+    | function_declaration
     | T_EXIT { yyerror("Program exited."); }
     ;
 

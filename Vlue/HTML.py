@@ -15,7 +15,6 @@ class Lexer(object):
         'RSB',
         'RMB',
         'COMMA',
-        'OTHER',
         'EQUAL',
         'STRING',
         'BLUE',

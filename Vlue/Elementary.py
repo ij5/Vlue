@@ -13,20 +13,16 @@ class Lexer(object):
         'if': 'IF',
         'else': 'ELSE',
         'fn': 'FUNCTION',
-        'repeat': 'REPEAT',
         'for': 'FOR',
         'while': 'WHILE',
         'in': 'IN',
         'use': 'USE',
-        'try': 'TRY',
-        'catch': 'CATCH',
         'global': 'GLOBAL',
         'class': 'CLASS',
         'pass': 'PASS',
         'true': 'TRUE',
         'false': 'FALSE',
         'namespace': 'NAMESPACE',
-        'this': 'THIS',
         'return': 'RETURN',
         'break': 'BREAK',
         'import': 'IMPORT',
@@ -41,7 +37,6 @@ class Lexer(object):
         'STRING',
         'LB',
         'RB',
-        'COLON',
         'SEMI',
         'PLUS',
         'MINUS',
@@ -71,7 +66,6 @@ class Lexer(object):
     t_RMB = r'\}'
     t_LB = r'\<'
     t_RB = r'\>'
-    t_COLON = r'\:'
     t_SEMI = r'\;'
     t_COMMA = r'\,'
     t_DOT = r'\.'

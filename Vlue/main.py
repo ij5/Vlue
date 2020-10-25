@@ -8,7 +8,6 @@ import sys
 
 
 filename = sys.argv[1]
-print(filename)
 startTime = time.time()
 data = open(filename, 'r', encoding='UTF-8').read()
 IS_ADVANCED = False

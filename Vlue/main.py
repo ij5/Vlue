@@ -5,8 +5,6 @@ from astor import code_gen
 import ast
 import sys
 
-
-
 filename = sys.argv[1]
 startTime = time.time()
 data = open(filename, 'r', encoding='UTF-8').read()

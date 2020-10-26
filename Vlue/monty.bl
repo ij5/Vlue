@@ -1,6 +1,6 @@
 use random;
 
-function populate_doors(){
+fn populate_doors(){
     door = ['goat', 'goat', 'goat'];
     door[random.randint(0,2)] = 'car';
     return door;

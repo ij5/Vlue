@@ -4,3 +4,4 @@ Blue/nginx/logs/nginx.pid
 *.log
 CBlue/owl
 *.exe
+./Vlue/venv

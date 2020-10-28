@@ -6,11 +6,11 @@ import flask
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 class Web(BaseHTTPRequestHandler):
-    def __init__():
+    def __init__(self):
         self.port = 8000;
         self.host = 'localhost'
         
-    def start():
+    def start(self):
         pass
     
             

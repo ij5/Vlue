@@ -1,5 +1,5 @@
 use base;
-
+use web;
 
 fn asd(){
 
@@ -89,3 +89,6 @@ for(i in range(3)){
 }
 
 print(b);
+
+var web = Web();
+web.start();

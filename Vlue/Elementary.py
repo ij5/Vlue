@@ -118,6 +118,10 @@ class Lexer(object):
         t.lexer.linepos = 0
         pass
 
+    def t_COMMENT(self, t):
+        r'\/\*[^\*\/]*\*\/'
+        pass
+
     def t_error(self, t):
         print("error on token %s" % t.value)
         t.lexer.skip(1)
@@ -1338,6 +1342,7 @@ class ElementaryParser(object):
         '''
         variable_declaration : VAR IDENTIFIER EQUAL expression
             | VAR variable_list EQUAL expression
+            | VAR inside EQUAL expression
             | VAR IDENTIFIER
         '''
         t[0] = BaseNode()
@@ -1362,14 +1367,19 @@ class ElementaryParser(object):
         '''
         variable_value_change : IDENTIFIER EQUAL expression
             | variable_list EQUAL expression
+            | inside EQUAL expression
         '''
         t[0] = BaseNode()
         if isinstance(t[3], Num):
             t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
-        elif isinstance(t[1], BaseNode):
-            t[0].VALUE = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
-        else:
+        elif isinstance(t[1], str):
             t[0].VALUE = Assign(targets=[Name(id=t[1], ctx=Store())], value=t[3].VALUE)
+        # elif isinstance(t[1], BaseNode):
+        #     t[0].VALUE = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
+        elif t[1].TYPE=="VARIABLE_LIST":
+            t[0].VALUE = Assign(targets=[Name(id=t[1].VALUE, ctx=Store())], value=t[3].VALUE)
+        elif t[1].TYPE=="INSIDE":
+            t[0].VALUE = Assign(targets=[t[1].VALUE], value=t[3].VALUE)
         t[0].TYPE = "VARIABLE_VALUE_CHANGE"
 
 

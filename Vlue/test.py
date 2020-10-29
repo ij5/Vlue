@@ -1,3 +1,5 @@
-string = "print('Hello World!')"
-a = compile(string, "", 'exec')
-print(a)
+from ast import *
+
+string = "a.b = 3"
+a = parse(string)
+print(dump(a))

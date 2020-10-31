@@ -6,8 +6,10 @@ log("Service started.");
 
 var page = import test;
 
-var style = Style();
-var script = Script();
+var style = Style(page);
+
+style.setColor('h1', 'red');
+page = style.apply();
 
 log(page);
 

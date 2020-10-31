@@ -2,7 +2,6 @@ use base;
 use Web;
 use debug;
 
-
 fn asd(){
 
 }
@@ -12,23 +11,23 @@ n2 = 1;
 nterms = 9;
 
 while(count < nterms){
-print(n1);
-nth = n1 + n2;
-n1 = n2;
-n2 = nth;
-count = count + 1;
+    print(n1);
+    nth = n1 + n2;
+    n1 = n2;
+    n2 = nth;
+    count = count + 1;
 }
 a = 1;
 a = 2;
 a = 3 + 4 * 5;
 print(a);
 if(a<10){
-print(1);
+    print(1);
 }else{
-print("a is bigger than 10");
+    print("a is bigger than 10");
 }
 fn hello(a){
-print(a);
+    print(a);
 }
 hello(9999999);
 print("Hello WO\"\nrld!"+"asdasdasd");

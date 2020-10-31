@@ -1,0 +1,18 @@
+use debug;
+use base;
+use Web;
+
+var a = "Hello";
+fn World(world){
+    global a;
+    a = (a + world);
+}
+World("world!");
+var array = [1,2,3,"a","b","c",[22,33,44]];
+print(array[6][1]);
+class BaseClass{}
+class TestClass(BaseClass){
+    var b = 3;
+}
+var tc = TestClass();
+print(tc.b);

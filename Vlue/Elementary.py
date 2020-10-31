@@ -1392,8 +1392,9 @@ class ElementaryParser(object):
         t[0] = BaseNode()
         html = HTML.HTMLParser()
         cwd = os.getcwd()
-        data = open(os.path.join(cwd, t[2].VALUE) + ".ebl", 'r', encoding='UTF-8').read()
+        data = open(os.path.join(cwd, t[2].VALUE) + ".ebl", 'r', encoding='utf8').read()
         result = html.parser.parse(data, debug=0, tracking=True)
+        print(result)
         t[0].VALUE = Str(s=result)
         t[0].TYPE = "IMPORT"
 

@@ -1,5 +1,4 @@
 use web;
-use debug;
 use base;
 
 
@@ -14,7 +13,7 @@ log(page);
 
 $route('/');
 fn index(){
-    return template(page);
+    return page;
 }
 
 var web = Web();

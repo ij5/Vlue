@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="Vlue",
-    version="0.1.0",
+    version="0.1.1",
     license = "MIT",
     author="jhlee838",
     author_email="jhlee@xzx.kr",
@@ -15,5 +15,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent"
     ],
-    scripts=['']
+    scripts=['vlue.py']
 )

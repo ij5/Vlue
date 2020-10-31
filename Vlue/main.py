@@ -34,10 +34,10 @@ elif(len(sys.argv)==2):
     startTime = time.time()
     data = open(filename, 'r', encoding='UTF-8').read()
     IS_ADVANCED = False
-    if(filename[-2:]=='bl'):
-        IS_ADVANCED = False
-    elif(filename[-3:]=='ebl'):
+    if(filename[-3:]=='ebl'):
         IS_ADVANCED = True
+    elif(filename[-2:]=='bl'):
+        IS_ADVANCED = False
     else:
         print("Invalid file format.")
         exit(-1)
@@ -61,15 +61,8 @@ elif(len(sys.argv)==2):
         parser = HTMLParser()
         result = parser.parser.parse(data, debug=0)
         if(parser.debug==True):
-            print("============== ABSTRACT SYNTAX TREE ==============")
-            print(ast.dump(result.VALUE))
-            print()
-            result = code_gen.to_source(result.VALUE)
-            print("============== PYTHON CODE ==============")
+            print("============== HTML ==============")
             print(result)
-            print()
-            print("============== RESULT ==============")
-            exec(result)
             print()
             print("Task finished in " + str(time.time() - startTime) + "s")
         else:

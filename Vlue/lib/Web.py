@@ -10,7 +10,11 @@ class Web():
         run(host=self.host, port=self.port)
 
 class Style():
-    pass
+    def __init__(self):
+        pass
+
+    def apply(self):
+        global html
 
 class Script():
     pass

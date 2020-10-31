@@ -26,7 +26,6 @@ class Lexer(object):
         'namespace': 'NAMESPACE',
         'return': 'RETURN',
         'break': 'BREAK',
-        'import': 'IMPORT',
     }
 
     tokens = [
@@ -52,7 +51,6 @@ class Lexer(object):
                  'COMMA',
                  'DOT',
                  'NOTEQUAL',
-                 'PYTHON',
                  'DL',
              ] + list(reserved.values())
 
@@ -109,10 +107,6 @@ class Lexer(object):
         t.type = Lexer.reserved.get(t.value, t.type)
         return t
 
-    def t_PYTHON(self, t):
-        r'`[^`]+`'
-        return t
-
     def t_NEWLINE(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
@@ -164,7 +158,6 @@ class Lexer(object):
 from ply import yacc
 import re
 import os
-import HTML
 
 code = "buf___ = 0\n"
 variable = {}
@@ -1325,21 +1318,6 @@ class AdvancedParser(object):
                 error("There are no library named " + lib)
         t[0].TYPE = "USE"
 
-    def p_python(self, t):
-        '''html : PYTHON'''
-        t[0] = BaseNode()
-        Module(body=[Assign(targets=[Name(id='a', ctx=Store())], value=Constant(value=3, kind=None), type_comment=None),
-                     Expr(value=JoinedStr(values=[Constant(value='asd', kind=None),
-                                                  FormattedValue(value=Name(id='a', ctx=Load()), conversion=-1,
-                                                                 format_spec=None)]))], type_ignores=[])
-        JoinedStr(values=[Str(s='asd'), FormattedValue(value=Name(id='a', ctx=Load()), conversion=-1, format_spec=None),
-                          Str(s='asd')])
-        code = t[1][1:-1]
-        htmlParser = HTML.HTMLParser()
-        result = htmlParser.parser.parse(code)
-        t[0].VALUE = Str(s=result)
-        t[0].TYPE = "html"
-
         ################### VARIABLE DECLARATION
 
     def p_variable_declaration(self, t):
@@ -1386,29 +1364,6 @@ class AdvancedParser(object):
             t[0].VALUE = Assign(targets=[t[1].VALUE], value=t[3].VALUE)
         t[0].TYPE = "VARIABLE_VALUE_CHANGE"
 
-    ################### IMPORT
-
-    def p_import(self, t):
-        '''import : IMPORT import_params'''
-        t[0] = BaseNode()
-        html = HTML.HTMLParser()
-        cwd = os.getcwd()
-        data = open(os.path.join(cwd, t[2].VALUE) + ".ebl", 'r', encoding='UTF-8').read()
-        result = html.parser.parse(data, debug=0, tracking=True)
-        t[0].VALUE = Str(s=result)
-        t[0].TYPE = "IMPORT"
-
-    def p_import_parameter(self, t):
-        '''
-        import_params : import_params DOT IDENTIFIER
-            | IDENTIFIER
-        '''
-        t[0] = BaseNode()
-        if (len(t) == 2):
-            t[0].VALUE = t[1]
-        else:
-            t[0].VALUE = os.path.join(t[1], t[3])
-        t[0].TYPE = "IMPORT_PARAMETER"
 
     ################### DOT
 
@@ -1880,18 +1835,6 @@ class AdvancedParser(object):
 
     def p_calculate_inside(self, t):
         '''calculate : inside'''
-        t[0] = BaseNode()
-        t[0].VALUE = t[1].VALUE
-        t[0].TYPE = t[1].TYPE
-
-    def p_calculate_html(self, t):
-        '''calculate : html'''
-        t[0] = BaseNode()
-        t[0].VALUE = t[1].VALUE
-        t[0].TYPE = t[1].TYPE
-
-    def p_calculate_import(self, t):
-        '''calculate : import'''
         t[0] = BaseNode()
         t[0].VALUE = t[1].VALUE
         t[0].TYPE = t[1].TYPE

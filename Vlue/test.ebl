@@ -1,11 +1,9 @@
 html(){
     head(){
-
+        link(rel="stylesheet"){}
     }
     body(){
-        <?var a = "Hello World!";?>
-        <?var b = 'asd';?>
-        <?"Hello";?>
         "Hello...."
+        <?2;?>
     }
 }

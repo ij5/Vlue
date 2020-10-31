@@ -6,3 +6,8 @@ use base;
 log("Service started.");
 
 var page = import test;
+
+var style = Style();
+var script = Script();
+
+html = style.

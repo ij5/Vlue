@@ -7,7 +7,10 @@ class Web():
         self.host = 'localhost'
 
     def start(self):
-        run(host=self.host, port=self.port)
+        try:
+            run(host=self.host, port=self.port)
+        except KeyboardInterrupt:
+            print("Program ended.")
 
 class Style():
     def __init__(self):

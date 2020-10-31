@@ -10,6 +10,8 @@ var page = import test;
 var style = Style();
 var script = Script();
 
+log(page);
+
 $route('/');
 fn index(){
     return template(page);

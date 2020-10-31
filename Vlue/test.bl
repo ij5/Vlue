@@ -1,5 +1,6 @@
 use base;
-use web;
+use Web;
+use debug;
 
 fn asd(){
 
@@ -94,6 +95,9 @@ print(b);
 print("HHHHHHHHHHHHHHHHHHHHHHHHH")
 */
 
+log("Hello world!");
+/*
 var web = Web();
 web.port = 3000;
 web.start();
+*/

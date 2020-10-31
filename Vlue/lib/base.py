@@ -1,5 +1,5 @@
 
-class Base:
-    def log(data):
-        print(data)
-        return data
+def log(data):
+    print(data)
+    return data
+

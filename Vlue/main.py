@@ -1,11 +1,10 @@
 import time
-from Elementary import ElementaryParser
-from HTML import HTMLParser
 from astor import code_gen
 import ast
 import sys
 
 if(len(sys.argv)==1):
+    from Elementary import ElementaryParser
     parser = ElementaryParser()
 
     while (True):
@@ -44,6 +43,7 @@ elif(len(sys.argv)==2):
         exit(-1)
 
     if(IS_ADVANCED==True):
+        from HTML import HTMLParser
         # dt = re.compile("use\s+[a-zA-Z0-9_]+;")
         # libres = dt.findall(data)
         # for lib in libres:
@@ -72,7 +72,12 @@ elif(len(sys.argv)==2):
             exec(result)
             print()
             print("Task finished in " + str(time.time() - startTime) + "s")
+        else:
+            result = code_gen.to_source(result.VALUE)
+            exec(result)
+
     else:
+        from Elementary import ElementaryParser
         parser = ElementaryParser()
         result = parser.parser.parse(data, debug=0, tracking=True)
         if(parser.debug==True):

@@ -17,6 +17,10 @@ class Style():
         self.html = html
         self.html = self.html + "\n<style>\n"
 
+    def apply(self):
+        self.html = self.html + "\n</style>\n"
+        return self.html
+
     def setColor(self, selector, color):
         self.html = self.html + f"""
 {selector}{{
@@ -32,29 +36,49 @@ class Style():
 """
 
     def setHeight(self, selector, height):
-        self.html = self.html + f"""
+        temp = f"""
 {selector}{{
     height: {height};
 }}
 """
+        self.html = self.html + temp
+        return temp
 
     def setMargin(self, selector, margin):
-        self.html = self.html + f"""
+        temp = f"""
 {selector}{{
     margin: {margin};
 }}
 """
+        self.html = self.html + temp
+        return temp
 
-
-
-    def apply(self):
-        self.html = self.html + "\n</style>"
-        return self.html
-
+    def setPadding(self, selector, padding):
+        self.html = self.html + f"""
+{selector}{{
+    padding: {padding};
+}}
+"""
 
 
 class Script():
-    pass
+    def __init__(self, html):
+        self.html = html
+        self.html = self.html + "\n<script>\n"
+
+    def apply(self):
+        self.html = self.html + "\n</script>\n"
+        return self.html
+
+    def onClick(self, selector, do):
+        self.html = self.html + f"""
+var ___onclick = document.querySelectorAll("{selector}");
+for (i=0; i < ___onclick.length; i++){{
+    ___onclick[i].addEventListener('click', function(){{
+        {do}
+    }});
+}}
+"""
 
 
 def onexit():

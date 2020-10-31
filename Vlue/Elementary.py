@@ -26,6 +26,9 @@ class Lexer(object):
         'return': 'RETURN',
         'break': 'BREAK',
         'import': 'IMPORT',
+        'html': 'HTML',
+        'js': 'JS',
+        'css': 'CSS',
     }
 
     tokens = [
@@ -1323,18 +1326,28 @@ class ElementaryParser(object):
 
 
     def p_python(self, t):
-        '''html : PYTHON'''
+        '''html : HTML PYTHON
+            | JS PYTHON
+            | CSS PYTHON
+        '''
         t[0] = BaseNode()
         Module(body=[Assign(targets=[Name(id='a', ctx=Store())], value=Constant(value=3, kind=None), type_comment=None),
                      Expr(value=JoinedStr(values=[Constant(value='asd', kind=None),
                                                   FormattedValue(value=Name(id='a', ctx=Load()), conversion=-1,
                                                                  format_spec=None)]))], type_ignores=[])
         JoinedStr(values=[Str(s='asd'), FormattedValue(value=Name(id='a', ctx=Load()), conversion=-1, format_spec=None), Str(s='asd')])
-        code = t[1][1:-1]
-        htmlParser = HTML.HTMLParser()
-        result = htmlParser.parser.parse(code)
-        t[0].VALUE = Str(s=result)
-        t[0].TYPE = "html"
+        code = t[2][1:-1]
+        if(t[1]=="html"):
+            htmlParser = HTML.HTMLParser()
+            result = htmlParser.parser.parse(code)
+            t[0].VALUE = Str(s=result)
+            t[0].TYPE = "html"
+        elif(t[1]=="js"):
+            t[0].VALUE = Str(s=code)
+            t[0].TYPE = "JS"
+        elif(t[1]=="css"):
+            t[0].VALUE = Str(s=code)
+            t[0].TYPE = "CSS"
 
         ################### VARIABLE DECLARATION
 

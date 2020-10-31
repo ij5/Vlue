@@ -7,5 +7,6 @@ html(){
         h1(){
             "World!"
         }
+        button(id="button"){"Press Me!"}
     }
 }

@@ -11,6 +11,14 @@ var style = Style(page);
 style.setColor('h1', 'red');
 page = style.apply();
 
+var script = Script(page);
+
+var s = js`
+this.style.color = "blue";
+`;
+script.onClick(".button", s);
+page = script.apply();
+
 log(page);
 
 $route('/');

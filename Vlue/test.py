@@ -1,9 +1,7 @@
 from ast import *
 
 string = """
-@route()
-def Hello():
-    pass
+f"{a}"
 """
 a = parse(string)
 print(dump(a))

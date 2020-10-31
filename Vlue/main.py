@@ -1,6 +1,6 @@
 import time
 from Elementary import ElementaryParser
-from Advanced import AdvancedParser
+from HTML import HTMLParser
 from astor import code_gen
 import ast
 import sys
@@ -37,7 +37,7 @@ elif(len(sys.argv)==2):
     IS_ADVANCED = False
     if(filename[-2:]=='bl'):
         IS_ADVANCED = False
-    elif(filename[-3:]=='bla'):
+    elif(filename[-3:]=='ebl'):
         IS_ADVANCED = True
     else:
         print("Invalid file format.")
@@ -58,19 +58,20 @@ elif(len(sys.argv)==2):
         # d = dict(locals(), **globals())
         # for ff in f:
         #     exec(ff, d, d)
-        parser = AdvancedParser()
+        parser = HTMLParser()
         result = parser.parser.parse(data, debug=0)
-        print("============== ABSTRACT SYNTAX TREE ==============")
-        print(ast.dump(result.VALUE))
-        print()
-        result = code_gen.to_source(result.VALUE)
-        print("============== PYTHON CODE ==============")
-        print(result)
-        print()
-        print("============== RESULT ==============")
-        exec(result)
-        print()
-        print("Task finished in " + str(time.time() - startTime) + "s")
+        if(parser.debug==True):
+            print("============== ABSTRACT SYNTAX TREE ==============")
+            print(ast.dump(result.VALUE))
+            print()
+            result = code_gen.to_source(result.VALUE)
+            print("============== PYTHON CODE ==============")
+            print(result)
+            print()
+            print("============== RESULT ==============")
+            exec(result)
+            print()
+            print("Task finished in " + str(time.time() - startTime) + "s")
     else:
         parser = ElementaryParser()
         result = parser.parser.parse(data, debug=0, tracking=True)

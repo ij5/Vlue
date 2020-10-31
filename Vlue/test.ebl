@@ -4,6 +4,8 @@ html(){
     }
     body(){
         <?var a = "Hello World!";?>
+        <?var b = 'asd';?>
+        <?"Hello";?>
         "Hello...."
     }
 }

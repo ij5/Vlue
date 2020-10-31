@@ -9,6 +9,14 @@ class Web():
     def start(self):
         run(host=self.host, port=self.port)
 
+class Style():
+    pass
+
+class Script():
+    pass
+
+class Page():
+    pass
 
 
 def onexit():

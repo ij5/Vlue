@@ -109,7 +109,7 @@ class Lexer(object):
 
 from ply import yacc
 import re
-from InsideHTML import ElementaryParser
+from Advanced import AdvancedParser
 
 def DecodeEscape(s):
     res = ''
@@ -211,6 +211,9 @@ identifier : identifier identifier
 string : STRING
 '''
 
+parser = AdvancedParser()
+
+
 class HTMLParser(object):
     tokens = Lexer.tokens
     debug = False
@@ -266,13 +269,12 @@ class HTMLParser(object):
 
     def p_i_b_2(self, t):
         '''i_b : BLUE'''
-        # parser = ElementaryParser()
-        # result = parser.parser.parse(t[1][2:-2])
-        # result = code_gen.to_source(result.VALUE)
-        # with StdoutIO() as s:
-        #     exec(result)
-        # t[0] = s.getvalue
-        t[0] = '{' + t[1][2:-2] + '}'
+        result = parser.parser.parse(t[1][2:-2])
+        result = code_gen.to_source(result.VALUE)
+        with StdoutIO() as s:
+            exec(result)
+        t[0] = s.getvalue
+        # t[0] = '{' + t[1][2:-2] + '}'
 
     def p_other(self, t):
         '''
@@ -282,13 +284,12 @@ class HTMLParser(object):
 
     def p_other_2(self, t):
         '''other : BLUE'''
-        # parser = ElementaryParser()
-        # result = parser.parser.parse(t[1][2:-2])
-        # result = code_gen.to_source(result.VALUE)
-        # with StdoutIO() as s:
-        #     exec(result)
-        # t[0] = s.getvalue()
-        t[0] = '{' + t[1][2:-2] + '}'
+        result = parser.parser.parse(t[1][2:-2])
+        result = code_gen.to_source(result.VALUE)
+        with StdoutIO() as s:
+            exec(result)
+        t[0] = s.getvalue()
+        # t[0] = '{' + t[1][2:-2] + '}'
 
     #
     # def p_root(self, t):

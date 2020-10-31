@@ -1,12 +1,11 @@
 html(){
     head(){
-        link(rel="stylesheet"){}
+        title(){"TItle page"}
     }
+
     body(){
-        "Hello...."
-        h1(){
-            "World!"
+        h1(class="title", id=title){
+            "This is title."
         }
-        button(id="button"){"Press Me!"}
     }
 }

@@ -16,7 +16,7 @@ var script = Script(page);
 var s = js`
 this.style.color = "blue";
 `;
-script.onClick(".button", s);
+script.onClick("#button", s);
 page = script.apply();
 
 log(page);

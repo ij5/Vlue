@@ -10,4 +10,12 @@ var page = import test;
 var style = Style();
 var script = Script();
 
-html = style.
+$route('/');
+fn index(){
+    return template(page);
+}
+
+var web = Web();
+web.host = 'localhost';
+web.port = 8000;
+web.start();

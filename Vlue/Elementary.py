@@ -1258,6 +1258,7 @@ class ElementaryParser(object):
             | break SEMI
             | for_statement
             | global SEMI
+            | function_dec
             | empty
         '''
         t[0] = BaseNode()
@@ -1613,6 +1614,15 @@ class ElementaryParser(object):
             t[1].VALUE.append(arg(arg=t[3], annotation=None))
             t[0].VALUE = t[1].VALUE
         t[0].TYPE = "FUNCTION_PARAMETER"
+
+
+    def p_function_dec(self, t):
+        '''
+        function_dec : DL IDENTIFIER LSB function_parameter RSB function_declaration
+        '''
+        t[0] = BaseNode()
+        t[0].VALUE = t[6].decorator_list.append(Call(func=Name(id=t[2], ctx=Load()), args=[t[4].VALUE], keywords=[]))
+        t[0].TYPE = "FUNCTION_DEC"
 
 
     ################### FOR

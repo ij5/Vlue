@@ -96,8 +96,13 @@ print("HHHHHHHHHHHHHHHHHHHHHHHHH")
 */
 
 log("Hello world!");
-/*
+
+
+var loc = Loc();
+loc.location = "/hello";
+loc.
+
 var web = Web();
+web.host = 'localhost';
 web.port = 3000;
 web.start();
-*/

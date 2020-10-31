@@ -119,7 +119,7 @@ class Lexer(object):
         pass
 
     def t_COMMENT(self, t):
-        r'\/\*[^\*\/]*\*\/'
+        r'\/\*(\*(?!\/)|[^*])*\*\/'
         pass
 
     def t_error(self, t):
@@ -1595,7 +1595,7 @@ class ElementaryParser(object):
         t[0].VALUE = FunctionDef(name=t[2], args=arguments(
             args=t[4].VALUE,
             vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
-            body=t[7].VALUE, decorator_list=[], returns=None)
+            body=t[7].VALUE, decorator_list=[None], returns=None)
         t[0].TYPE = "FUNCTION_DECLARATION"
 
     def p_function_parameter(self, t):
@@ -1616,12 +1616,13 @@ class ElementaryParser(object):
         t[0].TYPE = "FUNCTION_PARAMETER"
 
 
-    def p_function_dec(self, t):
+    def p_function_dec(self, t):        #TODO
         '''
-        function_dec : DL IDENTIFIER LSB function_parameter RSB function_declaration
+        function_dec : DL IDENTIFIER LSB function_call_parameter RSB SEMI function_declaration
         '''
         t[0] = BaseNode()
-        t[0].VALUE = t[6].decorator_list.append(Call(func=Name(id=t[2], ctx=Load()), args=[t[4].VALUE], keywords=[]))
+        t[7].VALUE.decorator_list.append(Call(func=Name(id=t[2], ctx=Load()), args=[t[4].VALUE], keywords=[]))
+        t[0].VALUE = t[7].VALUE
         t[0].TYPE = "FUNCTION_DEC"
 
 

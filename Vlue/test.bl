@@ -2,6 +2,7 @@ use base;
 use Web;
 use debug;
 
+
 fn asd(){
 
 }
@@ -23,6 +24,8 @@ a = 3 + 4 * 5;
 print(a);
 if(a<10){
 print(1);
+}else{
+print("a is bigger than 10");
 }
 fn hello(a){
 print(a);
@@ -97,10 +100,12 @@ print("HHHHHHHHHHHHHHHHHHHHHHHHH")
 
 log("Hello world!");
 
-
-var loc = Loc();
-loc.location = "/hello";
-loc.
+/*
+$route("/");
+fn index(){
+    return template("Hello world!");
+}
+*/
 
 var web = Web();
 web.host = 'localhost';

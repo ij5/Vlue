@@ -72,7 +72,7 @@ var fv2 = fn(){
 
 };
 
-var a = `
+var a = html`
 html(){
     head(){
         title(){"안녕"}

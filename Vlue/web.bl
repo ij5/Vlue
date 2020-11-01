@@ -10,6 +10,9 @@ title(){
 meta(){}
 `;
 var body = html`
+h1(class=head){
+    "This is title."
+}
 button(class=button1){
     "This is button."
 }
@@ -43,3 +46,30 @@ var web = Web();
 web.host = 'localhost';
 web.port = 8000;
 web.start();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

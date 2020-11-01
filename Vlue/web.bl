@@ -1,6 +1,5 @@
-use web;
+use Web;
 use base;
-
 
 log("Service started.");
 
@@ -10,37 +9,34 @@ title(){
 }
 meta(){}
 `;
-
 var body = html`
 button(class=button1){
     "This is button."
 }
 `;
 
-var html;
-
-var style = Style(page);
+var style = Style();
 style.setColor('h1', 'red');
-page = style.apply();
 
-var script = Script(page);
+var script = Script();
 var s = js`
 this.style.color = "blue";
 `;
 script.onClick("#button", s);
-page = script.apply();
 
 
 var page = Page();
 page.head(head);
 page.body(body);
-html = page.apply();
+page.body(style.apply());
+page.body(script.apply());
+var html = page.apply();
 
 log(html);
 
 $route('/');
 fn index(){
-    return page;
+    return html;
 }
 
 var web = Web();

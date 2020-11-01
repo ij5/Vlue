@@ -13,7 +13,7 @@ class Web():
             print("Program ended.")
 
 class Style():
-    def __init__(self, html):
+    def __init__(self, html=""):
         self.html = html
         self.html = self.html + "\n<style>\n"
 
@@ -66,7 +66,7 @@ class Style():
 
 
 class Script():
-    def __init__(self, html):
+    def __init__(self, html=""):
         self.html = html
         self.html = self.html + "\n<script>\n"
 
@@ -91,22 +91,22 @@ for (i=0; i < ___onclick.length; i++){{
 
 class Page():
     def __init__(self, body=""):
-        self.head = "<head>"
-        self.body = "<body>"+body
+        self._head = "<head>"
+        self._body = "<body>"+body
 
     def apply(self):
-        html = self.body + "</body>"
-        html = self.head + html
+        html = self._body + "</body>"
+        html = self._head + html
         html = "<html>" + html + "</html>"
         return html
 
-    def body(self, body):
-        self.body = self.body + body
-        return body
+    def body(self, _body):
+        self._body = self._body + _body
+        return _body
 
-    def head(self, head):
-        self.head = self.head + head
-        return head
+    def head(self, _head):
+        self._head = self._head + _head
+        return _head
 
 
 def onexit():

@@ -1799,9 +1799,11 @@ class ElementaryParser(object):
             t[0].VALUE = Str(s=result)
             t[0].TYPE = "HTML"
         elif(t[1]=="js"):
+            code = "<script>"+code+"</script>"
             t[0].VALUE = Str(s=code)
             t[0].TYPE = "JS"
         elif(t[1]=="css"):
+            code = "<style>"+code+"</style>"
             t[0].VALUE = Str(s=code)
             t[0].TYPE = "CSS"
         else:

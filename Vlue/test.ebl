@@ -1,11 +1,4 @@
-html(){
-    head(){
-        title(){"TItle page"}
-    }
 
-    body(){
-        h1(class="title", id=title){
-            "This is title."
-        }
-    }
+h1(class="title", id=title){
+    "This is title."
 }

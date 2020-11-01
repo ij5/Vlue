@@ -13,7 +13,14 @@
 # parser = AdvancedParser()
 # parser.parser.parse(data)
 
+class html():
+    def __init__(self):
+        pass
 
-def a(b):
-    global a
-    a = b
+    def custom(self):
+        def custom2():
+            return 3
+
+
+html = html()
+print(html.custom)

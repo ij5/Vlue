@@ -89,6 +89,26 @@ for (i=0; i < ___onclick.length; i++){{
 """
 
 
+class Page():
+    def __init__(self, body=""):
+        self.head = "<head>"
+        self.body = "<body>"+body
+
+    def apply(self):
+        html = self.body + "</body>"
+        html = self.head + html
+        html = "<html>" + html + "</html>"
+        return html
+
+    def body(self, body):
+        self.body = self.body + body
+        return body
+
+    def head(self, head):
+        self.head = self.head + head
+        return head
+
+
 def onexit():
     pass
 

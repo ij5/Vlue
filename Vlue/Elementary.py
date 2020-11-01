@@ -1351,7 +1351,7 @@ class ElementaryParser(object):
                 else:
                     t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=t[4].VALUE)
         else:
-            t[0].VALUE = Assign(targets=[Name(id=t[2].VALUE, ctx=Store())], value=Num(0))
+            t[0].VALUE = Assign(targets=[Name(id=t[2], ctx=Store())], value=Num(0))
             variable[t[2].VALUE] = 0
         t[0].TYPE = "VARIABLE_DECLARATION"
 

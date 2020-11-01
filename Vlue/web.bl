@@ -4,20 +4,20 @@ use base;
 
 log("Service started.");
 
-var page = import test;
+var head = html`
+title(){
+    "This is title."
+}
+meta(){}
+`;
 
-var html = html`
-html(){
-    head(){
-
-    }
-    body(){
-        button(class=button1){
-            "This is button."
-        }
-    }
+var body = html`
+button(class=button1){
+    "This is button."
 }
 `;
+
+var html;
 
 var style = Style(page);
 style.setColor('h1', 'red');
@@ -30,7 +30,13 @@ this.style.color = "blue";
 script.onClick("#button", s);
 page = script.apply();
 
-log(page);
+
+var page = Page();
+page.head(head);
+page.body(body);
+html = page.apply();
+
+log(html);
 
 $route('/');
 fn index(){

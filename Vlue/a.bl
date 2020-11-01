@@ -16,3 +16,5 @@ class TestClass(BaseClass){
 }
 var tc = TestClass();
 print(tc.b);
+
+var float = 3.4567;

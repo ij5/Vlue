@@ -102,7 +102,7 @@ log("Hello world!");
 
 $route("/");
 fn index(){
-    return template("Hello world!");
+    return "Hello world!";
 }
 
 

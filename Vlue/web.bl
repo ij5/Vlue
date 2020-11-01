@@ -6,8 +6,6 @@ log("Service started.");
 
 var page = import test;
 
-var style = Style(page);
-
 var html = html`
 html(){
     head(){
@@ -21,11 +19,11 @@ html(){
 }
 `;
 
+var style = Style(page);
 style.setColor('h1', 'red');
 page = style.apply();
 
 var script = Script(page);
-
 var s = js`
 this.style.color = "blue";
 `;

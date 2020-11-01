@@ -21,6 +21,10 @@ class Style():
         self.html = self.html + "\n</style>\n"
         return self.html
 
+    def custom(self, css):
+        self.html = self.html + css
+        return css
+
     def setColor(self, selector, color):
         self.html = self.html + f"""
 {selector}{{
@@ -69,6 +73,10 @@ class Script():
     def apply(self):
         self.html = self.html + "\n</script>\n"
         return self.html
+
+    def custom(self, js):
+        self.html = self.html + js
+        return js
 
     def onClick(self, selector, do):
         self.html = self.html + f"""

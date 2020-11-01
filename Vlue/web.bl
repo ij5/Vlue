@@ -8,7 +8,18 @@ var page = import test;
 
 var style = Style(page);
 
-var html = 3;
+var html = html`
+html(){
+    head(){
+
+    }
+    body(){
+        button(class=button1){
+            "This is button."
+        }
+    }
+}
+`;
 
 style.setColor('h1', 'red');
 page = style.apply();

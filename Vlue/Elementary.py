@@ -1,6 +1,9 @@
 #-*-coding: utf-8 -*-
 
+from sys import exit
+
 from ast import *
+
 
 ############################
 #####LEXER

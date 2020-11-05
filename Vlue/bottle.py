@@ -1022,6 +1022,7 @@ class Bottle(object):
                         out = E
                         out.apply(response)
         except (KeyboardInterrupt, SystemExit, MemoryError):
+            exit()      #TODO
             raise
         except Exception as E:
             if not self.catchall: raise
@@ -1086,6 +1087,7 @@ class Bottle(object):
         except HTTPResponse as E:
             first = E
         except (KeyboardInterrupt, SystemExit, MemoryError):
+            exit()          #TODO
             raise
         except Exception as error:
             if not self.catchall: raise
@@ -1118,6 +1120,7 @@ class Bottle(object):
             start_response(response._wsgi_status_line(), response.headerlist)
             return out
         except (KeyboardInterrupt, SystemExit, MemoryError):
+            exit()      #TODO
             raise
         except Exception as E:
             if not self.catchall: raise
@@ -3285,6 +3288,7 @@ class WSGIRefServer(ServerAdapter):
         try:
             self.srv.serve_forever()
         except KeyboardInterrupt:
+            exit()      #TODO
             self.srv.server_close()  # Prevent ResourceWarning: unclosed socket
             raise
 
@@ -3680,7 +3684,7 @@ def run(app=None,
                     if os.path.exists(lockfile): os.unlink(lockfile)
                     sys.exit(p.poll())
         except KeyboardInterrupt:
-            pass
+            exit()          #TODO
         finally:
             if os.path.exists(lockfile):
                 os.unlink(lockfile)
@@ -3732,7 +3736,7 @@ def run(app=None,
         else:
             server.run(app)
     except KeyboardInterrupt:
-        pass
+        exit()          #TODO
     except (SystemExit, MemoryError):
         raise
     except:

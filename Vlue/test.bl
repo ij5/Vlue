@@ -1,6 +1,5 @@
 use base;
 use Web;
-use debug;
 
 fn asd(){
 
@@ -72,18 +71,29 @@ var fv2 = fn(){
 
 };
 
-var a = html`
-html(){
-    head(){
-        title(){"안녕"}
-    }
-    body(){
-        p(id="1234 4567 asdfasdf"){"asdAsd"}
-        h1(id="head"){"Hello WOrlD!"}
-    }
-}
-<?[1,2,3];?>
+var body = html`
+p(id="1234 4567 asdfasdf"){"asdasd"}
+h1(id="head"){"Hello World!"}
 `;
+
+var head = html`
+title(){"This is test webpage"}
+`;
+
+var style = Style();
+style.custom(css`
+h1{
+    font-style: italic;
+    color: blue;
+}
+`);
+
+var page = Page();
+page.head(head);
+page.body(body);
+var appliedStyle = style.apply();
+page.head(appliedStyle);
+var html = page.apply();
 
 var b = import test;
 
@@ -102,11 +112,11 @@ log("Hello world!");
 
 $route("/");
 fn index(){
-    return "Hello world!";
+    return html;
 }
 
 
 var web = Web();
 web.host = 'localhost';
-web.port = 3000;
+web.port = 8000;
 web.start();

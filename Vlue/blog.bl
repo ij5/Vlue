@@ -1,0 +1,41 @@
+use base;
+use Web;
+use time;
+
+var head = html`
+title(){"This is blog."<?33?>}
+`;
+var body = html`
+h1(class=title){"BLOG"}
+`;
+
+var style = Style();
+var script = Script();
+style.custom(css`
+h1{
+    font-style: italic;
+}
+`);
+
+script.custom(js`
+alert("Test blog");
+`);
+
+var page = Page();
+page.head(head);
+page.head(style.apply());
+page.body(body);
+page.body(script.apply());
+
+var html = page.apply();
+
+log(html);
+
+$route('/');
+fn index(){
+    return html;
+}
+
+var web = Web();
+web.port = 8000;
+web.start();

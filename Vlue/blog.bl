@@ -6,7 +6,21 @@ var head = html`
 title(){"This is blog."<?33?>}
 `;
 var body = html`
-h1(class=title){"BLOG"}
+div(class=header){
+    h2(){"Blog"}
+}
+
+div(class=row){
+    div(class=leftcolumn){
+        div(class=card){
+            h2(){"TITLE HEADING"}
+            h5(){"Title description, Dec 8, 2027"}
+            div(class=fakeimg, style="height: 200px;"){"Image"}
+            p(){"Some text..."}
+        }
+        
+    }
+}
 `;
 
 var style = Style();

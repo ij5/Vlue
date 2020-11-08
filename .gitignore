@@ -2,8 +2,8 @@
 JSBlue/node_modules
 Blue/nginx/logs/nginx.pid
 *.log
-CBlue/owl
-*.exe
+CVlue/*.exe
 Vlue/venv
 CVlue/cmake-build-debug
+.idea/workspace.xml
 .idea

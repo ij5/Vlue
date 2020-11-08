@@ -16,3 +16,34 @@ typedef enum {
     N_DECLARATION,
 }NodeType;
 
+typedef struct node_statement{
+
+}node_statement;
+
+typedef struct node_expression{
+
+}node_expression;
+
+typedef struct node_assign{
+
+}node_assign;
+
+typedef struct node_binop{
+
+}node_binop;
+
+typedef struct node_add{
+
+}node_add;
+
+typedef struct node_sub{
+
+}node_sub;
+
+typedef struct node_mul{
+
+}node_mul;
+
+typedef struct node_div{
+
+}node_div;

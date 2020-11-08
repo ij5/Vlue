@@ -4,8 +4,11 @@ int yylex(void);
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "vm.h"
 
 int lineno = 0;
+
+int vp = 0;
 
 %}
 
@@ -26,10 +29,6 @@ int lineno = 0;
 %left T_ADD T_SUB
 %left T_MUL T_DIV
 %nonassoc T_UMINUS
-
-%type<ip> T_INT
-%type<fp> expression T_FLOAT
-%type<string> T_IDENTIFIER
 
 %start program
 
@@ -85,6 +84,9 @@ int main(void)
 // #ifdef YYDEBUG
 //     yydebug = 1;
 // #endif
+    initVM();
     yyparse();
+
+    freeVM();
     return 0;
 }

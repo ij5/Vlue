@@ -5,3 +5,5 @@ Blue/nginx/logs/nginx.pid
 CBlue/owl
 *.exe
 Vlue/venv
+CVlue/cmake-build-debug
+.idea

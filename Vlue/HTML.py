@@ -7,7 +7,7 @@ from ply import lex
 
 
 class Lexer(object):
-
+    
     tokens = [
         'IDENTIFIER',
         'LSB',

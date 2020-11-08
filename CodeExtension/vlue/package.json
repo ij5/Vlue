@@ -1,0 +1,31 @@
+{
+    "name": "vlue",
+    "displayName": "Vlue",
+    "description": "Syntax highlighting for vlue lang",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.51.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "vlue",
+            "aliases": ["Vlue", "vlue"],
+            "extensions": [".vl"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "vlue",
+            "scopeName": "main.vl",
+            "path": "./syntaxes/vlue.tmLanguage.json"
+        }],
+        "snippets": [
+            {
+                "language": "vlue",
+                "path": "./snippets/snippets.json"
+            }
+        ]
+    }
+}

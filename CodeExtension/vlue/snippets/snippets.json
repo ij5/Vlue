@@ -1,0 +1,31 @@
+{
+    "For": {
+        "prefix": "for",
+        "body": [
+            "for(${1:CONDITION}){",
+            "\t${0:BODY}",
+            "}"
+        ],
+        "description": "For statement"
+    },
+    "Var": {
+        "prefix": "var",
+        "body": "var ${0:IDENTIFIER};",
+        "description": "variable declaration"
+    },
+    "If": {
+        "prefix": "if",
+        "body": "if(${1:CONDITION}){\n\t${0:BODY}\n}",
+        "description": "If statemnet"
+    },
+    "Else": {
+        "prefix": "else",
+        "body": "else{\n\t${0:BODY}\n}",
+        "description": "Else statement"
+    },
+    "Else If": {
+        "prefix": "else if",
+        "body": "else if(${1:CONDITION}){\n\t${0:BODY}\n}",
+        "description": "Else if statement"
+    }
+}

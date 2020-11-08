@@ -16,30 +16,3 @@ typedef enum {
     N_DECLARATION,
 }NodeType;
 
-#define CHILD_LENGTH 128
-
-typedef struct {
-    int type;
-    int lineno;
-    char *value;
-}Node_const;
-
-typedef struct {
-    int type;
-    int lineno;
-    int op;
-    
-    Node_const *left;
-    Node_const *right;
-}Node_op;
-
-
-typedef struct {
-    int type;
-    char *value;
-    int lineno;
-}Node_identifier;
-
-typedef struct {
-
-}Node_variable;

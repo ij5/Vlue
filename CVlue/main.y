@@ -1,93 +1,45 @@
 %{
-void yyerror(char *);
-int yylex(void);
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "vm.h"
+
 #include "node.h"
 
-int lineno = 0;
-
-int vp = 0;
 
 %}
 
-%union{
-    long ip;
-    float fp;
-    char *string;
-}
-
-%token T_INT T_IDENTIFIER T_FLOAT 
-%token T_ADD T_SUB T_MUL T_DIV
-%token T_LSB T_RSB T_LMB T_RMB
-%token T_EQUAL T_VAR T_FUNCTION
-%token T_NEWLINE
 %token T_EXIT
-%token T_COMMA
+%token T_VAR
+%token T_FUNCTION
+%token T_IDENTIFIER
+%token T_FLOAT
+%token T_INT
+%token T_ADD
+%token T_SUB
+%token T_MUL
+%token T_DIV
+%token 
 
-%left T_ADD T_SUB
-%left T_MUL T_DIV
-%nonassoc T_UMINUS
+%right THEN
+%right ELSE
 
-%start program
+%union {
+    double val;
+    Node *node;
+    char str[100];
+}
+
+%type <node> program
+%type <node> statements
+%type <node> statement
+%type <node> if_statement
 
 %%
 
-program: 
-    program statement
-    |
-    ;
-
-statement: 
-    expression T_NEWLINE    { 
-        lineno++;
-        printf("%d\n", $1); 
-    }
-    | declaration
-    | function_declaration
-    | T_EXIT { yyerror("Program exited."); }
-    ;
-
-declaration: 
-    T_VAR T_IDENTIFIER T_EQUAL expression
-    ;
-
-function_declaration:
-    T_FUNCTION T_IDENTIFIER T_LSB params T_RSB T_LMB statement T_RMB
+program: statements {}
 ;
 
-params: 
-    expression
-    | params T_COMMA params
+statement: if_statement { $$ = $1; }
 ;
 
-expression: 
-    T_INT     { $$ = $1; }
-    | T_IDENTIFIER            { $$ = $1; }
-    | expression T_ADD expression       { $$ = $1 + $3; }
-    | expression T_SUB expression       { $$ = $1 - $3; }
-    | expression T_MUL expression       { $$ = $1 * $3; }
-    | expression T_DIV expression       { $$ = $1 / $3; }
-    | T_SUB expression %prec T_UMINUS     { $$ = -$2; }
-    | T_LSB expression T_RSB        { $$ = $2; }
-    ;
-
-%%
-void yyerror(char *s)
-{
-    printf("%s\n", s);
-}
-
-int main(void)
-{
-// #ifdef YYDEBUG
-//     yydebug = 1;
-// #endif
-    initVM();
-    yyparse();
-
-    freeVM();
-    return 0;
-}
+if_statement: IF LSB expression RSB LMB

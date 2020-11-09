@@ -1,11 +1,13 @@
 
 %{
 
-void yyerror(char *);
+#include <stdio.h>
+#include <string.h>
 #include "main.tab.h"
-%}
 
 %%
+
+%option noyywrap
 
 
 "exit" {

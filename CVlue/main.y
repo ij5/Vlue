@@ -5,6 +5,7 @@ int yylex(void);
 #include <stdlib.h>
 #include <string.h>
 #include "vm.h"
+#include "node.h"
 
 int lineno = 0;
 

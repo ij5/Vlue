@@ -29,23 +29,49 @@ type Statement struct {
 
 	Index int
 
-	Expression *Expression `( @@ ";" )`
+	Expression *Expression ` | ( @@ ";" )`
 }
 
 type Expression struct {
 	Pos lexer.Position
+
+	Equality *Equality `@@`
+}
+
+type Equality struct {
+	Comparison *Comparison `@@`
+	Op         string      `[ @("!" "=" | "=" "=")`
+	Next       *Equality   `  @@ ]`
+}
+
+type Comparison struct {
+	Addition *Addition   `@@`
+	Op       string      `[ @(">" | "<" | ">" "=" | "<" "=")`
+	Next     *Comparison `@@ ]`
+}
+
+type Addition struct {
+	Multiplication *Multiplication `@@`
+	Op             string          `[ @("-" | "+")`
+	Next           *Addition       `@@ ]`
+}
+
+type Multiplication struct {
+	Unary *Unary          `@@`
+	Op    *string         `[ @("/" | "*")`
+	Next  *Multiplication ` @@ ]`
 }
 
 type Unary struct {
-	Op    string `( @("!" | "-")`
-	Unary *Unary ` @@ )`
-	Value *Value `| @@`
+	Op    *string `( @("!" | "-")`
+	Unary *Unary  ` @@ )`
+	Value *Value  `| @@`
 }
 
 type Value struct {
-	Number        float64     `  @Float | @Int`
-	String        string      `| @String`
-	Bool          bool        `| @("true" | "false")`
-	Undefined     bool        `| @"undefined"`
+	Number        *float64    `  @Float | @Int`
+	String        *string     `| @String`
+	Bool          *bool       `| @("true" | "false")`
+	Undefined     *bool       `| @"undefined"`
 	SubExpression *Expression `| "(" @@ ")"`
 }

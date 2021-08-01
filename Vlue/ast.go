@@ -29,88 +29,23 @@ type Statement struct {
 
 	Index int
 
-	Expression *Expression `( @@ ";"`
-	If         *If         `| @@ )`
-}
-
-type Decorator struct {
-	Pos lexer.Position
-
-	Message string `"@" @String`
-}
-
-type Declaration struct {
-	Pos lexer.Position
-
-	Variable string      `"var" @Ident`
-	Value    *Expression `"=" @@`
-}
-
-type If struct {
-	Pos lexer.Position
-
-	Condition       *Expression `"if" "(" @@ ")"`
-	Then            *Statement  `"{" @@ "}"`
-	ElseIfCondition *Expression `( "else" "if" "(" @@ ")"`
-	ElseIfThen      *Statement  `"{" @@ "}" )*`
-	ElseThen        *Statement  `( "else" "{" @@ "}" )?`
-}
-
-type Value struct {
-	Pos lexer.Position
-
-	Number   *float64 ` @Number`
-	Variable *string  `| @Ident`
-	String   *string  `| @String`
-	Call     *Call    `| @@`
+	Expression *Expression `( @@ ";" )`
 }
 
 type Expression struct {
 	Pos lexer.Position
-
-	Value *Uminus `( @@ ) ";"`
 }
 
-type Operator string
-
-type Comparison struct {
-	Pos lexer.Position
+type Unary struct {
+	Op    string `( @("!" | "-")`
+	Unary *Unary ` @@ )`
+	Value *Value `| @@`
 }
 
-type First struct {
-	Pos lexer.Position
-
-	Expression *Expression `"(" @@ ")" | @@`
-}
-
-type Factor struct {
-	Pos lexer.Position
-
-	Operator Operator `@("*" | "/")`
-	Value    *Uminus  `| @@ )`
-}
-
-type Term struct {
-	Pos lexer.Position
-
-	Operator Operator `@("+" | "-")`
-	Factor   *Factor  `@@`
-}
-
-type Uminus struct {
-	Pos lexer.Position
-
-	First *First `( @@ | "-" @@ )`
-}
-
-type Call struct {
-	Pos lexer.Position
-
-	Left  string     `@Ident`
-	Right *Parameter `"(" @@ ")"`
-}
-
-type Parameter struct {
-	Left  *Expression `@@`
-	Right *Expression `("," @@)*`
+type Value struct {
+	Number        float64     `  @Float | @Int`
+	String        string      `| @String`
+	Bool          bool        `| @("true" | "false")`
+	Undefined     bool        `| @"undefined"`
+	SubExpression *Expression `| "(" @@ ")"`
 }

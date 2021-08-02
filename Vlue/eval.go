@@ -6,7 +6,6 @@ import (
 
 	"github.com/alecthomas/participle/v2"
 	"github.com/alecthomas/repr"
-	"golang.org/x/tools/go/analysis/passes/nilfunc"
 )
 
 type Evaluatable interface {
@@ -101,10 +100,48 @@ func (m *Multiplication) Eval(ctx *Context) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
+	lhsNumber, rhsNumber, err := checkIsNumber(ctx, lhs, rhs)
+	if err != nil {
+		return nil, participle.Errorf(m.Pos, "invalid arguments for %s: %s", *m.Op, err)
+	}
 	switch *op {
 	case "*":
-		if lhs.(type) == rhs.(type) {
-
-		}
+		return lhsNumber * rhsNumber, nil
+	case "/":
+		return lhsNumber / rhsNumber, nil
 	}
+	panic("unreachable")
+}
+
+func (a *Addition) Eval(ctx *Context) (interface{}, error) {
+	lhs, err := a.Multiplication.Eval(ctx)
+	if err != nil {
+		return nil, err
+	}
+	rhs, err := a.Next.Eval(ctx)
+	if err != nil {
+		return nil, err
+	}
+	lhsNumber, rhsNumber, err := checkIsNumber(ctx, lhs, rhs)
+	if err != nil {
+		return nil, participle.Errorf(a.Pos, "invalid arguments for %s: %s", *a.Op, err)
+	}
+	switch *a.Op {
+	case "+":
+		return lhsNumber + rhsNumber, nil
+	case "-":
+		return lhsNumber - rhsNumber, nil
+	}
+}
+
+func checkIsNumber(ctx *Context, lhs interface{}, rhs interface{}) (float64, float64, error) {
+	lhsNumber, ok := lhs.(float64)
+	if !ok {
+		return 0, 0, fmt.Errorf("lhs must be a number.")
+	}
+	rhsNumber, ok := rhs.(float64)
+	if !ok {
+		return 0, 0, fmt.Errorf("rhs must be a number.")
+	}
+	return lhsNumber, rhsNumber, nil
 }

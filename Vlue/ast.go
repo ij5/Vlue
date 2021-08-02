@@ -39,36 +39,48 @@ type Expression struct {
 }
 
 type Equality struct {
+	Pos lexer.Position
+
 	Comparison *Comparison `@@`
-	Op         string      `[ @("!" "=" | "=" "=")`
+	Op         *string     `[ @("!" "=" | "=" "=")`
 	Next       *Equality   `  @@ ]`
 }
 
 type Comparison struct {
+	Pos lexer.Position
+
 	Addition *Addition   `@@`
-	Op       string      `[ @(">" | "<" | ">" "=" | "<" "=")`
+	Op       *string     `[ @(">" | "<" | ">" "=" | "<" "=")`
 	Next     *Comparison `@@ ]`
 }
 
 type Addition struct {
+	Pos lexer.Position
+
 	Multiplication *Multiplication `@@`
-	Op             string          `[ @("-" | "+")`
+	Op             *string         `[ @("-" | "+")`
 	Next           *Addition       `@@ ]`
 }
 
 type Multiplication struct {
+	Pos lexer.Position
+
 	Unary *Unary          `@@`
 	Op    *string         `[ @("/" | "*")`
 	Next  *Multiplication ` @@ ]`
 }
 
 type Unary struct {
+	Pos lexer.Position
+
 	Op    *string `( @("!" | "-")`
 	Unary *Unary  ` @@ )`
 	Value *Value  `| @@`
 }
 
 type Value struct {
+	Pos lexer.Position
+
 	Number        *float64    `  @Float | @Int`
 	String        *string     `| @String`
 	Bool          *bool       `| @("true" | "false")`

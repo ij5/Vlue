@@ -132,6 +132,33 @@ func (a *Addition) Eval(ctx *Context) (interface{}, error) {
 	case "-":
 		return lhsNumber - rhsNumber, nil
 	}
+	panic("unreachable")
+}
+
+func (c *Comparison) Eval(ctx *Context) (interface{}, error) {
+	lhs, err := c.Addition.Eval(ctx)
+	if err != nil {
+		return nil, err
+	}
+	rhs, err := c.Next.Eval(ctx)
+	if err != nil {
+		return nil, err
+	}
+	lhsNumber, rhsNumber, err := checkIsNumber(ctx, lhs, rhs)
+	if err != nil {
+		return nil, participle.Errorf(c.Pos, "invalid arguments for %s: %s", *c.Op, err)
+	}
+	switch *c.Op {
+	case ">":
+		return lhsNumber > rhsNumber, nil
+	case "<":
+		return lhsNumber < rhsNumber, nil
+	case "<=":
+		return lhsNumber <= rhsNumber, nil
+	case ">=":
+		return lhsNumber >= rhsNumber, nil
+	}
+	panic("unreachable")
 }
 
 func checkIsNumber(ctx *Context, lhs interface{}, rhs interface{}) (float64, float64, error) {

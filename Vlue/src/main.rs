@@ -1,9 +1,10 @@
-#[macro_use]
+
 extern crate lalrpop_util;
 
 mod parser;
 mod ast;
 mod vm;
+mod grammar;
 
 use std::{env, io::Read};
 use std::fs::File;

@@ -1,9 +1,13 @@
 use std::str::FromStr;
-use crate::ast::{Expr, OpCode};
+use crate::ast::{CompOpCode, OpCode, Expr};
 
 grammar;
 
-pub Expr: Box<Expr> = {
+pub Program: Box<Expr> = {
+    Comparison,
+};
+
+Expr: Box<Expr> = {
     <l:Expr> <o:ExprOp> <r:Factor> => Box::new(Expr::Op(l, o, r)),
     Factor,
 };
@@ -11,6 +15,14 @@ pub Expr: Box<Expr> = {
 Factor: Box<Expr> = {
     <l:Factor> <o:FactorOp> <r:Term> => Box::new(Expr::Op(l, o, r)),
     Term,
+};
+
+
+Comparison: Box<Expr> = {
+    <l:Comparison> <o:CompOp> <r:Expr> => {
+        Box::new(Expr::CompOp(l, o, r))
+    },
+    Expr,
 };
 
 Term: Box<Expr> = {
@@ -26,6 +38,16 @@ ExprOp: OpCode = {
 FactorOp: OpCode = {
     "*" => OpCode::Mul,
     "/" => OpCode::Div,
+};
+
+
+CompOp: CompOpCode = {
+    "==" => CompOpCode::Eq,
+    "!=" => CompOpCode::NotEq,
+    ">" => CompOpCode::Gt,
+    "<" => CompOpCode::Lt,
+    ">=" => CompOpCode::GtE,
+    "<=" => CompOpCode::LtE,
 };
 
 Num: i32 = <s:r"[0-9]+"> => i32::from_str(s).unwrap();

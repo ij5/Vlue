@@ -1,4 +1,4 @@
-use super::grammar;
+lalrpop_mod!(pub grammar);
 
 use lalrpop_util::lexer::Token;
 
@@ -41,6 +41,11 @@ fn exp_parse(expr: Expr) -> Node {
     }
     Expr::CompOp(l, op, r) => {
       parse_compare_expr(*l, op, *r)
+    }
+    Expr::FnCall(fn_name, params) => {
+      println!("{}", fn_name);
+      println!("{:?}", params);
+      Node::Bool(true)
     }
   }
 }

@@ -1,13 +1,18 @@
-
+#[macro_use]
 extern crate lalrpop_util;
 
+// mod grammar;
 mod parser;
 mod ast;
 mod vm;
-mod grammar;
 
 use std::{env, io::Read};
 use std::fs::File;
+
+#[test]
+fn test_fn_call(){
+    
+}
 
 fn main() {
     let args: Vec<String> = env::args().collect();

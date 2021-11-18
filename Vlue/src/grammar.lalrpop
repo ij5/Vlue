@@ -1,10 +1,28 @@
 use std::str::FromStr;
-use crate::ast::{CompOpCode, OpCode, Expr};
+use crate::ast::{CompOpCode, OpCode, Expr, Stmt, Type, Symbols};
+use crate::parser::print_type_of;
 
 grammar;
 
 pub Program: Box<Expr> = {
     Comparison,
+};
+
+FnCall: Box<Expr> = {
+    <i:Identifier> "(" <p:(Parameters)*> ")" => {
+        Box::new(Expr::FnCall(i, p))
+    }
+};
+
+Parameters: () = {
+    <l:Comparison> <r:("," Comparison)*> => {
+        let v:Box<Expr> = vec![];
+        v.push(l);
+        for i in &r {
+            v.push(*i);
+        }
+        v
+    }
 };
 
 Expr: Box<Expr> = {
@@ -23,6 +41,7 @@ Comparison: Box<Expr> = {
         Box::new(Expr::CompOp(l, o, r))
     },
     Expr,
+    FnCall,
 };
 
 Term: Box<Expr> = {
@@ -50,9 +69,14 @@ CompOp: CompOpCode = {
     "<=" => CompOpCode::LtE,
 };
 
+// NL: Symbols = <s:r"\n"> => Symbols::NL;
+
+Identifier: String = <s:r"[_a-zA-Z][_a-zA-Z0-9]*"> => String::from(s);
+
 Num: i32 = <s:r"[0-9]+"> => i32::from_str(s).unwrap();
 
 WhiteSpace: () = {
+    // <w:r"[^\S\r\s]*"> => {}
     <w:r"\s*"> => {}
 };
 

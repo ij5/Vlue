@@ -1,2 +1,1 @@
-# Vlue - A programming language for web development.
-
+# Vlue - A programming language

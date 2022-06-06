@@ -10,7 +10,7 @@ build = "build.rs"
 lalrpop = "0.19.6"
 
 [dependencies]
-regex = "1.5.4"
+regex = "1.5.5"
 clap = "2.33.3"
 
 [dependencies.lalrpop-util]
